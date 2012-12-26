@@ -1,0 +1,11 @@
+$ ->
+  $('[data-stanza-type]').each ->
+    $this = $(this)
+    data = $this.data()
+    src  = "<%= ENV['SERVER_URL'] %>/stanza/#{data.stanzaType}?gene_id=#{data.stanzaGeneId}"
+
+    #TODO: レンダー先に応じて、上手くwidth, height を変更するようにしたい
+    iframe = $("<iframe frameborder='0' src='#{src}' />")
+    iframe.width(width) if width = data.stanzaWidth
+    iframe.height(height) if height = data.stanzaHeight
+    $(this).append(iframe)
