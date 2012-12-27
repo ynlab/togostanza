@@ -8,6 +8,7 @@ gem 'jquery-rails'
 gem 'action_args'
 gem 'sparql-client'
 gem 'flavour_saver'
+gem 'hashr'
 
 group :development do
   gem 'tapp'
@@ -22,9 +23,9 @@ end
 
 group :test do
   gem 'tapp'
+  gem 'capybara'
 
   group :development do
     gem 'rspec-rails'
-    gem "capybara"
   end
 end

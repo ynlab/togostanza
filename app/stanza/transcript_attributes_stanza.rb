@@ -1,7 +1,6 @@
 class TranscriptAttributesStanza < StanzaBase
   def context(gene_id)
-    sparql  = SPARQL::Client.new('http://lod.dbcls.jp/openrdf-sesame/repositories/rdfgenome')
-    results = sparql.query <<-SPARQL.strip_heredoc
+    query = <<-SPARQL.strip_heredoc
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX faldo: <http://biohackathon.org/resource/faldo#>
       SELECT DISTINCT ?begin_position ?end_position
@@ -14,13 +13,15 @@ class TranscriptAttributesStanza < StanzaBase
         ?end faldo:position ?end_position .
       }
     SPARQL
+
+    sparql('http://lod.dbcls.jp/openrdf-sesame/repositories/rdfgenome', query)
   end
 
   TEMPLATE = <<-EOS.strip_heredoc
-    {{#each context}}
+    {{#each this}}
       <dl class="dl-horizontal">
-        <dt>Begin Position</dt><dd>{{begin_position.value}}</dd>
-        <dt>End Position</dt><dd>{{end_position.value}}</dd>
+        <dt>Begin Position</dt><dd>{{begin_position}}</dd>
+        <dt>End Position</dt><dd>{{end_position}}</dd>
       </dl>
     {{/each}}
   EOS
