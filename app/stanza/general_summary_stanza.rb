@@ -1,7 +1,7 @@
 class GeneralSummaryStanza < StanzaBase
   def context(gene_id)
     sparql  = SPARQL::Client.new('http://lod.dbcls.jp/openrdf-sesame/repositories/rdfgenome')
-    results = sparql.query(<<-SPARQL.strip_heredoc, :content_type => SPARQL::Client::RESULT_JSON)
+    results = sparql.query <<-SPARQL.strip_heredoc
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX insdc: <http://rdf.insdc.org/>
       SELECT DISTINCT ?feature_product ?feature_gene ?feature_gene_synonym

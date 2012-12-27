@@ -13,13 +13,13 @@ class StanzaBase
   def Struct(args)
     case args
     when Hash
-      Struct.new(*args.keys).new(*args.values.map do |s|
-        case s
-        when Hash then Struct(s)
-        when Array then s.map {|ss| Struct(ss)}
-        else s
+      Struct.new(*args.keys).new(*args.values.map {|value|
+        case value
+        when Hash then Struct(value)
+        when Array then value.map {|e| Struct(e) }
+        else value
         end
-      end
+      }
      )
     end
   end
