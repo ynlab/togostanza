@@ -4,7 +4,7 @@
     %title Sample Page
     / こんな感じでJavaScriptを読み込んで頂き
     =javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js'
-    =javascript_include_tag 'stanza'
+    =javascript_include_tag 'stanza', 'absolute=true'
   %body
     / スタンザを表示したい箇所に以下の様なDIVを埋めてみて下さい
     %div(data-stanza-type='transcript_attributes_stanza' data-stanza-gene-id='slr0613')
