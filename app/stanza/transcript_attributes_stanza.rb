@@ -14,14 +14,14 @@ class TranscriptAttributesStanza < StanzaBase
         ?end faldo:position ?end_position .
       }
     SPARQL
-
-    rdf2hash(results)
   end
 
   TEMPLATE = <<-EOS.strip_heredoc
-    <dl class="dl-horizontal">
-      <dt>Begin Position</dt><dd>{{begin_position.value}}</dd>
-      <dt>End Position</dt><dd>{{end_position.value}}</dd>
-    </dl>
+    {{#each context}}
+      <dl class="dl-horizontal">
+        <dt>Begin Position</dt><dd>{{begin_position.value}}</dd>
+        <dt>End Position</dt><dd>{{end_position.value}}</dd>
+      </dl>
+    {{/each}}
   EOS
 end

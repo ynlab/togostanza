@@ -14,15 +14,15 @@ class GeneralSummaryStanza < StanzaBase
         }
       }
     SPARQL
-
-    rdf2hash(results)
   end
 
   TEMPLATE = <<-EOS.strip_heredoc
-    <dl class="dl-horizontal">
-      <dt>Feature Product</dt><dd>{{feature_product.value}}</dd>
-      <dt>Feature Gene</dt><dd>{{feature_gene.value}}</dd>
-      <dt>Feature Gene Synonym</dt><dd>{{feature_gene_synonym.value}}</dd>
-    </dl>
+    {{#each context}}
+      <dl class="dl-horizontal">
+        <dt>Feature Product</dt><dd>{{feature_product.value}}</dd>
+        <dt>Feature Gene</dt><dd>{{feature_gene.value}}</dd>
+        <dt>Feature Gene Synonym</dt><dd>{{feature_gene_synonym.value}}</dd>
+      </dl>
+    {{/each}}
   EOS
 end
