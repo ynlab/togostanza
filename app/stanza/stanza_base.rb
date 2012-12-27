@@ -5,7 +5,7 @@ class StanzaBase
   end
 
   def context(gene_id)
-    raise 'Called abstract method ...'
+    raise NotImplementedError
   end
 
   private
