@@ -1,12 +1,12 @@
 class StanzaBase
   include RDFStoreClient
 
-  def render(gene_id)
-    ctx = context(gene_id)
+  def render(query_params)
+    ctx = context(query_params)
     FS.evaluate(self.class::TEMPLATE, ctx)
   end
 
-  def context(gene_id)
+  def context(query_params)
     raise NotImplementedError
   end
 end
