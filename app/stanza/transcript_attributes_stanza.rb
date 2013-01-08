@@ -17,12 +17,14 @@ class TranscriptAttributesStanza < StanzaBase
     sparql('http://lod.dbcls.jp/openrdf-sesame/repositories/rdfgenome', query)
   end
 
-  TEMPLATE = <<-EOS.strip_heredoc
-    {{#each this}}
-      <dl class="dl-horizontal">
-        <dt>Begin Position</dt><dd>{{begin_position}}</dd>
-        <dt>End Position</dt><dd>{{end_position}}</dd>
-      </dl>
-    {{/each}}
-  EOS
+  def template
+    <<-EOS.strip_heredoc
+      {{#each this}}
+        <dl class="dl-horizontal">
+          <dt>Begin Position</dt><dd>{{begin_position}}</dd>
+          <dt>End Position</dt><dd>{{end_position}}</dd>
+        </dl>
+      {{/each}}
+    EOS
+  end
 end
