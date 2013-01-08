@@ -5,8 +5,7 @@ $ ->
 
     src  = "<%= ENV['SERVER_URL'] %>/stanza/#{data.stanzaType}?gene_id=#{data.stanzaGeneId}&tax_id=#{data.stanzaTaxId}"
 
-    #TODO: レンダー先に応じて、上手くwidth, height を変更するようにしたい
-    iframe = $("<iframe frameborder='0' src='#{src}' />")
+    iframe = $("<iframe frameborder='0' src='#{src}' width='100%' />")
     iframe.width(width) if width = data.stanzaWidth
     iframe.height(height) if height = data.stanzaHeight
     $(this).append(iframe)
