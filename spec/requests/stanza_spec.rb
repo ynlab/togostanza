@@ -20,4 +20,17 @@ feature 'スタンザを表示する' do
       expect(page).to have_text('1457123')
     end
   end
+
+  context 'Gene Attributes スタンザ' do
+    scenario "遺伝子 slr1311 / taxid: 1148" do
+      visit stanza_path('gene_attributes_stanza', gene_id: 'slr1311', tax_id: '1148')
+
+      expect(page).to have_text('photosystem II D1 protein')
+      expect(page).to have_text('psbA2')
+      expect(page).to have_text('MTTTLQQRESASLWEQFCQWVTSTNNRIYVGWFGTLMIPTLLTATTCFIIAFIAAPPVDIDGIREPVAGSLLYGNNIISGAVVPSSNAIGLHFYPIWEAASLDEWLYNGGPYQLVVFHFLIGIFCYMGRQWELSYRLGMRPWICVAYSAPVSAATAVFLIYPIGQGSFSDGMPLGISGTFNFMIVFQAEHNILMHPFHMLGVAGVFGGSLFSAMHGSLVTSSLVRETTEVESQNYGYKFGQEEETYNIVAAHGYFGRLIFQYASFNNSRSLHFFLGAWPVIGIWFTAMGVSTMAFNLNGFNFNQSILDSQGRVIGTWADVLNRANIGFEVMHERNAHNFPLDLASGEQAPVALTAPAVNG
+')
+      expect(page).to have_text('7229..8311')
+      expect(page).to have_text('http://purl.uniprot.org/refseq/NP_439906.1')
+    end
+  end
 end
