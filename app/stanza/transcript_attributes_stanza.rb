@@ -14,7 +14,7 @@ class TranscriptAttributesStanza < StanzaBase
       }
     SPARQL
 
-    sparql('http://lod.dbcls.jp/openrdf-sesame/repositories/rdfgenome', query)
+    sparql('http://lod.dbcls.jp/openrdf-sesame/repositories/togogenome', query)
   end
 
   def template

@@ -14,9 +14,7 @@ class GeneAttributesStanza < StanzaBase
         ?s insdc:feature_gene ?genename .
         ?s rdfs:seeAlso ?x .
         ?x rdf:type insdc:Protein .
-        OPTIONAL {
-          ?x rdfs:seeAlso ?up .
-        }
+        ?x rdfs:seeAlso ?up .
         ?s faldo:location ?l .
         ?l insdc:location_string ?location .
         ?l faldo:begin ?b .
@@ -32,7 +30,7 @@ class GeneAttributesStanza < StanzaBase
       }
     SPARQL
 
-    sparql('http://lod.dbcls.jp/openrdf-sesame/repositories/rdfgenome', query)
+    sparql('http://lod.dbcls.jp/openrdf-sesame/repositories/togogenome', query)
   end
 
   def template
