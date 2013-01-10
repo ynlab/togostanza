@@ -1,7 +1,7 @@
 module RDFStoreClient
-  def sparql(endpoint, query)
+  def query(endpoint, sparql)
     client  = SPARQL::Client.new(endpoint)
-    solutions = client.query(query)
+    solutions = client.query(sparql)
     solutions.map {|solution| Hashr.new(solution.to_hash) }
   end
 end

@@ -1,6 +1,6 @@
 class GeneAttributesStanza < StanzaBase
     def context(query_params)
-    query = <<-SPARQL.strip_heredoc
+    sparql = <<-SPARQL.strip_heredoc
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX obo: <http://purl.obolibrary.org/obo/>
@@ -30,7 +30,7 @@ class GeneAttributesStanza < StanzaBase
       }
     SPARQL
 
-    sparql('http://lod.dbcls.jp/openrdf-sesame/repositories/togogenome', query)
+    query('http://lod.dbcls.jp/openrdf-sesame/repositories/togogenome', sparql)
   end
 
   def template

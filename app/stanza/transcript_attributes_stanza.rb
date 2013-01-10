@@ -1,6 +1,6 @@
 class TranscriptAttributesStanza < StanzaBase
   def context(query_params)
-    query = <<-SPARQL.strip_heredoc
+    sparql = <<-SPARQL.strip_heredoc
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX faldo: <http://biohackathon.org/resource/faldo#>
       SELECT DISTINCT ?begin_position ?end_position
@@ -14,7 +14,7 @@ class TranscriptAttributesStanza < StanzaBase
       }
     SPARQL
 
-    sparql('http://lod.dbcls.jp/openrdf-sesame/repositories/togogenome', query)
+    query('http://lod.dbcls.jp/openrdf-sesame/repositories/togogenome', sparql)
   end
 
   def template
