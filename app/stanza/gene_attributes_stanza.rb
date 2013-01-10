@@ -1,6 +1,6 @@
 class GeneAttributesStanza < StanzaBase
-  def context(query_params)
-    sparql = <<-SPARQL.strip_heredoc
+  def context(gene_id, tax_id)
+    query('http://lod.dbcls.jp/openrdf-sesame/repositories/togogenome', <<-SPARQL)
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX obo: <http://purl.obolibrary.org/obo/>
@@ -8,7 +8,7 @@ class GeneAttributesStanza < StanzaBase
       PREFIX insdc: <http://rdf.insdc.org/>
       SELECT DISTINCT ?description ?genename ?aaseq ?location ?begin ?end ?up
       WHERE {
-        ?s insdc:feature_locus_tag "#{query_params[:gene_id]}" .
+        ?s insdc:feature_locus_tag "#{gene_id}" .
         ?s insdc:feature_product ?description .
         ?s insdc:feature_translation ?aaseq .
         ?s insdc:feature_gene ?genename .
@@ -24,13 +24,11 @@ class GeneAttributesStanza < StanzaBase
         ?s obo:so_part_of+ ?seq .
         ?seq rdf:type ?seqtype .
         ?seq rdfs:seeAlso ?tax .
-        ?tax rdfs:label "taxon:#{query_params[:tax_id]}" .
+        ?tax rdfs:label "taxon:#{tax_id}" .
         ?tax rdf:type insdc:Taxonomy .
         FILTER (?seqtype IN (obo:SO_0000988, obo:SO_0000155))
       }
     SPARQL
-
-    query('http://lod.dbcls.jp/openrdf-sesame/repositories/togogenome', sparql)
   end
 
   def template

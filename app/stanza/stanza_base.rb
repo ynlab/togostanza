@@ -1,16 +1,33 @@
 class StanzaBase
   include RDFStoreClient
 
-  def render(query_params)
-    ctx = context(query_params)
-    FS.evaluate(template, ctx)
+  attr_reader :params
+
+  def initialize(params)
+    @params = params
   end
 
-  def context(query_params)
+  def render
+    FS.evaluate(template, _context)
+  end
+
+  def context
     raise NotImplementedError
   end
 
   def template
     raise NotImplementedError
+  end
+
+  private
+
+  def _context
+    args = method(:context).parameters.reject {|type, _|
+      type == :block
+    }.map {|_, key|
+      params[key]
+    }
+
+    send :context, *args
   end
 end
