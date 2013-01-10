@@ -8,14 +8,14 @@ class StanzaBase
   end
 
   def render
-    FS.evaluate(template, _context)
+    Tilt.new(template_path).render(_context)
+  end
+
+  def template_path
+    Rails.root.join('app', 'stanza', 'templates', "#{self.class.name.underscore}.hbs").to_s
   end
 
   def context
-    raise NotImplementedError
-  end
-
-  def template
     raise NotImplementedError
   end
 

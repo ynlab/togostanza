@@ -30,20 +30,4 @@ class GeneAttributesStanza < StanzaBase
       }
     SPARQL
   end
-
-  def template
-    <<-EOS.strip_heredoc
-      {{#each this}}
-        <dl class="dl-horizontal">
-          <dt>Description</dt><dd>{{description}}</dd>
-          <dt>Gene Name</dt><dd>{{genename}}</dd>
-          <dt>Aaseq</dt><dd>{{aaseq}}</dd>
-          <dt>Location</dt><dd>{{location}}</dd>
-          <dt>Begin</dt><dd>{{begin}}</dd>
-          <dt>End</dt><dd>{{end}}</dd>
-          <dt>Up</dt><dd>{{up}}</dd>
-        </dl>
-      {{/each}}
-    EOS
-  end
 end

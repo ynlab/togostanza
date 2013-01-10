@@ -14,16 +14,4 @@ class GeneralSummaryStanza < StanzaBase
       }
     SPARQL
   end
-
-  def template
-    <<-EOS.strip_heredoc
-      {{#each this}}
-        <dl class="dl-horizontal">
-          <dt>Feature Product</dt><dd>{{feature_product}}</dd>
-          <dt>Feature Gene</dt><dd>{{feature_gene}}</dd>
-          <dt>Feature Gene Synonym</dt><dd>{{feature_gene_synonym}}</dd>
-        </dl>
-      {{/each}}
-    EOS
-  end
 end
