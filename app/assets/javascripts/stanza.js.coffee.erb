@@ -2,13 +2,13 @@ $ ->
   RE = /^data-stanza-(.+)/
 
   $('[data-stanza-type]').each ->
-    $this = $(this)
-    data  = $this.data()
-
+    $this  = $(this)
+    data   = $this.data()
     params = {}
 
     $.each @attributes, (i, attr) ->
-      params[key.replace('-', '_')] = attr.value if key = (RE.exec(attr.name) || [])[1]
+      if key = (RE.exec(attr.name) || [])[1]
+        params[key.replace('-', '_')] = attr.value
 
     src = "<%= ENV['SERVER_URL'] %>/stanza/#{data.stanzaType}?#{$.param(stanza_params: params)}"
 
