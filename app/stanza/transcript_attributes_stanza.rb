@@ -1,6 +1,6 @@
 class TranscriptAttributesStanza < StanzaBase
   def context(gene_id)
-    query('http://lod.dbcls.jp/openrdf-sesame/repositories/togogenome', <<-SPARQL)
+    query(:refseq, <<-SPARQL)
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX faldo: <http://biohackathon.org/resource/faldo#>
       SELECT DISTINCT ?begin_position ?end_position
