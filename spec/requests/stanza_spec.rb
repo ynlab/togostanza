@@ -4,7 +4,7 @@ require 'spec_helper'
 feature 'スタンザを表示する' do
   context 'General Summary スタンザ' do
     scenario "遺伝子 sll1615" do
-      visit stanza_path('general_summary', gene_id: 'sll1615')
+      visit stanza_path('general_summary', stanza_params: {gene_id: 'sll1615'})
 
       expect(page).to have_text('tRNA modification GTPase TrmE')
       expect(page).to have_text('trmE')
@@ -14,7 +14,7 @@ feature 'スタンザを表示する' do
 
   context 'Transcript Attributes スタンザ' do
     scenario "遺伝子 sll1615" do
-      visit stanza_path('transcript_attributes', gene_id: 'sll1615')
+      visit stanza_path('transcript_attributes', stanza_params: {gene_id: 'sll1615'})
 
       expect(page).to have_text('1455753')
       expect(page).to have_text('1457123')
@@ -23,7 +23,7 @@ feature 'スタンザを表示する' do
 
   context 'Gene Attributes スタンザ' do
     scenario "遺伝子 slr1311 / taxid: 1148" do
-      visit stanza_path('gene_attributes', gene_id: 'slr1311', tax_id: '1148')
+      visit stanza_path('gene_attributes', stanza_params: {gene_id: 'slr1311', tax_id: '1148'})
 
       expect(page).to have_text('photosystem II D1 protein')
       expect(page).to have_text('psbA2')
