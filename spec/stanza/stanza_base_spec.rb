@@ -22,9 +22,9 @@ describe StanzaBase do
       }
     end
 
-    subject { klass.new(bar: 'bar') }
+    subject { klass.new(bar: 'bar').context }
 
-    its(:context) {
+    it {
       should == {
         foo: 'foo',
         bar: 'barbarbar',
