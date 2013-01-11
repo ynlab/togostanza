@@ -14,8 +14,15 @@ module Script
       puts JSON.pretty_generate(StanzaBase.detect(name).new(params).context)
     end
 
-    desc 'preview <stanza name> <param1=val1 param2=val2>', ''
-    def preview(name, *param_strs)
+    desc 'render <stanza name> <param1=val1 param2=val2>', ''
+    def render(name, *param_strs)
+      params = convert_params(param_strs)
+
+      puts StanzaBase.detect(name).new(params).render
+    end
+
+    desc 'open <stanza name> <param1=val1 param2=val2>', ''
+    def open(name, *param_strs)
       query = {
         stanza_params: convert_params(param_strs)
       }.to_query
