@@ -6,15 +6,15 @@ describe StanzaBase do
   describe '#context' do
     let :klass do
       Class.new(StanzaBase) {
-        variable :foo do
+        property :foo do
           'foo'
         end
 
-        variable :bar do |bar|
+        property :bar do |bar|
           bar * 3
         end
 
-        variable :baz do
+        property :baz do
           {
             qux: 'quux'
           }

@@ -1,5 +1,5 @@
 class GeneralSummaryStanza < StanzaBase
-  variable :features do |gene_id|
+  property :features do |gene_id|
     query(:refseq, <<-SPARQL.strip_heredoc)
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX insdc: <http://rdf.insdc.org/>

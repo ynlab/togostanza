@@ -1,5 +1,5 @@
 class TranscriptAttributesStanza < StanzaBase
-  variable :transcripts do |gene_id|
+  property :transcripts do |gene_id|
     query(:refseq, <<-SPARQL)
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX faldo: <http://biohackathon.org/resource/faldo#>

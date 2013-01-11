@@ -1,16 +1,16 @@
 require 'togo_stanza/sparql_client'
 
 class StanzaBase
-  class_attribute :variables
+  class_attribute :properties
 
   class << self
     def detect(name)
       "#{name.camelize}Stanza".constantize
     end
 
-    def variable(name, &block)
-      self.variables ||= {}
-      self.variables[name] = block
+    def property(name, &block)
+      self.properties ||= {}
+      self.properties[name] = block
     end
   end
 
@@ -29,8 +29,8 @@ class StanzaBase
   end
 
   def context
-    variables.each_with_object({}) {|(name, block), hash|
-      hash[name] = fetch_variable(block)
+    properties.each_with_object({}) {|(name, block), hash|
+      hash[name] = fetch_property(block)
     }
   end
 
@@ -40,7 +40,7 @@ class StanzaBase
 
   private
 
-  def fetch_variable(block)
+  def fetch_property(block)
     args = block.parameters.reject {|type, _|
       type == :block
     }.map {|_, key|
