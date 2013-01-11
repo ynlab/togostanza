@@ -8,7 +8,7 @@ gem 'jquery-rails'
 gem 'action_args'
 gem 'sparql-client'
 gem 'flavour_saver'
-gem 'hashr'
+gem 'hashie'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
@@ -18,6 +18,7 @@ group :assets do
 end
 
 group :development do
+  gem 'pry', group: 'text'
   gem 'tapp', group: 'test'
   gem 'zeus'
 end

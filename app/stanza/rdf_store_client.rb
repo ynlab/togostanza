@@ -7,9 +7,6 @@ module RDFStoreClient
     endpoint = MAPPINGS[endpoint] || endpoint
     client   = SPARQL::Client.new(endpoint)
 
-    client.query(sparql).map {|solution|
-      Hashr.new(solution.to_hash)
-    }
+    client.query(sparql).map(&:to_hash)
   end
 end
-
