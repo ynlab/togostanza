@@ -74,6 +74,8 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.7.6)
     json_pure (1.7.6)
+    launchy (2.1.2)
+      addressable (~> 2.3)
     libwebsocket (0.1.7.1)
       addressable
       websocket
@@ -182,6 +184,7 @@ DEPENDENCIES
   haml-rails
   hashie
   jquery-rails
+  launchy
   pg
   pry
   rails

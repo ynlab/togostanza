@@ -7,6 +7,10 @@ module RDFStoreClient
     endpoint = MAPPINGS[endpoint] || endpoint
     client   = SPARQL::Client.new(endpoint)
 
-    client.query(sparql).map(&:to_hash)
+    client.query(sparql).map {|binding|
+      binding.each_with_object({}) {|(name, term), hash|
+        hash[name] = term.to_s
+      }
+    }
   end
 end

@@ -3,9 +3,15 @@ class StanzaBase
 
   class_attribute :variables
 
-  def self.variable(name, &block)
-    self.variables ||= {}
-    self.variables[name] = block
+  class << self
+    def detect(name)
+      "#{name.camelize}Stanza".constantize
+    end
+
+    def variable(name, &block)
+      self.variables ||= {}
+      self.variables[name] = block
+    end
   end
 
   attr_reader :params
@@ -22,13 +28,13 @@ class StanzaBase
     Rails.root.join('app', 'stanza', 'templates', "#{self.class.name.underscore}.hbs").to_s
   end
 
-  private
-
   def context
     variables.each_with_object({}) {|(name, block), hash|
       hash[name] = fetch_variable(block)
     }
   end
+
+  private
 
   def fetch_variable(block)
     args = block.parameters.reject {|type, _|

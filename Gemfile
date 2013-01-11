@@ -18,9 +18,10 @@ group :assets do
 end
 
 group :development do
-  gem 'pry', group: 'text'
+  gem 'launchy', require: false
+  gem 'pry', group: 'test'
   gem 'tapp', group: 'test'
-  gem 'zeus'
+  gem 'zeus', require: false
 end
 
 group :test do
