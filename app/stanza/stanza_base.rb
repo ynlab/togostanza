@@ -1,6 +1,6 @@
-class StanzaBase
-  include RDFStoreClient
+require 'togo_stanza/sparql_client'
 
+class StanzaBase
   class_attribute :variables
 
   class << self
@@ -32,6 +32,10 @@ class StanzaBase
     variables.each_with_object({}) {|(name, block), hash|
       hash[name] = fetch_variable(block)
     }
+  end
+
+  def query(endpoint, sparql)
+    TogoStanza::SPARQLClient.new(endpoint).query(sparql)
   end
 
   private
