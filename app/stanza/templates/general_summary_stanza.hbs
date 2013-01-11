@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>General Summary</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    {{adjust_iframe_height_script}}
+  </head>
+
+  <body>
+    {{#each features}}
+      <dl class="dl-horizontal">
+        <dt>Feature Product</dt><dd>{{feature_product}}</dd>
+        <dt>Feature Gene</dt><dd>{{feature_gene}}</dd>
+        <dt>Feature Gene Synonym</dt><dd>{{feature_gene_synonym}}</dd>
+      </dl>
+    {{/each}}
+  </body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Gene Attributes</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    {{adjust_iframe_height_script}}
+  </head>
+
+  <body>
+    {{#each transcripts}}
+      <dl class="dl-horizontal">
+        <dt>Begin Position</dt><dd>{{begin_position}}</dd>
+        <dt>End Position</dt><dd>{{end_position}}</dd>
+      </dl>
+    {{/each}}
+  </body>
+</html>

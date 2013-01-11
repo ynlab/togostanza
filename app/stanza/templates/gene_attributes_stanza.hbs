@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Gene Attributes</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    {{adjust_iframe_height_script}}
+  </head>
+
+  <body>
+    {{#each sequeces}}
+      <dl class="dl-horizontal">
+        <dt>Description</dt>
+        <dd>{{description}}</dd>
+
+        <dt>Gene Name</dt>
+        <dd>{{genename}}</dd>
+
+        <dt>Aaseq</dt>
+        <dd>{{aaseq}}</dd>
+
+        <dt>Location</dt>
+        <dd>{{location}}</dd>
+
+        <dt>Begin</dt>
+        <dd>{{begin}}</dd>
+
+        <dt>End</dt>
+        <dd>{{end}}</dd>
+
+        <dt>Up</dt>
+        <dd>{{up}}</dd>
+      </dl>
+    {{/each}}
+  </body>
+</html>

@@ -1,0 +1,19 @@
+$ ->
+  RE = /^data-stanza-(.+)/
+
+  $('[data-stanza-type]').each ->
+    $this  = $(this)
+    data   = $this.data()
+    params = {}
+
+    $.each @attributes, (i, attr) ->
+      if key = (RE.exec(attr.name) || [])[1]
+        params[key.replace('-', '_')] = attr.value
+
+    src = "<%= ENV['SERVER_URL'] %>/stanza/#{data.stanzaType}?#{$.param(stanza_params: params)}"
+
+    $('<iframe></iframe>')
+      .attr(src: src, frameborder: 0)
+      .width(data.stanzaWidth || '100%')
+      .height(data.stanzaHeight)
+      .appendTo $this
