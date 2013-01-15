@@ -1,6 +1,6 @@
-class ProtainAttributesStanza < StanzaBase
+class ProteinAttributesStanza < StanzaBase
   property :attributes do |gene_id|
-    protain_attributes = query(:uniprot, <<-SPARQL)
+    protein_attributes = query(:uniprot, <<-SPARQL)
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX up: <http://purl.uniprot.org/core/>
@@ -26,7 +26,7 @@ class ProtainAttributesStanza < StanzaBase
       }
     SPARQL
 
-    protain_attributes.map do |protain_attribute|
+    protein_attributes.map do |protain_attribute|
       new_hash = Hash[protain_attribute]
       # こういうロジックをこっちに持つのはどうなんだろう?
       # でも,UniProt では取れ無さそう(?)
