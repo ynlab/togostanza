@@ -1,4 +1,6 @@
 class ProteinAttributesStanza < StanzaBase
+  property :title, 'Protein Attributes'
+
   property :attributes do |gene_id|
     protein_attributes = query(:uniprot, <<-SPARQL)
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>

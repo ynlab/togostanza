@@ -1,4 +1,6 @@
 class GeneAttributesStanza < StanzaBase
+  property :title, 'Gene Attributes'
+
   property :sequeces do |gene_id, tax_id|
     query(:refseq, <<-SPARQL)
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>

@@ -7,6 +7,12 @@
     = javascript_include_tag 'stanza'
   %body
     / スタンザを表示したい箇所に以下の様なDIVを埋めてみて下さい
+    %div(data-stanza-type='protein_names_and_origin' data-stanza-gene-id='slr1311')
+
+    %div(data-stanza-type='protein_attributes' data-stanza-gene-id='slr1311')
+
+    %div(data-stanza-type='protein_general_annotation_comments' data-stanza-gene-id='slr1311')
+
     %div(data-stanza-type='transcript_attributes' data-stanza-gene-id='slr0613')
 
     %div(data-stanza-type='general_summary' data-stanza-gene-id='slr0612' data-stanza-width='600px')
@@ -17,6 +23,3 @@
 
     %div(data-stanza-type='gene_attributes' data-stanza-gene-id='slr1311' data-stanza-tax-id='1148')
 
-    %div(data-stanza-type='protein_names_and_origin' data-stanza-gene-id='slr1311')
-
-    %div(data-stanza-type='protain_attributes' data-stanza-gene-id='slr1311')

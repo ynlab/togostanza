@@ -1,4 +1,6 @@
 class ProteinNamesAndOriginStanza < StanzaBase
+  property :title, 'Names and origin'
+
   property :genes do |gene_id|
     query(:uniprot, <<-SPARQL)
       PREFIX up: <http://purl.uniprot.org/core/>
