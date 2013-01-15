@@ -29,8 +29,10 @@ class StanzaBase
   end
 
   def context
-    properties.each_with_object({}) {|(name, block), hash|
-      hash[name] = fetch_property(block)
+    Parallel.map(properties, in_threads: 16) {|name, block|
+      [name, fetch_property(block)]
+    }.each_with_object({}) {|(name, value), hash|
+      hash[name] = value
     }
   end
 

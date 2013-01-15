@@ -2,13 +2,14 @@ source 'https://rubygems.org'
 
 gem 'rails'
 
-gem 'pg'
-gem 'haml-rails'
-gem 'jquery-rails'
 gem 'action_args'
-gem 'sparql-client'
 gem 'flavour_saver'
+gem 'haml-rails'
 gem 'hashie'
+gem 'jquery-rails'
+gem 'parallel'
+gem 'pg'
+gem 'sparql-client'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
