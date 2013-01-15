@@ -1,6 +1,28 @@
-class ProtainNamesAndOriginStanza < StanzaBase
+class ProteinNamesAndOriginStanza < StanzaBase
+  property :genes do |gene_id|
+    query(:uniprot, <<-SPARQL)
+      PREFIX up: <http://purl.uniprot.org/core/>
+      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+      SELECT DISTINCT ?gene_name ?synonyms_name ?locus_name
+      WHERE {
+        ?target up:locusName "#{gene_id}" .
+        ?id up:encodedBy ?target .
+
+        # Gene names
+        ?id up:encodedBy ?encoded_by .
+        ## Name:
+        ?encoded_by skos:prefLabel ?gene_name .
+        ## Synonyms:
+        ?encoded_by skos:altLabel ?synonyms_name .
+        ## Ordered Locus Names:
+        ?encoded_by up:locusName ?locus_name .
+      }
+    SPARQL
+  end
+
   property :summary do |gene_id|
-    protain_summary = query(:uniprot, <<-SPARQL)
+    protein_summary = query(:uniprot, <<-SPARQL)
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX up: <http://purl.uniprot.org/core/>
 
@@ -34,39 +56,10 @@ class ProtainNamesAndOriginStanza < StanzaBase
       }
     SPARQL
 
-    genes = query(:uniprot, <<-SPARQL)
-      PREFIX up: <http://purl.uniprot.org/core/>
-      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-
-      SELECT DISTINCT ?gene_name ?synonyms_name ?locus_name
-      WHERE {
-        ?target up:locusName "#{gene_id}" .
-        ?id up:encodedBy ?target .
-
-        # Gene names
-        ?id up:encodedBy ?encoded_by .
-        ## Name:
-        ?encoded_by skos:prefLabel ?gene_name .
-        ## Synonyms:
-        ?encoded_by skos:altLabel ?synonyms_name .
-        ## Ordered Locus Names:
-        ?encoded_by up:locusName ?locus_name .
-      }
-    SPARQL
-
     # [{a: 'hoge', b: 'moge'}, {a: 'hoge', b: 'fuga'}] => {a: 'hoge', b: ['moge', 'fuga']}
-    protain_summary.inject({}) {|new_hash, old_hash|
-      old_hash.each {|k, v|
-        case new_hash[k]
-        when Array
-          new_hash[k] << v.to_s unless new_hash[k].include?(v.to_s)
-        when String
-          new_hash[k] = [new_hash[k], v.to_s] if new_hash[k] != v.to_s
-        when nil
-          new_hash[k] = v.to_s
-        end
-      }
-      new_hash
-    }.merge(genes: genes)
+    protein_summary.flat_map(&:to_a).group_by(&:first).each_with_object({}) {|(k, vs), hash|
+      v = vs.map(&:last).uniq
+      hash[k] = v.one? ? v.first : v
+    }
   end
 end
