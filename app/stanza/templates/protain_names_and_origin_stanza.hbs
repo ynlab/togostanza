@@ -14,22 +14,49 @@
       <dl class="dl-horizontal">
         <dt>Recommended Name</dt>
         <dd>{{recommended_name}}</dd>
+
         <dt>EC Name</dt>
         <dd>{{ec_name}}</dd>
+
         <dt>Alternative Names</dt>
-        <dd>{{alternative_names}}</dd>
-        <dt>Gene Names</dt>
-        <dd>{{gene_names}}</dd>
-        <dt>Synonyms Name</dt>
-        <dd>{{synonyms_name}}</dd>
-        <dt>Locus Name</dt>
-        <dd>{{locus_name}}</dd>
+        <dd>
+          <ul>
+            {{#each alternative_names}}
+              <li>{{this}}</li>
+            {{/each}}
+          </ul>
+        </dd>
+
+        <dt>Genes</dt>
+        <dd>
+          {{#each genes}}
+            <dl>
+              <dt>Gene Names</dt>
+              <dd>{{gene_name}}</dd>
+
+              <dt>Synonyms Name</dt>
+              <dd>{{synonyms_name}}</dd>
+
+              <dt>Locus Name</dt>
+              <dd>{{locus_name}}</dd>
+            </dl>
+          {{/each}}
+        </dd>
+
         <dt>Organism Name</dt>
         <dd>{{organism_name}}</dd>
+
         <dt>Taxonomic Identifier</dt>
         <dd>{{taxonomic_identifier}}</dd>
+
         <dt>Taxonomic Iineage</dt>
-        <dd>{{parent_taxonomy_name}}</dd>
+        <dd>
+          <ul>
+            {{#each parent_taxonomy_names}}
+              <li>{{this}}</li>
+            {{/each}}
+          </ul>
+        </dd>
       </dl>
     {{/with}}
   </body>
