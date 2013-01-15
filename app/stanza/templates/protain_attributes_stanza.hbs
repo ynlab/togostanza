@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Protain Attributes</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    {{adjust_iframe_height_script}}
+  </head>
+
+  <body>
+    <h1>Protain Attributes</h1>
+    {{#each attributes}}
+      <dl class="dl-horizontal">
+        <dt>Sequence length</dt><dd>{{sequence_length}}</dd>
+        <dt>Sequence status</dt><dd>{{sequence_status}}</dd>
+        <dt>Protein existence</dt><dd>{{existence_label}}</dd>
+      </dl>
+    {{/each}}
+  </body>
+</html>
+
