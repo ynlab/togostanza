@@ -29,6 +29,8 @@ class ProtainAttributesStanza < StanzaBase
     protain_attributes.map do |protain_attribute|
       new_hash = Hash[protain_attribute]
       # こういうロジックをこっちに持つのはどうなんだろう?
+      # でも,UniProt では取れ無さそう(?)
+      # 要ご相談
       new_hash[:sequence_length] = protain_attribute[:sequence].length
       new_hash[:sequence_status] = sequence_status(protain_attribute[:fragment].to_s)
       new_hash
