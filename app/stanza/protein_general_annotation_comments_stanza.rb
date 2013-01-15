@@ -1,7 +1,5 @@
 class ProteinGeneralAnnotationCommentsStanza < StanzaBase
-  property :title do
-    'General Annotation Comments'
-  end
+  property :title, 'General Annotation Comments'
 
   # メモ:
   # とりあえず、今はslr1311 を対象にしているが、
