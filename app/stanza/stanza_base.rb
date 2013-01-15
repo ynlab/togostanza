@@ -9,12 +9,10 @@ class StanzaBase
     end
 
     def property(name, val = nil, &block)
-      if [val, block].all?(&:nil?) || [val, block].all? {|i| !i.nil? }
-        raise ArgumentError, 'You must specify exactly one of either a value or block'
-      end
+      raise ArgumentError, 'You must specify exactly one of either a value or block' unless [val, block].one?(&:nil?)
 
       self.properties ||= {}
-      self.properties[name] = val || block
+      self.properties[name] = block || val
     end
   end
 

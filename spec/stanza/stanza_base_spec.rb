@@ -19,6 +19,12 @@ describe StanzaBase do
         klass.property :foo
       }.to raise_error(ArgumentError)
     end
+
+    specify 'allow specify a falsy value' do
+      klass.property :foo, false
+
+      klass.properties[:foo].should == false
+    end
   end
 
   describe '#context' do
