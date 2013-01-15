@@ -54,6 +54,7 @@ class ProteinNamesAndOriginStanza < StanzaBase
         ?taxonomy_id rdfs:subClassOf* ?parent_taxonomy .
         ?parent_taxonomy up:scientificName ?parent_taxonomy_names .
       }
+    ORDER BY DESC(?parent_taxonomy_names)
     SPARQL
 
     # [{a: 'hoge', b: 'moge'}, {a: 'hoge', b: 'fuga'}] => {a: 'hoge', b: ['moge', 'fuga']}
