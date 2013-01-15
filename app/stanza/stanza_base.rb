@@ -8,9 +8,13 @@ class StanzaBase
       "#{name.camelize}Stanza".constantize
     end
 
-    def property(name, &block)
+    def property(name, val = nil, &block)
+      if [val, block].all?(&:nil?) || [val, block].all? {|i| !i.nil? }
+        raise ArgumentError, 'You must specify exactly one of either a value or block'
+      end
+
       self.properties ||= {}
-      self.properties[name] = block
+      self.properties[name] = val || block
     end
   end
 
@@ -29,10 +33,10 @@ class StanzaBase
   end
 
   def context
-    Parallel.map(properties, in_threads: 16) {|name, block|
-      [name, fetch_property(block)]
-    }.each_with_object({}) {|(name, value), hash|
-      hash[name] = value
+    Parallel.map(properties, in_threads: 16) {|name, val|
+      [name, fetch_property(val)]
+    }.each_with_object({}) {|(name, val), hash|
+      hash[name] = val
     }
   end
 
@@ -42,13 +46,15 @@ class StanzaBase
 
   private
 
-  def fetch_property(block)
-    args = block.parameters.reject {|type, _|
+  def fetch_property(val)
+    return val unless val.respond_to?(:call)
+
+    args = val.parameters.reject {|type, _|
       type == :block
     }.map {|_, key|
       params[key]
     }
 
-    instance_exec(*args, &block)
+    instance_exec(*args, &val)
   end
 end

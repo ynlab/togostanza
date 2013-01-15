@@ -3,6 +3,24 @@
 require 'spec_helper'
 
 describe StanzaBase do
+  describe '.property' do
+    let(:klass) { Class.new(StanzaBase) }
+
+    specify 'raise error when specify a value and block' do
+      expect {
+        klass.property :foo, 'bar' do
+          'baz'
+        end
+      }.to raise_error(ArgumentError)
+    end
+
+    specify 'raise error when neither specify a value nor block' do
+      expect {
+        klass.property :foo
+      }.to raise_error(ArgumentError)
+    end
+  end
+
   describe '#context' do
     let :klass do
       Class.new(StanzaBase) {
@@ -19,6 +37,8 @@ describe StanzaBase do
             qux: 'quux'
           }
         end
+
+        property :foobar, 'foobar'
       }
     end
 
@@ -26,9 +46,10 @@ describe StanzaBase do
 
     it {
       should == {
-        foo: 'foo',
-        bar: 'barbarbar',
-        baz: {qux: 'quux'}
+        foo:    'foo',
+        bar:    'barbarbar',
+        baz:    {qux: 'quux'},
+        foobar: 'foobar'
       }
     }
   end
