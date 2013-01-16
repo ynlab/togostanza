@@ -28,7 +28,7 @@ class ProteinNamesAndOriginStanza < StanzaBase
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX up: <http://purl.uniprot.org/core/>
 
-      SELECT DISTINCT ?recommended_name ?ec_name ?alternative_names ?organism_name ?taxonomic_identifier ?parent_taxonomy_names
+      SELECT DISTINCT ?recommended_name ?ec_name ?alternative_names ?organism_name ?taxonomic_id ?parent_taxonomy_names
       WHERE {
         ?target up:locusName "#{gene_id}" .
         ?id up:encodedBy ?target .
@@ -50,19 +50,21 @@ class ProteinNamesAndOriginStanza < StanzaBase
         ?taxonomy_id up:scientificName ?organism_name .
 
         # Taxonomic identifier
-        ?id up:organism ?taxonomic_identifier .
 
         # Taxonomic lineage
         ?taxonomy_id rdfs:subClassOf* ?parent_taxonomy .
         ?parent_taxonomy up:scientificName ?parent_taxonomy_names .
       }
-      ORDER BY DESC(?parent_taxonomy_names)
     SPARQL
 
     # [{a: 'hoge', b: 'moge'}, {a: 'hoge', b: 'fuga'}] => {a: 'hoge', b: ['moge', 'fuga']}
-    protein_summary.flat_map(&:to_a).group_by(&:first).each_with_object({}) {|(k, vs), hash|
+    protein_summary = protein_summary.flat_map(&:to_a).group_by(&:first).each_with_object({}) {|(k, vs), hash|
       v = vs.map(&:last).uniq
       hash[k] = v.one? ? v.first : v
     }
+
+    # subClassOf* で順に子から親をたどって取得しているが、順番は逆が良い
+    protein_summary[:parent_taxonomy_names] = protein_summary[:parent_taxonomy_names].reverse
+    protein_summary
   end
 end
