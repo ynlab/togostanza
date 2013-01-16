@@ -13,10 +13,17 @@ class ProteinNamesAndOriginStanza < StanzaBase
 
         # Gene names
         ?id up:encodedBy ?encoded_by .
+
         ## Name:
-        ?encoded_by skos:prefLabel ?gene_name .
+        OPTIONAL {
+          ?encoded_by skos:prefLabel ?gene_name .
+        }
+
         ## Synonyms:
-        ?encoded_by skos:altLabel ?synonyms_name .
+        OPTIONAL {
+          ?encoded_by skos:altLabel ?synonyms_name .
+        }
+
         ## Ordered Locus Names:
         ?encoded_by up:locusName ?locus_name .
       }
@@ -28,7 +35,7 @@ class ProteinNamesAndOriginStanza < StanzaBase
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX up: <http://purl.uniprot.org/core/>
 
-      SELECT DISTINCT ?recommended_name ?ec_name ?alternative_names ?organism_name ?taxonomic_id ?parent_taxonomy_names
+      SELECT DISTINCT ?recommended_name ?ec_name ?alternative_names ?organism_name ?taxonomy_id ?parent_taxonomy_names
       WHERE {
         ?target up:locusName "#{gene_id}" .
         ?id up:encodedBy ?target .
@@ -37,12 +44,16 @@ class ProteinNamesAndOriginStanza < StanzaBase
         ## Recommended name:
         ?id up:recommendedName ?recommended_name_node .
         ?recommended_name_node up:fullName ?recommended_name .
-        ### EC=
-        ?recommended_name_node up:ecName ?ec_name .
 
-        ## Alternative name(s):
-        ?id up:alternativeName ?alternative_names_node .
-        ?alternative_names_node up:fullName ?alternative_names .
+        ### EC=
+        OPTIONAL {
+          ?recommended_name_node up:ecName ?ec_name .
+        }
+
+        OPTIONAL {
+          ?id up:alternativeName ?alternative_names_node .
+          ?alternative_names_node up:fullName ?alternative_names .
+        }
 
         # Organism
         ?id up:organism ?taxonomy_id .
