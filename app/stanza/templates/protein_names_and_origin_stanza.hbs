@@ -12,53 +12,48 @@
   <body>
     <h1>{{title}}</h1>
 
-    <dl class="dl-horizontal">
-      <dt>Recommended Name</dt>
-      <dd>{{summary.recommended_name}}</dd>
-
-      <dt>EC Name</dt>
-      <dd>{{summary.ec_name}}</dd>
-
-      <dt>Alternative Names</dt>
-      <dd>
-        <ul>
-          {{#each summary.alternative_names}}
-            <li>{{this}}</li>
-          {{/each}}
-        </ul>
-      </dd>
-
-      <dt>Genes</dt>
-      <dd>
-        {{#each genes}}
-          <dl>
-            <dt>Gene Names</dt>
-            <dd>{{gene_name}}</dd>
-
-            <dt>Synonyms Name</dt>
-            <dd>{{synonyms_name}}</dd>
-
-            <dt>Locus Name</dt>
-            <dd>{{locus_name}}</dd>
-          </dl>
-        {{/each}}
-      </dd>
-
-      <dt>Organism Name</dt>
-      <dd>{{summary.organism_name}}</dd>
-
-      <dt>Taxonomic Identifier</dt>
-      <dd>{{summary.taxonomic_identifier}}</dd>
-
-      <dt>Taxonomic Iineage</dt>
-      <dd>
-        <ul>
-          {{#each summary.parent_taxonomy_names}}
-            <li>{{this}}</li>
-          {{/each}}
-        </ul>
-      </dd>
-    </dl>
+    <table class='table table-bordered'>
+      <tbody>
+        <tr><th>Recommended Name</th><td>{{summary.recommended_name}}</td></tr>
+        <tr><th>EC Name</th><td>{{summary.ec_name}}</td></tr>
+        <tr>
+          <th>Alternative Names</th>
+          <td>
+            <ul>
+              {{#each summary.alternative_names}}
+              <li>{{this}}</li>
+              {{/each}}
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <th>Genes</th>
+          <td>
+            {{#each genes}}
+            <table class='table table-bordered'>
+              <tbody>
+                <tr><th>Gene Names</th><td>{{gene_name}}</td></tr>
+                <tr><th>Synonyms Name</th><td>{{synonyms_name}}</td></tr>
+                <tr><th>Locus Name</th><td>{{locus_name}}</td></tr>
+              </tbody>
+            </table>
+            {{/each}}
+          </td>
+        </tr>
+        <tr><th>Organism Name</th><td>{{summary.organism_name}}</td></tr>
+        <tr><th>Taxonomic Identifier</th><td>{{summary.taxonomic_identifier}}</td></tr>
+        <tr>
+          <th>Taxonomic Iineage</th>
+          <td>
+            <ul>
+              {{#each summary.parent_taxonomy_names}}
+              <li>{{this}}</li>
+              {{/each}}
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </body>
 </html>
 

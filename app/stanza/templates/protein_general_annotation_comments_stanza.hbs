@@ -11,39 +11,35 @@
 
   <body>
     <h1>{{title}}</h1>
-    <dl class="dl-horizontal">
-      <dt>Function</dt>
-      <dd>{{function.comment}}</dd>
 
-      <dt>Catalytic activity</dt>
-      <dd>{{catalytic_activity.comment}}</dd>
-
-      <dt>Cofactor</dt>
-      <dd>{{cofactor.comment}}</dd>
-
-      <dt>Subunit structure</dt>
-      <dd>{{subunit_structure.comment}}</dd>
-
-      <dt>Subcellular location</dt>
-      <dd>
-        <ul>
-          {{#each subcellular_location}}
-            <li>{{alias}}</li>
-          {{/each}}
-        </ul>
-      </dd>
-
-      <dt>Miscellaneous</dt>
-      <dd>
-        <ul>
-          {{#each miscellaneous}}
-            <li>{{comment}}</li>
-          {{/each}}
-        </ul>
-      </dd>
-
-      <dt>Sequence similarities</dt>
-      <dd>{{sequence_similarities.comment}}</dd>
-    </dl>
+    <table class='table table-bordered'>
+      <tbody>
+        <tr><th>Function</th><td>{{function.comment}}</td></tr>
+        <tr><th>Catalytic activity</th><td>{{catalytic_activity.comment}}</td></tr>
+        <tr><th>Cofactor</th><td>{{cofactor.comment}}</td></tr>
+        <tr><th>Subunit structure</th><td>{{subunit_structure.comment}}</td></tr>
+        <tr>
+          <th>Subcellular location</th>
+          <td>
+            <ul>
+              {{#each subcellular_location}}
+              <li>{{alias}}</li>
+              {{/each}}
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <th>Miscellaneous</th>
+          <td>
+            <ul>
+              {{#each miscellaneous}}
+              <li>{{comment}}</li>
+              {{/each}}
+            </ul>
+          </td>
+        </tr>
+        <tr><th>Sequence similarities</th><td>{{sequence_similarities.comment}}</td></tr>
+      </tbody>
+    </table>
   </body>
 </html>

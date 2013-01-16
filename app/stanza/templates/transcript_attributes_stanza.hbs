@@ -11,11 +11,14 @@
 
   <body>
     <h1>{{title}}</h1>
+
     {{#each transcripts}}
-      <dl class="dl-horizontal">
-        <dt>Begin Position</dt><dd>{{begin_position}}</dd>
-        <dt>End Position</dt><dd>{{end_position}}</dd>
-      </dl>
+      <table class='table table-bordered'>
+        <tbody>
+          <tr><th>Begin Position</th><td>{{begin_position}}</td></tr>
+          <tr><th>End Position</th><td>{{end_position}}</td></tr>
+        </tbody>
+      </table>
     {{/each}}
   </body>
 </html>

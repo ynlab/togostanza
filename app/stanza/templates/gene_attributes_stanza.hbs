@@ -11,29 +11,19 @@
 
   <body>
     <h1>{{title}}</h1>
+
     {{#each sequeces}}
-      <dl class="dl-horizontal">
-        <dt>Description</dt>
-        <dd>{{description}}</dd>
-
-        <dt>Gene Name</dt>
-        <dd>{{genename}}</dd>
-
-        <dt>Aaseq</dt>
-        <dd>{{aaseq}}</dd>
-
-        <dt>Location</dt>
-        <dd>{{location}}</dd>
-
-        <dt>Begin</dt>
-        <dd>{{begin}}</dd>
-
-        <dt>End</dt>
-        <dd>{{end}}</dd>
-
-        <dt>Up</dt>
-        <dd>{{up}}</dd>
-      </dl>
+      <table class='table table-bordered'>
+        <tbody>
+          <tr><th>Description</th><td>{{description}}</td></tr>
+          <tr><th>Gene Name</th><td>{{genename}}</td></tr>
+          <tr><th>Aaseq</th><td>{{aaseq}}</td></tr>
+          <tr><th>Location</th><td>{{location}}</td></tr>
+          <tr><th>Begin</th><td>{{begin}}</td></tr>
+          <tr><th>End</th><td>{{end}}</td></tr>
+          <tr><th>Up</th><td>{{up}}</td></tr>
+        </tbody>
+      </table>
     {{/each}}
   </body>
 </html>

@@ -11,13 +11,15 @@
 
   <body>
     <h1>{{title}}</h1>
+
     {{#each attributes}}
-      <dl class="dl-horizontal">
-        <dt>Sequence length</dt><dd>{{sequence_length}}</dd>
-        <dt>Sequence status</dt><dd>{{sequence_status}}</dd>
-        <dt>Protein existence</dt><dd>{{existence_label}}</dd>
-      </dl>
+      <table class='table table-bordered'>
+        <tbody>
+          <tr><th>Sequence length</th><td>{{sequence_length}}</td></tr>
+          <tr><th>Sequence status</th><td>{{sequence_status}}</td></tr>
+          <tr><th>Protein existence</th><td>{{existence_label}}</td></tr>
+        </tbody>
+      </table>
     {{/each}}
   </body>
 </html>
-
