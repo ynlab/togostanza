@@ -15,17 +15,13 @@ class ProteinNamesAndOriginStanza < StanzaBase
         ?id up:encodedBy ?encoded_by .
 
         ## Name:
-        OPTIONAL {
-          ?encoded_by skos:prefLabel ?gene_name .
-        }
+        OPTIONAL { ?encoded_by skos:prefLabel ?gene_name . }
 
         ## Synonyms:
-        OPTIONAL {
-          ?encoded_by skos:altLabel ?synonyms_name .
-        }
+        OPTIONAL { ?encoded_by skos:altLabel ?synonyms_name . }
 
         ## Ordered Locus Names:
-        ?encoded_by up:locusName ?locus_name .
+        OPTIONAL { ?encoded_by up:locusName ?locus_name . }
       }
     SPARQL
   end
@@ -42,13 +38,13 @@ class ProteinNamesAndOriginStanza < StanzaBase
 
         # Protein names
         ## Recommended name:
-        ?id up:recommendedName ?recommended_name_node .
-        ?recommended_name_node up:fullName ?recommended_name .
+        OPTIONAL {
+          ?id up:recommendedName ?recommended_name_node .
+          ?recommended_name_node up:fullName ?recommended_name .
+        }
 
         ### EC=
-        OPTIONAL {
-          ?recommended_name_node up:ecName ?ec_name .
-        }
+        OPTIONAL { ?recommended_name_node up:ecName ?ec_name . }
 
         OPTIONAL {
           ?id up:alternativeName ?alternative_names_node .
@@ -58,13 +54,15 @@ class ProteinNamesAndOriginStanza < StanzaBase
         # Organism
         ?id up:organism ?taxonomy_id .
 
-        ?taxonomy_id up:scientificName ?organism_name .
+        OPTIONAL { ?taxonomy_id up:scientificName ?organism_name . }
 
         # Taxonomic identifier
 
         # Taxonomic lineage
-        ?taxonomy_id rdfs:subClassOf* ?parent_taxonomy .
-        ?parent_taxonomy up:scientificName ?parent_taxonomy_names .
+        OPTIONAL {
+          ?taxonomy_id rdfs:subClassOf* ?parent_taxonomy .
+          ?parent_taxonomy up:scientificName ?parent_taxonomy_names .
+        }
       }
     SPARQL
 
