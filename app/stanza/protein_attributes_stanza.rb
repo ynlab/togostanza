@@ -2,6 +2,20 @@ class ProteinAttributesStanza < StanzaBase
   property :title, 'Protein Attributes'
 
   property :attributes do |gene_id|
+    uniprot_url = query(:togogenome, <<-SPARQL).first[:up]
+      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX insdc: <http://rdf.insdc.org/>
+
+      SELECT ?up
+      WHERE {
+        ?s insdc:feature_locus_tag "#{gene_id}" .
+        ?s rdfs:seeAlso ?np .
+        ?np rdf:type insdc:Protein .
+        ?np rdfs:seeAlso ?up .
+      }
+    SPARQL
+
     protein_attributes = query(:uniprot, <<-SPARQL)
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -10,21 +24,21 @@ class ProteinAttributesStanza < StanzaBase
       SELECT DISTINCT ?sequence ?fragment ?existence_label
       FROM <http://purl.uniprot.org/uniprot/>
       WHERE {
-        ?target up:locusName "#{gene_id}" .
-        ?id up:encodedBy ?target .
+        ?protein rdfs:seeAlso <#{uniprot_url}> .
+        ?protein up:reviewed true .
 
         # Sequence length
-        ?id up:sequence ?seq .
+        ?protein up:sequence ?seq .
         ?seq rdf:value ?sequence .
         # need?
-        # FILTER regex (?id, "uniprot")
+        # FILTER regex (?protein, "uniprot")
 
         #Sequence status
         OPTIONAL {
           ?seq up:fragment ?fragment .
         }
 
-        ?id up:existence ?existence .
+        ?protein up:existence ?existence .
         ?existence rdfs:label ?existence_label .
       }
     SPARQL

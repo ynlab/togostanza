@@ -2,6 +2,8 @@ class ProteinNamesAndOriginStanza < StanzaBase
   property :title, 'Names and origin'
 
   property :genes do |gene_id|
+    uniprot_url = uniprot_url(gene_id)
+
     query(:uniprot, <<-SPARQL)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -9,11 +11,11 @@ class ProteinNamesAndOriginStanza < StanzaBase
       SELECT DISTINCT ?gene_name ?synonyms_name ?locus_name
       FROM <http://purl.uniprot.org/uniprot/>
       WHERE {
-        ?target up:locusName "#{gene_id}" .
-        ?id up:encodedBy ?target .
+        ?protein rdfs:seeAlso <#{uniprot_url}> .
+        ?protein up:reviewed true .
 
         # Gene names
-        ?id up:encodedBy ?encoded_by .
+        ?protein up:encodedBy ?encoded_by .
 
         ## Name:
         OPTIONAL { ?encoded_by skos:prefLabel ?gene_name . }
@@ -28,6 +30,8 @@ class ProteinNamesAndOriginStanza < StanzaBase
   end
 
   property :summary do |gene_id|
+    uniprot_url = uniprot_url(gene_id)
+
     protein_summary = query(:uniprot, <<-SPARQL)
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX up: <http://purl.uniprot.org/core/>
@@ -35,13 +39,13 @@ class ProteinNamesAndOriginStanza < StanzaBase
       SELECT DISTINCT ?recommended_name ?ec_name ?alternative_names ?organism_name ?taxonomy_id ?parent_taxonomy_names
       FROM <http://purl.uniprot.org/uniprot/>
       WHERE {
-        ?target up:locusName "#{gene_id}" .
-        ?id up:encodedBy ?target .
+        ?protein rdfs:seeAlso <#{uniprot_url}> .
+        ?protein up:reviewed true .
 
         # Protein names
         ## Recommended name:
         OPTIONAL {
-          ?id up:recommendedName ?recommended_name_node .
+          ?protein up:recommendedName ?recommended_name_node .
           ?recommended_name_node up:fullName ?recommended_name .
         }
 
@@ -49,12 +53,12 @@ class ProteinNamesAndOriginStanza < StanzaBase
         OPTIONAL { ?recommended_name_node up:ecName ?ec_name . }
 
         OPTIONAL {
-          ?id up:alternativeName ?alternative_names_node .
+          ?protein up:alternativeName ?alternative_names_node .
           ?alternative_names_node up:fullName ?alternative_names .
         }
 
         # Organism
-        ?id up:organism ?taxonomy_id .
+        ?protein up:organism ?taxonomy_id .
 
         OPTIONAL { ?taxonomy_id up:scientificName ?organism_name . }
 
@@ -78,5 +82,21 @@ class ProteinNamesAndOriginStanza < StanzaBase
     # subClassOf* で順に子から親をたどって取得しているが、順番は逆が良い
     #protein_summary[:parent_taxonomy_names] = protein_summary[:parent_taxonomy_names].reverse
     protein_summary
+  end
+
+  def uniprot_url(gene_id)
+    query(:togogenome, <<-SPARQL).first[:up]
+      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX insdc: <http://rdf.insdc.org/>
+
+      SELECT ?up
+      WHERE {
+        ?s insdc:feature_locus_tag "#{gene_id}" .
+        ?s rdfs:seeAlso ?np .
+        ?np rdf:type insdc:Protein .
+        ?np rdfs:seeAlso ?up .
+      }
+    SPARQL
   end
 end
