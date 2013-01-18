@@ -1,6 +1,6 @@
 class TogoStanza::SPARQLClient
   MAPPINGS = {
-    refseq:  'http://lod.dbcls.jp/openrdf-sesame/repositories/togogenome',
+    togogenome:  'http://lod.dbcls.jp/openrdf-sesame/repositories/togogenome',
     uniprot: 'http://lod.dbcls.jp/fat8893/sparql'
   }
 
