@@ -7,6 +7,7 @@ class ProteinNamesAndOriginStanza < StanzaBase
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
       SELECT DISTINCT ?gene_name ?synonyms_name ?locus_name
+      FROM <http://purl.uniprot.org/uniprot/>
       WHERE {
         ?target up:locusName "#{gene_id}" .
         ?id up:encodedBy ?target .
@@ -32,6 +33,7 @@ class ProteinNamesAndOriginStanza < StanzaBase
       PREFIX up: <http://purl.uniprot.org/core/>
 
       SELECT DISTINCT ?recommended_name ?ec_name ?alternative_names ?organism_name ?taxonomy_id ?parent_taxonomy_names
+      FROM <http://purl.uniprot.org/uniprot/>
       WHERE {
         ?target up:locusName "#{gene_id}" .
         ?id up:encodedBy ?target .
@@ -60,7 +62,8 @@ class ProteinNamesAndOriginStanza < StanzaBase
 
         # Taxonomic lineage
         OPTIONAL {
-          ?taxonomy_id rdfs:subClassOf* ?parent_taxonomy .
+          # ?taxonomy_id rdfs:subClassOf* ?parent_taxonomy .
+          ?taxonomy_id rdfs:subClassOf ?parent_taxonomy .
           ?parent_taxonomy up:scientificName ?parent_taxonomy_names .
         }
       }
@@ -73,7 +76,7 @@ class ProteinNamesAndOriginStanza < StanzaBase
     }
 
     # subClassOf* で順に子から親をたどって取得しているが、順番は逆が良い
-    protein_summary[:parent_taxonomy_names] = protein_summary[:parent_taxonomy_names].reverse
+    #protein_summary[:parent_taxonomy_names] = protein_summary[:parent_taxonomy_names].reverse
     protein_summary
   end
 end

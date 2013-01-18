@@ -1,5 +1,5 @@
 class ProteinGeneralAnnotationCommentsStanza < StanzaBase
-  property :title, 'General Annotation Comments'
+  property :title, 'General Annotation'
 
   # メモ:
   # とりあえず、今はslr1311 を対象にしているが、
@@ -28,7 +28,9 @@ class ProteinGeneralAnnotationCommentsStanza < StanzaBase
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX up: <http://purl.uniprot.org/core/>
+
       SELECT DISTINCT ?alias
+      FROM <http://purl.uniprot.org/uniprot/>
       WHERE {
         ?target up:locusName "#{gene_id}" .
         ?id up:encodedBy ?target .
@@ -58,7 +60,9 @@ class ProteinGeneralAnnotationCommentsStanza < StanzaBase
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX up: <http://purl.uniprot.org/core/>
+
       SELECT DISTINCT ?comment
+      FROM <http://purl.uniprot.org/uniprot/>
       WHERE {
         ?target up:locusName "#{gene_id}" .
         ?id up:encodedBy ?target .
