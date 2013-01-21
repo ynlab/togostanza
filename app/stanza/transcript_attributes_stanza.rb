@@ -1,5 +1,7 @@
 class TranscriptAttributesStanza < StanzaBase
-  property :title, 'Transcript Attributes'
+  property :title do |gene_id|
+    "Transcript Attributes : #{gene_id}"
+  end
 
   property :transcripts do |gene_id|
     query(:togogenome, <<-SPARQL)

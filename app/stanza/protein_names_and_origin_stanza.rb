@@ -1,5 +1,7 @@
 class ProteinNamesAndOriginStanza < StanzaBase
-  property :title, 'Names and origin'
+  property :title do |gene_id|
+    "Names and origin : #{gene_id}"
+  end
 
   property :genes do |gene_id|
     uniprot_url = uniprot_url(gene_id)

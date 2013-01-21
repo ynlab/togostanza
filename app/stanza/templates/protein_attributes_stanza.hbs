@@ -15,9 +15,9 @@
     {{#each attributes}}
       <table class='table table-bordered'>
         <tbody>
-          <tr><th>Sequence length</th><td>{{sequence_length}}</td></tr>
-          <tr><th>Sequence status</th><td>{{sequence_status}}</td></tr>
-          <tr><th>Protein existence</th><td>{{existence_label}}</td></tr>
+          {{#if sequence_length}}<tr><th>Sequence length</th><td>{{sequence_length}}</td></tr>{{/if}}
+          {{#if sequence_status}}<tr><th>Sequence status</th><td>{{sequence_status}}</td></tr>{{/if}}
+          {{#if existence_label}}<tr><th>Protein existence</th><td>{{existence_label}}</td></tr>{{/if}}
         </tbody>
       </table>
     {{/each}}

@@ -1,5 +1,7 @@
-class ProteinGeneralAnnotationCommentsStanza < StanzaBase
-  property :title, 'General Annotation'
+class ProteinGeneralAnnotationStanza < StanzaBase
+  property :title do |gene_id|
+    "General Annotation : #{gene_id}"
+  end
 
   # メモ:
   # とりあえず、今はslr1311 を対象にしているが、
@@ -38,7 +40,7 @@ class ProteinGeneralAnnotationCommentsStanza < StanzaBase
       }
     SPARQL
 
-    query(:uniprot, <<-SPARQL)
+    comments = query(:uniprot, <<-SPARQL)
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX up: <http://purl.uniprot.org/core/>
@@ -49,17 +51,22 @@ class ProteinGeneralAnnotationCommentsStanza < StanzaBase
         ?protein rdfs:seeAlso <#{uniprot_url}> .
         ?protein up:reviewed true .
 
-        ?location up:alias ?alias .
-        ?located_in ?p ?location .
-        ?annotation up:locatedIn ?located_in .
-        ?annotation rdf:type up:Subcellular_Location_Annotation .
-        ?protein up:annotation ?annotation .
+        OPTIONAL {
+          ?location up:alias ?alias .
+          ?located_in ?p ?location .
+          ?annotation up:locatedIn ?located_in .
+          ?annotation rdf:type up:Subcellular_Location_Annotation .
+          ?protein up:annotation ?annotation .
+        }
       }
     SPARQL
+
+    comments.first.empty? ? nil : comments
   end
 
   property :miscellaneous do |gene_id|
-    comment(gene_id, 'Annotation')
+    comments = comment(gene_id, 'Annotation')
+    comments.first.empty? ? nil : comments
   end
 
 
@@ -95,9 +102,11 @@ class ProteinGeneralAnnotationCommentsStanza < StanzaBase
         ?protein rdfs:seeAlso <#{uniprot_url}> .
         ?protein up:reviewed true .
 
-        ?annotation rdfs:comment ?comment .
-        ?annotation rdf:type up:#{annotation_type} .
-        ?protein up:annotation ?annotation .
+        OPTIONAL {
+          ?annotation rdfs:comment ?comment .
+          ?annotation rdf:type up:#{annotation_type} .
+          ?protein up:annotation ?annotation .
+        }
       }
     SPARQL
   end

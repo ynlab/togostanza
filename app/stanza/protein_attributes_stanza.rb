@@ -1,5 +1,7 @@
 class ProteinAttributesStanza < StanzaBase
-  property :title, 'Protein Attributes'
+  property :title do |gene_id|
+    "Protein Attributes : #{gene_id}"
+  end
 
   property :attributes do |gene_id|
     uniprot_url = query(:togogenome, <<-SPARQL).first[:up]
@@ -28,18 +30,25 @@ class ProteinAttributesStanza < StanzaBase
         ?protein up:reviewed true .
 
         # Sequence length
-        ?protein up:sequence ?seq .
-        ?seq rdf:value ?sequence .
+        OPTIONAL {
+          ?protein up:sequence ?seq .
+          ?seq rdf:value ?sequence .
+        }
         # need?
         # FILTER regex (?protein, "uniprot")
 
-        #Sequence status
+        # Sequence status
         OPTIONAL {
           ?seq up:fragment ?fragment .
         }
 
-        ?protein up:existence ?existence .
-        ?existence rdfs:label ?existence_label .
+        # TODO: Sequence processing
+
+        # Protein existence
+        OPTIONAL {
+          ?protein up:existence ?existence .
+          ?existence rdfs:label ?existence_label .
+        }
       }
     SPARQL
 
@@ -48,7 +57,7 @@ class ProteinAttributesStanza < StanzaBase
     # 要ご相談
     protein_attributes.map {|attrs|
       attrs.merge(
-        sequence_length: attrs[:sequence].length,
+        sequence_length: attrs[:sequence].try(:length),
         sequence_status: sequence_status(attrs[:fragment].to_s)
       )
     }

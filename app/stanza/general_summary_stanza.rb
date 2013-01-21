@@ -1,5 +1,7 @@
 class GeneralSummaryStanza < StanzaBase
-  property :title, 'General Summary'
+  property :title do |gene_id|
+    "General Summary : #{gene_id}"
+  end
 
   property :features do |gene_id|
     query(:togogenome, <<-SPARQL.strip_heredoc)
