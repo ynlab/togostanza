@@ -14,10 +14,22 @@
 
     <table class='table table-bordered'>
       <tbody>
-        {{#if function.comment}}<tr><th>Function</th><td>{{function.comment}}</td></tr>{{/if}}
-        {{#if catalytic_activity.comment}}<tr><th>Catalytic activity</th><td>{{catalytic_activity.comment}}</td></tr>{{/if}}
-        {{#if cofactor.comment}}<tr><th>Cofactor</th><td>{{cofactor.comment}}</td></tr>{{/if}}
-        {{#if subunit_structure.comment}}<tr><th>Subunit structure</th><td>{{subunit_structure.comment}}</td></tr>{{/if}}
+        {{#if function.comment}}
+          <tr><th>Function</th><td>{{function.comment}}</td></tr>
+        {{/if}}
+
+        {{#if catalytic_activity.comment}}
+          <tr><th>Catalytic activity</th><td>{{catalytic_activity.comment}}</td></tr>
+        {{/if}}
+
+        {{#if cofactor.comment}}
+          <tr><th>Cofactor</th><td>{{cofactor.comment}}</td></tr>
+        {{/if}}
+
+        {{#if subunit_structure.comment}}
+          <tr><th>Subunit structure</th><td>{{subunit_structure.comment}}</td></tr>
+        {{/if}}
+
         {{#if subcellular_location}}
           <tr>
             <th>Subcellular location</th>
@@ -30,6 +42,7 @@
             </td>
           </tr>
         {{/if}}
+
         {{#if miscellaneous}}
           <tr>
             <th>Miscellaneous</th>
@@ -42,7 +55,10 @@
             </td>
           </tr>
         {{/if}}
-        {{#if sequence_similarities.comment}}<tr><th>Sequence similarities</th><td>{{sequence_similarities.comment}}</td></tr>{{/if}}
+
+        {{#if sequence_similarities.comment}}
+          <tr><th>Sequence similarities</th><td>{{sequence_similarities.comment}}</td></tr>
+        {{/if}}
       </tbody>
     </table>
   </body>

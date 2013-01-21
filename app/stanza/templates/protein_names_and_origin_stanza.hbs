@@ -14,8 +14,13 @@
 
     <table class='table table-bordered'>
       <tbody>
-        {{#if summary.recommended_name}}<tr><th>Recommended Name</th><td>{{summary.recommended_name}}</td></tr>{{/if}}
-        {{#if summary.ec_name}}<tr><th>EC Name</th><td>{{summary.ec_name}}</td></tr>{{/if}}
+        {{#if summary.recommended_name}}
+          <tr><th>Recommended Name</th><td>{{summary.recommended_name}}</td></tr>
+        {{/if}}
+
+        {{#if summary.ec_name}}
+          <tr><th>EC Name</th><td>{{summary.ec_name}}</td></tr>
+        {{/if}}
 
         {{#if summary.alternative_names}}
           <tr>
@@ -47,18 +52,23 @@
           </tr>
         {{/if}}
 
-        {{#if summary.organism_name}}<tr><th>Organism Name</th><td>{{summary.organism_name}}</td></tr>{{/if}}
-        {{#if summary.taxonomy_id}}<tr><th>Taxonomic Identifier</th><td>{{summary.taxonomy_id}}</td></tr>{{/if}}
+        {{#if summary.organism_name}}
+          <tr><th>Organism Name</th><td>{{summary.organism_name}}</td></tr>
+        {{/if}}
+
+        {{#if summary.taxonomy_id}}
+          <tr><th>Taxonomic Identifier</th><td>{{summary.taxonomy_id}}</td></tr>
+        {{/if}}
 
         {{#if summary.parent_taxonomy_names}}
-        <tr>
-          <th>Taxonomic Lineage</th>
-          <td>
-            <ul>
-              <li>{{summary.parent_taxonomy_names}}</li>
-            </ul>
-          </td>
-        </tr>
+          <tr>
+            <th>Taxonomic Lineage</th>
+            <td>
+              <ul>
+                <li>{{summary.parent_taxonomy_names}}</li>
+              </ul>
+            </td>
+          </tr>
         {{/if}}
       </tbody>
     </table>
