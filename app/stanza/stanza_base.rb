@@ -4,8 +4,8 @@ class StanzaBase
   class_attribute :properties
 
   class << self
-    def detect(name)
-      "#{name.camelize}Stanza".constantize
+    def find_by_slug(slug)
+      "#{slug.camelize}Stanza".constantize
     end
 
     def property(name, val = nil, &block)
@@ -14,7 +14,17 @@ class StanzaBase
       self.properties ||= {}
       self.properties[name] = block || val
     end
+
+    def slug
+      name.underscore.sub(/_stanza$/, '')
+    end
+
+    def root
+      Rails.root.join('app', 'stanza', slug)
+    end
   end
+
+  delegate :slug, :root, to: 'self.class'
 
   attr_reader :params
 
@@ -27,7 +37,7 @@ class StanzaBase
   end
 
   def template_path
-    Rails.root.join('app', 'stanza', 'templates', "#{self.class.name.underscore}.hbs").to_s
+    root.join('template.hbs').to_s
   end
 
   def context
