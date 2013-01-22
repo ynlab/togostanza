@@ -1,68 +1,107 @@
+# coding: utf-8
+
 class ProteinNamesAndOriginStanza < StanzaBase
-  property :title, 'Names and origin'
+  property :title do |gene_id|
+    "Names and origin : #{gene_id}"
+  end
 
   property :genes do |gene_id|
+    uniprot_url = uniprot_url(gene_id)
+
     query(:uniprot, <<-SPARQL)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
       SELECT DISTINCT ?gene_name ?synonyms_name ?locus_name
+      FROM <http://purl.uniprot.org/uniprot/>
       WHERE {
-        ?target up:locusName "#{gene_id}" .
-        ?id up:encodedBy ?target .
+        ?protein rdfs:seeAlso <#{uniprot_url}> .
+        ?protein up:reviewed true .
 
         # Gene names
-        ?id up:encodedBy ?encoded_by .
+        ?protein up:encodedBy ?encoded_by .
+
         ## Name:
-        ?encoded_by skos:prefLabel ?gene_name .
+        OPTIONAL { ?encoded_by skos:prefLabel ?gene_name . }
+
         ## Synonyms:
-        ?encoded_by skos:altLabel ?synonyms_name .
+        OPTIONAL { ?encoded_by skos:altLabel ?synonyms_name . }
+
         ## Ordered Locus Names:
-        ?encoded_by up:locusName ?locus_name .
+        OPTIONAL { ?encoded_by up:locusName ?locus_name . }
       }
     SPARQL
   end
 
   property :summary do |gene_id|
+    uniprot_url = uniprot_url(gene_id)
+
     protein_summary = query(:uniprot, <<-SPARQL)
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX up: <http://purl.uniprot.org/core/>
 
-      SELECT DISTINCT ?recommended_name ?ec_name ?alternative_names ?organism_name ?taxonomic_identifier ?parent_taxonomy_names
+      SELECT DISTINCT ?recommended_name ?ec_name ?alternative_names ?organism_name ?taxonomy_id ?parent_taxonomy_names
+      FROM <http://purl.uniprot.org/uniprot/>
       WHERE {
-        ?target up:locusName "#{gene_id}" .
-        ?id up:encodedBy ?target .
+        ?protein rdfs:seeAlso <#{uniprot_url}> .
+        ?protein up:reviewed true .
 
         # Protein names
         ## Recommended name:
-        ?id up:recommendedName ?recommended_name_node .
-        ?recommended_name_node up:fullName ?recommended_name .
-        ### EC=
-        ?recommended_name_node up:ecName ?ec_name .
+        OPTIONAL {
+          ?protein up:recommendedName ?recommended_name_node .
+          ?recommended_name_node up:fullName ?recommended_name .
+        }
 
-        ## Alternative name(s):
-        ?id up:alternativeName ?alternative_names_node .
-        ?alternative_names_node up:fullName ?alternative_names .
+        ### EC=
+        OPTIONAL { ?recommended_name_node up:ecName ?ec_name . }
+
+        OPTIONAL {
+          ?protein up:alternativeName ?alternative_names_node .
+          ?alternative_names_node up:fullName ?alternative_names .
+        }
 
         # Organism
-        ?id up:organism ?taxonomy_id .
+        ?protein up:organism ?taxonomy_id .
 
-        ?taxonomy_id up:scientificName ?organism_name .
+        OPTIONAL { ?taxonomy_id up:scientificName ?organism_name . }
 
         # Taxonomic identifier
-        ?id up:organism ?taxonomic_identifier .
 
         # Taxonomic lineage
-        ?taxonomy_id rdfs:subClassOf* ?parent_taxonomy .
-        ?parent_taxonomy up:scientificName ?parent_taxonomy_names .
+        OPTIONAL {
+          # SPARQL 1.1 が使えるようになったら外す
+          # ?taxonomy_id rdfs:subClassOf* ?parent_taxonomy .
+          ?taxonomy_id rdfs:subClassOf ?parent_taxonomy .
+          ?parent_taxonomy up:scientificName ?parent_taxonomy_names .
+        }
       }
-      ORDER BY DESC(?parent_taxonomy_names)
     SPARQL
 
     # [{a: 'hoge', b: 'moge'}, {a: 'hoge', b: 'fuga'}] => {a: 'hoge', b: ['moge', 'fuga']}
-    protein_summary.flat_map(&:to_a).group_by(&:first).each_with_object({}) {|(k, vs), hash|
+    protein_summary = protein_summary.flat_map(&:to_a).group_by(&:first).each_with_object({}) {|(k, vs), hash|
       v = vs.map(&:last).uniq
       hash[k] = v.one? ? v.first : v
     }
+
+    # SPARQL 1.1 が使えるようになったら外す
+    # protein_summary[:parent_taxonomy_names].reverse!
+    protein_summary
+  end
+
+  def uniprot_url(gene_id)
+    query(:togogenome, <<-SPARQL).first[:up]
+      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX insdc: <http://rdf.insdc.org/>
+
+      SELECT ?up
+      WHERE {
+        ?s insdc:feature_locus_tag "#{gene_id}" .
+        ?s rdfs:seeAlso ?np .
+        ?np rdf:type insdc:Protein .
+        ?np rdfs:seeAlso ?up .
+      }
+    SPARQL
   end
 end

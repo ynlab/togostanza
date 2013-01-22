@@ -1,8 +1,10 @@
 class GeneralSummaryStanza < StanzaBase
-  property :title, 'General Summary'
+  property :title do |gene_id|
+    "General Summary : #{gene_id}"
+  end
 
   property :features do |gene_id|
-    query(:refseq, <<-SPARQL.strip_heredoc)
+    query(:togogenome, <<-SPARQL.strip_heredoc)
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX insdc: <http://rdf.insdc.org/>
       SELECT DISTINCT ?feature_product ?feature_gene ?feature_gene_synonym
