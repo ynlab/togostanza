@@ -18,8 +18,9 @@ module Stanza
     end
 
     RENDERER = Renderer.new(
+      hard_wrap:       true,
       safe_links_only: true,
-      hard_wrap:       true
+      with_toc_data:   true
     )
 
     INSTANCE = Redcarpet::Markdown.new(RENDERER,
