@@ -1,5 +1,13 @@
+GIT
+  remote: git://github.com/jamesotron/FlavourSaver.git
+  revision: 95e242deda9bef2a11fe6813d2c6b589acc2b2cb
+  specs:
+    flavour_saver (0.3.0)
+      rltk (~> 2.2.0)
+      tilt (~> 1.3.3)
+
 GEM
-  remote: https://rubygems.org/
+  remote: http://rubygems.org/
   specs:
     action_args (1.0.4)
     actionmailer (3.2.11)
@@ -56,9 +64,6 @@ GEM
     execjs (1.4.0)
       multi_json (~> 1.0)
     ffi (1.3.1)
-    flavour_saver (0.3.0)
-      rltk (~> 2.2.0)
-      tilt (~> 1.3.3)
     haml (3.1.7)
     haml-rails (0.3.5)
       actionpack (>= 3.1, < 4.1)
@@ -178,7 +183,7 @@ DEPENDENCIES
   bootstrap-sass
   capybara
   coffee-rails (~> 3.2.1)
-  flavour_saver
+  flavour_saver!
   haml-rails
   hashie
   jquery-rails

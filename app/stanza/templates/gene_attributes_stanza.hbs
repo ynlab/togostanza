@@ -4,6 +4,11 @@
   <head>
     <title>{{title}}</title>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap.min.css" />
+    <style>
+      td.aaseq {
+        word-break: break-all;
+      }
+    </style>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
     {{adjust_iframe_height_script}}
@@ -17,7 +22,7 @@
         <tbody>
           <tr><th>Description</th><td>{{description}}</td></tr>
           <tr><th>Gene Name</th><td>{{genename}}</td></tr>
-          <tr><th>Aaseq</th><td>{{aaseq}}</td></tr>
+          <tr><th>Aaseq</th><td class='aaseq'>{{aaseq}}</td></tr>
           <tr><th>Location</th><td>{{location}}</td></tr>
           <tr><th>Begin</th><td>{{begin}}</td></tr>
           <tr><th>End</th><td>{{end}}</td></tr>

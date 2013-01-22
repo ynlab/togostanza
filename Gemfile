@@ -1,9 +1,9 @@
-source 'https://rubygems.org'
+source :rubygems
 
 gem 'rails'
 
 gem 'action_args'
-gem 'flavour_saver'
+gem 'flavour_saver', github: 'jamesotron/FlavourSaver' # wait for 0.4.0 release
 gem 'haml-rails'
 gem 'hashie'
 gem 'jquery-rails'
