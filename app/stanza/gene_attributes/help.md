@@ -1,5 +1,5 @@
-Names and Origin
-================
+Gene Attributes
+===============
 
 TODO: Write a stanza description
 
@@ -10,3 +10,4 @@ TODO: Write a stanza description
 | Name     | Description                         |
 |----------|-------------------------------------|
 | *gene_id | TODO: Write a parameter description |
+| *tax_id  | TODO: Write a parameter description |

@@ -1,5 +1,5 @@
-Names and Origin
-================
+General Summary
+===============
 
 TODO: Write a stanza description
 

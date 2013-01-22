@@ -1,5 +1,5 @@
-Names and Origin
-================
+Protein Attributes
+==================
 
 TODO: Write a stanza description
 

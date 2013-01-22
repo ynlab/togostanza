@@ -1,5 +1,5 @@
-Names and Origin
-================
+Transcript Attributes
+=====================
 
 TODO: Write a stanza description
 

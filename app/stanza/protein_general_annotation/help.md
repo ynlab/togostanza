@@ -1,5 +1,5 @@
-Names and Origin
-================
+General Annotation
+==================
 
 TODO: Write a stanza description
 
