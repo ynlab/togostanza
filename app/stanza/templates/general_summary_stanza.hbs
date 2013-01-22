@@ -4,6 +4,11 @@
   <head>
     <title>{{title}}</title>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap.min.css" />
+    <style>
+      html, body {
+        margin: 0;
+      }
+    </style>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
     {{adjust_iframe_height_script}}
@@ -15,9 +20,25 @@
     {{#each features}}
       <table class='table table-bordered'>
         <tbody>
-          <tr><th>Feature Product</th><td>{{feature_product}}</td></tr>
-          <tr><th>Feature Gene</th><td>{{feature_gene}}</td></tr>
-          <tr><th>Feature Gene Synonym</th><td>{{feature_gene_synonym}}</td></tr>
+          <tr>
+            <th>Feature Product</th>
+            <td>{{feature_product}}</td>
+          </tr>
+
+          {{#if feature_gene}}
+            <tr>
+              <th>Feature Gene</th>
+              <td>{{feature_gene}}</td>
+            </tr>
+          {{/if}}
+
+          {{#if feature_gene_synonym}}
+            <tr>
+              <th>Feature Gene Synonym</th>
+              <td>{{feature_gene_synonym}}</td>
+              </td>
+            </tr>
+          {{/if}}
         </tbody>
       </table>
     {{/each}}
