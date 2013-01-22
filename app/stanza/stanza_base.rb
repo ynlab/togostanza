@@ -1,4 +1,5 @@
 require 'togo_stanza/sparql_client'
+require 'togo_stanza/markdown'
 
 class StanzaBase
   class_attribute :properties
@@ -33,11 +34,11 @@ class StanzaBase
   end
 
   def render
-    Tilt.new(template_path).render(Hashie::Mash.new(context))
+    Tilt.new(template_path.to_s).render(Hashie::Mash.new(context))
   end
 
-  def template_path
-    root.join('template.hbs').to_s
+  def render_help
+    TogoStanza::Markdown.render(help_path.read)
   end
 
   def context
@@ -53,6 +54,14 @@ class StanzaBase
   end
 
   private
+
+  def template_path
+    root.join('template.hbs')
+  end
+
+  def help_path
+    root.join('help.md')
+  end
 
   def fetch_property(val)
     return val unless val.respond_to?(:call)
