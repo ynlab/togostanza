@@ -70,3 +70,5 @@ module TogoStanza
 end
 
 require 'stanza'
+
+Stanza.load_all!

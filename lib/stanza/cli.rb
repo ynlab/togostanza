@@ -6,11 +6,7 @@ module Stanza
   class CLI < Thor
     desc 'list', ''
     def list
-      Dir[Rails.root.join('app/stanza/*.rb')].each do |f|
-        require f
-      end
-
-      ::Stanza::Base.descendants.map(&:id).sort.each do |id|
+      Stanza.all.map(&:id).sort.each do |id|
         say id
       end
     end
@@ -19,14 +15,14 @@ module Stanza
     def show_context(id, *param_strs)
       params = convert_params(param_strs)
 
-      puts JSON.pretty_generate(::Stanza::Base.find(id).new(params).context)
+      puts JSON.pretty_generate(Stanza.find(id).new(params).context)
     end
 
     desc 'render <stanza name> <param1=val1 param2=val2>', ''
     def render(id, *param_strs)
       params = convert_params(param_strs)
 
-      puts ::Stanza::Base.find(id).new(params).render
+      puts Stanza.find(id).new(params).render
     end
 
     desc 'open <stanza name> <param1=val1 param2=val2>', ''

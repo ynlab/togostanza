@@ -13,11 +13,7 @@ module Stanza
       end
 
       def root
-        Rails.root.join('app', 'stanza', id)
-      end
-
-      def find(id)
-        "#{id.camelize}Stanza".constantize
+        Stanza.root.join(id)
       end
     end
 
