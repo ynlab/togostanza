@@ -34,8 +34,6 @@ class ProteinAttributesStanza < StanzaBase
           ?protein up:sequence ?seq .
           ?seq rdf:value ?sequence .
         }
-        # need?
-        # FILTER regex (?protein, "uniprot")
 
         # Sequence status
         OPTIONAL {

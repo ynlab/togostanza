@@ -1,3 +1,5 @@
+# coding: utf-8
+
 class ProteinNamesAndOriginStanza < StanzaBase
   property :title do |gene_id|
     "Names and origin : #{gene_id}"
@@ -68,6 +70,7 @@ class ProteinNamesAndOriginStanza < StanzaBase
 
         # Taxonomic lineage
         OPTIONAL {
+          # SPARQL 1.1 が使えるようになったら外す
           # ?taxonomy_id rdfs:subClassOf* ?parent_taxonomy .
           ?taxonomy_id rdfs:subClassOf ?parent_taxonomy .
           ?parent_taxonomy up:scientificName ?parent_taxonomy_names .
@@ -81,8 +84,8 @@ class ProteinNamesAndOriginStanza < StanzaBase
       hash[k] = v.one? ? v.first : v
     }
 
-    # subClassOf* で順に子から親をたどって取得しているが、順番は逆が良い
-    #protein_summary[:parent_taxonomy_names] = protein_summary[:parent_taxonomy_names].reverse
+    # SPARQL 1.1 が使えるようになったら外す
+    # protein_summary[:parent_taxonomy_names].reverse!
     protein_summary
   end
 
