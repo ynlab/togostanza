@@ -1,4 +1,4 @@
-module TogoStanza
+module Stanza
   module Markdown
     class << self
       def render(source)

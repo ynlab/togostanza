@@ -2,9 +2,9 @@
 
 require 'spec_helper'
 
-describe StanzaBase do
+describe Stanza::Base do
   describe '.property' do
-    let(:klass) { Class.new(StanzaBase) }
+    let(:klass) { Class.new(Stanza::Base) }
 
     specify 'raise error when specify a value and block' do
       expect {
@@ -29,7 +29,7 @@ describe StanzaBase do
 
   describe '#context' do
     let :klass do
-      Class.new(StanzaBase) {
+      Class.new(Stanza::Base) {
         property :foo do
           'foo'
         end
@@ -50,13 +50,9 @@ describe StanzaBase do
 
     subject { klass.new(bar: 'bar').context }
 
-    it {
-      should == {
-        foo:    'foo',
-        bar:    'barbarbar',
-        baz:    {qux: 'quux'},
-        foobar: 'foobar'
-      }
-    }
+    its(:foo)    { should == 'foo' }
+    its(:bar)    { should == 'barbarbar' }
+    its(:baz)    { should == {'qux' => 'quux'} }
+    its(:foobar) { should == 'foobar' }
   end
 end

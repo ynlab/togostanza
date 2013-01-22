@@ -1,4 +1,4 @@
-class ProteinGeneralAnnotationStanza < StanzaBase
+class ProteinGeneralAnnotationStanza < Stanza::Base
   property :title do |gene_id|
     "General Annotation : #{gene_id}"
   end

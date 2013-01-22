@@ -1,4 +1,4 @@
-class GeneAttributesStanza < StanzaBase
+class GeneAttributesStanza < Stanza::Base
   property :title do |gene_id|
     "Gene Attributes : #{gene_id}"
   end
