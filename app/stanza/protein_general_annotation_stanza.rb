@@ -64,6 +64,11 @@ class ProteinGeneralAnnotationStanza < StanzaBase
 
     # [{name: 'xxx', message: 'aaa'}, {name: 'xxx', message: 'bbb'}, {name: 'yyy', message: 'ccc'}]
     # => [{name: 'xxx', messages: ['aaa', 'bbb']}, {name: 'yyy', messages: ['ccc']}]
-    annotations.group_by {|a| a[:name] }.map {|k, vs| {name: k, messages: vs.map {|v| v[:message] } } }.reverse
+    annotations.group_by {|a| a[:name] }.map {|k, vs|
+      {
+        name:     k,
+        messages: vs.map {|v| v[:message] }
+      }
+    }.reverse
   end
 end
