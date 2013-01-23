@@ -24,7 +24,6 @@ class ProteinAttributesStanza < StanzaBase
       PREFIX up: <http://purl.uniprot.org/core/>
 
       SELECT DISTINCT ?sequence ?fragment ?existence_label
-      FROM <http://purl.uniprot.org/uniprot/>
       WHERE {
         ?protein rdfs:seeAlso <#{uniprot_url}> .
         ?protein up:reviewed true .

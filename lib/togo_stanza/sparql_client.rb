@@ -1,7 +1,7 @@
 class TogoStanza::SPARQLClient
   MAPPINGS = {
     togogenome: 'http://lod.dbcls.jp/openrdf-sesame/repositories/togogenome',
-    uniprot:    'http://lod.dbcls.jp/fat8893/sparql'
+    uniprot:    'http://lod.dbcls.jp/openrdf-sesame5l/repositories/cyano'
   }
 
   def initialize(endpoint)

@@ -11,54 +11,20 @@
 
   <body>
     <h1>{{title}}</h1>
-
     <table class='table table-bordered'>
       <tbody>
-        {{#if function.comment}}
-          <tr><th>Function</th><td>{{function.comment}}</td></tr>
-        {{/if}}
-
-        {{#if catalytic_activity.comment}}
-          <tr><th>Catalytic activity</th><td>{{catalytic_activity.comment}}</td></tr>
-        {{/if}}
-
-        {{#if cofactor.comment}}
-          <tr><th>Cofactor</th><td>{{cofactor.comment}}</td></tr>
-        {{/if}}
-
-        {{#if subunit_structure.comment}}
-          <tr><th>Subunit structure</th><td>{{subunit_structure.comment}}</td></tr>
-        {{/if}}
-
-        {{#if subcellular_location}}
+        {{#each general_annotations}}
           <tr>
-            <th>Subcellular location</th>
+            <th>{{name}}</th>
             <td>
               <ul>
-                {{#each subcellular_location}}
-                  <li>{{alias}}</li>
+                {{#each messages}}
+                  <li>{{this}}</li>
                 {{/each}}
               </ul>
             </td>
           </tr>
-        {{/if}}
-
-        {{#if miscellaneous}}
-          <tr>
-            <th>Miscellaneous</th>
-            <td>
-              <ul>
-                {{#each miscellaneous}}
-                  <li>{{comment}}</li>
-                {{/each}}
-              </ul>
-            </td>
-          </tr>
-        {{/if}}
-
-        {{#if sequence_similarities.comment}}
-          <tr><th>Sequence similarities</th><td>{{sequence_similarities.comment}}</td></tr>
-        {{/if}}
+        {{/each}}
       </tbody>
     </table>
   </body>
