@@ -124,6 +124,7 @@ GEM
       addressable (>= 2.2)
     rdoc (3.12)
       json (~> 1.4)
+    redcarpet (2.2.2)
     rltk (2.2.1)
       ffi (>= 1.0.0)
     rspec-core (2.12.2)
@@ -192,6 +193,7 @@ DEPENDENCIES
   pg
   pry
   rails
+  redcarpet
   rspec-rails
   sass-rails (~> 3.2.3)
   sparql-client

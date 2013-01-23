@@ -68,3 +68,7 @@ module TogoStanza
     config.assets.version = '1.0'
   end
 end
+
+require 'stanza'
+
+Stanza.load_all!

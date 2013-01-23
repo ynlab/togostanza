@@ -1,50 +1,6 @@
 #!/usr/bin/env ruby
 
 require_relative '../config/environment'
-require 'thor'
-require 'launchy'
-require 'uri'
+require 'stanza/cli'
 
-module Script
-  class Stanza < Thor
-    desc 'show_context <stanza name> <param1=val1 param2=val2>', ''
-    def show_context(name, *param_strs)
-      params = convert_params(param_strs)
-
-      puts JSON.pretty_generate(StanzaBase.detect(name).new(params).context)
-    end
-
-    desc 'render <stanza name> <param1=val1 param2=val2>', ''
-    def render(name, *param_strs)
-      params = convert_params(param_strs)
-
-      puts StanzaBase.detect(name).new(params).render
-    end
-
-    desc 'open <stanza name> <param1=val1 param2=val2>', ''
-    def open(name, *param_strs)
-      query = {
-        stanza_params: convert_params(param_strs)
-      }.to_query
-
-      Launchy.open URI::HTTP.build(
-        host:  'localhost',
-        port:  3000,
-        path:  "/stanza/#{name}",
-        query: query
-      )
-    end
-
-    private
-
-    def convert_params(param_strs)
-      param_strs.each_with_object({}) {|str, hash|
-        k, v = str.split('=', 2)
-
-        hash[k] = v.to_s
-      }.with_indifferent_access
-    end
-  end
-end
-
-Script::Stanza.start
+Stanza::CLI.start

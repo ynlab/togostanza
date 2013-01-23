@@ -1,4 +1,4 @@
-class GeneralSummaryStanza < StanzaBase
+class GeneralSummaryStanza < Stanza::Base
   property :title do |gene_id|
     "General Summary : #{gene_id}"
   end

@@ -9,6 +9,7 @@ gem 'hashie'
 gem 'jquery-rails'
 gem 'parallel'
 gem 'pg'
+gem 'redcarpet'
 gem 'sparql-client'
 
 group :assets do

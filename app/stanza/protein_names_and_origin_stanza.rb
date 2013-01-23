@@ -1,6 +1,6 @@
 # coding: utf-8
 
-class ProteinNamesAndOriginStanza < StanzaBase
+class ProteinNamesAndOriginStanza < Stanza::Base
   property :title do |gene_id|
     "Names and origin : #{gene_id}"
   end
