@@ -62,10 +62,8 @@ class ProteinGeneralAnnotationStanza < StanzaBase
       }
     SPARQL
 
-    # [{name: 'xxx', message: 'aaa'}, {name: 'xxx', massage: 'bbb'}, {name: 'yyy', message: 'ccc'}]
+    # [{name: 'xxx', message: 'aaa'}, {name: 'xxx', message: 'bbb'}, {name: 'yyy', message: 'ccc'}]
     # => [{name: 'xxx', messages: ['aaa', 'bbb']}, {name: 'yyy', messages: ['ccc']}]
-    annotations.group_by {|a| a[:name]}.each_with_object([]) do |(k, vs), arr|
-      arr << {name: k, messages: vs.flat_map {|a| a[:message] } }
-    end.reverse
+    annotations.group_by {|a| a[:name] }.map {|k, vs| {name: k, messages: vs.map {|v| v[:message] } } }.reverse
   end
 end
