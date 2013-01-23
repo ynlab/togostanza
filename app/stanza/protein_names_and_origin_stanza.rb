@@ -13,7 +13,6 @@ class ProteinNamesAndOriginStanza < StanzaBase
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
       SELECT DISTINCT ?gene_name ?synonyms_name ?locus_name
-      FROM <http://purl.uniprot.org/uniprot/>
       WHERE {
         ?protein rdfs:seeAlso <#{uniprot_url}> .
         ?protein up:reviewed true .
@@ -41,7 +40,6 @@ class ProteinNamesAndOriginStanza < StanzaBase
       PREFIX up: <http://purl.uniprot.org/core/>
 
       SELECT DISTINCT ?recommended_name ?ec_name ?alternative_names ?organism_name ?taxonomy_id ?parent_taxonomy_names
-      FROM <http://purl.uniprot.org/uniprot/>
       WHERE {
         ?protein rdfs:seeAlso <#{uniprot_url}> .
         ?protein up:reviewed true .
