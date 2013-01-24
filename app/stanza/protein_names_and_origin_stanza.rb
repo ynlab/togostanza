@@ -68,9 +68,7 @@ class ProteinNamesAndOriginStanza < Stanza::Base
 
         # Taxonomic lineage
         OPTIONAL {
-          # SPARQL 1.1 が使えるようになったら外す
-          # ?taxonomy_id rdfs:subClassOf* ?parent_taxonomy .
-          ?taxonomy_id rdfs:subClassOf ?parent_taxonomy .
+          ?taxonomy_id rdfs:subClassOf* ?parent_taxonomy .
           ?parent_taxonomy up:scientificName ?parent_taxonomy_names .
         }
       }
@@ -82,8 +80,7 @@ class ProteinNamesAndOriginStanza < Stanza::Base
       hash[k] = v.one? ? v.first : v
     }
 
-    # SPARQL 1.1 が使えるようになったら外す
-    # protein_summary[:parent_taxonomy_names].reverse!
+    protein_summary[:parent_taxonomy_names].reverse!
     protein_summary
   end
 

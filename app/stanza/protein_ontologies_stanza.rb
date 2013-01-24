@@ -1,6 +1,6 @@
 # coding: utf-8
 
-class ProteinOntologiesStanza < StanzaBase
+class ProteinOntologiesStanza < Stanza::Base
   property :title do |gene_id|
     "Protein Ontologies : #{gene_id}"
   end

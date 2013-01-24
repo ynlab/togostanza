@@ -65,7 +65,9 @@
             <th>Taxonomic Lineage</th>
             <td>
               <ul>
-                <li>{{summary.parent_taxonomy_names}}</li>
+                {{#each summary.parent_taxonomy_names}}
+                  <li>{{this}}</li>
+                {{/each}}
               </ul>
             </td>
           </tr>
