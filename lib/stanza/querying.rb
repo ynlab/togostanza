@@ -1,8 +1,8 @@
 module Stanza
   module Querying
     MAPPINGS = {
-      togogenome: 'http://lod.dbcls.jp/openrdf-sesame/repositories/togogenome',
-      uniprot:    'http://lod.dbcls.jp/fat8893/sparql'
+      togogenome: 'http://lod.dbcls.jp/openrdf-sesame5l/repositories/togogenome',
+      uniprot:    'http://lod.dbcls.jp/openrdf-sesame5l/repositories/cyano'
     }
 
     def query(endpoint, sparql)
