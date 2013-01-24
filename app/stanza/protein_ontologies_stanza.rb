@@ -35,7 +35,7 @@ class ProteinOntologiesStanza < Stanza::Base
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX up: <http://purl.uniprot.org/core/>
 
-      SELECT DISTINCT ?concept ?name ?comment ?root
+      SELECT DISTINCT ?concept
       WHERE {
         ?protein rdfs:seeAlso <#{uniprot_url}> .
         ?protein up:reviewed true .
