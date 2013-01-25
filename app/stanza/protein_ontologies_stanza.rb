@@ -5,6 +5,54 @@ class ProteinOntologiesStanza < Stanza::Base
     "Protein Ontologies : #{gene_id}"
   end
 
+  property :keywords do |gene_id|
+    uniprot_url = query(:togogenome, <<-SPARQL).first[:up]
+      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX insdc: <http://rdf.insdc.org/>
+
+      SELECT ?up
+      WHERE {
+        ?s insdc:feature_locus_tag "#{gene_id}" .
+        ?s rdfs:seeAlso ?np .
+        ?np rdf:type insdc:Protein .
+        ?np rdfs:seeAlso ?up .
+      }
+    SPARQL
+
+    keywords = query(:uniprot, <<-SPARQL)
+      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX up: <http://purl.uniprot.org/core/>
+
+      SELECT DISTINCT ?root_name ?concept ?name
+      WHERE {
+        ?protein rdfs:seeAlso <#{uniprot_url}> .
+        ?protein up:reviewed true .
+
+        ?protein ?p ?concept .
+        ?concept rdf:type up:Concept .
+        FILTER regex(str(?concept), 'keywords') .
+
+        ?concept rdfs:label ?name .
+        ?concept rdfs:subClassOf* ?parents .
+        ?parents rdfs:label ?root_name .
+        FILTER (str(?root_name) IN ('Biological process', 'Cellular component', 'Domain', 'Ligand', 'Molecular function', 'Technical term')) .
+      }
+      ORDER BY ?root_name ?concept ?name
+    SPARQL
+
+
+    # [{root_name: "hoge", concept: "x", name: "Hi"}, {root_name: "hoge", concept: "y", name: "Hello"}, {root_name: "moge", concept: "a", name: "How are you"}, {root_name: "moge", concept: "b", name: "I'm fine"}, {root_name: "moge", concept: "b", name: "Tank you."}]
+    # => {hoge=>["Hi", "Hello"], :moge=>["How are you", "I'm fine, Tank you."]}
+    keywords.group_by {|keyword| keyword[:root_name].gsub(/ /, '_').underscore.to_sym }.each_with_object({}) {|(k, vs), hash|
+      hash[k] = vs.group_by {|keyword| keyword[:concept]}.map {|k, vs|
+        vs.map {|h| h[:name] }.join(', ')
+      }
+    }
+  end
+
+
   property :gene_ontlogies do |gene_id|
 
     # slr1311 の時...

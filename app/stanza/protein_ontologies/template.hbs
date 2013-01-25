@@ -11,10 +11,95 @@
 
   <body>
     <h1>{{title}}</h1>
+    {{#if keywords}}
+      <h2>Keywords</h2>
+      <table class='table table-bordered'>
+        <tbody>
+          {{#if keywords.biological_process}}
+            <tr>
+              <th>Biological process</th>
+              <td>
+                <ul>
+                  {{#each keywords.biological_process}}
+                    <li>{{this}}</li>
+                  {{/each}}
+                </ul>
+              </td>
+            </tr>
+          {{/if}}
 
-    <table class='table table-bordered'>
-      <tbody>
-        {{#if gene_ontlogies}}
+          {{#if keywords.cellular_component}}
+            <tr>
+              <th>Cellular component</th>
+              <td>
+                <ul>
+                  {{#each keywords.cellular_component}}
+                    <li>{{this}}</li>
+                  {{/each}}
+                </ul>
+              </td>
+            </tr>
+          {{/if}}
+
+          {{#if keywords.domain}}
+            <tr>
+              <th>Domain</th>
+              <td>
+                <ul>
+                  {{#each keywords.domain}}
+                    <li>{{this}}</li>
+                  {{/each}}
+                </ul>
+              </td>
+            </tr>
+          {{/if}}
+
+          {{#if keywords.ligand}}
+            <tr>
+              <th>Ligand</th>
+              <td>
+                <ul>
+                  {{#each keywords.ligand}}
+                    <li>{{this}}</li>
+                  {{/each}}
+                </ul>
+              </td>
+            </tr>
+          {{/if}}
+
+          {{#if keywords.molecular_function}}
+            <tr>
+              <th>Molecular function</th>
+              <td>
+                <ul>
+                  {{#each keywords.molecular_function}}
+                    <li>{{this}}</li>
+                  {{/each}}
+                </ul>
+              </td>
+            </tr>
+          {{/if}}
+
+          {{#if keywords.technical_term}}
+            <tr>
+              <th>Technical term</th>
+              <td>
+                <ul>
+                  {{#each keywords.technical_term}}
+                    <li>{{this}}</li>
+                  {{/each}}
+                </ul>
+              </td>
+            </tr>
+          {{/if}}
+        </tbody>
+      </table>
+    {{/if}}
+
+    {{#if gene_ontlogies}}
+      <h2>Gene Ontologies</h2>
+      <table class='table table-bordered'>
+        <tbody>
           {{#if gene_ontlogies.biological_process}}
             <tr>
               <th>Biological process</th>
@@ -53,9 +138,9 @@
               </td>
             </tr>
           {{/if}}
-        {{/if}}
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    {{/if}}
   </body>
 </html>
 
