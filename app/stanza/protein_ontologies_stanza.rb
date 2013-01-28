@@ -109,6 +109,6 @@ class ProteinOntologiesStanza < Stanza::Base
       }
     SPARQL
 
-    gene_ontlogies.group_by {|go| go[:root_name].to_sym }
+    gene_ontlogies.group_by {|go| go[:root_name] }
   end
 end
