@@ -6,20 +6,6 @@ class ProteinGeneralAnnotationStanza < Stanza::Base
   end
 
   property :general_annotations do |gene_id|
-    uniprot_url = query(:togogenome, <<-SPARQL).first[:up]
-      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      PREFIX insdc: <http://rdf.insdc.org/>
-
-      SELECT ?up
-      WHERE {
-        ?s insdc:feature_locus_tag "#{gene_id}" .
-        ?s rdfs:seeAlso ?np .
-        ?np rdf:type insdc:Protein .
-        ?np rdfs:seeAlso ?up .
-      }
-    SPARQL
-
     annotations = query(:uniprot, <<-SPARQL)
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -27,7 +13,7 @@ class ProteinGeneralAnnotationStanza < Stanza::Base
 
       SELECT DISTINCT ?name ?message
       WHERE {
-        ?protein rdfs:seeAlso <#{uniprot_url}> .
+        ?protein rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
         ?protein up:reviewed true .
         ?protein up:annotation ?annotation .
 

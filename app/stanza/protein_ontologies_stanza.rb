@@ -6,20 +6,6 @@ class ProteinOntologiesStanza < Stanza::Base
   end
 
   property :keywords do |gene_id|
-    uniprot_url = query(:togogenome, <<-SPARQL).first[:up]
-      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      PREFIX insdc: <http://rdf.insdc.org/>
-
-      SELECT ?up
-      WHERE {
-        ?s insdc:feature_locus_tag "#{gene_id}" .
-        ?s rdfs:seeAlso ?np .
-        ?np rdf:type insdc:Protein .
-        ?np rdfs:seeAlso ?up .
-      }
-    SPARQL
-
     keywords = query(:uniprot, <<-SPARQL)
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -27,7 +13,7 @@ class ProteinOntologiesStanza < Stanza::Base
 
       SELECT DISTINCT ?root_name ?concept ?name
       WHERE {
-        ?protein rdfs:seeAlso <#{uniprot_url}> .
+        ?protein rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
         ?protein up:reviewed true .
 
         ?protein ?p ?concept .
@@ -42,7 +28,6 @@ class ProteinOntologiesStanza < Stanza::Base
       ORDER BY ?root_name ?concept ?name
     SPARQL
 
-
     # [{root_name: "hoge", concept: "x", name: "Hi"}, {root_name: "hoge", concept: "y", name: "Hello"}, {root_name: "moge", concept: "a", name: "How are you"}, {root_name: "moge", concept: "b", name: "I'm fine"}, {root_name: "moge", concept: "b", name: "Tank you."}]
     # => {hoge=>["Hi", "Hello"], :moge=>["How are you", "I'm fine, Tank you."]}
     keywords.group_by {|keyword| keyword[:root_name].gsub(/ /, '_').underscore.to_sym }.each_with_object({}) {|(k, vs), hash|
@@ -52,29 +37,11 @@ class ProteinOntologiesStanza < Stanza::Base
     }
   end
 
-
   property :gene_ontlogies do |gene_id|
 
     # slr1311 の時...
 
-    # refseq の UniProt
-    ## "http://purl.uniprot.org/refseq/NP_439906.1"
-    uniprot_url = query(:togogenome, <<-SPARQL).first[:up]
-      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      PREFIX insdc: <http://rdf.insdc.org/>
-
-      SELECT ?up
-      WHERE {
-        ?s insdc:feature_locus_tag "#{gene_id}" .
-        ?s rdfs:seeAlso ?np .
-        ?np rdf:type insdc:Protein .
-        ?np rdfs:seeAlso ?up .
-      }
-    SPARQL
-
     # UniProt の go の URI と UniProt のエントリの関係
-
     ## [{:concept=>"http://purl.uniprot.org/go/0009635"},
     ##  {:concept=>"http://purl.uniprot.org/go/0009772"},
     ##  ... ]
@@ -85,7 +52,7 @@ class ProteinOntologiesStanza < Stanza::Base
 
       SELECT DISTINCT ?concept
       WHERE {
-        ?protein rdfs:seeAlso <#{uniprot_url}> .
+        ?protein rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
         ?protein up:reviewed true .
 
         ?protein ?p ?concept .
@@ -95,7 +62,6 @@ class ProteinOntologiesStanza < Stanza::Base
     SPARQL
 
     # OBO の go の URI と UniProt の go の URI の関係
-
     ## "{ BIND(<http://purl.uniprot.org/go/0009635> as ?up_go_uri) }
     ##  UNION { BIND(<http://purl.uniprot.org/go/0009772> as ?up_go_uri) }
     ##  ... "
@@ -116,7 +82,6 @@ class ProteinOntologiesStanza < Stanza::Base
     SPARQL
 
     # OBO の go の階層とラベル
-
     ## "{ BIND(<http://purl.obolibrary.org/obo/GO_0009635> as ?obo_go_uri) }
     ##  UNION { BIND(<http://purl.obolibrary.org/obo/GO_0009772> as ?obo_go_uri) }
     ##  ... "

@@ -4,20 +4,6 @@ class ProteinAttributesStanza < Stanza::Base
   end
 
   property :attributes do |gene_id|
-    uniprot_url = query(:togogenome, <<-SPARQL).first[:up]
-      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      PREFIX insdc: <http://rdf.insdc.org/>
-
-      SELECT ?up
-      WHERE {
-        ?s insdc:feature_locus_tag "#{gene_id}" .
-        ?s rdfs:seeAlso ?np .
-        ?np rdf:type insdc:Protein .
-        ?np rdfs:seeAlso ?up .
-      }
-    SPARQL
-
     protein_attributes = query(:uniprot, <<-SPARQL)
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -25,7 +11,7 @@ class ProteinAttributesStanza < Stanza::Base
 
       SELECT DISTINCT ?sequence ?fragment ?existence_label
       WHERE {
-        ?protein rdfs:seeAlso <#{uniprot_url}> .
+        ?protein rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
         ?protein up:reviewed true .
 
         # Sequence length
