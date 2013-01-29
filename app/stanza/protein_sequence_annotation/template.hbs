@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    {{adjust_iframe_height_script}}
+  </head>
+
+  <body>
+    {{#if sequence_annotations}}
+      <h1>{{title}}</h1>
+      {{#each sequence_annotations}}
+        <table class='table table-bordered'>
+          <caption>{{this.first.parent_label}}</caption>
+          <thead>
+            <tr>
+              <th>Feature key</th>
+              <th>Position(s)</th>
+              <th>Length</th>
+              <th>Description</th>
+              <th>Feature identifier</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each this}}
+              <tr>
+                <td>{{label}}</td>
+                <td>{{position}}</td>
+                <td>{{location_length}}</td>
+                <td>{{comment}}</td>
+                <td>{{feature_identifier}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{/each}}
+    {{/if}}
+  </body>
+</html>
+
