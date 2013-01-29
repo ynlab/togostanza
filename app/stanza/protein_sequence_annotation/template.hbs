@@ -12,23 +12,21 @@
   <body>
     {{#if sequence_annotations}}
       <h1>{{title}}</h1>
-      <table class='table table-bordered'>
-        <thead>
-          <tr>
-            <th></th>
-            <th>Feature key</th>
-            <th>Position(s)</th>
-            <th>Length</th>
-            <th>Description</th>
-            <th>Feature identifier</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each sequence_annotations}}
-            <tr><th colspan='6'>{{this.first.parent_label}}</th></tr>
+      {{#each sequence_annotations}}
+        <table class='table table-bordered'>
+          <caption>{{this.first.parent_label}}</caption>
+          <thead>
+            <tr>
+              <th>Feature key</th>
+              <th>Position(s)</th>
+              <th>Length</th>
+              <th>Description</th>
+              <th>Feature identifier</th>
+            </tr>
+          </thead>
+          <tbody>
             {{#each this}}
               <tr>
-                <td></td>
                 <td>{{label}}</td>
                 <td>{{position}}</td>
                 <td>{{location_length}}</td>
@@ -36,9 +34,9 @@
                 <td>{{feature_identifier}}</td>
               </tr>
             {{/each}}
-          {{/each}}
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      {{/each}}
     {{/if}}
   </body>
 </html>
