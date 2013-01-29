@@ -11,7 +11,7 @@ class ProteinOntologiesStanza < Stanza::Base
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX up: <http://purl.uniprot.org/core/>
 
-      SELECT DISTINCT ?root_name ?concept ?name
+      SELECT DISTINCT ?root_name ?concept (GROUP_CONCAT(DISTINCT ?name; SEPARATOR=", ") AS ?names)
       WHERE {
         ?protein rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
         ?protein up:reviewed true .
@@ -25,15 +25,12 @@ class ProteinOntologiesStanza < Stanza::Base
         ?parents rdfs:label ?root_name .
         FILTER (str(?root_name) IN ('Biological process', 'Cellular component', 'Domain', 'Ligand', 'Molecular function', 'Technical term')) .
       }
+      GROUP BY ?root_name ?concept
       ORDER BY ?root_name ?concept ?name
     SPARQL
 
-    # [{root_name: "hoge", concept: "x", name: "Hi"}, {root_name: "hoge", concept: "y", name: "Hello"}, {root_name: "moge", concept: "a", name: "How are you"}, {root_name: "moge", concept: "b", name: "I'm fine"}, {root_name: "moge", concept: "b", name: "Tank you."}]
-    # => {hoge=>["Hi", "Hello"], :moge=>["How are you", "I'm fine, Tank you."]}
-    keywords.group_by {|keyword| keyword[:root_name].gsub(/ /, '_').underscore.to_sym }.each_with_object({}) {|(k, vs), hash|
-      hash[k] = vs.group_by {|keyword| keyword[:concept]}.map {|k, vs|
-        vs.map {|h| h[:name] }.join(', ')
-      }
+    keywords.group_by {|keyword|
+      keyword[:root_name].gsub(/ /, '_').underscore
     }
   end
 
