@@ -24,9 +24,9 @@
           </tr>
         </thead>
         <tbody>
-          {{#if sequence_annotations.molecule_processing}}
-            <tr><th colspan='6'>Molecule processing</th></tr>
-            {{#each sequence_annotations.molecule_processing}}
+          {{#each sequence_annotations}}
+            <tr><th colspan='6'>{{this.first.parent_label}}</th></tr>
+            {{#each this}}
               <tr>
                 <td></td>
                 <td>{{label}}</td>
@@ -36,49 +36,7 @@
                 <td>{{feature_identifier}}</td>
               </tr>
             {{/each}}
-          {{/if}}
-
-          {{#if sequence_annotations.region}}
-            <tr><th colspan='6'>Regions</th></tr>
-            {{#each sequence_annotations.region}}
-              <tr>
-                <td></td>
-                <td>{{label}}</td>
-                <td>{{position}}</td>
-                <td>{{location_length}}</td>
-                <td>{{comment}}</td>
-                <td>{{feature_identifier}}</td>
-              </tr>
-            {{/each}}
-          {{/if}}
-
-          {{#if sequence_annotations.site}}
-            <tr><th colspan='6'>Sites</th></tr>
-            {{#each sequence_annotations.site}}
-              <tr>
-                <td></td>
-                <td>{{label}}</td>
-                <td>{{position}}</td>
-                <td>{{location_length}}</td>
-                <td>{{comment}}</td>
-                <td>{{feature_identifier}}</td>
-              </tr>
-            {{/each}}
-          {{/if}}
-
-          {{#if sequence_annotations.experimental_information}}
-            <tr><th colspan='6'>Experimental info</th></tr>
-            {{#each sequence_annotations.experimental_information}}
-              <tr>
-                <td></td>
-                <td>{{label}}</td>
-                <td>{{position}}</td>
-                <td>{{location_length}}</td>
-                <td>{{comment}}</td>
-                <td>{{feature_identifier}}</td>
-              </tr>
-            {{/each}}
-          {{/if}}
+          {{/each}}
         </tbody>
       </table>
     {{/if}}

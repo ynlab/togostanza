@@ -42,8 +42,8 @@ class ProteinSequenceAnnotationStanza < Stanza::Base
         feature_identifier: (hash[:annotation] if hash[:annotation].include?('http://purl.uniprot.org/annotation/'))
       )
     }.group_by {|hash|
-      hash[:parent_label].gsub(/ /, '_').underscore
-    }
+      hash[:parent_label]
+    }.values
   end
 
   private
