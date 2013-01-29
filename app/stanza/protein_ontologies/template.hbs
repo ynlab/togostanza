@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Protein Ontologies</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    {{adjust_iframe_height_script}}
+  </head>
+
+  <body>
+    <h1>{{title}}</h1>
+    {{#if keywords}}
+      <h2>Keywords</h2>
+      <table class='table table-bordered'>
+        <tbody>
+          {{#if keywords.biological_process}}
+            <tr>
+              <th>Biological process</th>
+              <td>
+                <ul>
+                  {{#each keywords.biological_process}}
+                    <li>{{names}}</li>
+                  {{/each}}
+                </ul>
+              </td>
+            </tr>
+          {{/if}}
+
+          {{#if keywords.cellular_component}}
+            <tr>
+              <th>Cellular component</th>
+              <td>
+                <ul>
+                  {{#each keywords.cellular_component}}
+                    <li>{{names}}</li>
+                  {{/each}}
+                </ul>
+              </td>
+            </tr>
+          {{/if}}
+
+          {{#if keywords.domain}}
+            <tr>
+              <th>Domain</th>
+              <td>
+                <ul>
+                  {{#each keywords.domain}}
+                    <li>{{names}}</li>
+                  {{/each}}
+                </ul>
+              </td>
+            </tr>
+          {{/if}}
+
+          {{#if keywords.ligand}}
+            <tr>
+              <th>Ligand</th>
+              <td>
+                <ul>
+                  {{#each keywords.ligand}}
+                    <li>{{names}}</li>
+                  {{/each}}
+                </ul>
+              </td>
+            </tr>
+          {{/if}}
+
+          {{#if keywords.molecular_function}}
+            <tr>
+              <th>Molecular function</th>
+              <td>
+                <ul>
+                  {{#each keywords.molecular_function}}
+                    <li>{{names}}</li>
+                  {{/each}}
+                </ul>
+              </td>
+            </tr>
+          {{/if}}
+
+          {{#if keywords.technical_term}}
+            <tr>
+              <th>Technical term</th>
+              <td>
+                <ul>
+                  {{#each keywords.technical_term}}
+                    <li>{{names}}</li>
+                  {{/each}}
+                </ul>
+              </td>
+            </tr>
+          {{/if}}
+        </tbody>
+      </table>
+    {{/if}}
+
+    {{#if gene_ontlogies}}
+      <h2>Gene Ontologies</h2>
+      <table class='table table-bordered'>
+        <tbody>
+          {{#if gene_ontlogies.biological_process}}
+            <tr>
+              <th>Biological process</th>
+              <td>
+                {{#each gene_ontlogies.biological_process}}
+                  <ul>
+                    <li>{{this.name}}</li>
+                  </ul>
+                {{/each}}
+              </td>
+            </tr>
+          {{/if}}
+
+          {{#if gene_ontlogies.cellular_component}}
+            <tr>
+              <th>Cellular component</th>
+              <td>
+                {{#each gene_ontlogies.cellular_component}}
+                  <ul>
+                    <li>{{this.name}}</li>
+                  </ul>
+                {{/each}}
+              </td>
+            </tr>
+          {{/if}}
+
+          {{#if gene_ontlogies.molecular_function}}
+            <tr>
+              <th>Molecular function</th>
+              <td>
+                {{#each gene_ontlogies.molecular_function}}
+                  <ul>
+                    <li>{{this.name}}</li>
+                  </ul>
+                {{/each}}
+              </td>
+            </tr>
+          {{/if}}
+        </tbody>
+      </table>
+    {{/if}}
+  </body>
+</html>
+

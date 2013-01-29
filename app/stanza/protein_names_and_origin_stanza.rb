@@ -6,15 +6,13 @@ class ProteinNamesAndOriginStanza < Stanza::Base
   end
 
   property :genes do |gene_id|
-    uniprot_url = uniprot_url(gene_id)
-
     query(:uniprot, <<-SPARQL)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
       SELECT DISTINCT ?gene_name ?synonyms_name ?locus_name
       WHERE {
-        ?protein rdfs:seeAlso <#{uniprot_url}> .
+        ?protein rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
         ?protein up:reviewed true .
 
         # Gene names
@@ -33,15 +31,13 @@ class ProteinNamesAndOriginStanza < Stanza::Base
   end
 
   property :summary do |gene_id|
-    uniprot_url = uniprot_url(gene_id)
-
     protein_summary = query(:uniprot, <<-SPARQL)
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX up: <http://purl.uniprot.org/core/>
 
       SELECT DISTINCT ?recommended_name ?ec_name ?alternative_names ?organism_name ?taxonomy_id ?parent_taxonomy_names
       WHERE {
-        ?protein rdfs:seeAlso <#{uniprot_url}> .
+        ?protein rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
         ?protein up:reviewed true .
 
         # Protein names
@@ -68,9 +64,7 @@ class ProteinNamesAndOriginStanza < Stanza::Base
 
         # Taxonomic lineage
         OPTIONAL {
-          # SPARQL 1.1 が使えるようになったら外す
-          # ?taxonomy_id rdfs:subClassOf* ?parent_taxonomy .
-          ?taxonomy_id rdfs:subClassOf ?parent_taxonomy .
+          ?taxonomy_id rdfs:subClassOf* ?parent_taxonomy .
           ?parent_taxonomy up:scientificName ?parent_taxonomy_names .
         }
       }
@@ -82,24 +76,7 @@ class ProteinNamesAndOriginStanza < Stanza::Base
       hash[k] = v.one? ? v.first : v
     }
 
-    # SPARQL 1.1 が使えるようになったら外す
-    # protein_summary[:parent_taxonomy_names].reverse!
+    protein_summary[:parent_taxonomy_names].reverse!
     protein_summary
-  end
-
-  def uniprot_url(gene_id)
-    query(:togogenome, <<-SPARQL).first[:up]
-      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      PREFIX insdc: <http://rdf.insdc.org/>
-
-      SELECT ?up
-      WHERE {
-        ?s insdc:feature_locus_tag "#{gene_id}" .
-        ?s rdfs:seeAlso ?np .
-        ?np rdf:type insdc:Protein .
-        ?np rdfs:seeAlso ?up .
-      }
-    SPARQL
   end
 end
