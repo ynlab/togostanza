@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Protein Cross References</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    {{adjust_iframe_height_script}}
+  </head>
+
+  <body>
+    <h1>{{title}}</h1>
+
+    <table class='table table-bordered'>
+      <tbody>
+        {{#each references}}
+          <tr><th colspan='2'>{{this.first.first.category}}</th></tr>
+          {{#each this}}
+            <tr>
+              <td>{{this.first.abbreviation}}</td>
+              <td>
+                <ul>
+                  {{#each this}}
+                    <li><a href="{{link}}">{{ref_id}}</a></li>
+                  {{/each}}
+                </ul>
+              </td>
+            </tr>
+          {{/each}}
+        {{/each}}
+      </tbody>
+    </table>
+  </body>
+</html>
+
