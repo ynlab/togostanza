@@ -24,7 +24,7 @@
           </thead>
           <tbody>
             <tr>
-              <td>{{protein}}</td>
+              <td>{{up_id}}</td>
               <td>{{sequence_length}}</td>
               <td>{{mass}}</td>
             </tr>
@@ -33,10 +33,10 @@
         <div>
           Last modified: {{modified}}, Version {{version}} <br />
           Checksum: {{checksum}}
+          <pre>
+            {{value}}
+          </pre>
         </div>
-        <pre>
-          {{value}}
-        </pre>
       {{/each}}
     {{/if}}
   </body>
