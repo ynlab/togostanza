@@ -18,9 +18,11 @@
           {{#each references}}
             <tr>
               <td>
-                <b>{{title}}</b><br />
-                {{authors}}<br />
-                {{name}} {{volume}} {{pages}} ({{date}}) {{same}}
+                <dl>
+                  <dt>{{title}}</dt>
+                  <dd>{{authors}}</dd>
+                  <dd>{{name}} {{volume}} {{pages}} ({{date}}) {{same}}</dd>
+                </dl>
               </td>
             </tr>
           {{/each}}
