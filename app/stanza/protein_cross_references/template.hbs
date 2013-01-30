@@ -11,26 +11,27 @@
 
   <body>
     <h1>{{title}}</h1>
-
-    <table class='table table-bordered'>
-      <tbody>
-        {{#each references}}
-          <tr><th colspan='2'>{{this.first.first.category}}</th></tr>
-          {{#each this}}
-            <tr>
-              <td>{{this.first.abbreviation}}</td>
-              <td>
-                <ul>
-                  {{#each this}}
-                    <li><a href="{{link}}">{{ref_id}}</a></li>
-                  {{/each}}
-                </ul>
-              </td>
-            </tr>
-          {{/each}}
-        {{/each}}
-      </tbody>
-    </table>
+    {{#if references}}
+      {{#each references}}
+        <table class='table table-bordered'>
+          <caption>{{this.first.first.category}}</caption>
+          <tbody>
+            {{#each this}}
+              <tr>
+                <th>{{this.first.abbreviation}}</th>
+                <td>
+                  <ul>
+                    {{#each this}}
+                      <li><a href="{{url}}">{{ref_id}}</a></li>
+                    {{/each}}
+                  </ul>
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{/each}}
+    {{/if}}
   </body>
 </html>
 
