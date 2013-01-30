@@ -2,7 +2,7 @@
 
 class ProteinOntologiesStanza < Stanza::Base
   property :title do |gene_id|
-    "Protein Ontologies : #{gene_id}"
+    "Ontologies : #{gene_id}"
   end
 
   property :keywords do |gene_id|

@@ -12,8 +12,8 @@
   <body>
     <h1>{{title}}</h1>
     {{#if keywords}}
-      <h2>Keywords</h2>
       <table class='table table-bordered'>
+        <caption>Keywords</caption>
         <tbody>
           {{#if keywords.biological_process}}
             <tr>
@@ -97,8 +97,8 @@
     {{/if}}
 
     {{#if gene_ontlogies}}
-      <h2>Gene Ontologies</h2>
       <table class='table table-bordered'>
+        <caption>Gene Ontologies</caption>
         <tbody>
           {{#if gene_ontlogies.biological_process}}
             <tr>
