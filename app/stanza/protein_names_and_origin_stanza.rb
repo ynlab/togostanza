@@ -16,17 +16,19 @@ class ProteinNamesAndOriginStanza < Stanza::Base
         ?protein up:reviewed true .
 
         # Gene names
+        ?protein up:encodedBy ?gene .
+
         ## Name:
-        OPTIONAL { ?protein up:encodedBy/skos:prefLabel ?gene_name . }
+        OPTIONAL { ?gene skos:prefLabel ?gene_name . }
 
         ## Synonyms:
-        OPTIONAL { ?protein up:encodedBy/skos:altLabel ?synonyms_name . }
+        OPTIONAL { ?gene skos:altLabel ?synonyms_name . }
 
         ## Ordered Locus Names:
-        OPTIONAL { ?protein up:encodedBy/up:locusName ?locus_name . }
+        OPTIONAL { ?gene up:locusName ?locus_name . }
 
         ## ORF Names:
-        OPTIONAL { ?protein up:encodedBy/up:orfName ?orf_name . }
+        OPTIONAL { ?gene up:orfName ?orf_name . }
       }
     SPARQL
   end
