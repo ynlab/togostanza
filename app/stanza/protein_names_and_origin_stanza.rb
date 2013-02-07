@@ -10,22 +10,23 @@ class ProteinNamesAndOriginStanza < Stanza::Base
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-      SELECT DISTINCT ?gene_name ?synonyms_name ?locus_name
+      SELECT DISTINCT ?gene_name ?synonyms_name ?locus_name ?orf_name
       WHERE {
         ?protein rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
         ?protein up:reviewed true .
 
         # Gene names
-        ?protein up:encodedBy ?encoded_by .
-
         ## Name:
-        OPTIONAL { ?encoded_by skos:prefLabel ?gene_name . }
+        OPTIONAL { ?protein up:encodedBy/skos:prefLabel ?gene_name . }
 
         ## Synonyms:
-        OPTIONAL { ?encoded_by skos:altLabel ?synonyms_name . }
+        OPTIONAL { ?protein up:encodedBy/skos:altLabel ?synonyms_name . }
 
         ## Ordered Locus Names:
-        OPTIONAL { ?encoded_by up:locusName ?locus_name . }
+        OPTIONAL { ?protein up:encodedBy/up:locusName ?locus_name . }
+
+        ## ORF Names:
+        OPTIONAL { ?protein up:encodedBy/up:orfName ?orf_name . }
       }
     SPARQL
   end
