@@ -1,18 +1,17 @@
 class ProteinEntryInformationStanza < Stanza::Base
-  property :title do |gene_id|
-    "Entry information : #{gene_id}"
+  property :title do |tax_id, gene_id|
+    "Entry information #{tax_id}:#{gene_id}"
   end
 
-  property :information do |gene_id|
+  property :information do |tax_id, gene_id|
     informations = query(:uniprot, <<-SPARQL).first
-      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX up: <http://purl.uniprot.org/core/>
+      PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
       SELECT DISTINCT ?protein ?entry_name ?created ?modified ?sequence_modified ?version ?sequence_version ?reviewed ?status
       WHERE {
-        ?protein rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
-        ?protein up:reviewed true .
+        ?protein up:organism  taxonomy:#{tax_id} ;
+                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
 
         ?protein up:mnemonic ?entry_name ;
                  up:created  ?created ;

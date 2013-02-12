@@ -1,16 +1,17 @@
 class ProteinCrossReferencesStanza < Stanza::Base
-  property :title do |gene_id|
-    "Cross-references : #{gene_id}"
+  property :title do |tax_id, gene_id|
+    "Cross-references #{tax_id}:#{gene_id}"
   end
 
-  property :references do |gene_id|
+  property :references do |tax_id, gene_id|
     references = query(:uniprot, <<-SPARQL)
       PREFIX up: <http://purl.uniprot.org/core/>
+      PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
       SELECT DISTINCT ?protein ?category ?abbr ?ref ?url_template
       WHERE {
-        ?protein  rdfs:seeAlso    <#{uniprot_url_from_togogenome(gene_id)}> ;
-                  up:reviewed     true .
+        ?protein up:organism  taxonomy:#{tax_id} ;
+                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
 
         ?protein  rdfs:seeAlso    ?ref .
         ?ref      up:database     ?database .

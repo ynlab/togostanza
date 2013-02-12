@@ -1,21 +1,20 @@
 # coding: utf-8
 
 class ProteinGeneralAnnotationStanza < Stanza::Base
-  property :title do |gene_id|
-    "General Annotation : #{gene_id}"
+  property :title do |tax_id, gene_id|
+    "General Annotation #{tax_id}:#{gene_id}"
   end
 
-  property :general_annotations do |gene_id|
+  property :general_annotations do |tax_id, gene_id|
     annotations = query(:uniprot, <<-SPARQL)
-      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX up: <http://purl.uniprot.org/core/>
+      PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
       SELECT DISTINCT ?name ?message
       WHERE {
-        ?protein rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
-        ?protein up:reviewed true .
-        ?protein up:annotation ?annotation .
+        ?protein up:organism  taxonomy:#{tax_id} ;
+                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> ;
+                 up:annotation ?annotation .
 
         # up:Annotation 配下のアノテーションか up:Annotation 自身か
         # up:Annotation 自身の場合、label, type をBINDしている

@@ -1,17 +1,17 @@
 class ProteinSequencesStanza < Stanza::Base
-  property :title do |gene_id|
-    "Sequences : #{gene_id}"
+  property :title do |tax_id, gene_id|
+    "Sequences #{tax_id}:#{gene_id}"
   end
 
-  property :sequences do |gene_id|
+  property :sequences do |tax_id, gene_id|
     sequences = query(:uniprot, <<-SPARQL)
-      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       PREFIX up: <http://purl.uniprot.org/core/>
+      PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
       SELECT DISTINCT ?protein ?value ?mass ?modified ?version ?checksum
       WHERE {
-        ?protein rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> ;
-                 up:reviewed true .
+        ?protein up:organism  taxonomy:#{tax_id} ;
+                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
 
         ?protein up:sequence ?seq .
         ?seq rdf:value ?value ;

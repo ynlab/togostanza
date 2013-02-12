@@ -1,20 +1,19 @@
 # coding: utf-8
 
 class ProteinOntologiesStanza < Stanza::Base
-  property :title do |gene_id|
-    "Ontologies : #{gene_id}"
+  property :title do |tax_id, gene_id|
+    "Ontologies #{tax_id}:#{gene_id}"
   end
 
-  property :keywords do |gene_id|
+  property :keywords do |tax_id, gene_id|
     keywords = query(:uniprot, <<-SPARQL)
-      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX up: <http://purl.uniprot.org/core/>
+      PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
       SELECT DISTINCT ?root_name ?concept (GROUP_CONCAT(DISTINCT ?name; SEPARATOR=", ") AS ?names)
       WHERE {
-        ?protein rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
-        ?protein up:reviewed true .
+        ?protein up:organism  taxonomy:#{tax_id} ;
+                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
 
         ?protein ?p ?concept .
         ?concept rdf:type up:Concept .
@@ -34,7 +33,7 @@ class ProteinOntologiesStanza < Stanza::Base
     }
   end
 
-  property :gene_ontlogies do |gene_id|
+  property :gene_ontlogies do |tax_id, gene_id|
 
     # slr1311 の時...
 
@@ -43,14 +42,13 @@ class ProteinOntologiesStanza < Stanza::Base
     ##  {:concept=>"http://purl.uniprot.org/go/0009772"},
     ##  ... ]
     up_go_uris = query(:uniprot, <<-SPARQL)
-      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX up: <http://purl.uniprot.org/core/>
+      PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
       SELECT DISTINCT ?concept
       WHERE {
-        ?protein rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
-        ?protein up:reviewed true .
+        ?protein up:organism  taxonomy:#{tax_id} ;
+                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
 
         ?protein ?p ?concept .
         ?concept rdf:type up:Concept .

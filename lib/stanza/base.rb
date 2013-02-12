@@ -65,8 +65,6 @@ module Stanza
       # refseq の UniProt
       # slr1311 の時 "http://purl.uniprot.org/refseq/NP_439906.1"
       query(:togogenome, <<-SPARQL).first[:up]
-        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         PREFIX insdc: <http://rdf.insdc.org/>
 
         SELECT ?up
