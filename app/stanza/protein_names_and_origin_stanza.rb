@@ -71,10 +71,10 @@ class ProteinNamesAndOriginStanza < Stanza::Base
       }
     SPARQL
 
-    # [{a: 'hoge', b: 'moge'}, {a: 'hoge', b: 'fuga'}] => {a: 'hoge', b: ['moge', 'fuga']}
+    # alternative_names, parent_taxonomy_names のみ複数取りうる
     protein_summary = protein_summary.flat_map(&:to_a).group_by(&:first).each_with_object({}) {|(k, vs), hash|
       v = vs.map(&:last).uniq
-      hash[k] = v.one? ? v.first : v
+      hash[k] = [:alternative_names, :parent_taxonomy_names].include?(k) ? v : v.first
     }
 
     protein_summary[:parent_taxonomy_names].reverse!
