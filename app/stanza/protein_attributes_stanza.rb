@@ -1,18 +1,17 @@
 class ProteinAttributesStanza < Stanza::Base
-  property :title do |gene_id|
-    "Protein Attributes : #{gene_id}"
+  property :title do |tax_id, gene_id|
+    "Protein Attributes #{tax_id}:#{gene_id}"
   end
 
-  property :attributes do |gene_id|
+  property :attributes do |tax_id, gene_id|
     protein_attributes = query(:uniprot, <<-SPARQL)
-      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX up: <http://purl.uniprot.org/core/>
+      PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
       SELECT DISTINCT ?sequence ?fragment ?existence_label
       WHERE {
-        ?protein rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
-        ?protein up:reviewed true .
+        ?protein up:organism  taxonomy:#{tax_id} ;
+                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
 
         # Sequence length
         OPTIONAL {

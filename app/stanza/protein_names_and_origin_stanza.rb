@@ -1,19 +1,20 @@
 # coding: utf-8
 
 class ProteinNamesAndOriginStanza < Stanza::Base
-  property :title do |gene_id|
-    "Names and origin : #{gene_id}"
+  property :title do |tax_id, gene_id|
+    "Names and origin #{tax_id}:#{gene_id}"
   end
 
-  property :genes do |gene_id|
+  property :genes do |tax_id, gene_id|
     query(:uniprot, <<-SPARQL)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+      PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
       SELECT DISTINCT ?gene_name ?synonyms_name ?locus_name
       WHERE {
-        ?protein rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
-        ?protein up:reviewed true .
+        ?protein up:organism  taxonomy:#{tax_id} ;
+                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
 
         # Gene names
         ?protein up:encodedBy ?encoded_by .
@@ -30,15 +31,15 @@ class ProteinNamesAndOriginStanza < Stanza::Base
     SPARQL
   end
 
-  property :summary do |gene_id|
+  property :summary do |tax_id, gene_id|
     protein_summary = query(:uniprot, <<-SPARQL)
-      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX up: <http://purl.uniprot.org/core/>
+      PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
       SELECT DISTINCT ?recommended_name ?ec_name ?alternative_names ?organism_name ?taxonomy_id ?parent_taxonomy_names
       WHERE {
-        ?protein rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
-        ?protein up:reviewed true .
+        ?protein up:organism  taxonomy:#{tax_id} ;
+                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
 
         # Protein names
         ## Recommended name:
@@ -71,7 +72,7 @@ class ProteinNamesAndOriginStanza < Stanza::Base
     SPARQL
 
     # [{a: 'hoge', b: 'moge'}, {a: 'hoge', b: 'fuga'}] => {a: 'hoge', b: ['moge', 'fuga']}
-    protein_summary = protein_summary.flat_map(&:to_a).group_by(&:first).each_with_object({}) {|(k, vs), hash|
+    protein_summary = protein_summary.tapp.flat_map(&:to_a).group_by(&:first).each_with_object({}) {|(k, vs), hash|
       v = vs.map(&:last).uniq
       hash[k] = v.one? ? v.first : v
     }

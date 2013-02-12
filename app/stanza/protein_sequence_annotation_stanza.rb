@@ -1,20 +1,19 @@
 # coding: utf-8
 
 class ProteinSequenceAnnotationStanza < Stanza::Base
-  property :title do |gene_id|
-    "Sequence annotation : #{gene_id}"
+  property :title do |tax_id, gene_id|
+    "Sequence annotation #{tax_id}:#{gene_id}"
   end
 
-  property :sequence_annotations do |gene_id|
+  property :sequence_annotations do |tax_id, gene_id|
     annotations = query(:uniprot, <<-SPARQL)
-      PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX up: <http://purl.uniprot.org/core/>
+      PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
       SELECT DISTINCT ?parent_label ?label ?begin_location ?end_location ?comment ?substitution ?annotation ?feature_identifier
       WHERE {
-        ?protein rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> ;
-                 up:reviewed true ;
+        ?protein up:organism taxonomy:#{tax_id} ;
+                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> ;
                  up:annotation ?annotation .
 
         ?annotation rdf:type ?type .
