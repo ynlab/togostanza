@@ -72,7 +72,7 @@ class ProteinNamesAndOriginStanza < Stanza::Base
     SPARQL
 
     # [{a: 'hoge', b: 'moge'}, {a: 'hoge', b: 'fuga'}] => {a: 'hoge', b: ['moge', 'fuga']}
-    protein_summary = protein_summary.tapp.flat_map(&:to_a).group_by(&:first).each_with_object({}) {|(k, vs), hash|
+    protein_summary = protein_summary.flat_map(&:to_a).group_by(&:first).each_with_object({}) {|(k, vs), hash|
       v = vs.map(&:last).uniq
       hash[k] = v.one? ? v.first : v
     }
