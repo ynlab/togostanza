@@ -1,7 +1,7 @@
 $ ->
   RE = /^data-stanza-(.+)/
 
-  $('[data-stanza-type]').each ->
+  $('[data-stanza-type]').each (index) ->
     $this  = $(this)
     data   = $this.data()
     params = {}
@@ -14,6 +14,14 @@ $ ->
 
     $('<iframe></iframe>')
       .attr(src: src, frameborder: 0)
+      .attr(id: "stanza-frame-#{index}")
+      .attr(name: "stanza-frame-#{index}")
       .width(data.stanzaWidth || '100%')
       .height(data.stanzaHeight)
       .appendTo $this
+
+  window.onmessage = (e) ->
+    return null unless (e.origin == "<%= ENV['SERVER_URL'] %>")
+
+    message = JSON.parse(e.data)
+    $("##{message.id}").height(message.height)
