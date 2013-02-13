@@ -56,6 +56,8 @@ class ProteinOntologiesStanza < Stanza::Base
       }
     SPARQL
 
+    next if up_go_uris.empty?
+
     # OBO の go の URI と UniProt の go の URI の関係
     ## "{ BIND(<http://purl.uniprot.org/go/0009635> as ?up_go_uri) }
     ##  UNION { BIND(<http://purl.uniprot.org/go/0009772> as ?up_go_uri) }
@@ -75,6 +77,8 @@ class ProteinOntologiesStanza < Stanza::Base
         ?up_go_uri rdfs:seeAlso ?obo_go_uri .
       }
     SPARQL
+
+    next if obo_go_uris.empty?
 
     # OBO の go の階層とラベル
     ## "{ BIND(<http://purl.obolibrary.org/obo/GO_0009635> as ?obo_go_uri) }
