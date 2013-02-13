@@ -1,7 +1,7 @@
 $ ->
   RE = /^data-stanza-(.+)/
 
-  $('[data-stanza-type]').each (index) ->
+  $('[data-stanza]').each (index) ->
     $this  = $(this)
     data   = $this.data()
     params = {}
@@ -10,7 +10,7 @@ $ ->
       if key = (RE.exec(attr.name) || [])[1]
         params[key.replace('-', '_')] = attr.value
 
-    src = "<%= ENV['SERVER_URL'] %>/stanza/#{data.stanzaType}?#{$.param(stanza_params: params)}"
+    src = "#{data.stanza}?#{$.param(stanza_params: params)}"
 
     $('<iframe></iframe>')
       .attr(src: src, frameborder: 0)
