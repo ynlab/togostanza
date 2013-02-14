@@ -39,7 +39,7 @@ class ProteinNamesAndOriginStanza < Stanza::Base
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
-      SELECT DISTINCT ?recommended_name ?ec_name ?alternative_names ?organism_name ?taxonomy_id ?parent_taxonomy_names
+      SELECT DISTINCT ?recommended_name ?ec_name ?alternative_names ?organism_name ?parent_taxonomy_names
       WHERE {
         ?protein up:organism  taxonomy:#{tax_id} ;
                  rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
@@ -60,15 +60,13 @@ class ProteinNamesAndOriginStanza < Stanza::Base
         }
 
         # Organism
-        ?protein up:organism ?taxonomy_id .
-
-        OPTIONAL { ?taxonomy_id up:scientificName ?organism_name . }
+        OPTIONAL { taxonomy:#{tax_id} up:scientificName ?organism_name . }
 
         # Taxonomic identifier
 
         # Taxonomic lineage
         OPTIONAL {
-          ?taxonomy_id rdfs:subClassOf* ?parent_taxonomy .
+          taxonomy:#{tax_id} rdfs:subClassOf* ?parent_taxonomy .
           ?parent_taxonomy up:scientificName ?parent_taxonomy_names .
         }
       }
@@ -79,7 +77,7 @@ class ProteinNamesAndOriginStanza < Stanza::Base
       v = vs.map(&:last).uniq
       hash[k] = [:alternative_names, :parent_taxonomy_names].include?(k) ? v : v.first
     }
-
+    protein_summary[:taxonomy_id] = tax_id
     protein_summary[:parent_taxonomy_names].reverse!
     protein_summary
   end
