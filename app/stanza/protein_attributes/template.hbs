@@ -23,6 +23,10 @@
             <tr><th>Sequence status</th><td>{{sequence_status}}</td></tr>
           {{/if}}
 
+          {{#if sequence_processing}}
+            <tr><th>Sequence processing</th><td>{{sequence_processing}}</td></tr>
+          {{/if}}
+
           {{#if existence_label}}
             <tr><th>Protein existence</th><td>{{existence_label}}</td></tr>
           {{/if}}

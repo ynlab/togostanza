@@ -8,14 +8,14 @@ class ProteinAttributesStanza < Stanza::Base
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
-      SELECT DISTINCT ?sequence ?fragment ?existence_label
+      SELECT DISTINCT ?sequence ?fragment ?precursor ?existence_label
       WHERE {
         ?protein up:organism  taxonomy:#{tax_id} ;
-                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
+                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> ;
+                 up:sequence ?seq .
 
-        # Sequence length
+        # Sequence
         OPTIONAL {
-          ?protein up:sequence ?seq .
           ?seq rdf:value ?sequence .
         }
 
@@ -24,7 +24,10 @@ class ProteinAttributesStanza < Stanza::Base
           ?seq up:fragment ?fragment .
         }
 
-        # TODO: Sequence processing
+        # Sequence processing
+        OPTIONAL {
+          ?seq up:precursor ?precursor .
+        }
 
         # Protein existence
         OPTIONAL {
@@ -39,8 +42,9 @@ class ProteinAttributesStanza < Stanza::Base
     # 要ご相談
     protein_attributes.map {|attrs|
       attrs.merge(
-        sequence_length: attrs[:sequence].try(:length),
-        sequence_status: sequence_status(attrs[:fragment].to_s)
+        sequence_length:     attrs[:sequence].try(:length),
+        sequence_status:     sequence_status(attrs[:fragment].to_s),
+        sequence_processing: (attrs[:precursor] == 'true') ? 'precursor' : nil
       )
     }
   end
