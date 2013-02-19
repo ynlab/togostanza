@@ -6,7 +6,7 @@ class ProteinOntologiesStanza < Stanza::Base
   end
 
   property :keywords do |tax_id, gene_id|
-    keywords = query(:uniprot, <<-SPARQL)
+    keywords = query(:uniprot, <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
@@ -41,7 +41,7 @@ class ProteinOntologiesStanza < Stanza::Base
     ## [{:concept=>"http://purl.uniprot.org/go/0009635"},
     ##  {:concept=>"http://purl.uniprot.org/go/0009772"},
     ##  ... ]
-    up_go_uris = query(:uniprot, <<-SPARQL)
+    up_go_uris = query(:uniprot, <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
@@ -69,7 +69,7 @@ class ProteinOntologiesStanza < Stanza::Base
     ## [{:obo_go_uri=>"http://purl.obolibrary.org/obo/GO_0009635"},
     ##  {:obo_go_uri=>"http://purl.obolibrary.org/obo/GO_0009772"},
     ## ...]
-    obo_go_uris = query(:togogenome, <<-SPARQL)
+    obo_go_uris = query(:togogenome, <<-SPARQL.strip_heredoc)
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       SELECT DISTINCT ?obo_go_uri
       WHERE {
@@ -92,7 +92,7 @@ class ProteinOntologiesStanza < Stanza::Base
     ##  {:root_name=>"biological_process", :name=>"photosynthetic electron transport in photosystem II"},
     ##  {:root_name=>"molecular_function", :name=>"oxidoreductase activity"},
     ##  ...]
-    gene_ontlogies = query(:go, <<-SPARQL)
+    gene_ontlogies = query(:go, <<-SPARQL.strip_heredoc)
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       SELECT DISTINCT ?name ?root_name
       WHERE {

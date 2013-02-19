@@ -4,7 +4,7 @@ class TranscriptAttributesStanza < Stanza::Base
   end
 
   property :transcripts do |gene_id|
-    query(:togogenome, <<-SPARQL)
+    query(:togogenome, <<-SPARQL.strip_heredoc)
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX faldo: <http://biohackathon.org/resource/faldo#>
       SELECT DISTINCT ?begin_position ?end_position

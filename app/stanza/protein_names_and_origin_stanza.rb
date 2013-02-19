@@ -6,7 +6,7 @@ class ProteinNamesAndOriginStanza < Stanza::Base
   end
 
   property :genes do |tax_id, gene_id|
-    query(:uniprot, <<-SPARQL)
+    query(:uniprot, <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
@@ -35,7 +35,7 @@ class ProteinNamesAndOriginStanza < Stanza::Base
   end
 
   property :summary do |tax_id, gene_id|
-    protein_summary = query(:uniprot, <<-SPARQL)
+    protein_summary = query(:uniprot, <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 

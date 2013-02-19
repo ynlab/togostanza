@@ -4,7 +4,7 @@ class GeneAttributesStanza < Stanza::Base
   end
 
   property :sequeces do |gene_id, tax_id|
-    query(:togogenome, <<-SPARQL)
+    query(:togogenome, <<-SPARQL.strip_heredoc)
       PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX obo: <http://purl.obolibrary.org/obo/>

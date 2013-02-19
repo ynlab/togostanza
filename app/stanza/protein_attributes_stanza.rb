@@ -4,7 +4,7 @@ class ProteinAttributesStanza < Stanza::Base
   end
 
   property :attributes do |tax_id, gene_id|
-    protein_attributes = query(:uniprot, <<-SPARQL)
+    protein_attributes = query(:uniprot, <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 

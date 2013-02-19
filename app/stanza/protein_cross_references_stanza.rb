@@ -4,7 +4,7 @@ class ProteinCrossReferencesStanza < Stanza::Base
   end
 
   property :references do |tax_id, gene_id|
-    references = query(:uniprot, <<-SPARQL)
+    references = query(:uniprot, <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 

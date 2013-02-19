@@ -6,7 +6,7 @@ class ProteinSequenceAnnotationStanza < Stanza::Base
   end
 
   property :sequence_annotations do |tax_id, gene_id|
-    annotations = query(:uniprot, <<-SPARQL)
+    annotations = query(:uniprot, <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 

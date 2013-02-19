@@ -4,7 +4,7 @@ class ProteinEntryInformationStanza < Stanza::Base
   end
 
   property :information do |tax_id, gene_id|
-    informations = query(:uniprot, <<-SPARQL).first
+    informations = query(:uniprot, <<-SPARQL.strip_heredoc).first
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
