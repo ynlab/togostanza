@@ -2,8 +2,8 @@ class StanzaController < ApplicationController
   def index
   end
 
-  def show(id, stanza_params)
-    render inline: Stanza.find(id).new(stanza_params).render
+  def show(id)
+    render inline: Stanza.find(id).new(params).render
   end
 
   def help(stanza_id)

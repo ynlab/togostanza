@@ -10,7 +10,7 @@ $ ->
       if key = (RE.exec(attr.name) || [])[1]
         params[key.replace('-', '_')] = attr.value
 
-    src = "#{data.stanza}?#{$.param(stanza_params: params)}"
+    src = "#{data.stanza}?#{$.param(params)}"
 
     $('<iframe></iframe>')
       .attr(src: src, frameborder: 0)
