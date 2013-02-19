@@ -1,6 +1,7 @@
 # coding: utf-8
 
 require 'spec_helper'
+
 feature 'スタンザを表示する' do
   context 'General Summary スタンザ' do
     scenario "遺伝子 sll1615" do

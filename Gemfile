@@ -28,6 +28,7 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'json_spec'
 
   group :development do
     gem 'rspec-rails'
