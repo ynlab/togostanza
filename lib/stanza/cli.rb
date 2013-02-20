@@ -27,9 +27,7 @@ module Stanza
 
     desc 'open <stanza name> <param1=val1 param2=val2>', ''
     def open(id, *param_strs)
-      query = {
-        stanza_params: convert_params(param_strs)
-      }.to_query
+      query = convert_params(param_strs).to_query
 
       Launchy.open URI::HTTP.build(
         host:  'localhost',
