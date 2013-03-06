@@ -4,14 +4,15 @@ module Stanza
 
     included do
       class_attribute :properties
+
+      self.properties = {}
     end
 
     module ClassMethods
       def property(name, val = nil, &block)
         raise ArgumentError, 'You must specify exactly one of either a value or block' unless [val, block].one?(&:nil?)
 
-        self.properties ||= {}
-        self.properties[name] = block || val
+        self.properties = properties.merge(name => block || val)
       end
     end
 

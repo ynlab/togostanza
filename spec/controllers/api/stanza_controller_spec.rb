@@ -10,6 +10,7 @@ describe Api::StanzaController do
 
     it { response.body.should be_json_eql(<<-JSON) }
       {
+        "css_uri": "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap.min.css",
         "title": "Transcript Attributes : slr0613",
 
         "transcripts": [

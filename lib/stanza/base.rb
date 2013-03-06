@@ -60,5 +60,9 @@ module Stanza
 
       Markdown.render(path.read)
     end
+
+    property :css_uri do |css_uri|
+      css_uri || '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap.min.css'
+    end
   end
 end
