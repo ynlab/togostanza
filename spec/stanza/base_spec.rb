@@ -45,6 +45,10 @@ describe Stanza::Base do
         end
 
         property :foobar, 'foobar'
+
+        resource :do_not_evaluate do
+          raise
+        end
       }
     end
 
@@ -54,5 +58,24 @@ describe Stanza::Base do
     its(:bar)    { should == 'barbarbar' }
     its(:baz)    { should == {'qux' => 'quux'} }
     its(:foobar) { should == 'foobar' }
+  end
+
+  describe '#resource' do
+    let :klass do
+      Class.new(Stanza::Base) {
+        resource :foo do
+          'foo'
+        end
+
+        resource :bar do |bar|
+          bar * 3
+        end
+      }
+    end
+
+    let(:stanza) { klass.new(bar: 'bar') }
+
+    specify { stanza.resource(:foo).should == 'foo' }
+    specify { stanza.resource(:bar).should == 'barbarbar' }
   end
 end
