@@ -10,7 +10,7 @@ class ProteinSequenceAnnotationStanza < Stanza::Base
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
-      SELECT DISTINCT ?parent_label ?label ?begin_location ?end_location ?comment ?substitution ?annotation ?feature_identifier
+      SELECT DISTINCT ?parent_label ?label ?begin_location ?end_location ?comment (GROUP_CONCAT(DISTINCT ?substitution; SEPARATOR=", ") AS ?substitutions) ?seq ?annotation ?feature_identifier
       WHERE {
         ?protein up:organism taxonomy:#{tax_id} ;
                  rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> ;
@@ -30,21 +30,27 @@ class ProteinSequenceAnnotationStanza < Stanza::Base
                up:end ?end_location .
 
         # description の一部が取得できるが、内容の表示に必要があるのか
-        # OPTIONAL{ ?annotation up:substitution ?substitution . }
+        OPTIONAL{
+          ?annotation up:substitution ?substitution .
+          ?protein up:sequence/rdf:value ?seq .
+         }
 
         OPTIONAL {
           BIND (str(?annotation) as ?feature_identifier) .
           FILTER regex(str(?annotation), 'http://purl.uniprot.org/annotation')
         }
-      } ORDER BY ?parent_label ?label ?begin_location ?end_location
+      }
+      GROUP BY ?parent_label ?label ?begin_location ?end_location ?comment ?seq ?annotation ?feature_identifier
+      ORDER BY ?parent_label ?label ?begin_location ?end_location
     SPARQL
 
     annotations.map {|hash|
-      begin_location, end_location = hash.values_at(:begin_location, :end_location)
+      begin_location, end_location, substitutions, seq = hash.values_at(:begin_location, :end_location, :substitutions, :seq)
 
       hash.merge(
-        location_length: length(begin_location, end_location),
-        position:        position(begin_location, end_location)
+        location_length:       length(begin_location, end_location),
+        position:              position(begin_location, end_location),
+        substitution_sequence: substitution_sequence(begin_location, end_location, substitutions, seq)
       )
     }.group_by {|hash|
       hash[:parent_label]
@@ -59,5 +65,13 @@ class ProteinSequenceAnnotationStanza < Stanza::Base
 
   def length(begin_location, end_location)
     end_location.to_i - begin_location.to_i + 1
+  end
+
+  def substitution_sequence(begin_location, end_location, substitutions, seq)
+    return nil unless seq
+
+    original = seq.slice(begin_location.to_i.pred..end_location.to_i.pred)
+
+    "#{original} → #{substitutions}: "
   end
 end
