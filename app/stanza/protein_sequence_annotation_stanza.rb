@@ -68,9 +68,10 @@ class ProteinSequenceAnnotationStanza < Stanza::Base
   end
 
   def substitution_sequence(begin_location, end_location, substitutions, seq)
-    return if seq.nil?
-    seq_array = seq.split(//)
-    original = seq_array[begin_location.to_i.pred..end_location.to_i.pred].join
+    return nil unless seq
+
+    original = seq.slice(begin_location.to_i.pred..end_location.to_i.pred)
+
     "#{original} → #{substitutions}: "
   end
 end
