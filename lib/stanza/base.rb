@@ -1,4 +1,4 @@
-require 'stanza/context'
+require 'stanza/expression_map'
 require 'stanza/querying'
 require 'stanza/markdown'
 
@@ -24,8 +24,15 @@ module Stanza
   end
 
   class Base
-    include Context
+    extend ExpressionMap::Macro
     include Querying
+
+    define_expression_map :properties
+    define_expression_map :resources
+
+    property :css_uri do |css_uri|
+      css_uri || '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap.min.css'
+    end
 
     class << self
       def id
@@ -46,7 +53,11 @@ module Stanza
     attr_reader :params
 
     def context
-      super(params)
+      Hashie::Mash.new(properties.resolve_all_in_parallel(self, params))
+    end
+
+    def resource(name)
+      resources.resolve(self, name, params)
     end
 
     def render
@@ -59,10 +70,6 @@ module Stanza
       path = root.join('help.md')
 
       Markdown.render(path.read)
-    end
-
-    property :css_uri do |css_uri|
-      css_uri || '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap.min.css'
     end
   end
 end
