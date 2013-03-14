@@ -3,24 +3,24 @@
 <html>
   <head>
     <title>MDB Variation</title>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap.min.css" />
-    <link href="http://genome.annotation.jp/assets/application-c4ff29af8ee532e6e0ab563cd2be14f8.css" media="all" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{css_uri}}" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
 
     {{adjust_iframe_height_script}}
   </head>
+
   <body>
-    <h3>{{title}}</h3>
-    <div class='variation-part-content' id='variation-part-content-summary'>
-      <table border='1' class='nice'>
-        <tbody>
-          <tr><th>gene id</th><th>gene product</th><th>gene symbol</th><th>variation id</th><th>location</th><th>variation type</th><th>ref_allele</th><th>allele</th>
-          {{#each variation}}
-          <tr><td class='first-column'><a href="{{gene}}">{{gene_id}}</a></td><td>{{gene_product}}</td><td>{{gene_symbol}}</td><td><a href="{{valiationid}}">{{valiation_id}}</a></td><td>{{seqid}}:{{location}}</td><td>{{valiation_type}}</td><td>{{ref_allele}}</td><td>{{allele}}</td></tr>
-          {{/each}}
-        </tbody>
-      </table>
-    </div>
+    <h1>{{title}}</h1>
+    <table>
+      <thead>
+        <tr><th>gene id</th><th>gene product</th><th>gene symbol</th><th>variation id</th><th>location</th><th>variation type</th><th>ref_allele</th><th>allele</th>
+      </thead>
+      <tbody>
+        {{#each variation}}
+        <tr><td class='first-column'><a href="{{gene}}">{{gene_id}}</a></td><td>{{gene_product}}</td><td>{{gene_symbol}}</td><td><a href="{{valiationid}}">{{valiation_id}}</a></td><td>{{seqid}}:{{location}}</td><td>{{valiation_type}}</td><td>{{ref_allele}}</td><td>{{allele}}</td></tr>
+        {{/each}}
+      </tbody>
+    </table>
   </body>
 </html>
