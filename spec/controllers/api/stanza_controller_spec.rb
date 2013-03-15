@@ -8,8 +8,9 @@ describe Api::StanzaController do
 
     it { response.should be_success }
 
-    it { response.body.should be_json_eql(<<-JSON) }
+    it { response.body.should be_json_eql(<<-JSON.strip_heredoc) }
       {
+        "css_uri": "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap.min.css",
         "title": "Transcript Attributes : slr0613",
 
         "transcripts": [

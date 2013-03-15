@@ -3,7 +3,7 @@
 <html>
   <head>
     <title>{{title}}</title>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{{css_uri}}" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
     {{adjust_iframe_height_script}}
@@ -14,38 +14,47 @@
 
     <table class='table table-bordered'>
       <tbody>
-        {{#if summary.recommended_name}}
-          <tr><th>Recommended Name</th><td>{{summary.recommended_name}}</td></tr>
-        {{/if}}
+        <tr>
+          <th>Protein names</th>
+          <td>
+            <table class='table table-bordered'>
+              <tbody>
+                {{#if summary.recommended_name}}
+                  <tr><th>Recommended Name</th><td>{{summary.recommended_name}}</td></tr>
+                {{/if}}
 
-        {{#if summary.ec_name}}
-          <tr><th>EC Name</th><td>{{summary.ec_name}}</td></tr>
-        {{/if}}
+                {{#if summary.ec_name}}
+                  <tr><th>EC=</th><td>{{summary.ec_name}}</td></tr>
+                {{/if}}
 
-        {{#if summary.alternative_names}}
-          <tr>
-            <th>Alternative Names</th>
-            <td>
-              <ul>
-                {{#each summary.alternative_names}}
-                  <li>{{this}}</li>
-                {{/each}}
-              </ul>
-            </td>
-          </tr>
-        {{/if}}
+                {{#if summary.alternative_names}}
+                  <tr>
+                    <th>Alternative Name(s)</th>
+                    <td>
+                      <ul>
+                        {{#each summary.alternative_names}}
+                          <li>{{this}}</li>
+                        {{/each}}
+                      </ul>
+                    </td>
+                  </tr>
+                {{/if}}
+              </tbody>
+            </table>
+          </td>
+        </tr>
 
         {{#if genes}}
           <tr>
-            <th>Genes</th>
+            <th>Genes names</th>
             <td>
               {{#each genes}}
                 <table class='table table-bordered'>
                   <tbody>
-                    {{#if gene_name}}<tr><th>Gene Names</th><td>{{gene_name}}</td></tr>{{/if}}
-                    {{#if synonyms_name}}<tr><th>Synonyms Name</th><td>{{synonyms_name}}</td></tr>{{/if}}
-                    {{#if locus_name}}<tr><th>Locus Name</th><td>{{locus_name}}</td></tr>{{/if}}
-                    {{#if orf_name}}<tr><th>ORF Name</th><td>{{orf_name}}</td></tr>{{/if}}
+                    {{#if gene_name}}<tr><th>Name</th><td>{{gene_name}}</td></tr>{{/if}}
+                    {{#if synonyms_name}}<tr><th>Synonyms</th><td>{{synonyms_name}}</td></tr>{{/if}}
+                    {{#if locus_name}}<tr><th>Ordered Locus Names</th><td>{{locus_name}}</td></tr>{{/if}}
+                    {{#if orf_name}}<tr><th>ORF Names</th><td>{{orf_name}}</td></tr>{{/if}}
                   </tbody>
                 </table>
               {{/each}}
@@ -54,16 +63,16 @@
         {{/if}}
 
         {{#if summary.organism_name}}
-          <tr><th>Organism Name</th><td>{{summary.organism_name}}</td></tr>
+          <tr><th>Organism</th><td>{{summary.organism_name}}</td></tr>
         {{/if}}
 
         {{#if summary.taxonomy_id}}
-          <tr><th>Taxonomic Identifier</th><td>{{summary.taxonomy_id}}</td></tr>
+          <tr><th>Taxonomic identifier</th><td>{{summary.taxonomy_id}}</td></tr>
         {{/if}}
 
         {{#if summary.parent_taxonomy_names}}
           <tr>
-            <th>Taxonomic Lineage</th>
+            <th>Taxonomic lineage</th>
             <td>
               <ul>
                 {{#each summary.parent_taxonomy_names}}

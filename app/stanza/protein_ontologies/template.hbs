@@ -3,7 +3,7 @@
 <html>
   <head>
     <title>Protein Ontologies</title>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{{css_uri}}" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
     {{adjust_iframe_height_script}}
@@ -27,7 +27,7 @@
               <td>
                 <ul>
                   {{#each keywords.biological_process}}
-                    <li>{{names}}</li>
+                    <li><a href='{{concept}}'>{{names}}</a></li>
                   {{/each}}
                 </ul>
               </td>
@@ -40,7 +40,7 @@
               <td>
                 <ul>
                   {{#each keywords.cellular_component}}
-                    <li>{{names}}</li>
+                    <li><a href='{{concept}}'>{{names}}</a></li>
                   {{/each}}
                 </ul>
               </td>
@@ -53,7 +53,7 @@
               <td>
                 <ul>
                   {{#each keywords.domain}}
-                    <li>{{names}}</li>
+                    <li><a href='{{concept}}'>{{names}}</a></li>
                   {{/each}}
                 </ul>
               </td>
@@ -66,7 +66,7 @@
               <td>
                 <ul>
                   {{#each keywords.ligand}}
-                    <li>{{names}}</li>
+                    <li><a href='{{concept}}'>{{names}}</a></li>
                   {{/each}}
                 </ul>
               </td>
@@ -79,7 +79,7 @@
               <td>
                 <ul>
                   {{#each keywords.molecular_function}}
-                    <li>{{names}}</li>
+                    <li><a href='{{concept}}'>{{names}}</a></li>
                   {{/each}}
                 </ul>
               </td>
@@ -92,7 +92,7 @@
               <td>
                 <ul>
                   {{#each keywords.technical_term}}
-                    <li>{{names}}</li>
+                    <li><a href='{{concept}}'>{{names}}</a></li>
                   {{/each}}
                 </ul>
               </td>
