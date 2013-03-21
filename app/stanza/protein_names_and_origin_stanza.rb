@@ -1,10 +1,6 @@
 # coding: utf-8
 
 class ProteinNamesAndOriginStanza < Stanza::Base
-  property :title do |tax_id, gene_id|
-    "Names and origin #{tax_id}:#{gene_id}"
-  end
-
   property :genes do |tax_id, gene_id|
     query(:uniprot, <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>

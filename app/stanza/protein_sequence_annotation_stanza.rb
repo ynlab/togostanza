@@ -1,10 +1,6 @@
 # coding: utf-8
 
 class ProteinSequenceAnnotationStanza < Stanza::Base
-  property :title do |tax_id, gene_id|
-    "Sequence annotation #{tax_id}:#{gene_id}"
-  end
-
   property :sequence_annotations do |tax_id, gene_id|
     annotations = query(:uniprot, <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>

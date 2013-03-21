@@ -1,10 +1,6 @@
 # coding: utf-8
 
 class ProteinOntologiesStanza < Stanza::Base
-  property :title do |tax_id, gene_id|
-    "Ontologies #{tax_id}:#{gene_id}"
-  end
-
   property :keywords do |tax_id, gene_id|
     keywords = query(:uniprot, <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
