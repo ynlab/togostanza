@@ -11,14 +11,22 @@
   </head>
 
   <body>
-    <h1>{{title}}</h1>
     <table class='table'>
       <thead>
-        <tr><th>geneset</th><th>type</th><th>gene member</th></tr>
+        <tr>
+          <th>geneset</th>
+          <th>type</th>
+          <th>gene member</th>
+        </tr>
       </thead>
+
       <tbody>
         {{#each geneset}}
-        <tr><td class='first-column'><a href="{{geneset}}" target='_parent'>{{geneset_label}}</a></td><td>{{type}}</td><td>{{gene_member}}</td></tr>
+          <tr>
+            <td class='first-column'><a href="{{geneset}}" target='_parent'>{{geneset_label}}</a></td>
+            <td>{{type}}</td>
+            <td>{{gene_member}}</td>
+          </tr>
         {{/each}}
       </tbody>
     </table>

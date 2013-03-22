@@ -11,14 +11,31 @@
   </head>
 
   <body>
-    <h1>{{title}}</h1>
     <table>
       <thead>
-        <tr><th>gene id</th><th>gene product</th><th>gene symbol</th><th>variation id</th><th>location</th><th>variation type</th><th>ref_allele</th><th>allele</th>
+        <tr>
+          <th>gene id</th>
+          <th>gene product</th>
+          <th>gene symbol</th>
+          <th>variation id</th>
+          <th>location</th>
+          <th>variation type</th>
+          <th>ref_allele</th>
+          <th>allele</th>
       </thead>
+
       <tbody>
         {{#each variation}}
-        <tr><td class='first-column'><a href="{{gene}}" target='_parent'>{{gene_id}}</a></td><td>{{gene_product}}</td><td>{{gene_symbol}}</td><td><a href="{{valiationid}}" target='_parent'>{{valiation_id}}</a></td><td>{{seqid}}:{{location}}</td><td>{{valiation_type}}</td><td>{{ref_allele}}</td><td>{{allele}}</td></tr>
+          <tr>
+            <td class='first-column'><a href="{{gene}}" target='_parent'>{{gene_id}}</a></td>
+            <td>{{gene_product}}</td>
+            <td>{{gene_symbol}}</td>
+            <td><a href="{{valiationid}}" target='_parent'>{{valiation_id}}</a></td>
+            <td>{{seqid}}:{{location}}</td>
+            <td>{{valiation_type}}</td>
+            <td>{{ref_allele}}</td>
+            <td>{{allele}}</td>
+          </tr>
         {{/each}}
       </tbody>
     </table>
