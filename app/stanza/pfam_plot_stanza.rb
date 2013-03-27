@@ -61,13 +61,6 @@ class PfamPlotStanza < Stanza::Base
         }
       }
     SPARQL
-  ##temp
-  #json_data = open('http://biointegra.jp/OpenID/data/genome_cyano.json').read
-  #sequence_list0 = JSON.parser.new(json_data).parse()
-  #sequence_list0.each { |i|
-  #  sequence_list.push(i.symbolize_keys)
-  #} 
-  #p sequence_list
 
 # SPARQL statement for filtering by tax_id
     tax_filter = "FILTER (?tax IN ("
