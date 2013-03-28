@@ -161,7 +161,7 @@
         'elem_id_prefix': 'taxid_',
         'point_opacity': 0.7,
         'selected_tax_id': '{{selected_taxonomy_id}}',
-      }      
+      }
 
       var data;
       var has_range_data;
@@ -225,32 +225,32 @@
       Renders scatter plot
       */
       function render_scatterplot(point_label, x_axis_item, y_axis_item) {
-      
+
         //set status
         current_x_item = x_axis_item;
         current_y_item = y_axis_item;
         current_color = null;
         current_category = opt.no_categorize;
-      
+
         //calculate chart range and domain
         var x_scale = get_axis_scale(x_axis_item, "x");
         current_x_scale = x_scale;
         var x_axis = d3.svg.axis()
           .scale(x_scale);
-      
+
         var y_scale = get_axis_scale(y_axis_item, "y");
         current_y_scale = y_scale;
         var y_axis = d3.svg.axis()
           .scale(y_scale)
           .orient("left");
-      
+
         //add svg
         d3.select("#scatter_plot")
           .append("svg")
           .attr("id", "plot-svg")
           .attr("width", opt.width)
           .attr("height", opt.height);
-      
+
         //add points
         d3.select("svg")
           .selectAll("circle")
@@ -270,10 +270,10 @@
           .attr("r", opt.point_size)
           .attr("fill", opt.init_point_color)
           .style("opacity", opt.point_opacity);
-      
+
         //display tooltips on mouseover
         add_tooltips_event();
-      
+
         //axis
         d3.select("svg")
           .append("g")
@@ -281,13 +281,13 @@
           .attr("transform",
           "translate(0," + (opt.height - opt.margin) + ")")
           .call(x_axis);
-      
+
         d3.select("svg")
           .append("g")
           .attr("class", "y axis")
           .attr("transform", "translate(" + opt.margin + ", 0 )")
           .call(y_axis);
-      
+
         d3.select(".x.axis")
           .append("text")
           .attr("class", "x axis-label")
@@ -296,22 +296,22 @@
             return (opt.width / 2) - opt.margin
           })
           .attr("y", opt.margin / 1.5);
-      
+
         d3.select(".y.axis")
           .append("text")
           .attr("class", "y axis-label")
           .text(opt.y_axis_items[y_axis_item].axis_label);
-      
+
         var fontsize = 8; //same value with css
         var horizontal = (opt.margin - fontsize) * -1;
         var vertical = ((opt.height / 2) + (fontsize * y_axis_item.length / 2)) * -1;
         d3.select(".y.axis-label")
           .attr("transform", "rotate (-90) translate(" + vertical + "," + horizontal + ")");
-      
+
         optimize_axis_unit(".x.axis g text", x_axis_item);
         optimize_axis_unit(".y.axis g text", y_axis_item);
       }
-      
+
       /*
       Optimizes the tick unit
       */
@@ -338,7 +338,7 @@
           }
         }
       }
-      
+
       /*
       Adds event on each point for display tooltips
       */
@@ -386,7 +386,7 @@
               .style("visibility", "hidden");
           });
       }
-      
+
       /*
       //TODO specified by opt
       Returns taxonomy id from url
@@ -396,7 +396,7 @@
         taxid = taxid.replace("http://www.ncbi.nlm.nih.gov/taxonomy/", "");
         return taxid;
       }
-      
+
       /*
       Highlights a point to indicate current selected item_id.
       taxonomy id is specified by request parameter.(?taxid=NNNNN)
@@ -408,7 +408,7 @@
             .classed("selected", true)
             .attr("fill", opt.init_selected_point_color);
       }
-      
+
       /*
       Layers element (specified by id) in front.
       Because svg element is not supported z-index style.
@@ -417,7 +417,7 @@
         $("#" + id).appendTo("#plot-svg");
       }
       /*
-      
+
        */
       function selected_item_title(item_text) {
         d3.select("#scatter_plot")
@@ -428,7 +428,7 @@
           .style("left", opt.margin / 2 + "px")
           .style("top", opt.margin / 2 + "px")
       }
-      
+
       /*
       Creates menu
       */
@@ -467,19 +467,19 @@
           .text(function (d) {
             return d.value.button_label
           });
-      
+
         //set button status
         var x_element_id = "button-id-" + opt.init_x_axis_items + "-x";
         change_button_status("x", opt.init_x_axis_items, x_element_id);
         var y_element_id = "button-id-" + opt.init_y_axis_items + "-y";
         change_button_status("y", opt.init_y_axis_items, y_element_id);
-      
+
         d3.selectAll(".btn")
           .each(function () {
             var t = document.createElement("br");
             this.parentNode.insertBefore(t, this.nextSibling);
           });
-      
+
         //category select list
         d3.select(".dropdown-menu")
           .selectAll("category-list")
@@ -491,11 +491,11 @@
             return "update_category('" + d.key + "', this)";
           })
           .text(function (d) { return d.value.label });
-      
+
         d3.select(".menu")
           .style("visibility", "visible");
       }
-      
+
       /*
       Changes button status (enable/disable and current selected )
       */
@@ -506,7 +506,7 @@
             .classed("btn-primary", false); //reset
           d3.select("#" + element_id)
             .classed("btn-primary", true);
-      
+
           d3.selectAll(".y_axis_update .btn")
             .attr("disabled", null); //reset
           if (opt.range_items[current_selected_item]) { //can't select range item both X and Y
@@ -524,7 +524,7 @@
             .classed("btn-primary", false); //reset
           d3.select("#" + element_id)
             .classed("btn-primary", true);
-      
+
           d3.selectAll(".x_axis_update .btn")
             .attr("disabled", null); //reset
           if (opt.range_items[current_selected_item]) { //can't select range item both X and Y
@@ -538,7 +538,7 @@
           }
         }
       }
-      
+
       /**** update axis ****/
       /*
       Adds min points for item has range value
@@ -548,7 +548,7 @@
         var has_range_data = data.filter(function (d) {
           return d[min_item];
         });
-      
+
         var draw_fin_cnt = 0;
         hogehoge = d3
           .select("svg")
@@ -611,10 +611,10 @@
             }
           })
           .style("opacity", opt.point_opacity);
-      
+
         add_tooltips_event();
       }
-      
+
       /*
       Adds lines (min point to max point) for item has range value
       */
@@ -624,7 +624,7 @@
         var has_range_data = data.filter(function (d) {
           return d[min_item] && d[max_item]
         });
-      
+
         var draw_fin_cnt = 0;
         d3.select("svg")
           .selectAll("range-line-" + axis_type)
@@ -682,7 +682,7 @@
           })
           .style("opacity", opt.point_opacity);
       }
-      
+
       /*
       Returns optimal axis scale of specified item and axis(x or y)
       */
@@ -706,7 +706,7 @@
           } else if (opt_max_value) {
             max = opt_max_value;
           }
-      
+
           //min
           var min_value = d3.min(data, function (d) {
             if (d[opt.range_items[item].min])
@@ -724,7 +724,7 @@
           } else if (opt_min_value) {
             min = opt_min_value;
           }
-      
+
           if (axis == "x") {
             scale = d3.scale.linear()
               .range([opt.margin, opt.width - opt.margin])
@@ -750,7 +750,7 @@
         }
         return scale;
       }
-      
+
       /*
       Updates x axis
       */
@@ -759,22 +759,22 @@
         old_item = current_x_item;
         new_item = item;
         current_x_item = new_item;
-      
+
         //buttun focus
         change_button_status("x", item, element.id);
-      
+
         if (opt.range_items[old_item]) {
           d3.selectAll(".range-line.x")
             .remove();
           d3.selectAll(".min-point.x")
             .remove();
         }
-      
+
         new_scale = get_axis_scale(item, "x");
         current_x_scale = new_scale;
         var x_axis_new = d3.svg.axis()
           .scale(new_scale);
-      
+
         //move points
         d3.selectAll("circle")
           .transition()
@@ -785,7 +785,7 @@
           add_min_circle(item, "x");
           add_range_line(item, "x");
         }
-      
+
         //update axis
         d3.select(".x.axis")
           .transition()
@@ -796,7 +796,7 @@
           .delay(500)
           .text(opt.x_axis_items[item].axis_label);
         optimize_axis_unit(".x.axis g text", item);
-      
+
         // if other axis is range item, move line object
         if (opt.range_items[current_y_item]) {
           d3.selectAll(".range-line.y")
@@ -806,7 +806,7 @@
             .attrTween("x2", line_tween);
         }
       }
-      
+
       /*
       Updates y axis
       */
@@ -815,23 +815,23 @@
         old_item = current_y_item;
         new_item = item;
         current_y_item = new_item;
-      
+
         //buttun stasus
         change_button_status("y", item, element.id);
-      
+
         if (opt.range_items[old_item]) {
           d3.selectAll(".range-line.y")
             .remove();
           d3.selectAll(".min-point.y")
             .remove();
         }
-      
+
         new_scale = get_axis_scale(item, "y");
         current_y_scale = new_scale;
         var y_axis_new = d3.svg.axis()
           .scale(new_scale)
           .orient("left");
-      
+
         //move points
         d3.selectAll("circle")
           .transition()
@@ -842,7 +842,7 @@
           add_min_circle(item, "y");
           add_range_line(item, "y");
         }
-      
+
         // update axis
         d3.select(".y.axis")
           .transition()
@@ -854,7 +854,7 @@
           .text(
         opt.y_axis_items[item].axis_label);
         optimize_axis_unit(".y.axis g text", item);
-      
+
         // if other axis is range item, move line object
         if (opt.range_items[current_x_item]) {
           d3.selectAll(".range-line.x")
@@ -886,7 +886,7 @@
           return i(t);
         };
       }
-      
+
       /*
       Transition between start point and end point
       */
@@ -917,12 +917,12 @@
       Updates category
       */
       function update_category(category, event) {
-      
+
         d3.select(".legend-svg")
           .remove();
         reset_category_highlight();
         current_category = category;
-      
+
         if (category == opt.no_categorize) { //Clear
           current_color = null;
           d3.selectAll(".point")
@@ -931,21 +931,21 @@
             .attr("stroke", opt.init_point_color);
           d3.selectAll(".min-point")
             .attr("fill", opt.init_point_color);
-      
+
           if (opt.selected_tax_id) {
             highlight_selected_id(opt.selected_tax_id);
-      
+
             d3.selectAll(".selected")
               .attr("stroke", false)
               .attr("stroke-width", false);
           }
-      
+
           d3.select("#appendedDropdownButton")
             .attr("value", "");
         } else {
           var color = d3.scale.ordinal()
             .range(["#1f77b4", "#aec7e8", "#ff7f0e", "#ffbb78", "#2ca02c", "#98df8a", "#d62728", "#ff9896", "#9467bd", "#c5b0d5", "#8c564b", "#c49c94", "#e377c2", "#f7b6d2", "#bcbd22", "#dbdb8d", "#17becf", "#9edae5"]);
-      
+
           current_color = color;
           d3.selectAll(".point")
             .attr("fill", function (d) {
@@ -972,14 +972,14 @@
           		return opt.no_data_category_color;
           	}
             });
-      
+
           var height = ( color.domain().length + 1 ) * 20; // +1 is no data
           var led = d3.select("#legend")
             .append("svg")
             .attr("class", "legend-svg")
             .attr("width", opt.legend_width)
             .attr("height", height);
-      
+
           //"no data" is always displayed at end of list
           var legendsort = function (a, b) {
             if (a == opt.no_data_label)
@@ -992,9 +992,9 @@
               return 1;
             return 0;
           }
-      
+
           color.domain().push(opt.no_data_label);
-      
+
           var legend = led.selectAll(".legend-svg")
             .data(color.domain().sort(legendsort))
             .enter()
@@ -1010,7 +1010,7 @@
             .attr("transform", function (d, i) {
               return "translate(0," + i * 20 + ")";
             });
-      
+
           legend.append("rect")
             .attr("x", 0)
             .attr("width", opt.legend_rect_size)
@@ -1022,7 +1022,7 @@
                 return opt.no_data_category_color;
               }
             });
-      
+
           legend.append("text")
             .attr("x", opt.legend_rect_size + 3)
             .attr("y", 6)
@@ -1041,7 +1041,7 @@
                 .attr("id"));
               category_text_highlight(this);
             });
-      
+
           d3.select("#appendedDropdownButton")
             .attr("value", event.text);
         }
@@ -1127,5 +1127,4 @@
       init();
     </script>
   </body>
-
 </html>
