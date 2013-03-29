@@ -26,13 +26,13 @@ class ProteinSequenceAnnotationStanza < Stanza::Base
                up:end ?end_location .
 
         # description の一部が取得できるが、内容の表示に必要があるのか
-        OPTIONAL{ 
+        OPTIONAL{
           ?annotation up:substitution ?substitution .
           ?protein up:sequence/rdf:value ?seq .
         }
 
         # sequence の長さ取得用
-        OPTIONAL{ 
+        OPTIONAL{
           ?protein up:sequence/rdf:value ?seq_txt .
           BIND (strlen(?seq_txt) as ?seq_length) .
         }
