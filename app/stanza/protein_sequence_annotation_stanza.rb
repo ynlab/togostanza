@@ -38,12 +38,12 @@ class ProteinSequenceAnnotationStanza < Stanza::Base
         # sequence の長さ取得用
         OPTIONAL{
           ?protein up:sequence/rdf:value ?seq_txt .
-          BIND (strlen(?seq_txt) as ?seq_length) .
+          BIND (STRLEN(?seq_txt) AS ?seq_length) .
         }
 
         OPTIONAL {
-          BIND (str(?annotation) as ?feature_identifier) .
-          FILTER regex(str(?annotation), 'http://purl.uniprot.org/annotation')
+          BIND (STR(?annotation) AS ?feature_identifier) .
+          FILTER REGEX(STR(?annotation), 'http://purl.uniprot.org/annotation')
         }
       }
       GROUP BY ?parent_label ?label ?begin_location ?end_location ?seq_length ?comment ?seq ?annotation ?feature_identifier
