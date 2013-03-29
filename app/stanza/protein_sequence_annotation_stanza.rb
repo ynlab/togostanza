@@ -46,18 +46,14 @@ class ProteinSequenceAnnotationStanza < Stanza::Base
       ORDER BY ?parent_label ?label ?begin_location ?end_location
     SPARQL
 
-    #graphical view 描画用に各行の要素IDを設定
-    annotations.each_with_index{|hash, i|
-      hash['row_id'] = 'row' + i.to_s
-    }
-
-    annotations.map {|hash|
+    annotations.map.with_index {|hash, i|
       begin_location, end_location, substitutions, seq = hash.values_at(:begin_location, :end_location, :substitutions, :seq)
 
       hash.merge(
         location_length:       length(begin_location, end_location),
         position:              position(begin_location, end_location),
-        substitution_sequence: substitution_sequence(begin_location, end_location, substitutions, seq)
+        substitution_sequence: substitution_sequence(begin_location, end_location, substitutions, seq),
+        row_id:                "row#{i}" #graphical view 描画用に各行の要素IDを設定
       )
     }.group_by {|hash|
       hash[:parent_label]
