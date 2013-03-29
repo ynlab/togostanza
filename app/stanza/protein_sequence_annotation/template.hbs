@@ -8,16 +8,16 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
     {{adjust_iframe_height_script}}
     <script type="text/javascript">
-      function render_sequence_chart(id,begin, end, seqlen) {
+      function render_sequence_chart(id, begin, end, seqlen) {
         // If one of parameters is null, do nothing
         if (begin == null || end == null || seqlen == null) {
-          return ;
+          return;
         }
 
         var length = end - begin + 1;
         if (length == seqlen) {
           // bar of graph is equal to length of sequence
-          $('<div>').appendTo('#'+ id).addClass('on').css('width','100%');
+          $('<div>').appendTo('#' + id).addClass('on').css('width', '100%');
         } else if (begin == 1) {
           // bar of graph is from start to somewhere(except end)
           var on = Math.round(length / seqlen * 100);
@@ -25,18 +25,18 @@
             on = 1;
           }
           var off = 100 - on;
-          $('<div>').appendTo('#'+ id).addClass('on').css('float','left').css('width', on + '%');
-          $('<div>').appendTo('#'+ id).addClass('off').css('float','right').css('width', off+ '%');
+          $('<div>').appendTo('#' + id).addClass('on').css('float', 'left').css('width', on + '%');
+          $('<div>').appendTo('#' + id).addClass('off').css('float', 'right').css('width', off + '%');
         } else {
           if (end == seqlen) {
             // bar of graph is from somewhere(except start) to end
             var on = Math.round(length / seqlen * 100);
-            if (on == 0) {//even if length is too short, it's displayed.
+            if (on == 0) { //even if length is too short, it's displayed.
               on = 1;
             }
             var off = 100 - on;
-            $('<div>').appendTo('#'+ id).addClass('off').css('float','left').css('width', off + '%');
-            $('<div>').appendTo('#'+ id).addClass('on').css('float','right').css('width', on + '%');
+            $('<div>').appendTo('#' + id).addClass('off').css('float', 'left').css('width', off + '%');
+            $('<div>').appendTo('#' + id).addClass('on').css('float', 'right').css('width', on + '%');
           } else {
             // bar of graph is on the way sequence
             var off1 = Math.round(begin / seqlen * 100);
@@ -45,12 +45,13 @@
               on = 1;
             }
             var off2 = 100 - off1 - on;
-            $('<div>').appendTo('#'+ id ).addClass('off').css('float','left').css('width', off1 + '%');
-            $('<div>').appendTo('#'+ id).addClass('on').css('float','left').css('width', on + '%');
-            $('<div>').appendTo('#'+ id).addClass('off').css('float','right').css('width', off2 + '%');
+            $('<div>').appendTo('#' + id).addClass('off').css('float', 'left').css('width', off1 + '%');
+            $('<div>').appendTo('#' + id).addClass('on').css('float', 'left').css('width', on + '%');
+            $('<div>').appendTo('#' + id).addClass('off').css('float', 'right').css('width', off2 + '%');
           }
         }
       }
+    </script>
     </script>
     <style type="text/css">
       caption {
@@ -68,7 +69,7 @@
         background: white url(/assets/protein_sequence_annotation/line.png) repeat-x center;
         height:15px;
       }
-    </style>
+    </style>    
   </head>
 
   <body>
@@ -95,7 +96,7 @@
                 <td>{{substitution_sequence}}{{comment}}</td>
                 <td>{{feature_identifier}}</td>
                 <td id="{{row_id}}" class="graphicalview valign-middle" >
-                  <script>render_sequence_chart('{{row_id}}',{{begin_location}},{{end_location}},{{seq_length}});</script>
+                  <script>render_sequence_chart('{{row_id}}', {{begin_location}}, {{end_location}}, {{seq_length}});</script>
                 </td>
               </tr>
             {{/each}}

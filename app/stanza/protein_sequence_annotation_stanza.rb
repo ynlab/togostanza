@@ -30,7 +30,7 @@ class ProteinSequenceAnnotationStanza < Stanza::Base
           ?annotation up:substitution ?substitution .
           ?protein up:sequence/rdf:value ?seq .
         }
-        
+
         # sequence の長さ取得用
         OPTIONAL{ 
           ?protein up:sequence/rdf:value ?seq_txt .
@@ -48,7 +48,7 @@ class ProteinSequenceAnnotationStanza < Stanza::Base
 
     #graphical view 描画用に各行の要素IDを設定
     annotations.each_with_index{|hash, i|
-      hash['row_id'] = "row" + i.to_s
+      hash['row_id'] = 'row' + i.to_s
     }
 
     annotations.map {|hash|
