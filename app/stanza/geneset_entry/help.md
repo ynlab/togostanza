@@ -7,6 +7,8 @@ TODO: Write a stanza description
 
 (* = required)
 
-| Name | Description                         |
-|------|-------------------------------------|
-| *foo | TODO: Write a parameter description |
+| Name | Description                                |
+|------+--------------------------------------------|
+| *uri | A page uri of MicrobeBase GeneSetEntryView |
+| p    | predicate label                            |
+| o    | object label                               |
