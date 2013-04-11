@@ -5,7 +5,7 @@ TogoStanza::Application.routes.draw do
 
   namespace :api, path: '/' do
     resources :stanza, only: %w(show), path: '/' do
-      resources :resources, only: %w(show)
+      resources :resources, only: %w(show), controller: 'stanza/resources'
     end
   end
 end
