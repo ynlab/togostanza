@@ -11,6 +11,7 @@ gem 'parallel'
 gem 'pg'
 gem 'redcarpet'
 gem 'sparql-client'
+gem 'unicorn'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
@@ -21,6 +22,7 @@ end
 
 group :development do
   gem 'launchy', require: false
+  gem 'mina', require: false
   gem 'pry', group: 'test'
   gem 'tapp', group: 'test'
   gem 'zeus', require: false

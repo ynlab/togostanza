@@ -1,8 +1,12 @@
 # coding: utf-8
 
 class ProteinSequenceAnnotationStanza < Stanza::Base
+  def helpers
+    ApplicationController.new.view_context
+  end
+
   property :line_image do
-    ApplicationController.helpers.image_path('protein_sequence_annotation/line.png')
+    helpers.image_path('protein_sequence_annotation/line.png')
   end
 
   property :sequence_annotations do |tax_id, gene_id|
