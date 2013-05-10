@@ -1,5 +1,6 @@
-Names and Origin
+Names and origin
 ================
+
 See also: http://www.uniprot.org/manual/?query=category%3Anames_origin
 
 ## Parameters:
@@ -10,7 +11,6 @@ See also: http://www.uniprot.org/manual/?query=category%3Anames_origin
 |----------------------|--------------------------------------|
 | *data-stanza-tax-id  | Taxonomy identifier. (e.g., 1111708) |
 | *data-stanza-gene-id | Gene identifier. (e.g., slr1311)     |
-
 
 ## Sample:
 
