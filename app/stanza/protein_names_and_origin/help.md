@@ -1,6 +1,6 @@
 Names and Origin
 ================
-See: http://www.uniprot.org/manual/?query=category%3Anames_origin
+See also: http://www.uniprot.org/manual/?query=category%3Anames_origin
 
 ## Parameters:
 
@@ -18,6 +18,6 @@ See: http://www.uniprot.org/manual/?query=category%3Anames_origin
 <div data-stanza="http://togogenome.org/stanza/protein_names_and_origin" data-stanza-tax-id="1111708" data-stanza-gene-id="slr1311"></div>
 ```
 
-上記を埋め込むと以下のように展開される(英語にしたい)
+The above `<div>` will automatically embed the following Stanza in your HTML page.
 
 <div data-stanza="http://togogenome.org/stanza/protein_names_and_origin" data-stanza-tax-id="1111708" data-stanza-gene-id="slr1311"></div>
