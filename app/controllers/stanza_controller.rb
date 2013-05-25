@@ -3,10 +3,10 @@ class StanzaController < ApplicationController
   end
 
   def show(id)
-    render inline: Stanza.find(id).new(params).render
+    render text: Stanza.find(id).new(params).render, content_type: 'text/html'
   end
 
   def help(stanza_id)
-    render inline: Stanza.find(stanza_id).new.help, layout: true
+    render text: Stanza.find(stanza_id).new.help, layout: true, content_type: 'text/html'
   end
 end

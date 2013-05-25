@@ -32,7 +32,7 @@ module Stanza
       Launchy.open URI::HTTP.build(
         host:  'localhost',
         port:  3000,
-        path:  "/stanza/#{id}",
+        path:  "/#{id}",
         query: query
       )
     end

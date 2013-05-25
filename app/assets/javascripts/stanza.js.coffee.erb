@@ -22,4 +22,6 @@ jQuery ($) ->
 
   window.onmessage = (e) ->
     message = JSON.parse(e.data)
-    $("##{message.id}").height(message.height)
+    iframe  = $("##{message.id}")
+    if iframe.attr('style').search(/height/) == -1
+      iframe.height(message.height)

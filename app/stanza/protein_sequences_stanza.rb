@@ -1,8 +1,4 @@
 class ProteinSequencesStanza < Stanza::Base
-  property :title do |tax_id, gene_id|
-    "Sequences #{tax_id}:#{gene_id}"
-  end
-
   property :sequences do |tax_id, gene_id|
     sequences = query(:uniprot, <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>

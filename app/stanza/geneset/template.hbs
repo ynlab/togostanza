@@ -2,26 +2,30 @@
 
 <html>
   <head>
-    <title>Protein General Annotations</title>
+    <title>Geneset</title>
     <link rel="stylesheet" href="{{css_uri}}" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+
     {{adjust_iframe_height_script}}
   </head>
 
   <body>
-    <table class='table table-bordered'>
+    <table class='table'>
+      <thead>
+        <tr>
+          <th>geneset</th>
+          <th>type</th>
+          <th>gene member</th>
+        </tr>
+      </thead>
+
       <tbody>
-        {{#each general_annotations}}
+        {{#each geneset}}
           <tr>
-            <th>{{name}}</th>
-            <td>
-              <ul>
-                {{#each messages}}
-                  <li>{{this}}</li>
-                {{/each}}
-              </ul>
-            </td>
+            <td class='first-column'><a href="{{geneset}}" target='_parent'>{{geneset_label}}</a></td>
+            <td>{{type}}</td>
+            <td>{{gene_member}}</td>
           </tr>
         {{/each}}
       </tbody>

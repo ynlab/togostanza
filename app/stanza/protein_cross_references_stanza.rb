@@ -1,8 +1,4 @@
 class ProteinCrossReferencesStanza < Stanza::Base
-  property :title do |tax_id, gene_id|
-    "Cross-references #{tax_id}:#{gene_id}"
-  end
-
   property :references do |tax_id, gene_id|
     references = query(:uniprot, <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
