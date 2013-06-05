@@ -181,14 +181,13 @@ class GeneViewStanza < Stanza::Base
         :strand => param[:strand],
         :exons => exons.sort_by{|x| x.first}.flatten,
       )
-
       case param[:type]
       when "CDS"
         unless gene_track
           gene_track = page.add_track(
             :glyph => :transcript,
             :name => 'protein coding gene',
-            :feature_height => 20,
+            :feature_height => 15,
             :exon_fill_color => :blue_white_h,
             :utr_fill_color => :red_white_h,
             :gap_marker => 'angled',
@@ -200,9 +199,9 @@ class GeneViewStanza < Stanza::Base
           rrna_track = page.add_track(
             :glyph => :transcript,
             :name => 'rRNA gene',
-            :feature_height => 20,
+            :feature_height => 15,
             :line_width => 0,
-            :exon_fill_color => :green_white_h,
+            :exon_fill_color => :yellow_white_h,
             :utr_fill_color => :red_white_h,
             :gap_marker => 'angled',
           )
@@ -213,7 +212,7 @@ class GeneViewStanza < Stanza::Base
           trna_track = page.add_track(
             :glyph => :transcript,
             :name => 'tRNA gene',
-            :feature_height => 20,
+            :feature_height => 15,
             :line_width => 0,
             :exon_fill_color => :green_white_h,
             :utr_fill_color => :red_white_h,
@@ -226,9 +225,9 @@ class GeneViewStanza < Stanza::Base
           other_track = page.add_track(
             :glyph => :transcript,
             :name => 'other',
-            :feature_height => 20,
+            :feature_height => 15,
             :line_width => 0,
-            :exon_fill_color => :yellow_white_h,
+            :exon_fill_color => :red_white_h,
             :utr_fill_color => :red_white_h,
             :gap_marker => 'angled',
           )
@@ -258,7 +257,7 @@ class GeneViewStanza < Stanza::Base
     )
     
     range.add(feature)
-    
+
     svg = page.get_markup
     genes.first[:svg] = svg
 
