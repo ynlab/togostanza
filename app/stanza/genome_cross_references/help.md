@@ -14,9 +14,9 @@ Table of cross references of a given genome.
 ## Sample:
 
 ```html
-<div data-stanza="http://togogenome.org/stanza/genome_cross_references_stanza" data-stanza-tax-id="1148"></div>
+<div data-stanza="http://togogenome.org/stanza/genome_cross_references" data-stanza-tax-id="1148"></div>
 ```
 
 The above `<div>` will automatically embed the following Stanza in your HTML page.
 
-<div data-stanza="http://togogenome.org/stanza/genome_cross_references_stanza" data-stanza-tax-id="1148"></div>
+<div data-stanza="/genome_cross_references" data-stanza-tax-id="1148"></div>
