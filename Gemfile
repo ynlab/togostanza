@@ -12,6 +12,7 @@ gem 'pg'
 gem 'redcarpet'
 gem 'sparql-client'
 gem 'unicorn'
+gem 'bio-svgenes'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
