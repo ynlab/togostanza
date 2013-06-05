@@ -148,7 +148,8 @@ class GeneViewStanza < Stanza::Base
     )
 
     gene_track = nil
-    rna_track = nil
+    rrna_track = nil
+    trna_track = nil
     other_track = nil
 
     objs.each do |k, gene|
@@ -174,7 +175,7 @@ class GeneViewStanza < Stanza::Base
       end
 
       obj = Bio::Graphics::MiniFeature.new(
-        :id => "#{param[:id]} - #{param[:type]}",
+        :id => param[:id],
         :start => param[:start],
         :end => param[:end],
         :strand => param[:strand],
@@ -194,11 +195,11 @@ class GeneViewStanza < Stanza::Base
           )
         end
         gene_track.add(obj)
-      when "tRNA", "rRNA"
-        unless rna_track
-          rna_track = page.add_track(
+      when "rRNA"
+        unless rrna_track
+          rrna_track = page.add_track(
             :glyph => :transcript,
-            :name => 'ncRNA gene',
+            :name => 'rRNA gene',
             :feature_height => 20,
             :line_width => 0,
             :exon_fill_color => :green_white_h,
@@ -206,7 +207,20 @@ class GeneViewStanza < Stanza::Base
             :gap_marker => 'angled',
           )
         end
-        rna_track.add(obj)
+        rrna_track.add(obj)
+      when "tRNA"
+        unless trna_track
+          trna_track = page.add_track(
+            :glyph => :transcript,
+            :name => 'tRNA gene',
+            :feature_height => 20,
+            :line_width => 0,
+            :exon_fill_color => :green_white_h,
+            :utr_fill_color => :red_white_h,
+            :gap_marker => 'angled',
+          )
+        end
+        trna_track.add(obj)
       else
         unless other_track
           other_track = page.add_track(
