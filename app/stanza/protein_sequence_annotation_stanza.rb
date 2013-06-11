@@ -46,6 +46,7 @@ class ProteinSequenceAnnotationStanza < Stanza::Base
         }
 
         OPTIONAL {
+          ?annotation rdf:type ?type . # Virtuoso 対応
           BIND (STR(?annotation) AS ?feature_identifier) .
           FILTER REGEX(STR(?annotation), 'http://purl.uniprot.org/annotation')
         }
