@@ -1,9 +1,9 @@
 module Stanza
   module Querying
     MAPPINGS = {
-      togogenome: 'http://lod.dbcls.jp/openrdf-sesame5l/repositories/togogenome',
-      uniprot:    'http://lod.dbcls.jp/openrdf-sesame5l/repositories/cyano',
-      go:         'http://lod.dbcls.jp/openrdf-sesame5l/repositories/go'
+      togogenome: 'http://ep.dbcls.jp/sparql',
+      uniprot:    'http://ep.dbcls.jp/sparql',
+      go:         'http://ep.dbcls.jp/sparql'
     }
 
     def query(endpoint, sparql)
@@ -22,15 +22,20 @@ module Stanza
       # refseq の UniProt
       # slr1311 の時 "http://purl.uniprot.org/refseq/NP_439906.1"
       query(:togogenome, <<-SPARQL).first[:up]
-        PREFIX insdc: <http://rdf.insdc.org/>
+      PREFIX insdc: <http://insdc.org/owl/>
+      PREFIX idorg: <http://rdf.identifiers.org/database/>
 
-        SELECT ?up
-        WHERE {
-          ?s insdc:feature_locus_tag "#{gene_id}" .
+      SELECT DISTINCT ?up
+      WHERE {
+        GRAPH <http://togogenome.org/refseq/> {
+          ?s insdc:feature_locus_tag "slr1311" .
           ?s rdfs:seeAlso ?np .
-          ?np rdf:type insdc:Protein .
-          ?np rdfs:seeAlso ?up .
+          ?s rdfs:seeAlso ?xref .
+          ?np rdf:type idorg:Protein .
+          BIND (STRAFTER(STR(?np), "ncbiprotein/") AS ?npid)
+          BIND (IRI(CONCAT("http://purl.uniprot.org/refseq/", ?npid)) AS ?up)
         }
+      }
       SPARQL
     end
   end
