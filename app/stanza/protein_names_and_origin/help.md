@@ -24,4 +24,4 @@ The above `<div>` will automatically embed the following Stanza in your HTML pag
 
 test
 
-<div data-stanza="http://localhost:3000/protein_names_and_origin" data-stanza-tax-id="1111708" data-stanza-gene-id="slr1311"></div>
+<div data-stanza="/protein_names_and_origin" data-stanza-tax-id="1111708" data-stanza-gene-id="slr1311"></div>
