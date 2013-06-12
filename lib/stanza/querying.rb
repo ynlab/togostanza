@@ -28,7 +28,7 @@ module Stanza
       SELECT DISTINCT ?up
       WHERE {
         GRAPH <http://togogenome.org/refseq/> {
-          ?s insdc:feature_locus_tag "slr1311" .
+          ?s insdc:feature_locus_tag "#{gene_id}" .
           ?s rdfs:seeAlso ?np .
           ?s rdfs:seeAlso ?xref .
           ?np rdf:type idorg:Protein .
