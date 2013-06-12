@@ -6,22 +6,24 @@ class ProteinOntologiesStanza < Stanza::Base
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
-      SELECT DISTINCT ?root_name ?concept (GROUP_CONCAT(DISTINCT ?name; SEPARATOR=", ") AS ?names)
-      WHERE {
-        ?protein up:organism  taxonomy:#{tax_id} ;
-                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
+      SELECT ?root_name ?concept (GROUP_CONCAT(?name, ', ') AS ?names) {
+        SELECT DISTINCT ?root_name ?concept ?name
+        WHERE {
+          ?protein up:organism  taxonomy:#{tax_id} ;
+                   rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
 
-        ?protein ?p ?concept .
-        ?concept rdf:type up:Concept .
-        FILTER regex(str(?concept), 'keywords') .
+          ?protein ?p ?concept .
+          ?concept rdf:type up:Concept .
+          FILTER regex(str(?concept), 'keywords') .
 
-        ?concept rdfs:label ?name .
-        ?concept rdfs:subClassOf* ?parents .
-        ?parents rdfs:label ?root_name .
-        FILTER (str(?root_name) IN ('Biological process', 'Cellular component', 'Domain', 'Ligand', 'Molecular function', 'Technical term')) .
+          ?concept rdfs:label ?name .
+          ?concept rdfs:subClassOf* ?parents .
+          ?parents rdfs:label ?root_name .
+          FILTER (str(?root_name) IN ('Biological process', 'Cellular component', 'Domain', 'Ligand', 'Molecular function', 'Technical term')) .
+        }
+        GROUP BY ?root_name ?concept
+        ORDER BY ?root_name ?concept ?name
       }
-      GROUP BY ?root_name ?concept
-      ORDER BY ?root_name ?concept ?name
     SPARQL
 
     keywords.group_by {|keyword|

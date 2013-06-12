@@ -21,3 +21,7 @@ See also: http://www.uniprot.org/manual/?query=category%3Aontologies
 The above `<div>` will automatically embed the following Stanza in your HTML page.
 
 <div data-stanza="http://togogenome.org/stanza/protein_ontologies" data-stanza-tax-id="1111708" data-stanza-gene-id="slr1311"></div>
+
+test
+
+<div data-stanza="http://localhost:3000/protein_ontologies" data-stanza-tax-id="1111708" data-stanza-gene-id="slr1311"></div>
