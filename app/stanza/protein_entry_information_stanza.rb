@@ -12,15 +12,17 @@ class ProteinEntryInformationStanza < Stanza::Base
         ?protein up:mnemonic ?entry_name ;
                  up:created  ?created ;
                  up:modified ?modified ;
-                 up:version  ?version ;
-                 up:reviewed ?reviewed .
+                 up:version  ?version .
 
         OPTIONAL {
+          ?protein up:reviewed ?reviewed .
           BIND ( str('Reviewed') as ?status ) .
           FILTER (?reviewed = true)
         }
 
+
         OPTIONAL {
+          ?protein up:reviewed ?reviewed .
           BIND ( str('Uneviewed') as ?status ) .
           FILTER (?reviewed = false)
         }
