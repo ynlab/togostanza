@@ -19,15 +19,16 @@ class ProteinGeneralAnnotationStanza < Stanza::Base
           ?annotation rdf:type ?type .
           ?type rdfs:label ?name .
         } UNION {
+          ?annotation rdf:type ?type .
           BIND (up:Annotation as ?type) .
           BIND (str('Miscellaneous') as ?name) .
-          ?annotation rdf:type ?type .
         } .
 
 
         # Subcellular_Location_Annotation 以外の時は、rdfs:comments を入れている
         OPTIONAL {
           FILTER (?type != up:Subcellular_Location_Annotation)
+          ?annotation rdf:type ?type .
           ?annotation rdfs:comment ?message .
         }
 
