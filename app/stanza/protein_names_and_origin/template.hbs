@@ -10,12 +10,12 @@
   </head>
 
   <body>
-    <table class='table table-bordered'>
+    <table class='table'>
       <tbody>
         <tr>
           <th>Protein names</th>
           <td>
-            <table class='table table-bordered'>
+            <table class='table'>
               <tbody>
                 {{#if summary.recommended_name}}
                   <tr><th>Recommended Name</th><td>{{summary.recommended_name}}</td></tr>
@@ -47,7 +47,7 @@
             <th>Genes names</th>
             <td>
               {{#each genes}}
-                <table class='table table-bordered'>
+                <table class='table'>
                   <tbody>
                     {{#if gene_name}}<tr><th>Name</th><td>{{gene_name}}</td></tr>{{/if}}
                     {{#if synonyms_name}}<tr><th>Synonyms</th><td>{{synonyms_name}}</td></tr>{{/if}}

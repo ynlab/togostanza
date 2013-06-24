@@ -10,7 +10,7 @@ describe Api::StanzaController do
 
     it { response.body.should be_json_eql(<<-JSON.strip_heredoc) }
       {
-        "css_uri": "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap.min.css",
+        "css_uri": "/stanza/assets/stanza.css",
         "genes": [
           {
             "gene_name": "psbA3",

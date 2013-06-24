@@ -31,7 +31,7 @@ module Stanza
     define_expression_map :resources
 
     property :css_uri do |css_uri|
-      css_uri || '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap.min.css'
+      css_uri || '/stanza/assets/stanza.css'
     end
 
     class << self
