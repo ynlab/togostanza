@@ -6,15 +6,17 @@ class ProteinSequencesStanza < Stanza::Base
 
       SELECT DISTINCT ?protein ?value ?mass ?modified ?version ?checksum
       WHERE {
-        ?protein up:organism  taxonomy:#{tax_id} ;
-                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
+        GRAPH <http://togogenome.org/uniprot/> {
+          ?protein up:organism  taxonomy:#{tax_id} ;
+                   rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
 
-        ?protein up:sequence ?seq .
-        ?seq rdf:value ?value ;
-             up:mass ?mass ;
-             up:modified ?modified ;
-             up:version ?version ;
-             up:crc64Checksum ?checksum .
+          ?protein up:sequence ?seq .
+          ?seq rdf:value ?value ;
+               up:mass ?mass ;
+               up:modified ?modified ;
+               up:version ?version ;
+               up:crc64Checksum ?checksum .
+        }
       }
     SPARQL
 
