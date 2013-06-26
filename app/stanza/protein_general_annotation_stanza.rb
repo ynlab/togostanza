@@ -8,38 +8,40 @@ class ProteinGeneralAnnotationStanza < Stanza::Base
 
       SELECT DISTINCT ?name ?message
       WHERE {
-        ?protein up:organism  taxonomy:#{tax_id} ;
-                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> ;
-                 up:annotation ?annotation .
+        GRAPH <http://togogenome.org/uniprot/> {
+          ?protein up:organism  taxonomy:#{tax_id} ;
+                   rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> ;
+                   up:annotation ?annotation .
 
-        # up:Annotation 配下のアノテーションか up:Annotation 自身か
-        # up:Annotation 自身の場合、label, type をBINDしている
-        {
-          ?type rdfs:subClassOf up:Annotation .
-          ?annotation rdf:type ?type .
-          ?type rdfs:label ?name .
-        } UNION {
-          ?annotation rdf:type ?type .
-          BIND (up:Annotation as ?type) .
-          BIND (str('Miscellaneous') as ?name) .
-        } .
+          # up:Annotation 配下のアノテーションか up:Annotation 自身か
+          # up:Annotation 自身の場合、label, type をBINDしている
+          {
+            ?type rdfs:subClassOf up:Annotation .
+            ?annotation rdf:type ?type .
+            ?type rdfs:label ?name .
+          } UNION {
+            ?annotation rdf:type ?type .
+            BIND (up:Annotation AS ?type) .
+            BIND (STR('Miscellaneous') AS ?name) .
+          } .
 
 
-        # Subcellular_Location_Annotation 以外の時は、rdfs:comments を入れている
-        OPTIONAL {
-          FILTER (?type != up:Subcellular_Location_Annotation)
-          ?annotation rdf:type ?type .
-          ?annotation rdfs:comment ?message .
-        }
+          # Subcellular_Location_Annotation 以外の時は、rdfs:comments を入れている
+          OPTIONAL {
+            FILTER (?type != up:Subcellular_Location_Annotation)
+            ?annotation rdf:type ?type .
+            ?annotation rdfs:comment ?message .
+          }
 
-        # Subcellular_Location_Annotation の時は、イロイロ頑張って取っている
-        OPTIONAL {
-          FILTER (?type = up:Subcellular_Location_Annotation)
-          ?location up:alias ?message .
-          ?located_in ?p ?location .
-          ?annotation up:locatedIn ?located_in .
-          ?annotation rdf:type up:Subcellular_Location_Annotation .
-          ?protein up:annotation ?annotation .
+          # Subcellular_Location_Annotation の時は、イロイロ頑張って取っている
+          OPTIONAL {
+            FILTER (?type = up:Subcellular_Location_Annotation)
+            ?location up:alias ?message .
+            ?located_in ?p ?location .
+            ?annotation up:locatedIn ?located_in .
+            ?annotation rdf:type up:Subcellular_Location_Annotation .
+            ?protein up:annotation ?annotation .
+          }
         }
       }
     SPARQL

@@ -6,14 +6,16 @@ class ProteinCrossReferencesStanza < Stanza::Base
 
       SELECT DISTINCT ?protein ?category ?abbr ?ref ?url_template
       WHERE {
-        ?protein up:organism  taxonomy:#{tax_id} ;
-                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
+        GRAPH <http://togogenome.org/uniprot/> {
+          ?protein up:organism  taxonomy:#{tax_id} ;
+                   rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
 
-        ?protein  rdfs:seeAlso    ?ref .
-        ?ref      up:database     ?database .
-        ?database up:category     ?category ;
-                  up:abbreviation ?abbr ;
-                  up:UrlTemplate  ?url_template .
+          ?protein  rdfs:seeAlso    ?ref .
+          ?ref      up:database     ?database .
+          ?database up:category     ?category ;
+                    up:abbreviation ?abbr ;
+                    up:UrlTemplate  ?url_template .
+        }
       }
     SPARQL
 

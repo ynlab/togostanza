@@ -6,31 +6,33 @@ class ProteinEntryInformationStanza < Stanza::Base
 
       SELECT DISTINCT ?protein ?entry_name ?created ?modified ?sequence_modified ?version ?sequence_version ?reviewed ?status
       WHERE {
-        ?protein up:organism  taxonomy:#{tax_id} ;
-                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
+        GRAPH <http://togogenome.org/uniprot/> {
+          ?protein up:organism  taxonomy:#{tax_id} ;
+                   rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
 
-        ?protein up:mnemonic ?entry_name ;
-                 up:created  ?created ;
-                 up:modified ?modified ;
-                 up:version  ?version .
+          ?protein up:mnemonic ?entry_name ;
+                   up:created  ?created ;
+                   up:modified ?modified ;
+                   up:version  ?version .
 
-        OPTIONAL {
-          ?protein up:reviewed ?reviewed .
-          BIND ( str('Reviewed') as ?status ) .
-          FILTER (?reviewed = true)
-        }
+          OPTIONAL {
+            ?protein up:reviewed ?reviewed .
+            BIND ( STR('Reviewed') AS ?status ) .
+            FILTER (?reviewed = true)
+          }
 
 
-        OPTIONAL {
-          ?protein up:reviewed ?reviewed .
-          BIND ( str('Uneviewed') as ?status ) .
-          FILTER (?reviewed = false)
-        }
+          OPTIONAL {
+            ?protein up:reviewed ?reviewed .
+            BIND ( STR('Uneviewed') AS ?status ) .
+            FILTER (?reviewed = false)
+          }
 
-        OPTIONAL {
-          ?protein up:sequence ?sequence .
-          ?sequence up:modified ?sequence_modified ;
-                    up:version ?sequence_version .
+          OPTIONAL {
+            ?protein up:sequence ?sequence .
+            ?sequence up:modified ?sequence_modified ;
+                      up:version ?sequence_version .
+          }
         }
       }
     SPARQL
