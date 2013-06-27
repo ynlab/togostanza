@@ -2,94 +2,7 @@ require 'bio-svgenes'
 require 'pp'
 
 class GeneViewStanza < Stanza::Base
-  property :gene do |tax_id, gene_id|
-    genes = query("http://ep.dbcls.jp/sparql", <<-SPARQL.strip_heredoc)
-      prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-      prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#>
-      prefix xsd:    <http://www.w3.org/2001/XMLSchema#>
-      prefix obo:    <http://purl.obolibrary.org/obo/>
-      prefix faldo:  <http://biohackathon.org/resource/faldo#>
-      prefix idorg:  <http://rdf.identifiers.org/database/>
-      prefix insdc:  <http://insdc.org/owl/>
-
-      select distinct
-        ?locus_tag
-        (str(?gene_type_label) as ?gene_type_label)
-        ?gene_label
-        ?gene_symbol
-        ?insdc_location
-        ?faldo_begin_position
-        ?faldo_end_position
-        (?faldo_begin_type as ?strand)
-        (str(?strand_label) as ?strand_label) #strand from ?faldo_begin_type
-        ?faldo_type
-        (str(?faldo_type_label) as ?faldo_type_label)
-        ((xsd:int(?faldo_end_position) - xsd:int(?faldo_begin_position) +1) as ?gene_length)
-        ?seq_label
-        ?seq_type
-        (str(?seq_type_label) as ?seq_type_label)
-        ?refseq_label
-        ?ncbi_taxid
-        ?organism
-        ?seq
-      from <http://togogenome.org/refseq/>
-      from <http://togogenome.org/so/>
-      from <http://togogenome.org/faldo/>
-      where {
-        values ?locus_tag { "#{gene_id}" }  # param "slr0473"
-        #values ?ncbi_taxid {"#{tax_id}" }  # param "taxon:1148"
-        values ?seq_type  { obo:SO_0000340 obo:SO_0000155 } # chromosome, plasmid
-        values ?gene_type { obo:SO_0000316 obo:SO_0000252 obo:SO_0000253 } # CDS, rRNA, tRNA
-        values ?faldo_begin_type { faldo:ForwardStrandPosition faldo:ReverseStrandPosition }
-
-        # gene
-        ?gene insdc:feature_locus_tag ?locus_tag.
-        ?gene a ?gene_type.
-        ?gene_type rdfs:label ?gene_type_label.
-
-        # gene label
-        ?gene rdfs:label ?gene_label.
-        OPTIONAL { ?gene insdc:feature_gene ?gene_symbol. }
-
-        # seq
-        ?gene obo:so_part_of+ ?seq.
-        ?seq rdfs:label ?seq_label.
-        ?seq a ?seq_type.
-        ?seq_type rdfs:label ?seq_type_label.
-        ?seq rdfs:seeAlso ?refseq .
-        ?refseq a idorg:RefSeq .
-        ?refseq rdfs:label ?refseq_label .
-        ?seq insdc:source_organism ?organism .
-
-        # taxonomy ncbi
-        ?seq rdfs:seeAlso ?taxonomy .
-        ?taxonomy a idorg:Taxonomy .
-        ?taxonomy rdfs:label ?ncbi_taxid .
-
-        # faldo
-        ?gene faldo:location ?faldo.
-        ?faldo insdc:location ?insdc_location.
-
-        ?faldo faldo:begin ?faldo_begin.
-        ?faldo_begin faldo:position ?faldo_begin_position.
-        ?faldo_begin rdf:type ?faldo_begin_type.
-        ?faldo_begin_type rdfs:label ?strand_label.
-
-        ?faldo faldo:end ?faldo_end.
-        ?faldo_end faldo:position ?faldo_end_position.
-        ?faldo_end rdf:type ?faldo_end_type.
-        ?faldo rdf:type ?faldo_type.
-        ?faldo_type rdfs:label ?faldo_type_label.
-      }
-    SPARQL
-    pp genes
-
-    gene = genes.first
-    offset = 2000
-    s = gene[:seq]
-    f = gene[:faldo_begin_position].to_i - offset
-    t = gene[:faldo_end_position].to_i + offset
-
+  property :svg do |tax_id, gene_id|
     results = query("http://ep.dbcls.jp/sparql", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
 
@@ -106,15 +19,43 @@ class GeneViewStanza < Stanza::Base
       from <http://togogenome.org/so/>
       from <http://togogenome.org/faldo/>
       where {
+        values ?locus_tag { "#{gene_id}" }  # param "slr0473"
+        #values ?ncbi_taxid {"#{tax_id}" }  # param "taxon:1148"
+        values ?seq_type  { obo:SO_0000340 obo:SO_0000155 } # chromosome, plasmid
+        values ?gene_type { obo:SO_0000316 obo:SO_0000252 obo:SO_0000253 } # CDS, rRNA, tRNA
         values ?faldo_type { faldo:ForwardStrandPosition faldo:ReverseStrandPosition }
-        ?obj obo:so_part_of+ <#{s}> .
+        values ?offset { 2000 }
+
+        # gene
+        ?gene insdc:feature_locus_tag ?locus_tag.
+        ?gene a ?gene_type.
+
+        # seq
+        ?gene obo:so_part_of+ ?seq.
+        ?seq a ?seq_type.
+
+        # faldo
+        ?gene faldo:location ?gene_loc.
+        ?gene_loc faldo:begin/faldo:position ?gene_begin.
+        ?gene_loc faldo:end/faldo:position ?gene_end.
+
+        # taxonomy ncbi
+        ?seq rdfs:seeAlso ?taxonomy .
+        ?taxonomy a idorg:Taxonomy .
+        ?taxonomy rdfs:label ?ncbi_taxid .
+
+        # objects around the gene
+        ?obj obo:so_part_of+ ?seq .
 
         ?obj faldo:location ?faldo .
         ?faldo faldo:begin/rdf:type ?faldo_type .
         ?faldo_type rdfs:label ?strand .
         ?faldo faldo:begin/faldo:position ?b .
         ?faldo faldo:end/faldo:position ?e .
-        filter ((#{f} < ?e && ?e < #{t}) || (#{f} < ?b && ?e < #{t}) || (#{f} < ?b && ?b < #{t}))
+        #bind ((xsd:integer(?gene_begin) - ?offset) as ?f)
+        #bind ((xsd:integer(?gene_end) + ?offset) as ?t)
+        #filter (!(?b > ?t || ?e < ?f))
+        filter (!(?b > ?gene_end + ?offset || ?e < ?gene_begin - ?offset))
 
         ?obj rdf:type ?obj_type .
         ?obj_type rdfs:label ?obj_label .
@@ -139,11 +80,10 @@ class GeneViewStanza < Stanza::Base
       order by ?b
     SPARQL
     objs = results.group_by {|h| h[:obj]}
-    pp objs
 
     page = Bio::Graphics::Page.new(
-      :width => 800, 
-      :height => 200, 
+      :width => 800,
+      :height => 200,
       :number_of_intervals => 3,
     )
 
@@ -243,7 +183,11 @@ class GeneViewStanza < Stanza::Base
       :fill_color => 'white',
       :line_color => 'white',
     )
-    
+
+    h_tmp = results.first
+    f = h_tmp[:gene_begin].to_i - h_tmp[:offset].to_i
+    t = h_tmp[:gene_end].to_i + h_tmp[:offset].to_i
+
     #rf = (f - offset) / 1000
     #rt = (t + offset) / 1000
 
@@ -252,12 +196,9 @@ class GeneViewStanza < Stanza::Base
       :end   => t, # rt * 1000,
       :strand => '+',
     )
-    
+
     range.add(feature)
 
     svg = page.get_markup
-    genes.first[:svg] = svg
-
-    genes
   end
 end
