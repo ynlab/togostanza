@@ -6,10 +6,15 @@ class ProteinNamesAndOriginStanza < Stanza::Base
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
+      PREFIX dct:   <http://purl.org/dc/terms/>
 
       SELECT DISTINCT ?gene_name ?synonyms_name ?locus_name ?orf_name
       WHERE {
-        GRAPH <http://togogenome.org/uniprot/> {
+        GRAPH <http://togogenome.org/graph/> {
+          <http://togogenome.org/uniprot/> dct:isVersionOf ?g .
+        }
+
+        GRAPH ?g {
           ?protein up:organism  taxonomy:#{tax_id} ;
                    rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
 
@@ -36,10 +41,15 @@ class ProteinNamesAndOriginStanza < Stanza::Base
     protein_summary = query(:uniprot, <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
+      PREFIX dct:   <http://purl.org/dc/terms/>
 
       SELECT DISTINCT ?recommended_name ?ec_name ?alternative_names ?organism_name ?parent_taxonomy_names
       WHERE {
-        GRAPH <http://togogenome.org/uniprot/> {
+        GRAPH <http://togogenome.org/graph/> {
+          <http://togogenome.org/uniprot/> dct:isVersionOf ?g .
+        }
+
+        GRAPH ?g {
           ?protein up:organism  taxonomy:#{tax_id} ;
                    rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
 

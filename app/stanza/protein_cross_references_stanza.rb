@@ -3,10 +3,15 @@ class ProteinCrossReferencesStanza < Stanza::Base
     references = query(:uniprot, <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
+      PREFIX dct:   <http://purl.org/dc/terms/>
 
       SELECT DISTINCT ?protein ?category ?abbr ?ref ?url_template
       WHERE {
-        GRAPH <http://togogenome.org/uniprot/> {
+        GRAPH <http://togogenome.org/graph/> {
+          <http://togogenome.org/uniprot/> dct:isVersionOf ?g .
+        }
+
+        GRAPH ?g {
           ?protein up:organism  taxonomy:#{tax_id} ;
                    rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
 

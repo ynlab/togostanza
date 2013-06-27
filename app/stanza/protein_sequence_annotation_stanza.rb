@@ -13,10 +13,15 @@ class ProteinSequenceAnnotationStanza < Stanza::Base
     annotations = query(:uniprot, <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
+      PREFIX dct:   <http://purl.org/dc/terms/>
 
-      SELECT DISTINCT ?parent_label ?label ?begin_location ?end_location ?seq_length ?comment (GROUP_CONCAT(?substitution, ", ") AS ?substitutions) ?seq ?annotation ?feature_identifier
+      SELECT DISTINCT ?parent_label ?label ?begin_location ?end_location ?seq_length ?comment (GROUP_CONCAT(?substitution, ", ") AS ?substitutions) ?seq ?feature_identifier
       WHERE {
-        #GRAPH <http://togogenome.org/uniprot/> {
+        GRAPH <http://togogenome.org/graph/> {
+          <http://togogenome.org/uniprot/> dct:isVersionOf ?g .
+        }
+
+        GRAPH ?g {
           ?protein up:organism taxonomy:#{tax_id} ;
                    rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> ;
                    up:annotation ?annotation .
@@ -51,13 +56,13 @@ class ProteinSequenceAnnotationStanza < Stanza::Base
             BIND (STR(?annotation) AS ?feature_identifier) .
             FILTER REGEX(STR(?annotation), 'http://purl.uniprot.org/annotation')
           }
-        #}
+        }
       }
-      GROUP BY ?parent_label ?label ?begin_location ?end_location ?seq_length ?comment ?seq ?annotation ?feature_identifier
+      GROUP BY ?parent_label ?label ?begin_location ?end_location ?seq_length ?comment ?seq ?feature_identifier
       ORDER BY ?parent_label ?label ?begin_location ?end_location
     SPARQL
 
-    annotations.map.with_index {|hash, i|
+    annotations.uniq.map.with_index {|hash, i|
       begin_location, end_location, substitutions, seq = hash.values_at(:begin_location, :end_location, :substitutions, :seq)
 
       hash.merge(
