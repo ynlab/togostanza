@@ -14,42 +14,44 @@ class ProteinSequenceAnnotationStanza < Stanza::Base
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
-      SELECT DISTINCT ?parent_label ?label ?begin_location ?end_location ?seq_length ?comment (GROUP_CONCAT(DISTINCT ?substitution; SEPARATOR=", ") AS ?substitutions) ?seq ?annotation ?feature_identifier
+      SELECT DISTINCT ?parent_label ?label ?begin_location ?end_location ?seq_length ?comment (GROUP_CONCAT(?substitution, ", ") AS ?substitutions) ?seq ?annotation ?feature_identifier
       WHERE {
-        ?protein up:organism taxonomy:#{tax_id} ;
-                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> ;
-                 up:annotation ?annotation .
+        #GRAPH <http://togogenome.org/uniprot/> {
+          ?protein up:organism taxonomy:#{tax_id} ;
+                   rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> ;
+                   up:annotation ?annotation .
 
-        ?annotation rdf:type ?type .
-        ?type rdfs:label ?label .
+          ?annotation rdf:type ?type .
+          ?type rdfs:label ?label .
 
-        # sequence annotation 直下のtype のラベルを取得(Region, Site, Molecule Processing, Experimental Information)
-        ?type rdfs:subClassOf* ?parent_type .
-        ?parent_type rdfs:subClassOf up:Sequence_Annotation ;
-                     rdfs:label ?parent_label .
+          # sequence annotation 直下のtype のラベルを取得(Region, Site, Molecule Processing, Experimental Information)
+          ?type rdfs:subClassOf* ?parent_type .
+          ?parent_type rdfs:subClassOf up:Sequence_Annotation ;
+                       rdfs:label ?parent_label .
 
-        ?annotation up:range ?range .
-        OPTIONAL { ?annotation rdfs:comment ?comment . }
-        ?range up:begin ?begin_location ;
-               up:end ?end_location .
+          ?annotation up:range ?range .
+          OPTIONAL { ?annotation rdfs:comment ?comment . }
+          ?range up:begin ?begin_location ;
+                 up:end ?end_location .
 
-        # description の一部が取得できるが、内容の表示に必要があるのか
-        OPTIONAL{
-          ?annotation up:substitution ?substitution .
-          ?protein up:sequence/rdf:value ?seq .
-        }
+          # description の一部が取得できるが、内容の表示に必要があるのか
+          OPTIONAL{
+            ?annotation up:substitution ?substitution .
+            ?protein up:sequence/rdf:value ?seq .
+          }
 
-        # sequence の長さ取得用
-        OPTIONAL{
-          ?protein up:sequence/rdf:value ?seq_txt .
-          BIND (STRLEN(?seq_txt) AS ?seq_length) .
-        }
+          # sequence の長さ取得用
+          OPTIONAL{
+            ?protein up:sequence/rdf:value ?seq_txt .
+            BIND (STRLEN(?seq_txt) AS ?seq_length) .
+          }
 
-        OPTIONAL {
-          ?annotation rdf:type ?type . # Virtuoso 対応
-          BIND (STR(?annotation) AS ?feature_identifier) .
-          FILTER REGEX(STR(?annotation), 'http://purl.uniprot.org/annotation')
-        }
+          OPTIONAL {
+            ?annotation rdf:type ?type . # Virtuoso 対応
+            BIND (STR(?annotation) AS ?feature_identifier) .
+            FILTER REGEX(STR(?annotation), 'http://purl.uniprot.org/annotation')
+          }
+        #}
       }
       GROUP BY ?parent_label ?label ?begin_location ?end_location ?seq_length ?comment ?seq ?annotation ?feature_identifier
       ORDER BY ?parent_label ?label ?begin_location ?end_location
