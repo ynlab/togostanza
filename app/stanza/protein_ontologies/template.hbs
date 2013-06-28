@@ -22,8 +22,8 @@
         <tbody>
           {{#if keywords.biological_process}}
             <tr>
-              <th>Biological process</th>
-              <td>
+              <th class='span4'>Biological process</th>
+              <td class='span8'>
                 <ul>
                   {{#each keywords.biological_process}}
                     <li><a href='{{concept}}'>{{names}}</a></li>
@@ -35,8 +35,8 @@
 
           {{#if keywords.cellular_component}}
             <tr>
-              <th>Cellular component</th>
-              <td>
+              <th class='span4'>Cellular component</th>
+              <td class='span8'>
                 <ul>
                   {{#each keywords.cellular_component}}
                     <li><a href='{{concept}}'>{{names}}</a></li>
@@ -48,8 +48,8 @@
 
           {{#if keywords.domain}}
             <tr>
-              <th>Domain</th>
-              <td>
+              <th class='span4'>Domain</th>
+              <td class='span8'>
                 <ul>
                   {{#each keywords.domain}}
                     <li><a href='{{concept}}'>{{names}}</a></li>
@@ -61,8 +61,8 @@
 
           {{#if keywords.ligand}}
             <tr>
-              <th>Ligand</th>
-              <td>
+              <th class='span4'>Ligand</th>
+              <td class='span8'>
                 <ul>
                   {{#each keywords.ligand}}
                     <li><a href='{{concept}}'>{{names}}</a></li>
@@ -74,8 +74,8 @@
 
           {{#if keywords.molecular_function}}
             <tr>
-              <th>Molecular function</th>
-              <td>
+              <th class='span4'>Molecular function</th>
+              <td class='span8'>
                 <ul>
                   {{#each keywords.molecular_function}}
                     <li><a href='{{concept}}'>{{names}}</a></li>
@@ -87,8 +87,8 @@
 
           {{#if keywords.technical_term}}
             <tr>
-              <th>Technical term</th>
-              <td>
+              <th class='span4'>Technical term</th>
+              <td class='span8'>
                 <ul>
                   {{#each keywords.technical_term}}
                     <li><a href='{{concept}}'>{{names}}</a></li>
@@ -107,8 +107,8 @@
         <tbody>
           {{#if gene_ontlogies.biological_process}}
             <tr>
-              <th>Biological process</th>
-              <td>
+              <th class='span4'>Biological process</th>
+              <td class='span8'>
                 {{#each gene_ontlogies.biological_process}}
                   <ul>
                     <li>{{this.name}}</li>
@@ -120,8 +120,8 @@
 
           {{#if gene_ontlogies.cellular_component}}
             <tr>
-              <th>Cellular component</th>
-              <td>
+              <th class='span4'>Cellular component</th>
+              <td class='span8'>
                 {{#each gene_ontlogies.cellular_component}}
                   <ul>
                     <li>{{this.name}}</li>
@@ -133,8 +133,8 @@
 
           {{#if gene_ontlogies.molecular_function}}
             <tr>
-              <th>Molecular function</th>
-              <td>
+              <th class='span4'>Molecular function</th>
+              <td class='span8'>
                 {{#each gene_ontlogies.molecular_function}}
                   <ul>
                     <li>{{this.name}}</li>

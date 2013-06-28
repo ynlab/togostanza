@@ -13,22 +13,22 @@
     <table class='table'>
       <tbody>
         <tr>
-          <th>Protein names</th>
-          <td>
+          <th class='span4'>Protein names</th>
+          <td class='span8'>
             <table class='table'>
               <tbody>
                 {{#if summary.recommended_name}}
-                  <tr><th>Recommended Name</th><td>{{summary.recommended_name}}</td></tr>
+                  <tr><th class='span4'>Recommended Name</th><td class='span4'>{{summary.recommended_name}}</td></tr>
                 {{/if}}
 
                 {{#if summary.ec_name}}
-                  <tr><th>EC=</th><td>{{summary.ec_name}}</td></tr>
+                  <tr><th class='span4'>EC=</th><td class='span4'>{{summary.ec_name}}</td></tr>
                 {{/if}}
 
                 {{#if summary.alternative_names}}
                   <tr>
-                    <th>Alternative Name(s)</th>
-                    <td>
+                    <th class='span4'>Alternative Name(s)</th>
+                    <td class='span4'>
                       <ul>
                         {{#each summary.alternative_names}}
                           <li>{{this}}</li>
@@ -44,15 +44,15 @@
 
         {{#if genes}}
           <tr>
-            <th>Genes names</th>
-            <td>
+            <th class='span4'>Genes names</th>
+            <td class='span8'>
               {{#each genes}}
                 <table class='table'>
                   <tbody>
-                    {{#if gene_name}}<tr><th>Name</th><td>{{gene_name}}</td></tr>{{/if}}
-                    {{#if synonyms_name}}<tr><th>Synonyms</th><td>{{synonyms_name}}</td></tr>{{/if}}
-                    {{#if locus_name}}<tr><th>Ordered Locus Names</th><td>{{locus_name}}</td></tr>{{/if}}
-                    {{#if orf_name}}<tr><th>ORF Names</th><td>{{orf_name}}</td></tr>{{/if}}
+                    {{#if gene_name}}<tr><th class='span4'>Name</th><td class='span4'>{{gene_name}}</td></tr>{{/if}}
+                    {{#if synonyms_name}}<tr><th class='span4'>Synonyms</th><td class='span4'>{{synonyms_name}}</td></tr>{{/if}}
+                    {{#if locus_name}}<tr><th class='span4'>Ordered Locus Names</th><td class='span4'>{{locus_name}}</td></tr>{{/if}}
+                    {{#if orf_name}}<tr><th class='span4'>ORF Names</th><td class='span4'>{{orf_name}}</td></tr>{{/if}}
                   </tbody>
                 </table>
               {{/each}}

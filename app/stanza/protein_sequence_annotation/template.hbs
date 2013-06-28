@@ -78,23 +78,23 @@
           <caption>{{this.first.parent_label}}</caption>
           <thead>
             <tr>
-              <th>Feature key</th>
-              <th>Position(s)</th>
-              <th>Length</th>
-              <th>Description</th>
-              <th>Feature identifier</th>
-              <th>Graphical view</th>
+              <th class='span2'>Feature key</th>
+              <th class='span1'>Position(s)</th>
+              <th class='span1'>Length</th>
+              <th class='span3'>Description</th>
+              <th class='span3'>Feature identifier</th>
+              <th class='span2'>Graphical view</th>
             </tr>
           </thead>
           <tbody>
             {{#each this}}
               <tr>
-                <td>{{label}}</td>
-                <td>{{position}}</td>
-                <td>{{location_length}}</td>
-                <td>{{substitution_sequence}}{{comment}}</td>
-                <td>{{feature_identifier}}</td>
-                <td id="{{row_id}}" class="graphicalview valign-middle" >
+                <td class='span2'>{{label}}</td>
+                <td class='span1'>{{position}}</td>
+                <td class='span1'>{{location_length}}</td>
+                <td class='span3'>{{substitution_sequence}}{{comment}}</td>
+                <td class='span3'>{{feature_identifier}}</td>
+                <td id="{{row_id}}" class="graphicalview valign-middle span2" >
                   <script>render_sequence_chart('{{row_id}}', {{begin_location}}, {{end_location}}, {{seq_length}});</script>
                 </td>
               </tr>
