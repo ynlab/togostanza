@@ -24,26 +24,19 @@ class GenomeCrossReferencesStanza < Stanza::Base
       }
     SPARQL
 
-    # Absolutely need cosmetic :)
-    hash = results.group_by {|h1| h1[:bp]}
-      .each_with_object([]) {|(k,v),a1|
-        h2 = {}
-        h2[:bp] = k
-        h2[:data] = v.group_by {|h3|
-          h3[:rs]}.each_with_object([]) {|(k,v),a2|
-            h4 = {}
-            h4[:rs] = k
-            h4[:desc] = v.first[:desc]
-            h4[:xref] = v.map {|h5|
-              xref_db, xref_id = h5[:label].split(':')
-              h5.merge(:xref_db => xref_db, :xref_id => xref_id)
-            }.sort_by {|h6|
-              h6[:xref_db]
-            }
-            a2 << h4
-          }
-        a1 << h2
-        }
-    hash
+    results.group_by {|h| h[:bp] }.map do |bp, values|
+      data = values.group_by {|h| h[:rs] }.map {|rs, v|
+        {rs: rs, desc: v.first[:desc], xref: xref(v)}
+      }
+
+      {bp: bp, data: data}
+    end
+  end
+
+  def xref(values)
+    values.map {|hash|
+      xref_db, xref_id = hash[:label].split(':')
+      hash.merge(xref_db: xref_db, xref_id: xref_id)
+    }.sort_by {|h| h[:xref_db] }
   end
 end

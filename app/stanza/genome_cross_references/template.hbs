@@ -11,23 +11,22 @@
 
   <body>
     {{#if xrefs}}
-    {{#each xrefs}}
-    <h2>{{bp}}</h2>
-    {{#each data}}
-    <h3>{{rs}} : {{desc}}</h3>
-    <table class='table table-bordered'>
-      <tbody>
-        {{#each xref}}
-        <tr>
-          <th>{{xref_db}}</th>
-          <td><a href="{{xref}}">{{xref_id}}</a></td>
-        </tr>
+      {{#each xrefs}}
+        <h2>{{bp}}</h2>
+        {{#each data}}
+          <h3>{{rs}} : {{desc}}</h3>
+          <table class='table table-bordered'>
+            <tbody>
+              {{#each xref}}
+                <tr>
+                  <th>{{xref_db}}</th>
+                  <td><a href="{{xref}}">{{xref_id}}</a></td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
         {{/each}}
-      </tbody>
-    </table>
-    {{/each}}
-    {{/each}}
+      {{/each}}
     {{/if}}
   </body>
 </html>
-
