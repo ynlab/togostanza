@@ -13,31 +13,31 @@ describe Api::StanzaController do
         "css_uri": "/stanza/assets/stanza.css",
         "genes": [
           {
-            "gene_name": "psbA3",
-            "locus_name": "sll1867",
-            "synonyms_name": "psbA-3"
+            "gene_name": "psbA2",
+            "synonyms_name": "psbA-2",
+            "locus_name": "slr1311"
           },
           {
-            "gene_name": "psbA2",
-            "locus_name": "slr1311",
-            "synonyms_name": "psbA-2"
+            "gene_name": "psbA3",
+            "synonyms_name": "psbA-3",
+            "locus_name": "sll1867"
           }
         ],
         "summary": {
           "alternative_names": [
-            "Photosystem II protein D1 2",
-            "32 kDa thylakoid membrane protein 2"
+            "32 kDa thylakoid membrane protein 2",
+            "Photosystem II protein D1 2"
           ],
           "ec_name": "1.10.3.9",
           "organism_name": "Synechocystis sp. (strain PCC 6803 / Kazusa)",
           "parent_taxonomy_names": [
             "cellular organisms",
-            "Bacteria",
+            "Oscillatoriophycideae",
             "Cyanobacteria",
-            "Chroococcales",
             "Synechocystis",
-            "Synechocystis sp. PCC 6803",
-            "Synechocystis sp. (strain PCC 6803 / Kazusa)"
+            "Chroococcales",
+            "Bacteria",
+            "Synechocystis sp. PCC 6803"
           ],
           "recommended_name": "Photosystem Q(B) protein 2",
           "taxonomy_id": "1111708"

@@ -6,26 +6,33 @@ class ProteinNamesAndOriginStanza < Stanza::Base
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
+      PREFIX dct:   <http://purl.org/dc/terms/>
 
       SELECT DISTINCT ?gene_name ?synonyms_name ?locus_name ?orf_name
       WHERE {
-        ?protein up:organism  taxonomy:#{tax_id} ;
-                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
+        GRAPH <http://togogenome.org/graph/> {
+          <http://togogenome.org/uniprot/> dct:isVersionOf ?g .
+        }
 
-        # Gene names
-        ?protein up:encodedBy ?gene .
+        GRAPH ?g {
+          ?protein up:organism  taxonomy:#{tax_id} ;
+                   rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
 
-        ## Name:
-        OPTIONAL { ?gene skos:prefLabel ?gene_name . }
+          # Gene names
+          ?protein up:encodedBy ?gene .
 
-        ## Synonyms:
-        OPTIONAL { ?gene skos:altLabel ?synonyms_name . }
+          ## Name:
+          OPTIONAL { ?gene skos:prefLabel ?gene_name . }
 
-        ## Ordered Locus Names:
-        OPTIONAL { ?gene up:locusName ?locus_name . }
+          ## Synonyms:
+          OPTIONAL { ?gene skos:altLabel ?synonyms_name . }
 
-        ## ORF Names:
-        OPTIONAL { ?gene up:orfName ?orf_name . }
+          ## Ordered Locus Names:
+          OPTIONAL { ?gene up:locusName ?locus_name . }
+
+          ## ORF Names:
+          OPTIONAL { ?gene up:orfName ?orf_name . }
+        }
       }
     SPARQL
   end
@@ -34,36 +41,43 @@ class ProteinNamesAndOriginStanza < Stanza::Base
     protein_summary = query(:uniprot, <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
+      PREFIX dct:   <http://purl.org/dc/terms/>
 
       SELECT DISTINCT ?recommended_name ?ec_name ?alternative_names ?organism_name ?parent_taxonomy_names
       WHERE {
-        ?protein up:organism  taxonomy:#{tax_id} ;
-                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
-
-        # Protein names
-        ## Recommended name:
-        OPTIONAL {
-          ?protein up:recommendedName ?recommended_name_node .
-          ?recommended_name_node up:fullName ?recommended_name .
+        GRAPH <http://togogenome.org/graph/> {
+          <http://togogenome.org/uniprot/> dct:isVersionOf ?g .
         }
 
-        ### EC=
-        OPTIONAL { ?recommended_name_node up:ecName ?ec_name . }
+        GRAPH ?g {
+          ?protein up:organism  taxonomy:#{tax_id} ;
+                   rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
 
-        OPTIONAL {
-          ?protein up:alternativeName ?alternative_names_node .
-          ?alternative_names_node up:fullName ?alternative_names .
-        }
+          # Protein names
+          ## Recommended name:
+          OPTIONAL {
+            ?protein up:recommendedName ?recommended_name_node .
+            ?recommended_name_node up:fullName ?recommended_name .
+          }
 
-        # Organism
-        OPTIONAL { taxonomy:#{tax_id} up:scientificName ?organism_name . }
+          ### EC=
+          OPTIONAL { ?recommended_name_node up:ecName ?ec_name . }
 
-        # Taxonomic identifier
+          OPTIONAL {
+            ?protein up:alternativeName ?alternative_names_node .
+            ?alternative_names_node up:fullName ?alternative_names .
+          }
 
-        # Taxonomic lineage
-        OPTIONAL {
-          taxonomy:#{tax_id} rdfs:subClassOf* ?parent_taxonomy .
-          ?parent_taxonomy up:scientificName ?parent_taxonomy_names .
+          # Organism
+          OPTIONAL { taxonomy:#{tax_id} up:scientificName ?organism_name . }
+
+          # Taxonomic identifier
+
+          # Taxonomic lineage
+          OPTIONAL {
+            taxonomy:#{tax_id} rdfs:subClassOf* ?parent_taxonomy .
+            ?parent_taxonomy up:scientificName ?parent_taxonomy_names .
+          }
         }
       }
     SPARQL
@@ -73,8 +87,9 @@ class ProteinNamesAndOriginStanza < Stanza::Base
       v = vs.map(&:last).uniq
       hash[k] = [:alternative_names, :parent_taxonomy_names].include?(k) ? v : v.first
     }
+
     protein_summary[:taxonomy_id] = tax_id
-    protein_summary[:parent_taxonomy_names].reverse!
+    protein_summary[:parent_taxonomy_names].reverse! if protein_summary[:parent_taxonomy_names]
     protein_summary
   end
 end

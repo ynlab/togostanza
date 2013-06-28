@@ -2,50 +2,94 @@
 
 class ProteinGeneralAnnotationStanza < Stanza::Base
   property :general_annotations do |tax_id, gene_id|
-    annotations = query(:uniprot, <<-SPARQL.strip_heredoc)
+    uniprot_url = uniprot_url_from_togogenome(gene_id)
+
+    # type がup:Annotation のアノテーション
+    annotation_type = query(:uniprot, <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
+      PREFIX dct:   <http://purl.org/dc/terms/>
 
       SELECT DISTINCT ?name ?message
       WHERE {
-        ?protein up:organism  taxonomy:#{tax_id} ;
-                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> ;
-                 up:annotation ?annotation .
-
-        # up:Annotation 配下のアノテーションか up:Annotation 自身か
-        # up:Annotation 自身の場合、label, type をBINDしている
-        {
-          ?type rdfs:subClassOf up:Annotation .
-          ?annotation rdf:type ?type .
-          ?type rdfs:label ?name .
-        } UNION {
-          BIND (up:Annotation as ?type) .
-          BIND (str('Miscellaneous') as ?name) .
-          ?annotation rdf:type ?type .
-        } .
-
-
-        # Subcellular_Location_Annotation 以外の時は、rdfs:comments を入れている
-        OPTIONAL {
-          FILTER (?type != up:Subcellular_Location_Annotation)
-          ?annotation rdfs:comment ?message .
+        GRAPH <http://togogenome.org/graph/> {
+          <http://togogenome.org/uniprot/> dct:isVersionOf ?g .
         }
 
-        # Subcellular_Location_Annotation の時は、イロイロ頑張って取っている
-        OPTIONAL {
-          FILTER (?type = up:Subcellular_Location_Annotation)
-          ?location up:alias ?message .
-          ?located_in ?p ?location .
-          ?annotation up:locatedIn ?located_in .
+        GRAPH ?g {
+          ?protein up:organism  taxonomy:#{tax_id} ;
+                   rdfs:seeAlso <#{uniprot_url}> ;
+                   up:annotation ?annotation .
+
+          ?annotation rdf:type up:Annotation .
+
+          # name, message の取得
+          BIND(STR('Miscellaneous') AS ?name) .
+          ?annotation rdfs:comment ?message .
+        }
+      }
+    SPARQL
+
+    # subClassOf Annotation で type が up:Subcellular_Location_Annotation のアノテーション
+    subcellular_location_annotation_type = query(:uniprot, <<-SPARQL.strip_heredoc)
+      PREFIX up: <http://purl.uniprot.org/core/>
+      PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
+      PREFIX dct:   <http://purl.org/dc/terms/>
+
+      SELECT DISTINCT ?name ?message
+      WHERE {
+        GRAPH <http://togogenome.org/graph/> {
+          <http://togogenome.org/uniprot/> dct:isVersionOf ?g .
+        }
+
+        GRAPH ?g {
+          ?protein up:organism  taxonomy:#{tax_id} ;
+                   rdfs:seeAlso <#{uniprot_url}> ;
+                   up:annotation ?annotation .
+
+          ?type rdfs:subClassOf up:Annotation .
           ?annotation rdf:type up:Subcellular_Location_Annotation .
-          ?protein up:annotation ?annotation .
+
+          # name, message の取得
+          up:Subcellular_Location_Annotation rdfs:label ?name .
+          ?annotation up:locatedIn ?located_in .
+          ?located_in ?p ?location .
+          ?location up:alias ?message .
+        }
+      }
+    SPARQL
+
+    # type が up:Subcellular_Location_Annotation 以外の subClassOf Annotation のアノテーション
+    subclass_of_annotation_type = query(:uniprot, <<-SPARQL.strip_heredoc)
+      PREFIX up: <http://purl.uniprot.org/core/>
+      PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
+      PREFIX dct:   <http://purl.org/dc/terms/>
+
+      SELECT DISTINCT ?name ?message
+      WHERE {
+        GRAPH <http://togogenome.org/graph/> {
+          <http://togogenome.org/uniprot/> dct:isVersionOf ?g .
+        }
+
+        GRAPH ?g {
+          ?protein up:organism  taxonomy:#{tax_id} ;
+                   rdfs:seeAlso <#{uniprot_url}> ;
+                   up:annotation ?annotation .
+
+          ?annotation rdf:type ?type .
+          ?type rdfs:subClassOf up:Annotation .
+          FILTER (?type != up:Subcellular_Location_Annotation)
+
+          # name, message の取得
+          ?type rdfs:label ?name .
+          ?annotation rdfs:comment ?message .
         }
       }
     SPARQL
 
     # [{name: 'xxx', message: 'aaa'}, {name: 'xxx', message: 'bbb'}, {name: 'yyy', message: 'ccc'}]
     # => [{name: 'xxx', messages: ['aaa', 'bbb']}, {name: 'yyy', messages: ['ccc']}]
-    annotations.group_by {|a| a[:name] }.map {|k, vs|
+    (annotation_type + subcellular_location_annotation_type + subclass_of_annotation_type).group_by {|a| a[:name] }.map {|k, vs|
       {
         name:     k,
         messages: vs.map {|v| v[:message] }

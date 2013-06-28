@@ -20,4 +20,4 @@ See also: http://www.uniprot.org/manual/?query=category%3Aprotein_attributes
 
 The above `<div>` will automatically embed the following Stanza in your HTML page.
 
-<div data-stanza="http://togogenome.org/stanza/protein_attributes" data-stanza-tax-id="1111708" data-stanza-gene-id="slr1311"></div>
+<div data-stanza="/protein_attributes" data-stanza-tax-id="1111708" data-stanza-gene-id="slr1311"></div>
