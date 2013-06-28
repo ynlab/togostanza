@@ -20,4 +20,4 @@ See also: http://www.uniprot.org/manual/?query=category%3Across_references
 
 The above `<div>` will automatically embed the following Stanza in your HTML page.
 
-<div data-stanza="/protein_cross_references" data-stanza-tax-id="1111708" data-stanza-gene-id="slr1311"></div>
+<div data-stanza="/stanza/protein_cross_references" data-stanza-tax-id="1111708" data-stanza-gene-id="slr1311"></div>
