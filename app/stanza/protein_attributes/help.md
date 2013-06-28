@@ -22,4 +22,5 @@ The above `<div>` will automatically embed the following Stanza in your HTML pag
 
 <div data-stanza="http://togogenome.org/stanza/protein_attributes" data-stanza-tax-id="1111708" data-stanza-gene-id="slr1311"></div>
 
-<div data-stanza="http://localhost:3001/protein_attributes" data-stanza-tax-id="1111708" data-stanza-gene-id="slr1311"></div>
+test:
+<div data-stanza="http://localhost:3000/protein_attributes" data-stanza-tax-id="1111708" data-stanza-gene-id="slr1311"></div>

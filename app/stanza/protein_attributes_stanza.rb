@@ -40,7 +40,7 @@ class ProteinAttributesStanza < Stanza::Base
       attrs.merge(
         sequence_length:     attrs[:sequence].try(:length),
         sequence_status:     sequence_status(attrs[:fragment].to_s),
-        sequence_processing: (attrs[:precursor] == 'true') ? 'precursor' : nil
+        sequence_processing: is_true?(attrs[:precursor]) ? 'precursor' : nil
       )
     }
   end
@@ -54,5 +54,10 @@ class ProteinAttributesStanza < Stanza::Base
     else
       'Complete'
     end
+  end
+
+  def is_true?(val)
+    # XXX Owlimだと 'true' が、Virtuosoだと '1' が返ってくるよ...
+    val == 'true' || val == '1'
   end
 end
