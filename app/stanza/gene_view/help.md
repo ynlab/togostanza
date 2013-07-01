@@ -21,8 +21,8 @@ Schematic view of the structure and surroundings of a gene
 
 The above `<div>` will automatically embed the following Stanza in your HTML page.
 
-<div data-stanza="/gene_view" data-stanza-tax-id="155864" data-stanza-gene-id="Z2546m"></div>
-<div data-stanza="/gene_view" data-stanza-tax-id="155864" data-stanza-gene-id="Z0217"></div>
+<div data-stanza="/stanza/gene_view" data-stanza-tax-id="155864" data-stanza-gene-id="Z2546m"></div>
+<div data-stanza="/stanza/gene_view" data-stanza-tax-id="155864" data-stanza-gene-id="Z0217"></div>
 
 Example image:<br/>
 ```html

@@ -1,5 +1,4 @@
 require 'bio-svgenes'
-require 'pp'
 
 class GeneViewStanza < Stanza::Base
   property :svg do |tax_id, gene_id|
@@ -82,9 +81,9 @@ class GeneViewStanza < Stanza::Base
     objs = results.group_by {|h| h[:obj]}
 
     page = Bio::Graphics::Page.new(
-      :width => 800,
-      :height => 200,
-      :number_of_intervals => 3,
+      width: 800,
+      height: 200,
+      number_of_intervals: 3
     )
 
     gene_track = nil
@@ -101,12 +100,14 @@ class GeneViewStanza < Stanza::Base
         param[:type] = exon[:obj_label]
         param[:start] = exon[:b].to_i
         param[:end] = exon[:e].to_i
+
         case exon[:strand]
         when 'Positive strand'
           param[:strand] = '+'
         else
           param[:strand] = '-'
         end
+
         if exon[:pb] and exon[:pe]
           exons << [exon[:pb].to_i, exon[:pe].to_i]
         else
@@ -115,73 +116,78 @@ class GeneViewStanza < Stanza::Base
       end
 
       obj = Bio::Graphics::MiniFeature.new(
-        :id => param[:id],
-        :start => param[:start],
-        :end => param[:end],
-        :strand => param[:strand],
-        :exons => exons.sort_by{|x| x.first}.flatten,
+        id: param[:id],
+        start: param[:start],
+        end: param[:end],
+        strand: param[:strand],
+        exons: exons.sort_by{|x| x.first}.flatten
       )
+
       case param[:type]
       when "CDS"
         unless gene_track
           gene_track = page.add_track(
-            :glyph => :transcript,
-            :name => 'protein coding gene',
-            :feature_height => 15,
-            :exon_fill_color => :blue_white_h,
-            :utr_fill_color => :red_white_h,
-            :gap_marker => 'angled',
+            glyph: :transcript,
+            name: 'protein coding gene',
+            feature_height: 15,
+            exon_fill_color: :blue_white_h,
+            utr_fill_color: :red_white_h,
+            gap_marker: 'angled'
           )
         end
+
         gene_track.add(obj)
       when "rRNA"
         unless rrna_track
           rrna_track = page.add_track(
-            :glyph => :transcript,
-            :name => 'rRNA gene',
-            :feature_height => 15,
-            :exon_fill_color => :yellow_white_h,
-            :utr_fill_color => :red_white_h,
-            :gap_marker => 'angled',
+            glyph: :transcript,
+            name: 'rRNA gene',
+            feature_height: 15,
+            exon_fill_color: :yellow_white_h,
+            utr_fill_color: :red_white_h,
+            gap_marker: 'angled'
           )
         end
+
         rrna_track.add(obj)
       when "tRNA"
         unless trna_track
           trna_track = page.add_track(
-            :glyph => :transcript,
-            :name => 'tRNA gene',
-            :feature_height => 15,
-            :exon_fill_color => :green_white_h,
-            :utr_fill_color => :red_white_h,
-            :gap_marker => 'angled',
+            glyph: :transcript,
+            name: 'tRNA gene',
+            feature_height: 15,
+            exon_fill_color: :green_white_h,
+            utr_fill_color: :red_white_h,
+            gap_marker: 'angled'
           )
         end
+
         trna_track.add(obj)
       else
         unless other_track
           other_track = page.add_track(
-            :glyph => :transcript,
-            :name => 'other',
-            :feature_height => 15,
-            :exon_fill_color => :red_white_h,
-            :utr_fill_color => :red_white_h,
-            :gap_marker => 'angled',
+            glyph: :transcript,
+            name: 'other',
+            feature_height: 15,
+            exon_fill_color: :red_white_h,
+            utr_fill_color: :red_white_h,
+            gap_marker: 'angled'
           )
         end
+
         other_track.add(obj)
       end
     end
 
     # reserve diagram width
     range = page.add_track(
-      :glyph => :generic,
-      :label => false,
-      :feature_height => 2,
-      :stroke_width => 1,
-      :stroke => 'white',
-      :fill_color => 'white',
-      :line_color => 'white',
+      glyph: :generic,
+      label: false,
+      feature_height: 2,
+      stroke_width: 1,
+      stroke: 'white',
+      fill_color: 'white',
+      line_color: 'white'
     )
 
     h_tmp = results.first
@@ -192,9 +198,9 @@ class GeneViewStanza < Stanza::Base
     #rt = (t + offset) / 1000
 
     feature = Bio::Graphics::MiniFeature.new(
-      :start => f, # rf * 1000,
-      :end   => t, # rt * 1000,
-      :strand => '+',
+      start: f, # rf * 1000,
+      end: t, # rt * 1000,
+      strand: '+'
     )
 
     range.add(feature)
