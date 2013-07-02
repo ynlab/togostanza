@@ -3,8 +3,7 @@
 <html>
   <head>
     <title>Lineage Information</title>
-<!--    <link rel="stylesheet" href="{{css_uri}}" /> -->
-    <link rel="stylesheet" href="http://togogenome.org/stanza/assets/stanza.css" />
+    <link rel="stylesheet" href="{{css_uri}}" />
     <style>
       #id_{{param_tax_id}} {
         background-color: #fffacd
@@ -27,9 +26,9 @@
         </thead>
         <tbody>
           {{#each tax_lineage_list}}
-            <tr id="id_{{tax_no}}" 
+            <tr id='id_{{tax_no}}' 
               {{#if selected_tax}}
-               class="selected"
+                class='selected'
               {{/if}}
             >
               <td>{{rank}}</td>
