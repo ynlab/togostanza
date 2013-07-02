@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Organism Name</title>
+    <link rel="stylesheet" href="{{css_uri}}"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    {{adjust_iframe_height_script}}
+  </head>
+
+  <body>
+    {{#if organism_name_list}}
+      <table class='table'>
+        <tbody>
+          {{#each organism_name_list}}
+            <tr>
+              <th>{{this.first.name_label}}</th>
+              <td>
+                <ul>
+                  {{#each this}}
+                    <li>{{name}}</li>
+                  {{/each}}
+                </ul>
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    {{else}}
+      No items found
+    {{/if}}
+  </body>
+</html>
+
