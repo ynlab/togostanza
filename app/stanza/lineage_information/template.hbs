@@ -26,11 +26,7 @@
         </thead>
         <tbody>
           {{#each tax_lineage_list}}
-            <tr id='id_{{tax_no}}' 
-              {{#if selected_tax}}
-                class='selected'
-              {{/if}}
-            >
+            <tr id='id_{{tax_no}}' {{#if selected_tax}}class='selected'{{/if}}>
               <td>{{rank}}</td>
               <td><a href='{{tax_app_link}}' target='_top'>{{tax_label}}</a></td>
               <td><a href='{{tax_link}}' target='_blank'>{{tax_no}}</a></td>
