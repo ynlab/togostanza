@@ -15,8 +15,8 @@
         <tbody>
           {{#each link_list}}
             <tr>
-              <th>{{this.first.xref_db}}</th>
-              <td>
+              <th class='span2'>{{this.first.xref_db}}</th>
+              <td class='span10'>
                 {{#each this}}
                   <a href='{{link}}' target='_blank'>{{xref_id}}</a>{{#unless is_last_data}},&nbsp;{{/unless}}
                 {{/each}}
