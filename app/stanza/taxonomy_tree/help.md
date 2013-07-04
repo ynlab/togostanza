@@ -19,5 +19,5 @@ TODO: Write a stanza description
 
 The above `<div>` will automatically embed the following Stanza in your HTML page.
 
-<div data-stanza="stanza/taxonomy_tree" data-stanza-tax-id="1351" data-stanza-height="500">
+<div data-stanza="/stanza/taxonomy_tree" data-stanza-tax-id="1351" data-stanza-height="500">
 
