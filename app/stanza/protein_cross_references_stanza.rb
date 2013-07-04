@@ -1,3 +1,5 @@
+# coding: utf-8
+
 class ProteinCrossReferencesStanza < Stanza::Base
   property :references do |tax_id, gene_id|
     references = query(:uniprot, <<-SPARQL.strip_heredoc)
@@ -33,10 +35,25 @@ class ProteinCrossReferencesStanza < Stanza::Base
 
       hash.merge(
         ref_id: ref_id,
-        url:    hash[:url_template].gsub(/%s|%u/, "%s" => ref_id, "%u" => up_id)
+        url:    url(hash[:url_template], hash[:abbr], ref_id, up_id)
       )
     }.reverse.group_by {|hash| hash[:category] }.map {|hash|
       hash.last.group_by {|h| h[:abbr] }.values
     }
+  end
+
+  private
+
+  # UniProt の url_template データが誤っていると考えられる
+  # UniProt のデータが更新された後は、要確認(逆にバグとなってしまう可能性があるため)
+  def url(url_template, abbr, ref_id, up_id)
+    case abbr
+    when 'eggNOG'
+      url_template.gsub(/%s|%u/, "%s" => up_id, "%u" => up_id)
+    when 'ProtClustDB'
+      url_template.gsub(/%s|%u/, "%s" => ref_id, "%u" => ref_id)
+    else
+      url_template.gsub(/%s|%u/, "%s" => ref_id, "%u" => up_id)
+    end
   end
 end
