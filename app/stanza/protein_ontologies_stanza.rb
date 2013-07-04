@@ -89,7 +89,7 @@ class ProteinOntologiesStanza < Stanza::Base
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX dct: <http://purl.org/dc/terms/>
 
-      SELECT DISTINCT ?name ?root_name
+      SELECT DISTINCT ?name ?root_name ?obo_go_uri
       WHERE {
         GRAPH <http://togogenome.org/graph/> {
           <http://togogenome.org/go/> dct:isVersionOf ?g .
@@ -109,6 +109,8 @@ class ProteinOntologiesStanza < Stanza::Base
       }
     SPARQL
 
-    gene_ontlogies.group_by {|go| go[:root_name] }
+    gene_ontlogies.map {|hash|
+      hash.merge(url: hash[:obo_go_uri].gsub(/http:\/\/purl\.obolibrary\.org\/obo\/GO_/, 'http://www.ebi.ac.uk/QuickGO/GTerm?id=GO:'))
+    }.group_by {|go| go[:root_name] }
   end
 end
