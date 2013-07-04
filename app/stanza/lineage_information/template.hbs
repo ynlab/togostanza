@@ -3,6 +3,7 @@
 <html>
   <head>
     <title>Lineage Information</title>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap.min.css" />
     <link rel="stylesheet" href="{{css_uri}}" />
     <style>
       #id_{{param_tax_id}} {
@@ -15,8 +16,9 @@
   </head>
 
   <body>
+    <div>
     {{#if tax_lineage_list}}
-      <table class='table table-bordered'>
+      <table class='table'>
         <thead>
           <tr>
             <th>Rank</th>
@@ -35,6 +37,7 @@
         </tbody>
       </table>
     {{/if}}
+    </div>
   </body>
 </html>
 

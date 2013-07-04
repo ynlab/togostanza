@@ -10,13 +10,15 @@
   </head>
 
   <body>
+    <div>
     {{#if nucleotide_sequences}}
-      <pre>
+      <pre style="white-space:nowrap;line-height:0.6;">
         {{#each nucleotide_sequences.value}}
-          {{this}}
+          <p>{{this}}
         {{/each}}
       </pre>
     {{/if}}
+    </div>
   </body>
 </html>
 

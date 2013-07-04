@@ -10,29 +10,32 @@ class TaxonomyTreeStanza < Stanza::Base
   end
 
   property :root_taxonomy_uri do
-    taxon_prefix + '1'
+    taxon_prefix + '131567'
   end
 
   resource :taxonomy_tree do |tax_id|
-    query('http://lod.dbcls.jp/openrdf-sesame5l/repositories/ncbitaxon', <<-SPARQL.strip_heredoc)
+    query('http://ep.dbcls.jp/sparql', <<-SPARQL.strip_heredoc)
       PREFIX taxon: <#{taxon_prefix}>
+      PREFIX taxon_rank: <http://purl.obolibrary.org/obo/ncbitaxon#>
 
       SELECT ?tax ?parent ?tax_label ?rank
+      FROM <http://togogenome.org/ncbitaxon/>
       WHERE
       {
         {
           ?search_tax rdfs:label ?label FILTER (?search_tax = taxon:#{tax_id} ) .
-          ?search_tax rdfs:subClassOf* ?tax .
+          ?search_tax rdfs:subClassOf* ?tax.
           ?tax rdfs:label ?tax_label .
           OPTIONAL { ?tax rdfs:subClassOf ?parent . }
-          OPTIONAL { ?tax <http://purl.obolibrary.org/obo/ncbitaxon#has_rank> ?rank . }
+          OPTIONAL { ?tax taxon_rank:has_rank ?rank . }
         }
         UNION
         {
-          ?tax rdfs:subClassOf taxon:#{tax_id} ;
-            rdfs:label ?tax_label .
+          ?search_tax rdfs:label ?label FILTER (?search_tax = taxon:#{tax_id}) .
+          ?tax rdfs:subClassOf ?search_tax .
+          ?tax rdfs:label ?tax_label .
           OPTIONAL { ?tax rdfs:subClassOf ?parent . }
-          OPTIONAL { ?tax <http://purl.obolibrary.org/obo/ncbitaxon#has_rank> ?rank . }
+          OPTIONAL { ?tax taxon_rank:has_rank ?rank . }
         }
       }
     SPARQL
