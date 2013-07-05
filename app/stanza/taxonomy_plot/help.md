@@ -1,12 +1,23 @@
 Taxonomy Plot
 =============
 
-TODO: Write a stanza description
+Scatter plot of taxonomy.
 
 ## Parameters:
 
 (* = required)
 
-| Name   | Description                                    |
-|--------|------------------------------------------------|
-| tax_id | Taxonomy id without prefix. Examples: 1080229  |
+| Name                 | Description                          |
+|----------------------|--------------------------------------|
+| *data-stanza-tax-id  | Taxonomy identifier. (e.g., 103690)  |
+
+#Sample:
+
+```html
+<div data-stanza="http://togogenome.org/stanza/taxonomy_plot" data-stanza-tax-id="103690"></div>
+```
+
+The above `<div>` will automatically embed the following Stanza in your HTML page.
+
+<div data-stanza="/stanza/taxonomy_plot" data-stanza-tax-id="103690"></div>
+
