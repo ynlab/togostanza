@@ -16,10 +16,10 @@ Scatter plot of pfam corresponding with genes.
 #Sample:
 
 ```html
-<div data-stanza="http://togogenome.org/stanza/pfam_plot" data-stanza-tax-id="103690" data-stanza-gene-id="all1455"></div>
+<div data-stanza="http://togogenome.org/stanza/pfam_plot" data-stanza-tax-id="103690" data-stanza-gene-id="all1455" data-stanza-height="600"></div>
 ```
 
 The above `<div>` will automatically embed the following Stanza in your HTML page.
 
-<div data-stanza="/stanza/pfam_plot" data-stanza-tax-id="103690" data-stanza-gene-id="all1455"></div>
+<div data-stanza="/stanza/pfam_plot" data-stanza-tax-id="103690" data-stanza-gene-id="all1455" data-stanza-height="600"></div>
 

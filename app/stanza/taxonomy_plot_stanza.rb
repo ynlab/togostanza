@@ -29,8 +29,8 @@ class TaxonomyPlotStanza < Stanza::Base
         } GROUP BY ?tax
       SPARQL
     }
- 
-    query2 = Thread.new { 
+
+    query2 = Thread.new {
       genome_list = query('http://biointegra.jp/sparql3',<<-SPARQL.strip_heredoc)
         DEFINE sql:select-option "order"
         PREFIX owl: <http://www.w3.org/2002/07/owl#>
@@ -77,7 +77,7 @@ class TaxonomyPlotStanza < Stanza::Base
         } GROUP BY ?tax ?organism_name ?genome_length  ?bioProject  ?opt_temp ?min_temp ?max_temp ?opt_ph ?min_ph ?max_ph
       SPARQL
     }
- 
+
     #gene #rrna #trna
     query3 = Thread.new {
       summary_list = query('http://biointegra.jp/sparql3',<<-SPARQL.strip_heredoc)
@@ -93,7 +93,7 @@ class TaxonomyPlotStanza < Stanza::Base
         }
       SPARQL
     }
- 
+
     query1.join
     query2.join
     query3.join
@@ -115,7 +115,7 @@ class TaxonomyPlotStanza < Stanza::Base
       trna_hash[entity[:tax] + "/" + entity[:project_id]] = entity[:num_trna]
     end
     gene_list = nil
- 
+
     ##merge all data
     result_list = []
     result_list = genome_list.map {|hash|
@@ -125,11 +125,11 @@ class TaxonomyPlotStanza < Stanza::Base
       rrna = rrna_hash.key?(tax_prj_key) ? rrna_hash[tax_prj_key] : '0'
       trna = trna_hash.key?(tax_prj_key) ? trna_hash[tax_prj_key] : '0'
       hash.merge(
-        :habitat => habitat_label,
-        :num_gene => gene,
-        :num_rrna => rrna,
-        :num_trna => trna,
-        :size => hash[:genome_length]
+        habitat: habitat_label,
+        num_gene: gene,
+        num_rrna: rrna,
+        num_trna: trna,
+        size: hash[:genome_length]
       )
     }
     result_list.delete_if {|entity| entity[:num_gene] == '0'}

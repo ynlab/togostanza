@@ -127,7 +127,7 @@
           'point_opacity': 0.7,
           'selected_tax_id': '{{selected_taxonomy_id}}',
         }
-        d3.json('./resources/taxonomy', function(data) {
+        d3.json('./taxonomy_plot/resources/taxonomy', function(data) {
           //console.log(JSON.stringify(data,null," "));
           create_page(data.taxonomy,option);
          })

@@ -111,7 +111,7 @@ class PfamPlotStanza < Stanza::Base
         } GROUP BY ?tax
       SPARQL
     }
- 
+
     query2 = Thread.new {
       genome_list = query('http://biointegra.jp/sparql3',<<-SPARQL.strip_heredoc)
         DEFINE sql:select-option "order"
@@ -122,7 +122,7 @@ class PfamPlotStanza < Stanza::Base
         PREFIX obo: <http://purl.obolibrary.org/obo/>
         PREFIX insdc: <http://insdc.org/owl/>
         PREFIX idorg:<http://rdf.identifiers.org/database/>
- 
+
         SELECT
           ?tax ?bioProject ?organism_name ?genome_length
           (sql:GROUP_DIGEST (?cell_shape_label, ', ', 1000, 1)) AS ?cell_shape_label
@@ -181,7 +181,7 @@ class PfamPlotStanza < Stanza::Base
         PREFIX up: <http://purl.uniprot.org/core/>
         PREFIX tax: <http://purl.uniprot.org/taxonomy/>
         PREFIX pfam: <http://purl.uniprot.org/pfam/>
- 
+
         SELECT
           REPLACE(STR(?tax), "http://purl.uniprot.org/taxonomy/", "http://identifiers.org/taxonomy/") AS ?tax_id
           (SUM(?hits) as ?num_pfam)
@@ -239,14 +239,14 @@ class PfamPlotStanza < Stanza::Base
       pfam = pfam_hash.key?(hash[:tax]) ? pfam_hash[hash[:tax]] : '0'
       pfam_protein = pfam_protein_hash.key?(hash[:tax]) ? pfam_protein_hash[hash[:tax]] : '0'
       hash.merge(
-        :habitat => habitat_label,
-        :num_gene => gene,
-        :num_rrna => rrna,
-        :num_trna => trna,
-        :num_pfam => pfam,
-        :num_pfam_protein => pfam_protein,
-        :size => hash[:genome_length]
-      ) 
+        habitat: habitat_label,
+        num_gene: gene,
+        num_rrna: rrna,
+        num_trna: trna,
+        num_pfam: pfam,
+        num_pfam_protein: pfam_protein,
+        size: hash[:genome_length]
+      )
     }
     result_list.delete_if {|entity| entity[:num_gene] == '0'}
 

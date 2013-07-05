@@ -146,8 +146,8 @@
           'selected_tax_id': '{{selected_tax_id}}',
           'selected_pfam': '{{selected_pfam_name}} ({{selected_pfam_id}})',
         }
-      
-        d3.json('./resources/plot_data/?tax_id={{selected_tax_id}}&gene_id={{selected_gene_id}}', function(data) {
+
+        d3.json('./pfam_plot/resources/plot_data/?tax_id={{selected_tax_id}}&gene_id={{selected_gene_id}}', function(data) {
           //console.log(JSON.stringify(data,null," "));
           create_page(data.plot_data,option);
          })
