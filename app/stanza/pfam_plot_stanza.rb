@@ -18,6 +18,9 @@ class PfamPlotStanza < Stanza::Base
       }
     SPARQL
 
+    if pfam_list == nil || pfam_list.size == 0 then
+      next nil
+    end
     pfam_id = pfam_list.first[:pfam_id]
   end
 
@@ -48,6 +51,9 @@ class PfamPlotStanza < Stanza::Base
       }
     SPARQL
 
+    if pfam_list == nil || pfam_list.size == 0 then
+      next nil
+    end
     pfam_id = pfam_list.first[:pfam_id]
 
     pfam_name =  query('http://biointegra.jp/sparql3', <<-SPARQL.strip_heredoc)
@@ -60,6 +66,9 @@ class PfamPlotStanza < Stanza::Base
       }
     SPARQL
 
+    if pfam_name == nil || pfam_list.size == 0 then
+      next nil
+    end
     pfam_name.first[:label]
   end
 
@@ -88,6 +97,10 @@ class PfamPlotStanza < Stanza::Base
       }
     SPARQL
 
+    if pfam_list == nil || pfam_list.size == 0 then
+      pfam_list = []
+      next
+    end
     pfam_id =  pfam_list.first[:pfam_id]
 
     query1 = Thread.new {
