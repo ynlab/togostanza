@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Protein Sequence Annotations</title>
+    {{#each css_uri}}
+    <link rel="stylesheet" href="{{this}}" />
+    {{/each}}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    {{adjust_iframe_height_script}}
+    <script type="text/javascript">
+      function render_sequence_chart(id, begin, end, seqlen) {
+        // If one of parameters is null, do nothing
+        if (begin == null || end == null || seqlen == null) {
+          return;
+        }
+
+        var length = end - begin + 1;
+        if (length == seqlen) {
+          // bar of graph is equal to length of sequence
+          $('<div>').appendTo('#' + id).addClass('on').css('width', '100%');
+        } else if (begin == 1) {
+          // bar of graph is from start to somewhere(except end)
+          var on = Math.round(length / seqlen * 100);
+          if (on == 0) { //even if length is too short, it's displayed.
+            on = 1;
+          }
+          var off = 100 - on;
+          $('<div>').appendTo('#' + id).addClass('on').css('float', 'left').css('width', on + '%');
+          $('<div>').appendTo('#' + id).addClass('off').css('float', 'right').css('width', off + '%');
+        } else {
+          if (end == seqlen) {
+            // bar of graph is from somewhere(except start) to end
+            var on = Math.round(length / seqlen * 100);
+            if (on == 0) { //even if length is too short, it's displayed.
+              on = 1;
+            }
+            var off = 100 - on;
+            $('<div>').appendTo('#' + id).addClass('off').css('float', 'left').css('width', off + '%');
+            $('<div>').appendTo('#' + id).addClass('on').css('float', 'right').css('width', on + '%');
+          } else {
+            // bar of graph is on the way sequence
+            var off1 = Math.round(begin / seqlen * 100);
+            var on = Math.round(length / seqlen * 100);
+            if (on == 0) {
+              on = 1;
+            }
+            var off2 = 100 - off1 - on;
+            $('<div>').appendTo('#' + id).addClass('off').css('float', 'left').css('width', off1 + '%');
+            $('<div>').appendTo('#' + id).addClass('on').css('float', 'left').css('width', on + '%');
+            $('<div>').appendTo('#' + id).addClass('off').css('float', 'right').css('width', off2 + '%');
+          }
+        }
+      }
+    </script>
+    <style type="text/css">
+      caption {
+        font-size: x-large;
+        margin: 10px 0;
+      }
+      .graphicalview {
+        width: 135px;
+      }
+      div.on {
+        background-color:#F89406;
+        height:15px;
+      }
+      div.off {
+        background: white url({{line_image}}) repeat-x center;
+        height:15px;
+      }
+    </style>
+  </head>
+
+  <body>
+    {{#if sequence_annotations}}
+      {{#each sequence_annotations}}
+        <table class='table'>
+          <caption>{{this.first.parent_label}}</caption>
+          <thead>
+            <tr>
+              <th class='span2'>Feature key</th>
+              <th class='span1'>Position(s)</th>
+              <th class='span1'>Length</th>
+              <th class='span3'>Description</th>
+              <th class='span3'>Feature identifier</th>
+              <th class='span2'>Graphical view</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each this}}
+              <tr>
+                <td class='span2'>{{label}}</td>
+                <td class='span1'>{{position}}</td>
+                <td class='span1'>{{location_length}}</td>
+                <td class='span3'>{{substitution_sequence}}{{comment}}</td>
+                <td class='span3'>{{feature_identifier}}</td>
+                <td id="{{row_id}}" class="graphicalview valign-middle span2" >
+                  <script>render_sequence_chart('{{row_id}}', {{begin_location}}, {{end_location}}, {{seq_length}});</script>
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{/each}}
+    {{/if}}
+  </body>
+</html>
+

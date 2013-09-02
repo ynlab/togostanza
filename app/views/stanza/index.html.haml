@@ -1,9 +1,0 @@
-%h2 List of Stanzas
-
-%ul
-  - Stanza.all.sort_by(&:id).each do |stanza|
-    %li
-      = stanza.id
-
-      = surround '(', ')' do
-        = link_to 'help', stanza_help_path(stanza.id)

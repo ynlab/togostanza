@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Protein Names And Origin</title>
+    {{#each css_uri}}
+    <link rel="stylesheet" href="{{this}}" />
+    {{/each}}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    {{adjust_iframe_height_script}}
+  </head>
+
+  <body>
+    <table class='table'>
+      <tbody>
+        <tr>
+          <th class='span4'>Protein names</th>
+          <td class='span8'>
+            <table class='table'>
+              <tbody>
+                {{#if summary.recommended_name}}
+                  <tr><th class='span4'>Recommended Name</th><td class='span4'>{{summary.recommended_name}}</td></tr>
+                {{/if}}
+
+                {{#if summary.ec_name}}
+                  <tr><th class='span4'>EC number</th><td class='span4'>{{summary.ec_name}}</td></tr>
+                {{/if}}
+
+                {{#if summary.alternative_names}}
+                  <tr>
+                    <th class='span4'>Alternative Name(s)</th>
+                    <td class='span4'>
+                      <ul>
+                        {{#each summary.alternative_names}}
+                          <li>{{this}}</li>
+                        {{/each}}
+                      </ul>
+                    </td>
+                  </tr>
+                {{/if}}
+              </tbody>
+            </table>
+          </td>
+        </tr>
+
+        {{#if genes}}
+          <tr>
+            <th class='span4'>Genes names</th>
+            <td class='span8'>
+              {{#each genes}}
+                <table class='table'>
+                  <tbody>
+                    {{#if gene_name}}<tr><th class='span4'>Name</th><td class='span4'>{{gene_name}}</td></tr>{{/if}}
+                    {{#if synonyms_name}}<tr><th class='span4'>Synonyms</th><td class='span4'>{{synonyms_name}}</td></tr>{{/if}}
+                    {{#if locus_name}}<tr><th class='span4'>Ordered Locus Names</th><td class='span4'>{{locus_name}}</td></tr>{{/if}}
+                    {{#if orf_name}}<tr><th class='span4'>ORF Names</th><td class='span4'>{{orf_name}}</td></tr>{{/if}}
+                  </tbody>
+                </table>
+              {{/each}}
+            </td>
+          </tr>
+        {{/if}}
+
+        {{#if summary.organism_name}}
+          <tr><th>Organism</th><td>{{summary.organism_name}}</td></tr>
+        {{/if}}
+
+        {{#if summary.taxonomy_id}}
+          <tr><th>Taxonomic identifier</th><td>{{summary.taxonomy_id}}</td></tr>
+        {{/if}}
+
+        {{#if summary.parent_taxonomy_names}}
+          <tr>
+            <th>Taxonomic lineage</th>
+            <td>
+              <ul>
+                {{#each summary.parent_taxonomy_names}}
+                  <li>{{this}}</li>
+                {{/each}}
+              </ul>
+            </td>
+          </tr>
+        {{/if}}
+      </tbody>
+    </table>
+  </body>
+</html>
+

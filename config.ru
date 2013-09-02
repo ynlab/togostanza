@@ -1,7 +1,8 @@
-# This file is used by Rack-based servers to start the application.
+require 'bundler/setup'
+require 'togostanza-server'
 
-require ::File.expand_path('../config/environment',  __FILE__)
+TogoStanza::Stanza.load_all!
 
-map ActionController::Base.config.relative_url_root || '/' do
+map '/stanza' do
   run TogoStanza::Application
 end

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Protein Ontologies</title>
+    {{#each css_uri}}
+    <link rel="stylesheet" href="{{this}}" />
+    {{/each}}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    {{adjust_iframe_height_script}}
+    <style type="text/css">
+      caption {
+        font-size: x-large;
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    {{#if keywords}}
+      <table class='table'>
+        <caption>Keywords</caption>
+        <tbody>
+          {{#if keywords.biological_process}}
+            <tr>
+              <th class='span4'>Biological process</th>
+              <td class='span8'>
+                <ul>
+                  {{#each keywords.biological_process}}
+                    <li><a href='{{concept}}' target='_blank'>{{names}}</a></li>
+                  {{/each}}
+                </ul>
+              </td>
+            </tr>
+          {{/if}}
+
+          {{#if keywords.cellular_component}}
+            <tr>
+              <th class='span4'>Cellular component</th>
+              <td class='span8'>
+                <ul>
+                  {{#each keywords.cellular_component}}
+                    <li><a href='{{concept}}' target='_blank'>{{names}}</a></li>
+                  {{/each}}
+                </ul>
+              </td>
+            </tr>
+          {{/if}}
+
+          {{#if keywords.domain}}
+            <tr>
+              <th class='span4'>Domain</th>
+              <td class='span8'>
+                <ul>
+                  {{#each keywords.domain}}
+                    <li><a href='{{concept}}' target='_blank'>{{names}}</a></li>
+                  {{/each}}
+                </ul>
+              </td>
+            </tr>
+          {{/if}}
+
+          {{#if keywords.ligand}}
+            <tr>
+              <th class='span4'>Ligand</th>
+              <td class='span8'>
+                <ul>
+                  {{#each keywords.ligand}}
+                    <li><a href='{{concept}}' target='_blank'>{{names}}</a></li>
+                  {{/each}}
+                </ul>
+              </td>
+            </tr>
+          {{/if}}
+
+          {{#if keywords.molecular_function}}
+            <tr>
+              <th class='span4'>Molecular function</th>
+              <td class='span8'>
+                <ul>
+                  {{#each keywords.molecular_function}}
+                    <li><a href='{{concept}}' target='_blank'>{{names}}</a></li>
+                  {{/each}}
+                </ul>
+              </td>
+            </tr>
+          {{/if}}
+
+          {{#if keywords.technical_term}}
+            <tr>
+              <th class='span4'>Technical term</th>
+              <td class='span8'>
+                <ul>
+                  {{#each keywords.technical_term}}
+                    <li><a href='{{concept}}' target='_blank'>{{names}}</a></li>
+                  {{/each}}
+                </ul>
+              </td>
+            </tr>
+          {{/if}}
+        </tbody>
+      </table>
+    {{/if}}
+
+    {{#if gene_ontlogies}}
+      <table class='table'>
+        <caption>Gene Ontologies</caption>
+        <tbody>
+          {{#if gene_ontlogies.biological_process}}
+            <tr>
+              <th class='span4'>Biological process</th>
+              <td class='span8'>
+                {{#each gene_ontlogies.biological_process}}
+                  <ul>
+                    <li><a href='{{url}}' target='_blank'>{{this.name}}</a></li>
+                  </ul>
+                {{/each}}
+              </td>
+            </tr>
+          {{/if}}
+
+          {{#if gene_ontlogies.cellular_component}}
+            <tr>
+              <th class='span4'>Cellular component</th>
+              <td class='span8'>
+                {{#each gene_ontlogies.cellular_component}}
+                  <ul>
+                    <li><a href='{{url}}' target='_blank'>{{this.name}}</a></li>
+                  </ul>
+                {{/each}}
+              </td>
+            </tr>
+          {{/if}}
+
+          {{#if gene_ontlogies.molecular_function}}
+            <tr>
+              <th class='span4'>Molecular function</th>
+              <td class='span8'>
+                {{#each gene_ontlogies.molecular_function}}
+                  <ul>
+                    <li><a href='{{url}}' target='_blank'>{{this.name}}</a></li>
+                  </ul>
+                {{/each}}
+              </td>
+            </tr>
+          {{/if}}
+        </tbody>
+      </table>
+    {{/if}}
+  </body>
+</html>
+
