@@ -1,6 +1,6 @@
 class PfamPlotStanza < Stanza::Base
-  property :selected_pfam_id do |tax_id,gene_id|
-    pfam_list = query('http://biointegra.jp/sparql3',<<-SPARQL.strip_heredoc)
+  property :pfam_list do |tax_id,gene_id|
+    results = query('http://biointegra.jp/sparql3',<<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
       PREFIX dct:   <http://purl.org/dc/terms/>
@@ -18,10 +18,31 @@ class PfamPlotStanza < Stanza::Base
       }
     SPARQL
 
-    if pfam_list == nil || pfam_list.size == 0 then
+    if results == nil || results.size == 0 then
       next nil
     end
-    pfam_id = pfam_list.first[:pfam_id]
+    pfam_list = []
+    results.each do |entity|
+      pfam_hash = {}
+      pfam_id = entity[:pfam_id]
+      pfam_name_list =  query('http://biointegra.jp/sparql3', <<-SPARQL.strip_heredoc)
+        PREFIX pfam: <http://purl.uniprot.org/pfam/>
+
+        SELECT ?label
+        WHERE
+        {
+          pfam:#{pfam_id} rdfs:comment ?label .
+        }
+      SPARQL
+      pfam_hash[:id] = pfam_id
+      if pfam_name_list == nil || pfam_name_list.size == 0 then
+        pfam_hash[:name] = ''
+      else
+        pfam_hash[:name] = pfam_name_list[0][:label]
+      end
+      pfam_list.push(pfam_hash)
+    end
+    pfam_list
   end
 
   property :selected_tax_id do |tax_id|
@@ -30,46 +51,6 @@ class PfamPlotStanza < Stanza::Base
 
   property :selected_gene_id do |gene_id|
     gene_id
-  end
-
-  property :selected_pfam_name do |tax_id,gene_id|
-    pfam_list = query('http://biointegra.jp/sparql3',<<-SPARQL.strip_heredoc)
-      PREFIX up: <http://purl.uniprot.org/core/>
-      PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
-      PREFIX dct:   <http://purl.org/dc/terms/>
-
-      SELECT DISTINCT  REPLACE(STR(?ref), "http://purl.uniprot.org/pfam/","") AS ?pfam_id
-      FROM <http://togogenome.org/uniprot/>
-      WHERE
-      {
-        ?protein up:organism taxonomy:#{tax_id} ;
-          rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
-        ?protein rdfs:seeAlso ?ref .
-        ?ref up:database ?database .
-        ?database up:abbreviation ?abbr
-        FILTER (?abbr ='Pfam').
-      }
-    SPARQL
-
-    if pfam_list == nil || pfam_list.size == 0 then
-      next nil
-    end
-    pfam_id = pfam_list.first[:pfam_id]
-
-    pfam_name =  query('http://biointegra.jp/sparql3', <<-SPARQL.strip_heredoc)
-      PREFIX pfam: <http://purl.uniprot.org/pfam/>
-
-      SELECT ?label
-      WHERE
-      {
-        pfam:#{pfam_id} rdfs:comment ?label .
-      }
-    SPARQL
-
-    if pfam_name == nil || pfam_list.size == 0 then
-      next nil
-    end
-    pfam_name.first[:label]
   end
 
   resource :plot_data do |tax_id,gene_id|
@@ -101,8 +82,7 @@ class PfamPlotStanza < Stanza::Base
       pfam_list = []
       next
     end
-    pfam_id =  pfam_list.first[:pfam_id]
-
+    
     query1 = Thread.new {
       habitat_list = query('http://biointegra.jp/sparql3',<<-SPARQL.strip_heredoc)
         PREFIX owl: <http://www.w3.org/2002/07/owl#>
@@ -188,8 +168,32 @@ class PfamPlotStanza < Stanza::Base
         }
       SPARQL
     }
+    
+    query1.join
+    query2.join
+    query3.join
 
-    query4 = Thread.new {
+    #habitat
+    habitat_hash = {}
+    habitat_list.each do |entity|
+      habitat_hash[entity[:tax]] = entity[:habitat].split(", ").sort.join(", ")
+    end
+    habitat_list = nil
+
+    #gene #rrna #trna
+    gene_hash ={}
+    rrna_hash ={}
+    trna_hash ={}
+    summary_list.each do |entity|
+      gene_hash[entity[:tax] + "/" + entity[:project_id]] = entity[:num_gene]
+      rrna_hash[entity[:tax] + "/" + entity[:project_id]] = entity[:num_rrna]
+      trna_hash[entity[:tax] + "/" + entity[:project_id]] = entity[:num_trna]
+    end
+    summary_list = nil
+    
+    result_hash = {}
+    pfam_list.each do |pfam_entity|
+      pfam_id = pfam_entity[:pfam_id]
       pfam_summary_list = query('http://biointegra.jp/sparql3',<<-SPARQL.strip_heredoc)
         PREFIX up: <http://purl.uniprot.org/core/>
         PREFIX tax: <http://purl.uniprot.org/taxonomy/>
@@ -209,60 +213,38 @@ class PfamPlotStanza < Stanza::Base
           ?id up:hits ?hits .
         } GROUP BY ?tax
       SPARQL
-    }
-    query1.join
-    query2.join
-    query3.join
-    query4.join
+      
+      pfam_hash ={}
+      pfam_protein_hash ={}
+      pfam_summary_list.each do |entity|
+        pfam_hash[entity[:tax_id]] = entity[:num_pfam]
+        pfam_protein_hash[entity[:tax_id]] = entity[:num_pfam_protein]
+      end
+      pfam_summary_list = nil
 
-    #habitat
-    habitat_hash = {}
-    habitat_list.each do |entity|
-      habitat_hash[entity[:tax]] = entity[:habitat].split(", ").sort.join(", ")
+      ##merge all data
+      tax_list = []
+      tax_list = genome_list.map {|hash|
+        tax_prj_key = hash[:tax] + "/" + hash[:bioProject]
+        habitat_label = habitat_hash.key?(hash[:tax]) ? habitat_hash[hash[:tax]] :'no data'
+        gene = gene_hash.key?(tax_prj_key) ? gene_hash[tax_prj_key] : '0'
+        rrna = rrna_hash.key?(tax_prj_key) ? rrna_hash[tax_prj_key] : '0'
+        trna = trna_hash.key?(tax_prj_key) ? trna_hash[tax_prj_key] : '0'
+        pfam = pfam_hash.key?(hash[:tax]) ? pfam_hash[hash[:tax]] : '0'
+        pfam_protein = pfam_protein_hash.key?(hash[:tax]) ? pfam_protein_hash[hash[:tax]] : '0'
+        hash.merge(
+          habitat: habitat_label,
+          num_gene: gene,
+          num_rrna: rrna,
+          num_trna: trna,
+          num_pfam: pfam,
+          num_pfam_protein: pfam_protein,
+          size: hash[:genome_length]
+        )
+      }
+      tax_list.delete_if {|entity| entity[:num_gene] == '0'}
+      result_hash[pfam_id] = tax_list
     end
-    habitat_list = nil
-
-    #gene #rrna #trna
-    gene_hash ={}
-    rrna_hash ={}
-    trna_hash ={}
-    summary_list.each do |entity|
-      gene_hash[entity[:tax] + "/" + entity[:project_id]] = entity[:num_gene]
-      rrna_hash[entity[:tax] + "/" + entity[:project_id]] = entity[:num_rrna]
-      trna_hash[entity[:tax] + "/" + entity[:project_id]] = entity[:num_trna]
-    end
-    summary_list = nil
-
-    pfam_hash ={}
-    pfam_protein_hash ={}
-    pfam_summary_list.each do |entity|
-      pfam_hash[entity[:tax_id]] = entity[:num_pfam]
-      pfam_protein_hash[entity[:tax_id]] = entity[:num_pfam_protein]
-    end
-    pfam_summary_list = nil
-
-    ##merge all data
-    result_list = []
-    result_list = genome_list.map {|hash|
-      tax_prj_key = hash[:tax] + "/" + hash[:bioProject]
-      habitat_label = habitat_hash.key?(hash[:tax]) ? habitat_hash[hash[:tax]] :'no data'
-      gene = gene_hash.key?(tax_prj_key) ? gene_hash[tax_prj_key] : '0'
-      rrna = rrna_hash.key?(tax_prj_key) ? rrna_hash[tax_prj_key] : '0'
-      trna = trna_hash.key?(tax_prj_key) ? trna_hash[tax_prj_key] : '0'
-      pfam = pfam_hash.key?(hash[:tax]) ? pfam_hash[hash[:tax]] : '0'
-      pfam_protein = pfam_protein_hash.key?(hash[:tax]) ? pfam_protein_hash[hash[:tax]] : '0'
-      hash.merge(
-        habitat: habitat_label,
-        num_gene: gene,
-        num_rrna: rrna,
-        num_trna: trna,
-        num_pfam: pfam,
-        num_pfam_protein: pfam_protein,
-        size: hash[:genome_length]
-      )
-    }
-    result_list.delete_if {|entity| entity[:num_gene] == '0'}
-
-    result_list
+    [result_hash]
   end
 end

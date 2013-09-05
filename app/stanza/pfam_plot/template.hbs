@@ -144,12 +144,12 @@
           'elem_id_prefix': 'taxid_',
           'point_opacity': 0.7,
           'selected_tax_id': '{{selected_tax_id}}',
-          'selected_pfam': '{{selected_pfam_name}} ({{selected_pfam_id}})',
+          'pfam_list': [{{#each pfam_list}}{"key":"{{id}}","value":"{{name}}"},{{/each}}],
         }
 
-        d3.json('./pfam_plot/resources/plot_data/?tax_id={{selected_tax_id}}&gene_id={{selected_gene_id}}', function(data) {
+        d3.json('./resources/plot_data/?tax_id={{selected_tax_id}}&gene_id={{selected_gene_id}}', function(data) {
           //console.log(JSON.stringify(data,null," "));
-          create_page(data.plot_data,option);
+          create_page(data.plot_data[0],option,'pfam');
          })
       }
     </script>
@@ -169,6 +169,13 @@
             <div id="menu" class="menu">
               <table class="category">
                 <tr>
+                  <td>
+                    <div class="title_area">
+                      <div class="title_update">
+                        <div>Change-Pfam</div>
+                      </div>
+                    </div>
+                  </td>
                   <td>
                     <div class="x_axis_area">
                       <div class="x_axis_update">
