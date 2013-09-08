@@ -1,44 +1,45 @@
 class OrganismNameStanza < Stanza::Base
   property :organism_name_list do |tax_id|
-    results = query("http://ep.dbcls.jp/sparql", <<-SPARQL.strip_heredoc)
-      PREFIX go: <http://www.geneontology.org/formats/oboInOwl#>
-      PREFIX ncbitaxon: <http://purl.obolibrary.org/obo/NCBITaxon_>
-      PREFIX obotaxon: <http://purl.obolibrary.org/obo/ncbitaxon#>
-
-      SELECT ?name ?name_type
-      FROM <http://togogenome.org/ncbitaxon/>
+    results = query("http://biointegra.jp/sparqlTOGOdev", <<-SPARQL.strip_heredoc)
+      PREFIX taxo: <http://ddbj.nig.ac.jp/ontologies/taxonomy#>
+      PREFIX taxid: <http://identifiers.org/taxonomy/>
+      
+      SELECT ?name_type ?name_type_label ?name
+      FROM <http://togogenome.org/graph/taxonomy/>
       WHERE
       {
+        VALUES ?name_type
         {
-          SELECT ?name ?name_type
-          WHERE
-          {
-            ncbitaxon:#{tax_id} rdfs:label ?name .
-            BIND("Scientific name" AS ?name_type)
-          }
+          taxo:scientificName taxo:synonym taxo:preferredSynonym taxo:acronym taxo:preferredAcronym taxo:anamorph taxo:teleomorph
+          taxo:misnomer taxo:commonName taxo:preferredCommonName taxo:inPart taxo:includes taxo:equivalentName 
+          taxo:genbankSynonym taxo:genbankCommonName taxo:authority taxo:misspelling
         }
-        UNION
-        {
-          SELECT DISTINCT ?synonymTypeLabel AS ?name_type ?annotatedTarget AS ?name
-          WHERE
-          {
-            ?blank owl:annotatedSource ncbitaxon:#{tax_id} ;
-            owl:annotatedTarget ?annotatedTarget ;
-            go:hasSynonymType ?synonymType
-            FILTER (?synonymType != obotaxon:misspelling) .
-            ?synonymType rdfs:label ?synonymTypeLabel .
-          }
-        }
+        taxid:#{ tax_id } ?name_type ?name .
+        ?name_type rdfs:label ?name_type_label .
       }
     SPARQL
 
-    results.map {|hash|
-      name_label = hash[:name_type].capitalize
+    result = results.map {|hash|
+      name = hash[:name].gsub("\\","")
+      name_label = hash[:name_type_label].capitalize
       hash.merge(
-        name_label: name_label
+        name_label: name_label,
+        name: name
       )
-    }.group_by {|hash| hash[:name_label] }.map {|hash|
-       hash.last
+    }.group_by {|hash| hash[:name_type] }
+    
+    #Order by kind of synonym
+    order_array = ["scientificName", "synonym", "preferredSynonym", "acronym", "preferredAcronym",
+                   "anamorph", "teleomorph", "misnomer", "commonName", "preferredCommonName",
+                   "inPart", "includes", "equivalentName", "genbankSynonym", "genbankCommonName", "authority", "misspelling" ]
+    taxo_prefix = "http://ddbj.nig.ac.jp/ontologies/taxonomy#"
+    orderd_result = []
+    hoge = order_array.each {|item|
+      key = taxo_prefix + item
+      unless result[key].nil? then
+        orderd_result.push(result[key])
+      end
     }
+    orderd_result
   end
 end
