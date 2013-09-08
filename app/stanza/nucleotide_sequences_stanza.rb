@@ -33,7 +33,7 @@ class NucleotideSequencesStanza < Stanza::Base
     SPARQL
     results.map {|hash|
       hash.merge(
-        :value => sequence_lines(get_sequence_from_togows(hash[:nuc_seq_pos]))
+        :value => get_sequence_from_togows(hash[:nuc_seq_pos]).upcase
       )
     }.first
   end
@@ -46,16 +46,5 @@ class NucleotideSequencesStanza < Stanza::Base
       res = http.request(path)
       res.body
     }
-  end
-
-  #Splits the sequence to displaying 70 characters at each line.
-  def sequence_lines(sequence)
-    pos = 0
-    lines = []
-    while pos < sequence.length do
-      lines.push(sequence.slice(pos, 70).upcase)
-      pos += 70
-    end
-    lines
   end
 end
