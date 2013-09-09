@@ -1,31 +1,30 @@
 class TaxonomyCrossReferencesStanza < Stanza::Base
   property :link_list do |tax_id|
-    link_list1 = query('http://ep.dbcls.jp/sparql', <<-SPARQL.strip_heredoc)
+    link_list1 = query(:togogenome, <<-SPARQL.strip_heredoc)
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>
       PREFIX obo: <http://purl.obolibrary.org/obo/>
       PREFIX insdc: <http://insdc.org/owl/>
       PREFIX idtax: <http://identifiers.org/taxonomy/>
-
+      
       SELECT ?label ?link
-      FROM <http://togogenome.org/gold/>
-      FROM <http://togogenome.org/refseq/>
-      FROM <http://togogenome.org/ncbitaxon/>
+      FROM <http://togogenome.org/graph/gold/>
+      FROM <http://togogenome.org/graph/refseq/>
       WHERE
       {
-       {
-         SELECT REPLACE(str(?gold),"http://genomesonline.org/cgi-bin/GOLD/GOLDCards.cgi\\\\?goldstamp=", "GOLD:" ) as ?label ?gold as ?link
-         FROM <http://togogenome.org/gold/>
-         WHERE
-         {
-           ?gold mccv:MCCV_000020 idtax:#{tax_id} .
-         }
-       }
-       UNION
-       {
-         SELECT DISTINCT ?label ?xref as ?link
-         FROM <http://togogenome.org/refseq/>
-         WHERE
-         {
+        {
+          SELECT REPLACE(str(?gold),"http://www.genomesonline.org/cgi-bin/GOLD/GOLDCards.cgi\\\\?goldstamp=", "GOLD:" ) as ?label ?gold as ?link
+          FROM <http://togogenome.org/gold/>
+          WHERE
+          {
+            ?gold mccv:MCCV_000020 idtax:#{tax_id} .
+          }
+        }
+        UNION
+        {
+          SELECT DISTINCT ?label ?xref as ?link
+          FROM <http://togogenome.org/graph/refseq/>
+          WHERE
+          {
             values ?tax_id { idtax:#{tax_id} }
             values ?so { obo:SO_0000340 obo:SO_0000155 }
             ?seq rdfs:seeAlso ?tax_id .

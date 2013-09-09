@@ -1,7 +1,7 @@
 module Stanza
   module Querying
     MAPPINGS = {
-      togogenome: 'http://ep.dbcls.jp/sparql7os',
+      togogenome: 'http://ep.dbcls.jp/sparql7dev',
       uniprot:    'http://ep.dbcls.jp/sparql7os',
       go:         'http://ep.dbcls.jp/sparql7os'
     }
@@ -27,19 +27,14 @@ module Stanza
       PREFIX dct:   <http://purl.org/dc/terms/>
 
       SELECT DISTINCT ?up
+      FROM <http://togogenome.org/graph/refseq/>
       WHERE {
-        GRAPH <http://togogenome.org/graph/> {
-          <http://togogenome.org/refseq/> dct:isVersionOf ?g .
-        }
-
-        GRAPH ?g {
           ?s insdc:feature_locus_tag "#{gene_id}" .
           ?s rdfs:seeAlso ?np .
           ?s rdfs:seeAlso ?xref .
           ?np rdf:type idorg:Protein .
           BIND (STRAFTER(STR(?np), "ncbiprotein/") AS ?npid)
           BIND (IRI(CONCAT("http://purl.uniprot.org/refseq/", ?npid)) AS ?up)
-        }
       }
       SPARQL
     end

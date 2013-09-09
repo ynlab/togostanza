@@ -147,7 +147,7 @@
           'pfam_list': [{{#each pfam_list}}{"key":"{{id}}","value":"{{name}}"},{{/each}}],
         }
 
-        d3.json('./resources/plot_data/?tax_id={{selected_tax_id}}&gene_id={{selected_gene_id}}', function(data) {
+        d3.json('./pfam_plot/resources/plot_data/?tax_id={{selected_tax_id}}&gene_id={{selected_gene_id}}', function(data) {
           //console.log(JSON.stringify(data,null," "));
           create_page(data.plot_data[0],option,'pfam');
          })

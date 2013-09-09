@@ -26,7 +26,5 @@ class TaxonomyOrthologProfileStanza < Stanza::Base
         ?tax rdfs:subClassOf+ taxon:#{tax_id} .
       } ORDER BY DESC (?count) limit 10
     SPARQL
-    p ortholog_uris
-    ortholog_uris
   end
 end

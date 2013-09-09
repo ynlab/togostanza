@@ -9,29 +9,29 @@ class TaxonomyPlotStanza < Stanza::Base
     genome_list = []
 
     query1 = Thread.new {
-      habitat_list = query('http://biointegra.jp/sparql3',<<-SPARQL.strip_heredoc)
+      habitat_list = query(:togogenome,<<-SPARQL.strip_heredoc)
         PREFIX owl: <http://www.w3.org/2002/07/owl#>
         PREFIX meo: <http://purl.jp/bio/11/meo/>
         PREFIX mccv: <http://purl.jp/bio/01/mccv#>
 
-        SELECT  ?tax (sql:GROUP_DIGEST (?label, ', ', 1000, 1)) as ?habitat
-        FROM <http://togogenome.org/gold/>
-        FROM <http://togogenome.org/gold_meo0_5test/> #temporary
-        FROM <http://togogenome.org/meov0_5test/> #temporary
+        SELECT ?tax (sql:GROUP_DIGEST (?label, ', ', 1000, 1)) as ?habitat
+        FROM <http://togogenome.org/graph/gold/>
+        FROM <http://togogenome.org/graph/meo/>
         WHERE
         {
-         ?gold mccv:MCCV_000020 ?tax FILTER regex(?tax, "^http://identifiers.org/") .
-         ?gold meo:MEO_0000437 ?meo .
-         ?meo a owl:Class ;
-           rdfs:subClassOf* ?parent .
-           ?parent rdfs:label ?label.
-         ?parent meo:MEO_0000442 "1"
+          VALUES ?p_env { meo:MEO_0000437 meo:MEO_0000440 }
+          ?gold mccv:MCCV_000020 ?tax FILTER regex(?tax, "^http://identifiers.org/") .
+          ?gold ?p_env ?meo .
+          ?meo a owl:Class ;
+            rdfs:subClassOf* ?parent .
+            ?parent rdfs:label ?label .
+          ?parent meo:MEO_0000442 "1" .
         } GROUP BY ?tax
       SPARQL
     }
 
     query2 = Thread.new {
-      genome_list = query('http://biointegra.jp/sparql3',<<-SPARQL.strip_heredoc)
+      genome_list = query(:togogenome,<<-SPARQL.strip_heredoc)
         DEFINE sql:select-option "order"
         PREFIX owl: <http://www.w3.org/2002/07/owl#>
         PREFIX meo: <http://purl.jp/bio/11/meo/>
@@ -40,56 +40,58 @@ class TaxonomyPlotStanza < Stanza::Base
         PREFIX obo: <http://purl.obolibrary.org/obo/>
         PREFIX insdc: <http://insdc.org/owl/>
         PREFIX idorg:<http://rdf.identifiers.org/database/>
+        PREFIX taxo: <http://ddbj.nig.ac.jp/ontologies/taxonomy#>
 
         SELECT
-          ?tax ?bioProject ?organism_name ?genome_length
+          ?tax ?organism_name ?bioProject ?genome_length
           (sql:GROUP_DIGEST (?cell_shape_label, ', ', 1000, 1)) AS ?cell_shape_label
           (sql:GROUP_DIGEST (?temp_range_label, ', ', 1000, 1)) AS ?temp_range_label
           (sql:GROUP_DIGEST (?oxy_req_label, ', ', 1000, 1)) AS ?oxy_req_label
           ?opt_temp ?min_temp ?max_temp ?opt_ph ?min_ph ?max_ph
-        FROM <http://togogenome.org/refseq/>
-        FROM <http://togogenome.org/mpo/> #TODO change to gold
-        FROM <http://togogenome.org/ncbitaxon/>
+        FROM <http://togogenome.org/graph/refseq/>
+        FROM <http://togogenome.org/graph/mpo/>
+        FROM <http://togogenome.org/graph/gold/>
+        FROM <http://togogenome.org/graph/taxonomy/>
         {
           {
-            SELECT  ?tax ?bioProject SUM(?seq_len) AS ?genome_length IRI(REPLACE(str(?tax),"http://identifiers.org/taxonomy/","http://purl.obolibrary.org/obo/NCBITaxon_")) AS ?taxon
-            FROM <http://togogenome.org/refseq/>
-            WHERE
+            SELECT ?tax ?bioProject SUM(?seq_len) AS ?genome_length
             {
               ?tax rdf:type idorg:Taxonomy .
               ?seq rdfs:seeAlso ?tax ;
-              rdf:type ?obo_type FILTER(?obo_type IN (obo:SO_0000340, obo:SO_0000155 )).
+              rdf:type ?obo_type FILTER(?obo_type IN (obo:SO_0000340, obo:SO_0000155 )) .
               ?seq insdc:sequence_length ?seq_len ;
-                rdfs:seeAlso ?bioProject.
+                rdfs:seeAlso ?bioProject .
               ?bioProject rdf:type idorg:BioProject .
             } GROUP BY ?tax  ?bioProject
           }
-          OPTIONAL { ?tax mpo:MPO_10001/rdfs:label ?cell_shape_label  FILTER (lang(?cell_shape_label) = "en") .}
-          OPTIONAL { ?tax mpo:MPO_10003/rdfs:label ?temp_range_label  FILTER (lang(?temp_range_label) = "en") .}
-          OPTIONAL { ?tax mpo:MPO_10002/rdfs:label ?oxy_req_label FILTER (lang(?oxy_req_label) = "en") .}
-          OPTIONAL { ?tax mpo:MPO_10009 ?opt_temp .}
-          OPTIONAL { ?tax mpo:MPO_10010 ?min_temp .}
-          OPTIONAL { ?tax mpo:MPO_10011 ?max_temp .}
-          OPTIONAL { ?tax mpo:MPO_10005 ?opt_ph .}
-          OPTIONAL { ?tax mpo:MPO_10006 ?min_ph .}
-          OPTIONAL { ?tax mpo:MPO_10007 ?max_ph .}
-          ?taxon rdfs:label ?organism_name
-        } GROUP BY ?tax ?organism_name ?genome_length  ?bioProject  ?opt_temp ?min_temp ?max_temp ?opt_ph ?min_ph ?max_ph
+          OPTIONAL { ?tax mpo:MPO_10001/rdfs:label ?cell_shape_label  FILTER (lang(?cell_shape_label) = "en") . }
+          OPTIONAL { ?tax mpo:MPO_10003/rdfs:label ?temp_range_label  FILTER (lang(?temp_range_label) = "en") . }
+          OPTIONAL { ?tax mpo:MPO_10002/rdfs:label ?oxy_req_label FILTER (lang(?oxy_req_label) = "en") . }
+          OPTIONAL { ?tax mpo:MPO_10009 ?opt_temp . }
+          OPTIONAL { ?tax mpo:MPO_10010 ?min_temp . }
+          OPTIONAL { ?tax mpo:MPO_10011 ?max_temp . }
+          OPTIONAL { ?tax mpo:MPO_10005 ?opt_ph . }
+          OPTIONAL { ?tax mpo:MPO_10006 ?min_ph . }
+          OPTIONAL { ?tax mpo:MPO_10007 ?max_ph . }
+          ?tax taxo:scientificName ?organism_name
+        } GROUP BY ?tax ?organism_name ?genome_length ?bioProject  ?opt_temp ?min_temp ?max_temp ?opt_ph ?min_ph ?max_ph
       SPARQL
     }
 
     #gene #rrna #trna
     query3 = Thread.new {
-      summary_list = query('http://biointegra.jp/sparql3',<<-SPARQL.strip_heredoc)
+      summary_list = query(:togogenome,<<-SPARQL.strip_heredoc)
+        PREFIX togo: <http://togogenome.org/stats/>
+
         SELECT ?tax ?project_id ?num_gene ?num_rrna ?num_trna
-        FROM <http://togogenome.org/refseq_gene_count/>
+        FROM <http://togogenome.org/graph/stats/>
         WHERE
         {
-         ?tax <gene_count> ?blank .
-         ?blank rdfs:seeAlso ?project_id .
-         ?blank <gene_number> ?num_gene .
-         ?blank <rrna_number> ?num_rrna .
-         ?blank <trna_number> ?num_trna .
+          ?tax togo:genome_stats ?blank .
+          ?blank rdfs:seeAlso ?project_id .
+          ?blank togo:gene_number ?num_gene .
+          ?blank togo:rrna_number ?num_rrna .
+          ?blank togo:trna_number ?num_trna .
         }
       SPARQL
     }

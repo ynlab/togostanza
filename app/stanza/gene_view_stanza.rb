@@ -2,7 +2,7 @@ require 'bio-svgenes'
 
 class GeneViewStanza < Stanza::Base
   property :svg do |tax_id, gene_id|
-    results = query("http://ep.dbcls.jp/sparql", <<-SPARQL.strip_heredoc)
+    results = query(:togogenome, <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
 
       prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -14,9 +14,9 @@ class GeneViewStanza < Stanza::Base
       prefix insdc:  <http://insdc.org/owl/>
 
       select *
-      from <http://togogenome.org/refseq/>
-      from <http://togogenome.org/so/>
-      from <http://togogenome.org/faldo/>
+      from <http://togogenome.org/graph/refseq/>
+      from <http://togogenome.org/graph/so/>
+      from <http://togogenome.org/graph/faldo/>
       where {
         values ?locus_tag { "#{gene_id}" }  # param "slr0473"
         #values ?ncbi_taxid {"#{tax_id}" }  # param "taxon:1148"
