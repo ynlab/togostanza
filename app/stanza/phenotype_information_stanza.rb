@@ -4,7 +4,7 @@ class PhenotypeInformationStanza < Stanza::Base
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX idtax: <http://purl.uniprot.org/taxonomy/>
-      
+
       SELECT ?mpo ?phenotype (GROUP_CONCAT(?value; SEPARATOR = ", ") AS ?value)
       FROM <http://togogenome.org/graph/mpo/>
       FROM <http://togogenome.org/graph/gold/>

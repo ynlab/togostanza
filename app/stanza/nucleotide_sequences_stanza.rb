@@ -16,7 +16,7 @@ class NucleotideSequencesStanza < Stanza::Base
       FROM <http://togogenome.org/graph/so/>
       WHERE
       {
-        values ?locus_tag { "all1455" }
+        values ?locus_tag { "#{gene_id}" }
         values ?seq_type  { obo:SO_0000340 obo:SO_0000155 }
         values ?gene_type { obo:SO_0000704 obo:SO_0000252 obo:SO_0000253 }
       

@@ -5,7 +5,7 @@ class TaxonomyCrossReferencesStanza < Stanza::Base
       PREFIX obo: <http://purl.obolibrary.org/obo/>
       PREFIX insdc: <http://insdc.org/owl/>
       PREFIX idtax: <http://identifiers.org/taxonomy/>
-      
+
       SELECT ?label ?link
       FROM <http://togogenome.org/graph/gold/>
       FROM <http://togogenome.org/graph/refseq/>
@@ -42,7 +42,7 @@ class TaxonomyCrossReferencesStanza < Stanza::Base
       # temporary replace. identifiers.org's links are not available.
       hash[:link].gsub!('http://identifiers.org/bioproject/', 'http://www.ncbi.nlm.nih.gov/bioproject/?term=')
       hash[:link].gsub!('http://identifiers.org/ncbigi/', 'http://www.ncbi.nlm.nih.gov/nuccore/')
- 
+
       xref_db, xref_id = hash[:label].split(':')
       hash.merge(:xref_db => xref_db, :xref_id => xref_id)
     }.group_by{|hash| hash[:xref_db] }.map {|hash|
