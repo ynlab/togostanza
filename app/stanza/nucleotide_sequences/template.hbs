@@ -12,11 +12,7 @@
   <body>
     <div>
     {{#if nucleotide_sequences}}
-      <pre style="white-space:nowrap;line-height:0.6;">
-        {{#each nucleotide_sequences.value}}
-          <p>{{this}}
-        {{/each}}
-      </pre>
+      <pre>{{nucleotide_sequences.value}}</pre>
     {{/if}}
     </div>
   </body>

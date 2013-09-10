@@ -2,28 +2,19 @@
 
 <html>
   <head>
-    <title>Organism Name</title>
-    <link rel="stylesheet" href="{{css_uri}}"/>
+    <title>Protein Orthologs</title>
+    <link rel="stylesheet" href="{{css_uri}}" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
     {{adjust_iframe_height_script}}
   </head>
 
   <body>
-    {{#if organism_name_list}}
+    {{#if orthologs}}
       <table class='table'>
         <tbody>
-          {{#each organism_name_list}}
-            <tr>
-              <th class='span4'>{{this.first.name_label}}</th>
-              <td class='span8'>
-                <ul>
-                  {{#each this}}
-                    <li>{{name}}</li>
-                  {{/each}}
-                </ul>
-              </td>
-            </tr>
+          {{#each orthologs}}
+            <a href='{{protein}}' target='_blank'>{{protein_label}}</a>{{#unless is_last_data}},&nbsp;{{/unless}}
           {{/each}}
         </tbody>
       </table>
@@ -34,4 +25,3 @@
     {{/if}}
   </body>
 </html>
-

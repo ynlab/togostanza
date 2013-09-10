@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Taxonomy Ortholog Profile</title>
+    <link rel="stylesheet" href="{{css_uri}}" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    {{adjust_iframe_height_script}}
+    <style type="text/css">
+      div.bar {
+         display: inline-block;
+         width: 20px;
+         height: 75px;
+         margin-right: 2px;
+         background-color: teal;
+      }
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript">
+      var fg = 0;
+      var w = 800;
+      var h = 250;
+      var barw = 20;
+      var barPadding = 2;
+      var stposx = 20;
+      var maxwidth = 600;
+      init();
+
+      function init() {
+        console.log({{param_tax_id}});
+        d3.json('./taxonomy_ortholog_profile/resources/taxonomy_ortholog_profile?tax_id={{param_tax_id}}', function(error, data) {
+          draw(data.taxonomy_ortholog_profile);
+        })
+      }
+
+      function draw(data) {
+        console.log(data);
+        var svg = d3.select("body")
+                    .append("svg")
+                    .attr("width", w)
+                    .attr("height", h);
+
+        var tooltip = d3.select("body")
+                        .append("div")
+                        .style("position", "absolute")
+                        .style("z-index", "10")
+                        .style("visibility", "hidden")
+                        .style("font-size", "16px")
+                        .style("font-family", "sans-serif")
+                        .text(function(tax) {
+                          return tax;
+                        });
+
+        svg.selectAll("rect")
+           .data(data)
+           .enter()
+           .append("rect")
+           .attr("x", function(d,i) {
+             return stposx;
+           })
+           .attr("y", function(d,i) {
+             return i*(barw+barPadding);
+           })
+           .attr("height", barw)
+           .attr("width", function(d,i) {
+             if (i==0) {
+               fg = maxwidth / d.count;
+               return maxwidth;
+             } else {
+               return d.count * fg;
+             }
+           })
+           .attr("fill", function(d,i) {
+             if (i % 2 == 0) {
+               return "rgb(167,179,129)";
+             } else {
+               return "rgb(202,209,151)";
+             }
+           });
+
+        svg.selectAll("text.count")
+           .data(data)
+           .enter()
+           .append("text")
+           .text(function(d) {
+             return d.count;
+           })
+           .attr("text-anchor", "middle")
+           .attr("y", function(d,i) {
+             return (i+1) * (barw+barPadding) - (barw-barPadding)/2;
+           })
+          .attr("x", function() {
+            return stposx + 10 ;
+          })
+          .attr("font-family", "sans-serif")
+          .attr("font-size", "7px")
+          .attr("fill", "#ffffff");
+
+        svg.selectAll("text.name")
+           .data(data)
+           .enter()
+           .append("text")
+           .text(function(d) {
+             return d.comment;
+           })
+           .attr("text-anchor", "middle")
+           .attr("y", function(d,i) {
+             return (i+1) * (barw+barPadding) - (barw-barPadding)/2;
+           })
+           .attr("x", function() {
+             return stposx + 25;
+           })
+           .attr("text-anchor", "start")
+           .attr("font-family", "sans-serif")
+           .attr("font-size", "7px")
+           .attr("fill", "#444444");
+      }
+    </script>
+  </body>
+</html>
+
