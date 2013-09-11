@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Organism Culture Collections</title>
+    <link rel="stylesheet" href="{{css_uri}}" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    {{adjust_iframe_height_script}}
+  </head>
+
+  <body>
+    {{#if strain_list}}
+      <table class='table'>
+        <thead>
+          <tr>
+            <th>Strain No.</th>
+            <th>Scientific Name of this Strain</th>
+            <th>Isolated from</th>
+            <th>History</th>
+            <th>Applications</th>
+            <th>Other collections</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each strain_list}}
+            <tr>
+              <td><a href='{{strain_url}}' target='_blank'>{{strain_no}}</a></td>
+              <td>{{strain_name}}</td>
+              <td>{{isolated_from}}</td>
+              <td>{{history}}</td>
+              <td>{{application}}</td>
+              <td>{{other_collections}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    {{else}}
+      <div>
+        No items found
+      </div>
+    {{/if}}
+  </body>
+</html>
+

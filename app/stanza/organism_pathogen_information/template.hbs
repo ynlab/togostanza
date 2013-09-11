@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Pathogen Info</title>
+    <link rel="stylesheet" href="{{css_uri}}" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    {{adjust_iframe_height_script}}
+  </head>
+
+  <body>
+    {{#if pathogen_list}}
+      <table class='table'>
+        <thead>
+          <tr>
+            <th>Organism name</th>
+            <th>Disease name</th>
+            <th>Infectious type</th>
+            <th>Strain type</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each pathogen_list}}
+            <tr>
+              <td><a href="{{tax_link}}">{{bacterialName}}</a></td>
+              <td>{{diseaseNameSet}}</td>
+              <td>{{infectiousType}}</td>
+              <td>{{strainType}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    {{else}}
+      <div>
+        No items found
+      </div>
+    {{/if}}
+  </body>
+</html>
+
