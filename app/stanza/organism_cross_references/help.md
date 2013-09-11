@@ -1,7 +1,7 @@
-Taxonomic information
-=====================
+Organism cross references
+=========================
 
-Lineage of the specified organism.
+List of databases that references the specified organism.
 
 ## Parameters:
 
@@ -14,9 +14,9 @@ Lineage of the specified organism.
 ## Sample:
 
 ```html
-<div data-stanza="http://togogenome.org/stanza/lineage_information" data-stanza-tax-id="103690"></div>
+<div data-stanza="http://togogenome.org/stanza/organism_cross_references" data-stanza-tax-id="103690"></div>
 ```
 
 The above `<div>` will automatically embed the following Stanza in your HTML page.
 
-<div data-stanza="/stanza/lineage_information" data-stanza-tax-id="103690"></div>
+<div data-stanza="/stanza/organism_cross_references" data-stanza-tax-id="103690"></div>

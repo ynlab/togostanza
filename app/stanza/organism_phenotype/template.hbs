@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Organism Phenotype</title>
+    <link rel="stylesheet" href="{{css_uri}}" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    {{adjust_iframe_height_script}}
+  </head>
+
+  <body>
+    {{#if phenotype_items}}
+      <table class='table'>
+        <tbody>
+          {{#each phenotype_items}}
+            <tr>
+              <th class='span4'>{{phenotype}}</th>
+              <td class='span8'>
+                {{value}}{{#if deg_flag}}&deg;C{{/if}}
+              </td>
+            </td>
+          {{/each}}
+        </tbody>
+      </table>
+    {{else}}
+      <div>
+        No items found
+      </div>
+    {{/if}}
+  </body>
+</html>
+

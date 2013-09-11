@@ -12,10 +12,10 @@
   <body>
     {{#if xrefs}}
       {{#each xrefs}}
-        <h2>{{bp}}</h2>
+        <h3>{{bp}}</h3>
         {{#each data}}
-          <h3>{{rs}} : {{desc}}</h3>
-          <table class='table table-bordered'>
+          <table class='table'>
+          <caption>{{rs}} : {{desc}}</caption>
             <tbody>
               {{#each xref}}
                 <tr>

@@ -1,5 +1,5 @@
-General annotation
-==================
+Protein general annotation
+==========================
 
 See also: http://www.uniprot.org/manual/?query=category%3Ageneral_annotation
 

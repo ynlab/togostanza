@@ -1,4 +1,4 @@
-Attributes
+Protein attributes
 ==================
 
 See also: http://www.uniprot.org/manual/?query=category%3Aprotein_attributes

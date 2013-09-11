@@ -1,7 +1,7 @@
-Protein sequence annotation
-===========================
+Protein sequence
+================
 
-See also: http://www.uniprot.org/manual/?query=category%3Asequence_annotation
+See also: http://www.uniprot.org/manual/?query=category%3Asequences
 
 ## Parameters:
 
@@ -15,9 +15,9 @@ See also: http://www.uniprot.org/manual/?query=category%3Asequence_annotation
 ## Sample:
 
 ```html
-<div data-stanza="http://togogenome.org/stanza/protein_sequence_annotation" data-stanza-tax-id="1111708" data-stanza-gene-id="slr1311"></div>
+<div data-stanza="http://togogenome.org/stanza/protein_sequence" data-stanza-tax-id="1111708" data-stanza-gene-id="slr1311"></div>
 ```
 
 The above `<div>` will automatically embed the following Stanza in your HTML page.
 
-<div data-stanza="/stanza/protein_sequence_annotation" data-stanza-tax-id="1111708" data-stanza-gene-id="slr1311"></div>
+<div data-stanza="/stanza/protein_sequence" data-stanza-tax-id="1111708" data-stanza-gene-id="slr1311"></div>
