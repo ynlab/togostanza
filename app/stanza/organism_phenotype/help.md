@@ -1,5 +1,5 @@
-Organism phenotype
-==================
+Phenotype information
+=====================
 
 Phenotype information of specified organism.
 

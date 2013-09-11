@@ -1,4 +1,4 @@
-Organism Names
+Organism names
 ==============
 
 List of organism names and synonyms.

@@ -6,7 +6,7 @@ class OrganismCultureCollectionsStanza < Stanza::Base
       PREFIX dcterms: <http://purl.org/dc/terms/>
       PREFIX dc: <http://purl.org/dc/elements/1.1/>
       PREFIX taxo: <http://ddbj.nig.ac.jp/ontologies/taxonomy#>
-      
+
       SELECT ?strain_id AS ?strain_url ?strain_no ?strain_name 
         ?isolated_from ?history ?application 
         (sql:GROUP_DIGEST(?other_link, ', ', 1000, 1)) AS ?other_collections

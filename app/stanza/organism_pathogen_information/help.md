@@ -1,7 +1,7 @@
-Organism Pathogen Information
-=============================
+Pathogen information
+====================
 
-TODO: Write a stanza description
+List of organisms and associated pathogen which have linage of the specified taxonomy.
 
 ## Parameters:
 

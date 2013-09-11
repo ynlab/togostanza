@@ -3,7 +3,7 @@ class OrganismNamesStanza < Stanza::Base
     results = query(:togogenome, <<-SPARQL.strip_heredoc)
       PREFIX taxo: <http://ddbj.nig.ac.jp/ontologies/taxonomy#>
       PREFIX taxid: <http://identifiers.org/taxonomy/>
-      
+
       SELECT ?name_type ?name_type_label ?name
       FROM <http://togogenome.org/graph/taxonomy/>
       WHERE
@@ -27,7 +27,7 @@ class OrganismNamesStanza < Stanza::Base
         name: name
       )
     }.group_by {|hash| hash[:name_type] }
-    
+
     #Order by kind of synonym
     order_array = ["scientificName", "synonym", "preferredSynonym", "acronym", "preferredAcronym",
                    "anamorph", "teleomorph", "misnomer", "commonName", "preferredCommonName",

@@ -3,7 +3,7 @@ class OrganismPathogenInformationStanza < Stanza::Base
     results = query(:togogenome, <<-SPARQL.strip_heredoc)
       PREFIX pdo: <http://purl.jp/bio/11/pdo/>
       PREFIX taxid: <http://identifiers.org/taxonomy/>
-      
+
       SELECT REPLACE(STR(?tax_id),"http://identifiers.org/taxonomy/","") AS ?tax_no
        ?bacterialName (GROUP_CONCAT(?diseaseName; SEPARATOR = ", ") AS ?diseaseNameSet) ?infectiousType ?strainType
       FROM <http://togogenome.org/graph/pdo/>

@@ -17,7 +17,7 @@ class TaxonomyLinageStanza < Stanza::Base
     query(:togogenome, <<-SPARQL.strip_heredoc)
       PREFIX taxo: <http://ddbj.nig.ac.jp/ontologies/taxonomy#>
       PREFIX taxid: <#{taxon_prefix}>
-      
+
       SELECT ?tax ?parent ?tax_label ?rank
       FROM <http://togogenome.org/graph/taxonomy/>
       WHERE

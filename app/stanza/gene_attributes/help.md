@@ -1,7 +1,7 @@
 Gene Attributes
 ===============
 
-TODO: Write a stanza description
+Basic information of the specified gene.
 
 ## Parameters:
 

@@ -1,7 +1,8 @@
-Organism culture collections
-============================
+Culture collections
+===================
 
-TODO: Write a stanza description
+List of strains that is related to the specified taxonomy.
+These strains are related to taxonomy by NCBI taxonomy database or by sequence or by StrainInfo database or by strain name.
 
 ## Parameters:
 

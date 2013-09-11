@@ -1,7 +1,7 @@
 Taxonomic linage
 ================
 
-TODO: Write a stanza description
+Lineage of the specified organism.
 
 ## Parameters:
 

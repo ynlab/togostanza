@@ -1,7 +1,7 @@
-Genome Information
+Genome information
 ==================
 
-TODO: Write a stanza description
+Genomic information of a taxonomy.
 
 ## Parameters:
 

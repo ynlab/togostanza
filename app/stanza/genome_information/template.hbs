@@ -23,7 +23,7 @@
               <th>rRNA</th>
               <th>Other</th>
             </tr>
-            {{#each this}}  
+            {{#each this}}
               <tr>
                 <td>{{desc}}</td>
                 <td><a href='{{refseq_link}}' target='_blank'>{{refseq_version}}</a></td>
@@ -32,10 +32,10 @@
                 <td>{{gene_cnt}}</td>
                 <td>{{trna_cnt}}</td>
                 <td>{{rrna_cnt}}</td>
-                <td>{{other_cnt}}</td>           
+                <td>{{other_cnt}}</td>
               </tr>
             {{/each}}
-          </tbody>   
+          </tbody>
         </table>
       {{/each}}
     {{else}}
