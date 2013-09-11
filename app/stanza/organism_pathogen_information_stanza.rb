@@ -11,9 +11,9 @@ class OrganismPathogenInformationStanza < Stanza::Base
       FROM <http://togogenome.org/graph/taxonomy/>
       WHERE
       {
-        { ?tax_id rdfs:subClassOf+ taxid:1763 }
+        { ?tax_id rdfs:subClassOf+ taxid:#{tax_id} }
         UNION
-        { ?tax_id rdfs:label ?o FILTER (?tax_id = taxid:1763) }
+        { ?tax_id rdfs:label ?o FILTER (?tax_id = taxid:#{tax_id}) }
         ?tax_id rdfs:label ?bacterialName ;
           pdo:isAssociatedTo ?blank .
         ?blank ?p ?disease FILTER (?p IN(pdo:mayCaused, pdo:isRelatedTo)).
