@@ -19,7 +19,7 @@ class GeneAttributesStanza < Stanza::Base
       FROM <http://togogenome.org/graph/faldo/>
       WHERE
       {
-        values ?locus_tag { "slr0473" }
+        values ?locus_tag { "#{gene_id}" }
         values ?seq_type  { obo:SO_0000340 obo:SO_0000155 }
         values ?gene_type { obo:SO_0000704 obo:SO_0000252 obo:SO_0000253 }
         values ?faldo_stand_type { faldo:ForwardStrandPosition faldo:ReverseStrandPosition }
