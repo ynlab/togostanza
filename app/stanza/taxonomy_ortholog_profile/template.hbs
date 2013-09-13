@@ -18,12 +18,13 @@
     </style>
   </head>
   <body>
+    <div id="chart"></div>
     <script type="text/javascript">
       var fg = 0;
       var w = 800;
-      var h = 250;
-      var barw = 20;
-      var barPadding = 2;
+      var h = 400;
+      var barw = 35;
+      var barPadding = 5;
       var stposx = 20;
       var maxwidth = 600;
       init();
@@ -37,7 +38,7 @@
 
       function draw(data) {
         console.log(data);
-        var svg = d3.select("body")
+        var svg = d3.select("#chart")
                     .append("svg")
                     .attr("width", w)
                     .attr("height", h);
@@ -92,10 +93,10 @@
              return (i+1) * (barw+barPadding) - (barw-barPadding)/2;
            })
           .attr("x", function() {
-            return stposx + 10 ;
+            return stposx + 15 ;
           })
           .attr("font-family", "sans-serif")
-          .attr("font-size", "7px")
+          .attr("font-size", "14px")
           .attr("fill", "#ffffff");
 
         svg.selectAll("text.name")
@@ -110,11 +111,11 @@
              return (i+1) * (barw+barPadding) - (barw-barPadding)/2;
            })
            .attr("x", function() {
-             return stposx + 25;
+             return stposx + 35;
            })
            .attr("text-anchor", "start")
            .attr("font-family", "sans-serif")
-           .attr("font-size", "7px")
+           .attr("font-size", "14px")
            .attr("fill", "#444444");
       }
     </script>

@@ -23,7 +23,7 @@
         <tbody>
           {{#each pathogen_list}}
             <tr>
-              <td><a href="{{tax_link}}">{{bacterialName}}</a></td>
+              <td><a href="{{tax_link}}" target="_top">{{bacterialName}}</a></td>
               <td>{{diseaseNameSet}}</td>
               <td>{{infectiousType}}</td>
               <td>{{strainType}}</td>
@@ -33,7 +33,7 @@
       </table>
     {{else}}
       <div>
-        No items found
+        No data
       </div>
     {{/if}}
   </body>
