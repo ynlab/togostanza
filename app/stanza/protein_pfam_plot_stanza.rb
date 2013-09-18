@@ -4,7 +4,6 @@ class ProteinPfamPlotStanza < Stanza::Base
       DEFINE sql:select-option "order"
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
-      PREFIX dct:   <http://purl.org/dc/terms/>
 
       SELECT DISTINCT  REPLACE(STR(?ref), "http://purl.uniprot.org/pfam/","") AS ?pfam_id
       FROM <http://togogenome.org/graph/uniprot/>
@@ -65,7 +64,6 @@ class ProteinPfamPlotStanza < Stanza::Base
       DEFINE sql:select-option "order"
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
-      PREFIX dct:   <http://purl.org/dc/terms/>
 
       SELECT DISTINCT  REPLACE(STR(?ref), "http://purl.uniprot.org/pfam/","") AS ?pfam_id
       FROM <http://togogenome.org/graph/uniprot/>
@@ -207,7 +205,7 @@ class ProteinPfamPlotStanza < Stanza::Base
           REPLACE(STR(?tax), "http://purl.uniprot.org/taxonomy/", "http://identifiers.org/taxonomy/") AS ?tax_id
           (SUM(?hits) as ?num_pfam)
           (COUNT(DISTINCT(?prot_id)) AS ?num_pfam_protein)
-        FROM <http://togogenome.org/uniprot/>
+        FROM <http://togogenome.org/graph/uniprot/>
         WHERE
         {
           ?prot_id up:organism ?tax .

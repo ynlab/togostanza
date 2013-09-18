@@ -6,33 +6,27 @@ class ProteinNamesStanza < Stanza::Base
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
-      PREFIX dct:   <http://purl.org/dc/terms/>
 
       SELECT DISTINCT ?gene_name ?synonyms_name ?locus_name ?orf_name
+      FROM <http://togogenome.org/graph/uniprot/>
       WHERE {
-        GRAPH <http://togogenome.org/graph/> {
-          <http://togogenome.org/uniprot/> dct:isVersionOf ?g .
-        }
+        ?protein up:organism  taxonomy:#{tax_id} ;
+                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
 
-        GRAPH ?g {
-          ?protein up:organism  taxonomy:#{tax_id} ;
-                   rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
+        # Gene names
+        ?protein up:encodedBy ?gene .
 
-          # Gene names
-          ?protein up:encodedBy ?gene .
+        ## Name:
+        OPTIONAL { ?gene skos:prefLabel ?gene_name . }
 
-          ## Name:
-          OPTIONAL { ?gene skos:prefLabel ?gene_name . }
+        ## Synonyms:
+        OPTIONAL { ?gene skos:altLabel ?synonyms_name . }
 
-          ## Synonyms:
-          OPTIONAL { ?gene skos:altLabel ?synonyms_name . }
+        ## Ordered Locus Names:
+        OPTIONAL { ?gene up:locusName ?locus_name . }
 
-          ## Ordered Locus Names:
-          OPTIONAL { ?gene up:locusName ?locus_name . }
-
-          ## ORF Names:
-          OPTIONAL { ?gene up:orfName ?orf_name . }
-        }
+        ## ORF Names:
+        OPTIONAL { ?gene up:orfName ?orf_name . }
       }
     SPARQL
   end
@@ -41,43 +35,37 @@ class ProteinNamesStanza < Stanza::Base
     protein_summary = query(:uniprot, <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
-      PREFIX dct:   <http://purl.org/dc/terms/>
 
       SELECT DISTINCT ?recommended_name ?ec_name ?alternative_names ?organism_name ?parent_taxonomy_names
+      FROM <http://togogenome.org/graph/uniprot/>
       WHERE {
-        GRAPH <http://togogenome.org/graph/> {
-          <http://togogenome.org/uniprot/> dct:isVersionOf ?g .
+        ?protein up:organism  taxonomy:#{tax_id} ;
+                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
+
+        # Protein names
+        ## Recommended name:
+        OPTIONAL {
+          ?protein up:recommendedName ?recommended_name_node .
+          ?recommended_name_node up:fullName ?recommended_name .
         }
 
-        GRAPH ?g {
-          ?protein up:organism  taxonomy:#{tax_id} ;
-                   rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
+        ### EC=
+        OPTIONAL { ?recommended_name_node up:ecName ?ec_name . }
 
-          # Protein names
-          ## Recommended name:
-          OPTIONAL {
-            ?protein up:recommendedName ?recommended_name_node .
-            ?recommended_name_node up:fullName ?recommended_name .
-          }
+        OPTIONAL {
+          ?protein up:alternativeName ?alternative_names_node .
+          ?alternative_names_node up:fullName ?alternative_names .
+        }
 
-          ### EC=
-          OPTIONAL { ?recommended_name_node up:ecName ?ec_name . }
+        # Organism
+        OPTIONAL { taxonomy:#{tax_id} up:scientificName ?organism_name . }
 
-          OPTIONAL {
-            ?protein up:alternativeName ?alternative_names_node .
-            ?alternative_names_node up:fullName ?alternative_names .
-          }
+        # Taxonomic identifier
 
-          # Organism
-          OPTIONAL { taxonomy:#{tax_id} up:scientificName ?organism_name . }
-
-          # Taxonomic identifier
-
-          # Taxonomic lineage
-          OPTIONAL {
-            taxonomy:#{tax_id} rdfs:subClassOf* ?parent_taxonomy .
-            ?parent_taxonomy up:scientificName ?parent_taxonomy_names .
-          }
+        # Taxonomic lineage
+        OPTIONAL {
+          taxonomy:#{tax_id} rdfs:subClassOf* ?parent_taxonomy .
+          ?parent_taxonomy up:scientificName ?parent_taxonomy_names .
         }
       }
     SPARQL

@@ -1,9 +1,9 @@
 module Stanza
   module Querying
     MAPPINGS = {
-      togogenome: 'http://ep.dbcls.jp/sparql7dev',
-      uniprot:    'http://ep.dbcls.jp/sparql7os',
-      go:         'http://ep.dbcls.jp/sparql7os'
+      togogenome: 'http://ep.dbcls.jp/sparql7',
+      uniprot:    'http://ep.dbcls.jp/sparql7',
+      go:         'http://ep.dbcls.jp/sparql7'
     }
 
     def query(endpoint, sparql)
@@ -24,7 +24,6 @@ module Stanza
       query(:togogenome, <<-SPARQL).first[:up]
       PREFIX insdc: <http://insdc.org/owl/>
       PREFIX idorg: <http://rdf.identifiers.org/database/>
-      PREFIX dct:   <http://purl.org/dc/terms/>
 
       SELECT DISTINCT ?up
       FROM <http://togogenome.org/graph/refseq/>
