@@ -196,7 +196,7 @@ class ProteinPfamPlotStanza < Stanza::Base
     result_hash = {}
     pfam_list.each do |pfam_entity|
       pfam_id = pfam_entity[:pfam_id]
-      pfam_summary_list = query('http://biointegra.jp/sparql3',<<-SPARQL.strip_heredoc)
+      pfam_summary_list = query(:togogenome,<<-SPARQL.strip_heredoc)
         PREFIX up: <http://purl.uniprot.org/core/>
         PREFIX tax: <http://purl.uniprot.org/taxonomy/>
         PREFIX pfam: <http://purl.uniprot.org/pfam/>
