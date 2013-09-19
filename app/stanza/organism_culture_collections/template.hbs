@@ -15,9 +15,10 @@
         <thead>
           <tr>
             <th>Strain No.</th>
-            <th>Scientific Name of this Strain</th>
-            <th>Isolated from</th>
-            <th>History</th>
+            <th>Organism name</th>
+            <th>Isolation</th>
+            <th>Environmental link</th>
+            <th>Type strain</th>
             <th>Applications</th>
             <th>Other collections</th>
           </tr>
@@ -25,10 +26,17 @@
         <tbody>
           {{#each strain_list}}
             <tr>
-              <td><a href='{{strain_url}}' target='_blank'>{{strain_no}}</a></td>
-              <td>{{strain_name}}</td>
-              <td>{{isolated_from}}</td>
-              <td>{{history}}</td>
+              <td><a href='{{strain_id}}' target='_blank'>{{strain_number}}</a></td>
+              <td>{{organism_name}}</td>
+              <td>{{isolation}}</td>
+              <td>
+                {{#if env_link_array}}
+                  {{#each env_link_array}}
+                    <a href="http://togogenome.org/environment/{{meo_id}}" target="_top">{{meo_label}}</a>{{#unless is_last_data}},&nbsp;{{/unless}}
+                  {{/each}}
+                {{/if}}
+              </td>
+              <td>{{type_strain_label}}</td>
               <td>{{application}}</td>
               <td>{{other_collections}}</td>
             </tr>

@@ -9,47 +9,56 @@ class GeneAttributesStanza < Stanza::Base
       PREFIX faldo: <http://biohackathon.org/resource/faldo#>
       PREFIX idorg: <http://rdf.identifiers.org/database/>
       PREFIX insdc: <http://insdc.org/owl/>
-
-      SELECT distinct ?locus_tag ?gene_type_label ?gene_symbol ?seq_label ?seq_type_label
+      
+      SELECT DISTINCT ?locus_tag ?gene_type_label ?seq_label ?seq_type_label ?gene_symbol
         REPLACE(?refseq_label,"RefSeq:","") AS ?refseq_label ?organism ?taxid
         ?faldo_begin_position ?faldo_end_position ?stand ?insdc_location
         CONCAT("http://togows.dbcls.jp/entry/nucleotide/", REPLACE(?refseq_label,"RefSeq:",""),"/seq/", ?insdc_location) AS ?seqence
       FROM <http://togogenome.org/graph/refseq/>
       FROM <http://togogenome.org/graph/so/>
       FROM <http://togogenome.org/graph/faldo/>
-      WHERE
       {
-        values ?locus_tag { "#{gene_id}" }
-        values ?seq_type  { obo:SO_0000340 obo:SO_0000155 }
-        values ?gene_type { obo:SO_0000704 obo:SO_0000252 obo:SO_0000253 }
-        values ?faldo_stand_type { faldo:ForwardStrandPosition faldo:ReverseStrandPosition }
-
-        ?gene insdc:feature_locus_tag ?locus_tag ;
-          a ?gene_type ;
-          obo:so_part_of ?seq .
+        {
+          SELECT DISTINCT ?gene ?locus_tag ?gene_type_label ?seq_label ?seq_type_label 
+            ?refseq_label ?organism ?taxid 
+            ?faldo_begin_position ?faldo_end_position ?stand ?insdc_location
+          WHERE
+          {
+            VALUES ?locus_tag { "#{ gene_id }" }
+            VALUES ?seq_type  { obo:SO_0000340 obo:SO_0000155 }
+            VALUES ?gene_type { obo:SO_0000704 obo:SO_0000252 obo:SO_0000253 }
+            VALUES ?faldo_stand_type { faldo:ForwardStrandPosition faldo:ReverseStrandPosition }
+      
+            ?gene ?p ?locus_tag ;
+              a ?gene_type ;
+              obo:so_part_of ?seq .
+            ?gene_type rdfs:label ?gene_type_label .
+      
+            #sequence
+            ?seq rdfs:label ?seq_label ;
+              a ?seq_type ;
+              rdfs:seeAlso ?refseq ;
+              insdc:source_organism ?organism ;
+              rdfs:seeAlso ?taxonomy .
+            ?seq_type rdfs:label ?seq_type_label .
+            ?refseq a idorg:RefSeq ;
+              rdfs:label ?refseq_label .
+            ?taxonomy a idorg:Taxonomy ;
+              rdfs:label ?taxid .
+      
+            #faldo
+            ?gene faldo:location ?faldo .
+            ?faldo insdc:location ?insdc_location ;
+              faldo:begin ?faldo_begin ;
+              faldo:end ?faldo_end .
+            ?faldo_begin faldo:position ?faldo_begin_position ;
+              rdf:type ?faldo_stand_type .
+            ?faldo_end faldo:position ?faldo_end_position .
+            ?faldo_stand_type rdfs:label ?stand .
+          }
+        }
         OPTIONAL { ?gene insdc:feature_gene ?gene_symbol. }
-        ?gene_type rdfs:label ?gene_type_label .
-        #sequence
-        ?seq rdfs:label ?seq_label ;
-          a ?seq_type ;
-          rdfs:seeAlso ?refseq ;
-          insdc:source_organism ?organism ;
-          rdfs:seeAlso ?taxonomy .
-        ?seq_type rdfs:label ?seq_type_label .
-        ?refseq a idorg:RefSeq ;
-          rdfs:label ?refseq_label .
-        ?taxonomy a idorg:Taxonomy ;
-          rdfs:label ?taxid .
-        #faldo
-        ?gene faldo:location ?faldo .
-        ?faldo insdc:location ?insdc_location ;
-          faldo:begin ?faldo_begin ;
-          faldo:end ?faldo_end .
-        ?faldo_begin faldo:position ?faldo_begin_position ;
-          rdf:type ?faldo_stand_type .
-        ?faldo_end faldo:position ?faldo_end_position .
-        ?faldo_stand_type rdfs:label ?stand .
-      }
+      }     
     SPARQL
     results.map {|hash|
       hash.merge(
