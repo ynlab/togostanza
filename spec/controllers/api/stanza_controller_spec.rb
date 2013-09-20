@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Api::StanzaController do
   describe 'GET show' do
     before do
-      get :show, id: 'protein_names_and_origin', tax_id: '1111708', gene_id: 'slr1311'
+      get :show, id: 'protein_names', tax_id: '1111708', gene_id: 'slr1311'
     end
 
     it { response.should be_success }
@@ -24,22 +24,23 @@ describe Api::StanzaController do
           }
         ],
         "summary": {
+          "recommended_name": "Photosystem Q(B) protein 2",
+          "ec_name": "1.10.3.9",
           "alternative_names": [
             "32 kDa thylakoid membrane protein 2",
             "Photosystem II protein D1 2"
           ],
-          "ec_name": "1.10.3.9",
           "organism_name": "Synechocystis sp. (strain PCC 6803 / Kazusa)",
           "parent_taxonomy_names": [
-            "cellular organisms",
             "Oscillatoriophycideae",
             "Cyanobacteria",
+            "Synechocystis sp. PCC 6803",
             "Synechocystis",
+            "cellular organisms",
+            "Synechocystis sp. (strain PCC 6803 / Kazusa)",
             "Chroococcales",
-            "Bacteria",
-            "Synechocystis sp. PCC 6803"
+            "Bacteria"
           ],
-          "recommended_name": "Photosystem Q(B) protein 2",
           "taxonomy_id": "1111708"
         }
       }

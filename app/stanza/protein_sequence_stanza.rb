@@ -3,25 +3,19 @@ class ProteinSequenceStanza < Stanza::Base
     sequences = query(:uniprot, <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
-      PREFIX dct:   <http://purl.org/dc/terms/>
 
       SELECT DISTINCT ?protein ?value ?mass ?modified ?version ?checksum
+      FROM <http://togogenome.org/graph/uniprot/>
       WHERE {
-        GRAPH <http://togogenome.org/graph/> {
-          <http://togogenome.org/uniprot/> dct:isVersionOf ?g .
-        }
+        ?protein up:organism  taxonomy:#{tax_id} ;
+                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
 
-        GRAPH ?g {
-          ?protein up:organism  taxonomy:#{tax_id} ;
-                   rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
-
-          ?protein up:sequence ?seq .
-          ?seq rdf:value ?value ;
-               up:mass ?mass ;
-               up:modified ?modified ;
-               up:version ?version ;
-               up:crc64Checksum ?checksum .
-        }
+        ?protein up:sequence ?seq .
+        ?seq rdf:value ?value ;
+             up:mass ?mass ;
+             up:modified ?modified ;
+             up:version ?version ;
+             up:crc64Checksum ?checksum .
       }
     SPARQL
 
