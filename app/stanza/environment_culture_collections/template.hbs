@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Environment Culture Collections</title>
+    <link rel="stylesheet" href="{{css_uri}}" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    {{adjust_iframe_height_script}}
+  </head>
+
+  <body>
+    {{#if strain_list}}
+      <table class='table'>
+        <thead>
+          <tr>
+            <th>Strain No.</th>
+            <th>Organism name</th>
+            <th>Taxonomic link</th>
+            <th>Isolation</th>
+            <th>Environmental link</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each strain_list}}
+            <tr>
+              <td><a href='{{strain_id}}' target='_blank'>{{strain_number}}</a></td>
+              <td>{{organism_name}}</td>
+              <td>
+                {{#if tax_link_array}}
+                  {{#each tax_link_array}}
+                    <a href="http://togogenome.org/organism/{{tax_id}}" target="_top">{{tax_id}}</a>{{#unless is_last_data}},&nbsp;{{/unless}}
+                  {{/each}}
+                {{/if}}
+              </td>
+              <td>{{isolation}}</td>
+              <td>
+                {{#if env_link_array}}
+                  {{#each env_link_array}}
+                    <a href="http://togogenome.org/environment/{{meo_id}}" target="_top">{{meo_label}}</a>{{#unless is_last_data}},&nbsp;{{/unless}}
+                  {{/each}}
+                {{/if}}
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    {{else}}
+      <div>
+        No data 
+      </div>
+    {{/if}}
+  </body>
+</html>
+
