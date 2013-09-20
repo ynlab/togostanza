@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Environment Attributes</title>
+    <link rel="stylesheet" href="{{css_uri}}" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    {{adjust_iframe_height_script}}
+  </head>
+
+  <body>
+    {{#if environment_attr}}
+      <table class='table'>
+        <tbody>
+          <tr>
+            <th>MEO ID</th>
+            <td>{{environment_attr.meo_no}}</td>
+          </tr>
+          <tr>
+            <th>Label</th>
+            <td>{{environment_attr.meo_term_label}}</td>
+          </tr>
+          <tr>
+            <th>Definition</th>
+            <td>{{environment_attr.meo_definition}}</td>
+          </tr>
+          <tr> 
+            <th>Super class</th>
+            <td>
+              {{#if environment_attr.meo_superclass_term_label}}
+                {{environment_attr.meo_superclass_term_label}} ({{environment_attr.meo_superclass_no}})
+              {{/if}}
+            </td>
+          </tr>
+          <tr>
+            <th>Exact synonyms</th>
+            <td>{{environment_attr.exact_synonyms}}</td>
+          </tr>
+        </tbody>
+      </table>
+    {{else}}
+      <div>
+        No data
+      </div>
+    {{/if}}
+  </body>
+</html>
+

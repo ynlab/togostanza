@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>MEO Ontology Viewer</title>
+    <link rel="stylesheet" href="{{css_uri}}" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript" src="http://biointegra.jp/OpenID/js/meo_ontology_viewer.js"></script>
+    {{adjust_iframe_height_script}}
+    <link rel="stylesheet" type="text/css" href="http://biointegra.jp/OpenID/css/mdbstyle.css">
+    <style>
+      .node circle {
+        cursor: pointer;
+        fill: #fff;
+        stroke: steelblue;
+        stroke-width: 1.5px;
+      }
+      .node text {
+        font-size: 11px;
+      }
+      path.link {
+        fill: none;
+        stroke: #ccc;
+        stroke-width: 1.5px;
+      }
+      {{select_meo_style}}
+      .tooltip {
+        position: absolute;
+        text-align: left;
+        font: 12px sans-serif;
+        background: #FFFFFF;
+        color: #333333;
+        border: solid 1px #B4B4B4;
+        border-radius: 8px;
+        padding: 10px 10px 10px 10px;
+      }
+    </style>
+    <script type="text/javascript">
+    <!--
+      function init() {
+        // param id input_file root view_width view_height default_posX default_posY
+        var opts = {
+          "children": "meo_id",
+          "parent": "parent",
+          "name": "label",
+          "Name": "label",
+          "Definition": "definition",
+          "MEO ID": "tag_id",
+          "link": "link"
+        };
+        var tips = {
+          "Name": "Name",
+          "Definition": "Definition",
+          "MEO ID": "MEO ID"
+        };
+        draw('body','./meo_ontology_viewer/resources/meo_ontology_tree','meo_ontology_tree',opts,'root','MEO ID','link',tips,4500,4500,'{{select_meo_id}}');
+      }
+    -->
+    </script>
+  </head>
+  <body onload="init()">
+    <div id="body">
+    </div>
+  </body>
+</html>

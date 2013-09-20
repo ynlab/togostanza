@@ -13,14 +13,18 @@
     {{#if orthologs}}
       <table class='table'>
         <tbody>
-          {{#each orthologs}}
-            <a href='{{protein}}' target='_blank'>{{protein_label}}</a>{{#unless is_last_data}},&nbsp;{{/unless}}
-          {{/each}}
+          <tr>
+            <td>
+              {{#each orthologs}}
+                <a href='{{protein}}' target='_blank'>{{protein_label}}</a>{{#unless is_last_data}},&nbsp;{{/unless}}
+              {{/each}}
+            </td>
+          </tr>
         </tbody>
       </table>
     {{else}}
       <div>
-        No items found
+        No data
       </div>
     {{/if}}
   </body>
