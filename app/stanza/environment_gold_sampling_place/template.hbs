@@ -23,7 +23,7 @@
       new google.maps.InfoWindow({
         content: msg
       }).open(marker.getMap(), marker);
-    });  
+    });
   }
 
   //initialize 
@@ -39,7 +39,7 @@
         data.push({position: new google.maps.LatLng(json.place_list[i].latitude, json.place_list[i].longitude), content: json.place_list[i].place_name + '<br>' + link});
       }
       draw_map(data);
-    }); 
+    });
   }
   function draw_map(data) {
     // settings for Google Map

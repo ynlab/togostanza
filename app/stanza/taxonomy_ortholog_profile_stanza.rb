@@ -8,8 +8,7 @@ class TaxonomyOrthologProfileStanza < Stanza::Base
   end
 
   resource :taxonomy_ortholog_profile do |tax_id|
-#    ortholog_uris = query("http://sparql.nibb.ac.jp/sparql", <<-SPARQL.strip_heredoc)
-    ortholog_uris = query("http://biointegra.jp/sparqlMDBdev", <<-SPARQL.strip_heredoc)
+    ortholog_uris = query("http://sparql.nibb.ac.jp/sparql", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX mbgd: <http://mbgd.genome.ad.jp/owl/mbgd.owl#>
@@ -17,7 +16,7 @@ class TaxonomyOrthologProfileStanza < Stanza::Base
       PREFIX uniprot: <http://purl.uniprot.org/uniprot/>
       PREFIX uniprotCore: <http://purl.uniprot.org/core/>
       PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
-      
+ 
       SELECT ?group ?comment COUNT(?member) AS ?count
       WHERE {
         ?tax rdfs:subClassOf+ taxon:#{tax_id} .

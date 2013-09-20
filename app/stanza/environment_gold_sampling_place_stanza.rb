@@ -5,8 +5,7 @@ class EnvironmentGoldSamplingPlaceStanza < Stanza::Base
 
   resource :place_list do |meo_id|
     gazetter = []
-    #results = query(:togogenome, <<-SPARQL.strip_heredoc)
-    results = query('http://ep.dbcls.jp/sparql7dev', <<-SPARQL.strip_heredoc)
+    results = query(:togogenome, <<-SPARQL.strip_heredoc)
       PREFIX meo: <http://purl.jp/bio/11/meo/>
       PREFIX msv: <http://purl.jp/bio/11/msv/>
 

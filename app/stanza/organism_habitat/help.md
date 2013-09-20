@@ -19,4 +19,4 @@ Link list of organism habitat
 
 The above `<div>` will automatically embed the following Stanza in your HTML page.
 
-<div data-stanza="/stanza/organism_habitat" data-stanza-tax-id="103690" data-stanza-height="444400">
+<div data-stanza="/stanza/organism_habitat" data-stanza-tax-id="103690" data-stanza-height="400">

@@ -3,7 +3,7 @@ class EnvironmentAttributesStanza < Stanza::Base
     results = query(:togogenome, <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX meo: <http://purl.jp/bio/11/meo/>
-      
+
       SELECT
        REPLACE(STR(?meo_id),"http://purl.jp/bio/11/meo/","") AS ?meo_no ?meo_term_label ?meo_definition
        REPLACE(STR(?meo_superclass_id),"http://purl.jp/bio/11/meo/","") AS ?meo_superclass_no ?meo_superclass_term_label

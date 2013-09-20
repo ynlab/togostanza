@@ -1,8 +1,7 @@
 Taxonomic composition
 ================================
 
-
-TODO: Write a stanza description
+Visualization of the kind of organism which lives in specified environment.
 
 ## Parameters:
 

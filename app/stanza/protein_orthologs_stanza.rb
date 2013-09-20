@@ -14,8 +14,7 @@ class ProteinOrthologsStanza < Stanza::Base
     # uniprot_uri = "<http://purl.uniprot.org/uniprot/P16033>"
     uniprot_uri = protein_attributes.first[:upid]
 
-#    ortholog_uris = query("http://sparql.nibb.ac.jp/sparql", <<-SPARQL.strip_heredoc)
-    ortholog_uris = query("http://biointegra.jp/sparqlMDBdev", <<-SPARQL.strip_heredoc)
+    ortholog_uris = query("http://sparql.nibb.ac.jp/sparql", <<-SPARQL.strip_heredoc)
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX mbgd: <http://mbgd.genome.ad.jp/owl/mbgd.owl#>
       PREFIX orth: <http://mbgd.genome.ad.jp/owl/ortholog.owl#>

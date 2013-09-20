@@ -52,9 +52,9 @@
         text-align: center;
         margin: 1em 0;
       }
-      
+
       #breadcrumbs { display: none; }
-      
+
       .tooltip {
         position: absolute;
         text-align: left;
@@ -109,7 +109,7 @@
         d3.json(_fileName, function(jsonfile) {
             var json = sparql2tree(jsonfile[_dataset], _opts,_rootName);
             //console.log(JSON.stringify(json,null," "));
-            
+
             var nodes = partition.nodes(json);
             var path = vis.selectAll("path").data(nodes);
             path.enter().append("path")
@@ -194,11 +194,11 @@
                     d3.select(this).style("visibility", "visible");
                   } else {
                     d3.select(this).style("visibility", "hidden");
-                  }        
+                  }
                 });
           }
-          
-          //tooltips表示用ファンクション
+
+          //tooltips
           function add_tooltips_event() {
               var tooltips = d3.select(".tooltip");
               if (tooltips) {
@@ -220,7 +220,7 @@
                   tooltips.text(function () {
                     var tooltiptext = "";
                     for (var key in _tips) {
-                      tooltiptext += key + ":" + (d[key]?d[key]:"") + "　　";
+                      tooltiptext += key + ":" + (d[key]?d[key]:"") + "    ";
                     }
                     if (tooltiptext.length > 0) {
                       tooltiptext = tooltiptext.slice(0, -2);
@@ -252,7 +252,7 @@
                   tooltips.text(function () {
                     var tooltiptext = "";
                     for (var key in _tips) {
-                      tooltiptext += key + ":" + (d[key]?d[key]:"") + "　　";
+                      tooltiptext += key + ":" + (d[key]?d[key]:"") + "    ";
                     }
                     if (tooltiptext.length > 0) {
                       tooltiptext = tooltiptext.slice(0, -2);
@@ -322,12 +322,10 @@
         for (var data_i = 0; data_i < data.length; data_i++) {
           var blanch = {};
           parent = (data[data_i][opts.parent]?data[data_i][opts.parent]:root);
-          
-          // 属性をつめる
+
           for (var key in opts) {
               blanch[key] = data[data_i][opts[key]];
           }
-          // 親子関係を埋める
           if (tree.has(parent)) {
             component = tree.get(parent);
           } else {

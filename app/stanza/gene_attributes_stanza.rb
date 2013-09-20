@@ -4,12 +4,12 @@ require 'uri'
 class GeneAttributesStanza < Stanza::Base
   property :gene_attributes do |tax_id, gene_id|
     results = query(:togogenome, <<-SPARQL.strip_heredoc)
-      DEFINE sql:select-option "order" 
+      DEFINE sql:select-option "order"
       PREFIX obo: <http://purl.obolibrary.org/obo/>
       PREFIX faldo: <http://biohackathon.org/resource/faldo#>
       PREFIX idorg: <http://rdf.identifiers.org/database/>
       PREFIX insdc: <http://insdc.org/owl/>
-      
+
       SELECT DISTINCT ?locus_tag ?gene_type_label ?seq_label ?seq_type_label ?gene_symbol
         REPLACE(?refseq_label,"RefSeq:","") AS ?refseq_label ?organism ?taxid
         ?faldo_begin_position ?faldo_end_position ?stand ?insdc_location
@@ -19,8 +19,8 @@ class GeneAttributesStanza < Stanza::Base
       FROM <http://togogenome.org/graph/faldo/>
       {
         {
-          SELECT DISTINCT ?gene ?locus_tag ?gene_type_label ?seq_label ?seq_type_label 
-            ?refseq_label ?organism ?taxid 
+          SELECT DISTINCT ?gene ?locus_tag ?gene_type_label ?seq_label ?seq_type_label
+            ?refseq_label ?organism ?taxid
             ?faldo_begin_position ?faldo_end_position ?stand ?insdc_location
           WHERE
           {
@@ -28,12 +28,12 @@ class GeneAttributesStanza < Stanza::Base
             VALUES ?seq_type  { obo:SO_0000340 obo:SO_0000155 }
             VALUES ?gene_type { obo:SO_0000704 obo:SO_0000252 obo:SO_0000253 }
             VALUES ?faldo_stand_type { faldo:ForwardStrandPosition faldo:ReverseStrandPosition }
-      
+ 
             ?gene ?p ?locus_tag ;
               a ?gene_type ;
               obo:so_part_of ?seq .
             ?gene_type rdfs:label ?gene_type_label .
-      
+
             #sequence
             ?seq rdfs:label ?seq_label ;
               a ?seq_type ;
@@ -45,7 +45,7 @@ class GeneAttributesStanza < Stanza::Base
               rdfs:label ?refseq_label .
             ?taxonomy a idorg:Taxonomy ;
               rdfs:label ?taxid .
-      
+ 
             #faldo
             ?gene faldo:location ?faldo .
             ?faldo insdc:location ?insdc_location ;
@@ -58,7 +58,7 @@ class GeneAttributesStanza < Stanza::Base
           }
         }
         OPTIONAL { ?gene insdc:feature_gene ?gene_symbol. }
-      }     
+      }
     SPARQL
     results.map {|hash|
       hash.merge(

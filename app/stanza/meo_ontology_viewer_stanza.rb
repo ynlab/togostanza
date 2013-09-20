@@ -2,8 +2,8 @@ class MeoOntologyViewerStanza < Stanza::Base
   property :select_meo_style do |meo_id|
       select_meo_style = meo_id.blank? ? "" : "#" + meo_id + ".node text \{fill:red;font-size:20px;\}"
   end
- 
-   property :select_meo_id do |meo_id|
+
+  property :select_meo_id do |meo_id|
       select_meo_id = meo_id
   end
 
@@ -11,9 +11,9 @@ class MeoOntologyViewerStanza < Stanza::Base
     results = query(:togogenome, <<-SPARQL.strip_heredoc)
       PREFIX meo: <http://purl.jp/bio/11/meo/>
 
-      SELECT ?meo_id ?label ?definition ?parent 
+      SELECT ?meo_id ?label ?definition ?parent
       FROM <http://togogenome.org/graph/meo/>
-      WHERE 
+      WHERE
       {
        ?meo_id a owl:Class .
        OPTIONAL {?meo_id rdfs:label ?label}

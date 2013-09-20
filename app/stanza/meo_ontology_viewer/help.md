@@ -1,7 +1,7 @@
-Environment ontology viewer
+MEO ontology viewer
 ===========================
 
-TODO: Write a stanza description
+Visualization for the structure of MEO(Metagenome/Microbes Environment Ontology).
 
 ## Parameters:
 
