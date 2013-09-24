@@ -25,6 +25,10 @@ class EnvironmentGoldSamplingPlaceStanza < Stanza::Base
       }
     SPARQL
 
+    if results == nil || results.size == 0 then
+      next
+    end
+
     results.each do |entity|
       gaz = Hash.new
       gaz[:label] = entity[:place_name].gsub(' ','').gsub(/'/, "_").gsub(/-/, "_")

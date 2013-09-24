@@ -1,6 +1,6 @@
 class GenomeCrossReferencesStanza < Stanza::Base
   property :xrefs do |tax_id|
-    results = query("http://ep.dbcls.jp/sparql", <<-SPARQL.strip_heredoc)
+    results = query(:togogenome, <<-SPARQL.strip_heredoc)
       prefix obo: <http://purl.obolibrary.org/obo/>
       prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       prefix insdc: <http://insdc.org/owl/>

@@ -8,7 +8,6 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
     <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
     <script type="text/javascript" src="http://biointegra.jp/OpenID/js/meo_ontology_viewer.js"></script>
-    {{adjust_iframe_height_script}}
     <link rel="stylesheet" type="text/css" href="http://biointegra.jp/OpenID/css/mdbstyle.css">
     <style>
       .node circle {
@@ -55,13 +54,29 @@
           "Definition": "Definition",
           "MEO ID": "MEO ID"
         };
-        draw('body','/stanza/meo_ontology_viewer/resources/meo_ontology_tree','meo_ontology_tree',opts,'root','MEO ID','link',tips,4500,4500,'{{select_meo_id}}');
+
+        var frame_height = 1100;
+        var chart_height = frame_height - 30 -30; //margin and padding
+
+        draw('chart','/stanza/meo_ontology_viewer/resources/meo_ontology_tree','meo_ontology_tree',opts,'root','MEO ID','link',tips,8000,4500,'{{select_meo_id}}');
+        $("#chart").css('height', chart_height + 'px');
+        adjust_iframe_height(frame_height);
+      }
+
+      function adjust_iframe_height(height_px) {
+        var height = 0;
+        if(height_px) {
+          height = height_px;
+        } else {
+          height = document.body.offsetHeight + 30;
+        }
+        parent.postMessage(JSON.stringify({height: height, id: name}), "*");
       }
     -->
     </script>
   </head>
   <body onload="init()">
-    <div id="body">
+    <div id="chart">
     </div>
   </body>
 </html>

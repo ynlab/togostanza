@@ -11,7 +11,6 @@
     <script type="text/javascript" src="http://biointegra.jp/OpenID/js/plot2.js"></script>
     <script type="text/javascript" src="http://biointegra.jp/OpenID/js/loading.js"></script>
 
-    {{adjust_iframe_height_script}}
     <script type="text/javascript">
 /**** initialize ****/
       /*
@@ -129,8 +128,18 @@
         d3.json('./genome_plot/resources/taxonomy', function(data) {
           //console.log(JSON.stringify(data,null," "));
           create_page(data.taxonomy,option);
-         })
+          adjust_iframe_height();
+        })
       }
+      function adjust_iframe_height(height_px) {
+        var height = 0;
+        if(height_px) {
+          height = height_px;
+        } else {
+          height = document.body.offsetHeight + 30;
+        }
+        parent.postMessage(JSON.stringify({height: height, id: name}), "*");
+      } 
     </script>
   </head>
 
