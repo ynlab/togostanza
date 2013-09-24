@@ -3,7 +3,7 @@
 <html>
   <head>
     <title>Environment Taxonomy Composition</title>
-    <link rel="stylesheet" href="{{css_uri}}" />
+    <link rel="stylesheet" href="http://pure-stream-7615.herokuapp.com/assets/stanza.css" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
     <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
@@ -404,7 +404,7 @@
           "rank": "rank"
         };
 
-        var json_resource = '/stanza/environment_taxonomy_composition/resources/taxonomy_sunburst/?meo_id={{search_meo_id}}';
+        var json_resource = './environment_taxonomy_composition/resources/taxonomy_sunburst/?meo_id={{search_meo_id}}';
         d3.json(json_resource, function(jsonfile) {
           var jsondata = jsonfile['taxonomy_sunburst'];
           if(jsondata.length > 1) {
