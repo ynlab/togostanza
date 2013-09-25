@@ -10,11 +10,11 @@
   <body>
     {{#if genome_info_list}}
       {{#each genome_info_list}}
-        <table class='table'>
+        <table class='table span12'>
           <caption>{{this.first.bioproject_id}}</caption>
           <tbody>
             <tr>
-              <th>Description</th>
+              <th class="span5">Description</th>
               <th>RefSeq</th>
               <th>Type</th>
               <th>Size</th>
@@ -28,11 +28,11 @@
                 <td>{{desc}}</td>
                 <td><a href='{{refseq_link}}' target='_blank'>{{refseq_version}}</a></td>
                 <td>{{replicon_type}}</td>
-                <td class="numeric">{{sequence_length}}</td>
-                <td class="numeric">{{gene_cnt}}</td>
-                <td class="numeric">{{trna_cnt}}</td>
-                <td class="numeric">{{rrna_cnt}}</td>
-                <td class="numeric">{{other_cnt}}</td>
+                <td class="numeric nowrap">{{sequence_length}}</td>
+                <td class="numeric nowrap">{{gene_cnt}}</td>
+                <td class="numeric nowrap">{{trna_cnt}}</td>
+                <td class="numeric nowrap">{{rrna_cnt}}</td>
+                <td class="numeric nowrap">{{other_cnt}}</td>
               </tr>
             {{/each}}
           </tbody>

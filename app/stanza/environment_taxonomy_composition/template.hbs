@@ -403,13 +403,14 @@
           "tax id": "tag_id",
           "rank": "rank"
         };
+        var chart_size = 1200;
 
         var json_resource = './environment_taxonomy_composition/resources/taxonomy_sunburst/?meo_id={{search_meo_id}}';
         d3.json(json_resource, function(jsonfile) {
           var jsondata = jsonfile['taxonomy_sunburst'];
           if(jsondata.length > 1) {
-           // $(document.body).css("width","1200px");
-            draw('vis', jsondata, opt, 'root', tips, 1200);
+            $("#vis").css("width", chart_size + "px");
+            draw('vis', jsondata, opt, 'root', tips, chart_size);
             adjust_iframe_height();
           } else {
             $("#vis").text("No data");
