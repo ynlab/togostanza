@@ -172,7 +172,7 @@
                 return "rotate(" + rotate + ")translate(" + (y(d.y) + padding) + ")rotate(" + (angle > 90 ? -180 : 0) + ")";
               })
               //.on("click", click);
-             // .on("click", click)
+              .on("click", click)
               .style("visibility", function (d) { // If range of area is narrow(less than 8), text is not displayed
                 var sAngle = Math.max(0, Math.min(2 * Math.PI, x(d.x)));
                 var eAngle = Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx)));
