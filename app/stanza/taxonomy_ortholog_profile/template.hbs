@@ -34,7 +34,8 @@
           if(data.taxonomy_ortholog_profile.length > 0) { 
             draw(data.taxonomy_ortholog_profile);
           } else {
-            nodata();
+            $("#chart").text("No data");
+            adjust_iframe_height();
           }
         })
       }
@@ -123,16 +124,16 @@
 
         adjust_iframe_height();
       }
-      function nodata() {
-        var div = d3.select("#chart")
-                    .text("No data");
-        adjust_iframe_height();
-      }
 
-      function adjust_iframe_height() {
-        var height = document.body.offsetHeight + 30;
+      function adjust_iframe_height(height_px) {
+        var height = 0;
+        if(height_px) {
+          height = height_px;
+        } else {
+          height = document.body.offsetHeight + 30;
+        }
         parent.postMessage(JSON.stringify({height: height, id: name}), "*");
-      }
+      } 
     </script>
   </body>
 </html>
