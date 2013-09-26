@@ -8,7 +8,7 @@ class GenomeInformationStanza < Stanza::Base
       PREFIX idorg: <http://rdf.identifiers.org/database/>
       PREFIX idtax: <http://identifiers.org/taxonomy/>
 
-      SELECT  ?bioproject ?bioproject_id ?refseq_version ?desc ?replicon_type ?sequence_length
+      SELECT ?bioproject ?bioproject_id ?refseq_version ?refseq_link ?desc ?replicon_type ?sequence_length
        count(?gene_locus_tag) as ?gene_cnt
        count(?trna_locus_tag) as ?trna_cnt
        count(?rrna_locus_tag) as ?rrna_cnt
