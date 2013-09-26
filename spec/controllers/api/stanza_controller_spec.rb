@@ -32,14 +32,14 @@ describe Api::StanzaController do
           ],
           "organism_name": "Synechocystis sp. (strain PCC 6803 / Kazusa)",
           "parent_taxonomy_names": [
-            "Oscillatoriophycideae",
-            "Cyanobacteria",
-            "Synechocystis sp. PCC 6803",
-            "Synechocystis",
             "cellular organisms",
             "Synechocystis sp. (strain PCC 6803 / Kazusa)",
+            "Oscillatoriophycideae",
+            "Synechocystis",
+            "Synechocystis sp. PCC 6803",
             "Chroococcales",
-            "Bacteria"
+            "Bacteria",
+            "Cyanobacteria"
           ],
           "taxonomy_id": "1111708"
         }
