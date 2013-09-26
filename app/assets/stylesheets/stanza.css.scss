@@ -106,6 +106,9 @@ td > .table > tbody > tr:after {
 .table li + li {
 	margin-top: 4px;
 }
+td.numeric {
+  text-align: right;
+}
 
 pre {
 	background-color:#daf1f5;
