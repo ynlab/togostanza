@@ -8,7 +8,7 @@ class GenomeCrossReferencesStanza < Stanza::Base
       prefix idtax: <http://identifiers.org/taxonomy/>
 
       select ?bp ?rs ?desc ?label ?xref
-      from <http://togogenome.org/refseq/>
+      from <http://togogenome.org/graph/refseq/>
       where {
         values ?tax_id { idtax:#{tax_id} }
         values ?so { obo:SO_0000340 obo:SO_0000155 }

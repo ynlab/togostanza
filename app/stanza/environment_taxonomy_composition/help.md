@@ -14,9 +14,9 @@ Visualization of the kind of organism which lives in specified environment.
 ## Sample:
 
 ```html
-<div data-stanza="http://togogenome.org/stanza/environment_taxonomy_composition/" data-stanza-meo-id="MEO_0000029" data-stanza-height="1100px"></div>
+<div data-stanza="http://togogenome.org/stanza/environment_taxonomy_composition/" data-stanza-meo-id="MEO_0000029"></div>
 ```
 
 The above `<div>` will automatically embed the following Stanza in your HTML page.
 
-<div data-stanza="/stanza/environment_taxonomy_composition/" data-stanza-meo-id="MEO_0000029" data-stanza-height="1100px"></div>
+<div data-stanza="/stanza/environment_taxonomy_composition/" data-stanza-meo-id="MEO_0000029"></div>
