@@ -1,5 +1,5 @@
-Environment attributes
-======================
+Environmental attributes
+========================
 
 Basic information of a environment ontology.
 
