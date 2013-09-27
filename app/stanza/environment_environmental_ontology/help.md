@@ -1,4 +1,4 @@
-Environmental Ontology
+Environmental ontology
 ======================
 
 Visualization for the structure of MEO(Metagenome/Microbes Environment Ontology).
