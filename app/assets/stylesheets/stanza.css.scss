@@ -1,5 +1,3 @@
-//= require bootstrap
-
 @charset "UTF-8";
 
 body {
@@ -50,11 +48,11 @@ body > div {
 
 body > .table {
 	border-style: solid;
-	border-color: rgba(0,0,0,0);
+	border-color: #fff;
 	border-top-width: 5px;
 	border-bottom-width: 5px;
-	border-left-width: 0;
-	border-right-width: 0;
+	border-left-width: 20px;
+	border-right-width: 20px;
 }
 .table {
 	margin-bottom: 0;
@@ -72,12 +70,6 @@ body > .table {
 	margin: 0;
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
-}
-body > .table tr:before, body > .table tr:after {
-	content: "";
-	display: table-cell;
-	width: 20px;
-	background-color: #fff;
 }
 .table thead th, .table thead td {
 	border-bottom: 1px solid #555;
@@ -97,12 +89,6 @@ body > .table tr:before, body > .table tr:after {
 th > .table, td > .table {
 	margin: -10px -4px;
 	width: 100%;
-}
-th > .table > tbody > tr:before,
-td > .table > tbody > tr:before,
-th > .table > tbody > tr:after,
-td > .table > tbody > tr:after {
-	content: none;
 }
 .table li + li {
 	margin-top: 4px;
