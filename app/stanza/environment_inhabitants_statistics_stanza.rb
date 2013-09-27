@@ -25,7 +25,7 @@ class EnvironmentInhabitantsStatisticsStanza < Stanza::Base
           SELECT ?type COUNT(DISTINCT ?strain) AS ?cnt
           {
             VALUES ?meo_strain_mapping { mccv:MCCV_000059 mccv:MCCV_000060 }
-            ?strain_meo_id rdfs:subClassOf* meo:MEO_0000004 .
+            ?strain_meo_id rdfs:subClassOf* meo:#{meo_id} .
             ?strain ?meo_strain_mapping ?strain_meo_id . 
             BIND (IF(STRSTARTS(STR(?strain), "http://www.nbrc.nite.go.jp/"), "NBRC",IF(STRSTARTS(STR(?strain), "http://www.jcm.riken.go.jp/"),"JCM","")) AS ?type) .
           } GROUP BY ?type
