@@ -1,5 +1,5 @@
-GOLD sampling place
-===================
+Geographical map
+================
 
 Place where GOLD samples have sampled. 
 
@@ -14,9 +14,9 @@ Place where GOLD samples have sampled.
 ## Sample:
 
 ```html
-<div data-stanza="http://togogenome.org/stanza/environment_gold_sampling_place" data-stanza-meo-id="MEO_0000029"></div>
+<div data-stanza="http://togogenome.org/stanza/environment_geographical_map" data-stanza-meo-id="MEO_0000029"></div>
 ```
 
 The above `<div>` will automatically embed the following Stanza in your HTML page.
 
-<div data-stanza="/stanza/environment_gold_sampling_place" data-stanza-meo-id="MEO_0000029"></div>
+<div data-stanza="/stanza/environment_geographical_map" data-stanza-meo-id="MEO_0000029"></div>

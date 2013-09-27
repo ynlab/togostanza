@@ -27,9 +27,9 @@
     //initialize 
     function init() {
       var data = new Array();
-      $.getJSON("./environment_gold_sampling_place/resources/place_list/?meo_id={{select_meo_id}}", function(json) {
+      $.getJSON("./environment_geographical_map/resources/place_list/?meo_id={{select_meo_id}}", function(json) {
         if(json.place_list != null && json.place_list.length >0) {
-          $("#togogenome_css").attr("href","none");
+          $("#togogenome_css").remove();
           $(document.body).css("height", "100%");
           $(document.body).css("margin", "0px");
           $(document.body).css("padding", "0px");

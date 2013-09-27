@@ -1,5 +1,5 @@
-MEO ontology viewer
-===========================
+Environmental ontology
+======================
 
 Visualization for the structure of MEO(Metagenome/Microbes Environment Ontology).
 
@@ -14,9 +14,9 @@ Visualization for the structure of MEO(Metagenome/Microbes Environment Ontology)
 ## Sample:
 
 ```html
-<div data-stanza="http://togogenome.org/stanza/meo_ontology_viewer/" meo_id="MEO_0000029"></div>
+<div data-stanza="http://togogenome.org/stanza/environment_environmental_ontology/" meo_id="MEO_0000029"></div>
 ```
 
 The above `<div>` will automatically embed the following Stanza in your HTML page.
 
-<div data-stanza="/stanza/meo_ontology_viewer/" meo_id="MEO_0000029"></div>
+<div data-stanza="/stanza/environment_environmental_ontology/" meo_id="MEO_0000029"></div>

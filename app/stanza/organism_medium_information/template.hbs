@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Organism Medium Information</title>
+    <link rel="stylesheet" href="{{css_uri}}" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    {{adjust_iframe_height_script}}
+  </head>
+
+  <body>
+    {{#if medium_information}}
+      {{#each medium_information}}
+        <table class='table'>
+          <caption>{{this.first.medium_id}}</caption>
+          <tbody>
+            <tr>
+              <td>Medium ID</td>
+              <td>{{this.first.medium_id}}</td>
+            </tr>
+            <tr>
+              <td>Medium name</td>
+              <td>{{this.first.medium_name}}</td>
+            </tr>
+            <tr>
+              <td>Medium type</td>
+              <td>{{this.first.medium_type}}</td>
+            </tr>
+            {{#each this}}
+              <tr>
+                <td class='span2'>{{ingredient_type}}</td>
+                <td class='span2'>{{ingredients}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{/each}}
+    {{else}}
+      <div>
+        No data
+      <div>
+    {{/if}}
+  </body>
+</html>
+

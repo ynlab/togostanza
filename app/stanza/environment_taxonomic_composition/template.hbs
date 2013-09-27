@@ -405,7 +405,7 @@
         };
         var chart_size = 1200;
 
-        var json_resource = '/stanza/environment_taxonomy_composition/resources/taxonomy_sunburst/?meo_id={{search_meo_id}}';
+        var json_resource = '/stanza/environment_taxonomic_composition/resources/taxonomy_sunburst/?meo_id={{search_meo_id}}';
         d3.json(json_resource, function(jsonfile) {
           var jsondata = jsonfile['taxonomy_sunburst'];
           if(jsondata.length > 1) {

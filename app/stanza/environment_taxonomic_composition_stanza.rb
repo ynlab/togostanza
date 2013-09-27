@@ -1,4 +1,4 @@
-class EnvironmentTaxonomyCompositionStanza < Stanza::Base
+class EnvironmentTaxonomicCompositionStanza < Stanza::Base
   property :search_meo_id do |meo_id|
     meo_id
   end

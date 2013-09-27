@@ -1,4 +1,4 @@
-class EnvironmentGoldSamplingPlaceStanza < Stanza::Base
+class EnvironmentGeographicalMapStanza < Stanza::Base
   property :select_meo_id do |meo_id|
     meo_id
   end

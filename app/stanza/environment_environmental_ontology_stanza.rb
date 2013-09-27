@@ -1,4 +1,4 @@
-class MeoOntologyViewerStanza < Stanza::Base
+class EnvironmentEnvironmentalOntologyStanza < Stanza::Base
   property :select_meo_style do |meo_id|
       select_meo_style = meo_id.blank? ? "" : "#" + meo_id + ".node text \{fill:red;font-size:20px;\}"
   end
