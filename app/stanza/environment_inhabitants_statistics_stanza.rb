@@ -4,7 +4,7 @@ class EnvironmentInhabitantsStatisticsStanza < Stanza::Base
       DEFINE sql:select-option "order"
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>
       PREFIX meo: <http://purl.jp/bio/11/meo/>
-      
+
       SELECT ?type ?cnt
       FROM <http://togogenome.org/graph/gold/>
       FROM <http://togogenome.org/graph/meo/>

@@ -6,9 +6,9 @@ class EnvironmentInhabitantsStanza < Stanza::Base
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>
       PREFIX meo: <http://purl.jp/bio/11/meo/>
       PREFIX taxo: <http://ddbj.nig.ac.jp/ontologies/taxonomy#>
- 
-      SELECT 
-       ?gold AS ?source_link 
+
+      SELECT
+       ?gold AS ?source_link
        REPLACE(STR(?gold) ,"http://www.genomesonline.org/cgi-bin/GOLD/GOLDCards.cgi\\\\?goldstamp=" ,"" ) AS ?source_id
        ?organism_name REPLACE(STR(?tax_id) ,"http://identifiers.org/taxonomy/" ,"" ) AS ?tax_no "" AS ?isolation
        (sql:GROUP_DIGEST(?env, '||', 1000, 1)) AS ?env_links
@@ -20,8 +20,8 @@ class EnvironmentInhabitantsStanza < Stanza::Base
         ?meo_id rdfs:subClassOf* meo:#{meo_id} .
         ?gold ?meo_mapping ?meo_id .
         ?meo_id rdfs:label ?meo_label .
-        BIND (CONCAT(REPLACE(STR(?meo_id),"http://purl.jp/bio/11/meo/",""), ?meo_label) AS ?env ) 
-        OPTIONAL 
+        BIND (CONCAT(REPLACE(STR(?meo_id),"http://purl.jp/bio/11/meo/",""), ?meo_label) AS ?env )
+        OPTIONAL
         {
           ?gold mccv:MCCV_000020 ?tax_id . 
           ?tax_id taxo:scientificName ?organism_name
@@ -64,11 +64,11 @@ class EnvironmentInhabitantsStanza < Stanza::Base
           ?strain_id ?related_type ?tax_id FILTER (STRSTARTS(STR(?tax_id),"http://identifiers.org/")) .
           BIND (REPLACE(STR(?tax_id),"http://identifiers.org/taxonomy/","") AS ?tax_no) .
         }
-      } GROUP BY ?strain_id ?strain_number ?strain_name ?isolation ORDER BY DESC (?source_id) 
+      } GROUP BY ?strain_id ?strain_number ?strain_name ?isolation ORDER BY DESC (?source_id)
     SPARQL
 
     source_list = gold_list.concat(strain_list)
-   
+
     source_list.map {|hash|
       unless hash[:env_links] == "" then
         env_link_array = hash[:env_links].split("||")
@@ -78,7 +78,7 @@ class EnvironmentInhabitantsStanza < Stanza::Base
         hash[:env_link_array].last[:is_last_data] = true
         unless hash[:tax_no].nil? then
           tax_no_array = hash[:tax_no].split("||")
-          if tax_no_array.length > 0 
+          if tax_no_array.length > 0
             hash[:tax_no_array] = tax_no_array.map {|tax_no|
               tax = {:tax_no => tax_no }
             }

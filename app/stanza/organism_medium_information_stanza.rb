@@ -5,13 +5,13 @@ class OrganismMediumInformationStanza < Stanza::Base
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>
       PREFIX gmo: <http://purl.jp/bio/11/gmo#>
       PREFIX taxid: <http://identifiers.org/taxonomy/>
- 
+
       SELECT ?medium_id ?medium_name STR(?medium_type_label) AS ?medium_type
         STR(?ingredient_type_label) AS ?ingredient_type
         (sql:GROUP_DIGEST(?ingredient_label , ',  ', 1000, 1)) AS ?ingredients
       FROM <http://togogenome.org/graph/brc/>
       FROM <http://togogenome.org/graph/gmo/>
-      WHERE 
+      WHERE
       {
         { SELECT DISTINCT ?medium
           {
@@ -29,9 +29,8 @@ class OrganismMediumInformationStanza < Stanza::Base
           ?ingredient_type rdfs:label ?ingredient_type_label .
           ?ingredient rdfs:label ?ingredient_label FILTER (lang(?ingredient_label) = "en").
         }
-        OPTIONAL { ?medium gmo:GMO_000102 ?medium_name }. 
+        OPTIONAL { ?medium gmo:GMO_000102 ?medium_name }.
       } GROUP BY ?ingredient_type_label ?medium_id  ?medium_name ?medium_type_label
-
     SPARQL
 
     results.reverse.group_by {|hash| hash[:medium_id] }.map {|hash| hash.last }
