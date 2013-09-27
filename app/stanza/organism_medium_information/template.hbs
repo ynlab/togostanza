@@ -13,24 +13,11 @@
     {{#if medium_information}}
       {{#each medium_information}}
         <table class='table'>
-          <caption>{{this.first.medium_id}}</caption>
           <tbody>
-            <tr>
-              <td>Medium ID</td>
-              <td>{{this.first.medium_id}}</td>
-            </tr>
-            <tr>
-              <td>Medium name</td>
-              <td>{{this.first.medium_name}}</td>
-            </tr>
-            <tr>
-              <td>Medium type</td>
-              <td>{{this.first.medium_type}}</td>
-            </tr>
             {{#each this}}
               <tr>
-                <td class='span2'>{{ingredient_type}}</td>
-                <td class='span2'>{{ingredients}}</td>
+              <td class='span3'>{{this.row_key}}</td>
+              <td class='span9'>{{this.row_value}}</td>
               </tr>
             {{/each}}
           </tbody>
