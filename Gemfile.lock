@@ -14,6 +14,11 @@ GIT
       sparql-client
       thor
 
+PATH
+  remote: ./variation_stanza
+  specs:
+    variation_stanza (0.0.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -84,3 +89,4 @@ DEPENDENCIES
   bio-svgenes (>= 0.3.3)
   togostanza-server!
   unicorn
+  variation_stanza!
