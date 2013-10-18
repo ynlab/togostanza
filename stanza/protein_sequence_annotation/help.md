@@ -1,4 +1,4 @@
-Sequence annotation
+Protein sequence annotation
 ===========================
 
 See also: http://www.uniprot.org/manual/?query=category%3Asequence_annotation

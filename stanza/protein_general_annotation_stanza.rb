@@ -1,5 +1,3 @@
-# coding: utf-8
-
 class ProteinGeneralAnnotationStanza < TogoStanza::Stanza::Base
   property :general_annotations do |tax_id, gene_id|
     uniprot_url = uniprot_url_from_togogenome(gene_id)
@@ -8,25 +6,19 @@ class ProteinGeneralAnnotationStanza < TogoStanza::Stanza::Base
     annotation_type = query(:uniprot, <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
-      PREFIX dct:   <http://purl.org/dc/terms/>
 
       SELECT DISTINCT ?name ?message
+      FROM <http://togogenome.org/graph/uniprot/>
       WHERE {
-        GRAPH <http://togogenome.org/graph/> {
-          <http://togogenome.org/uniprot/> dct:isVersionOf ?g .
-        }
+        ?protein up:organism  taxonomy:#{tax_id} ;
+                 rdfs:seeAlso <#{uniprot_url}> ;
+                 up:annotation ?annotation .
 
-        GRAPH ?g {
-          ?protein up:organism  taxonomy:#{tax_id} ;
-                   rdfs:seeAlso <#{uniprot_url}> ;
-                   up:annotation ?annotation .
+        ?annotation rdf:type up:Annotation .
 
-          ?annotation rdf:type up:Annotation .
-
-          # name, message の取得
-          BIND(STR('Miscellaneous') AS ?name) .
-          ?annotation rdfs:comment ?message .
-        }
+        # name, message の取得
+        BIND(STR('Miscellaneous') AS ?name) .
+        ?annotation rdfs:comment ?message .
       }
     SPARQL
 
@@ -34,28 +26,22 @@ class ProteinGeneralAnnotationStanza < TogoStanza::Stanza::Base
     subcellular_location_annotation_type = query(:uniprot, <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
-      PREFIX dct:   <http://purl.org/dc/terms/>
 
       SELECT DISTINCT ?name ?message
+      FROM <http://togogenome.org/graph/uniprot/>
       WHERE {
-        GRAPH <http://togogenome.org/graph/> {
-          <http://togogenome.org/uniprot/> dct:isVersionOf ?g .
-        }
+        ?protein up:organism  taxonomy:#{tax_id} ;
+                 rdfs:seeAlso <#{uniprot_url}> ;
+                 up:annotation ?annotation .
 
-        GRAPH ?g {
-          ?protein up:organism  taxonomy:#{tax_id} ;
-                   rdfs:seeAlso <#{uniprot_url}> ;
-                   up:annotation ?annotation .
+        ?type rdfs:subClassOf up:Annotation .
+        ?annotation rdf:type up:Subcellular_Location_Annotation .
 
-          ?type rdfs:subClassOf up:Annotation .
-          ?annotation rdf:type up:Subcellular_Location_Annotation .
-
-          # name, message の取得
-          up:Subcellular_Location_Annotation rdfs:label ?name .
-          ?annotation up:locatedIn ?located_in .
-          ?located_in ?p ?location .
-          ?location up:alias ?message .
-        }
+        # name, message の取得
+        up:Subcellular_Location_Annotation rdfs:label ?name .
+        ?annotation up:locatedIn ?located_in .
+        ?located_in ?p ?location .
+        ?location up:alias ?message .
       }
     SPARQL
 
@@ -63,27 +49,21 @@ class ProteinGeneralAnnotationStanza < TogoStanza::Stanza::Base
     subclass_of_annotation_type = query(:uniprot, <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
-      PREFIX dct:   <http://purl.org/dc/terms/>
 
       SELECT DISTINCT ?name ?message
+      FROM <http://togogenome.org/graph/uniprot/>
       WHERE {
-        GRAPH <http://togogenome.org/graph/> {
-          <http://togogenome.org/uniprot/> dct:isVersionOf ?g .
-        }
+        ?protein up:organism  taxonomy:#{tax_id} ;
+                 rdfs:seeAlso <#{uniprot_url}> ;
+                 up:annotation ?annotation .
 
-        GRAPH ?g {
-          ?protein up:organism  taxonomy:#{tax_id} ;
-                   rdfs:seeAlso <#{uniprot_url}> ;
-                   up:annotation ?annotation .
+        ?annotation rdf:type ?type .
+        ?type rdfs:subClassOf up:Annotation .
+        FILTER (?type != up:Subcellular_Location_Annotation)
 
-          ?annotation rdf:type ?type .
-          ?type rdfs:subClassOf up:Annotation .
-          FILTER (?type != up:Subcellular_Location_Annotation)
-
-          # name, message の取得
-          ?type rdfs:label ?name .
-          ?annotation rdfs:comment ?message .
-        }
+        # name, message の取得
+        ?type rdfs:label ?name .
+        ?annotation rdfs:comment ?message .
       }
     SPARQL
 

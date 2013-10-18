@@ -1,6 +1,6 @@
 class GenomeCrossReferencesStanza < TogoStanza::Stanza::Base
   property :xrefs do |tax_id|
-    results = query("http://ep.dbcls.jp/sparql", <<-SPARQL.strip_heredoc)
+    results = query(:togogenome, <<-SPARQL.strip_heredoc)
       prefix obo: <http://purl.obolibrary.org/obo/>
       prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       prefix insdc: <http://insdc.org/owl/>
@@ -8,7 +8,7 @@ class GenomeCrossReferencesStanza < TogoStanza::Stanza::Base
       prefix idtax: <http://identifiers.org/taxonomy/>
 
       select ?bp ?rs ?desc ?label ?xref
-      from <http://togogenome.org/refseq/>
+      from <http://togogenome.org/graph/refseq/>
       where {
         values ?tax_id { idtax:#{tax_id} }
         values ?so { obo:SO_0000340 obo:SO_0000155 }

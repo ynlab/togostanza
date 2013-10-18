@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+  <head>
+    <title>Genome Information</title>
+    {{#each css_uri}}
+    <link rel="stylesheet" href="{{this}}" />
+    {{/each}}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    {{adjust_iframe_height_script}}
+  </head>
+
+  <body>
+    {{#if genome_info_list}}
+      {{#each genome_info_list}}
+        <table class='table'>
+          <caption>{{this.first.bioproject_id}}</caption>
+          <tbody>
+            <tr>
+              <th class="span5">Description</th>
+              <th>RefSeq</th>
+              <th>Type</th>
+              <th>Size</th>
+              <th>Gene</th>
+              <th>tRNA</th>
+              <th>rRNA</th>
+              <th>Other</th>
+            </tr>
+            {{#each this}}
+              <tr>
+                <td>{{desc}}</td>
+                <td><a href='{{refseq_link}}' target='_blank'>{{refseq_version}}</a></td>
+                <td>{{replicon_type}}</td>
+                <td class="numeric nowrap">{{sequence_length}}</td>
+                <td class="numeric nowrap">{{gene_cnt}}</td>
+                <td class="numeric nowrap">{{trna_cnt}}</td>
+                <td class="numeric nowrap">{{rrna_cnt}}</td>
+                <td class="numeric nowrap">{{other_cnt}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{/each}}
+    {{else}}
+      <div>
+        No data
+      </div>
+    {{/if}}
+  </body>
+</html>
+

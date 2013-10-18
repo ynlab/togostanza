@@ -1,4 +1,4 @@
-References
+Protein references
 ==================
 
 See also: http://www.uniprot.org/manual/?query=category%3Areferences

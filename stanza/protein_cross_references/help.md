@@ -1,4 +1,4 @@
-Cross references
+Protein cross references
 ========================
 
 See also: http://www.uniprot.org/manual/?query=category%3Across_references

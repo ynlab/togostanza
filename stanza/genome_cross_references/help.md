@@ -1,4 +1,4 @@
-Genome Cross References
+Genome cross references
 =======================
 
 Table of cross references of a given genome.

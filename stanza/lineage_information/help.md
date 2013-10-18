@@ -1,5 +1,5 @@
-Lineage Information
-===================
+Taxonomic information
+=====================
 
 Lineage of the specified organism.
 
