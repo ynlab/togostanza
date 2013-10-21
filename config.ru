@@ -1,7 +1,6 @@
 require 'bundler/setup'
-require 'togostanza-server'
-
-TogoStanza::Stanza.load_all!
+require 'togostanza'
+require 'variation_stanza'
 
 map '/stanza' do
   run TogoStanza::Application
