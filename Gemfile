@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'togostanza'
+gem 'togostanza', '>= 0.0.2'
 gem 'unicorn'
 gem 'variation_stanza', path: './variation_stanza'
 gem 'environment_attributes_stanza', path: './environment_attributes_stanza'

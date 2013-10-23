@@ -1,12 +1,4 @@
 class ProteinSequenceAnnotationStanza < TogoStanza::Stanza::Base
-  def helpers
-    ApplicationController.new.view_context
-  end
-
-  property :line_image do
-    helpers.image_path('protein_sequence_annotation/line.png')
-  end
-
   property :sequence_annotations do |tax_id, gene_id|
     annotations = query(:uniprot, <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
