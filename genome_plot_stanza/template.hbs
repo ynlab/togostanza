@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     {{#each css_uri}}
-    <link rel="stylesheet" type="text/this" href="{{css_uri}}">
+    <link rel="stylesheet" href="{{this}}" />
     {{/each}}
     <link rel="stylesheet" type="text/css" href="http://biointegra.jp/OpenID/css/plot2.css">
     <link rel="stylesheet" type="text/css" href="http://biointegra.jp/OpenID/css/loading.css">
@@ -141,7 +141,7 @@
           height = document.body.offsetHeight + 30;
         }
         parent.postMessage(JSON.stringify({height: height, id: name}), "*");
-      } 
+      }
     </script>
   </head>
 
