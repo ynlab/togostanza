@@ -17,4 +17,5 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_runtime_dependency 'togostanza'
+  spec.add_runtime_dependency 'bio-svgenes', '>= 0.3.3'
 end
