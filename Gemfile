@@ -10,3 +10,6 @@ gem 'environment_geographical_map_stanza', path: './environment_geographical_map
 gem 'environment_inhabitants_stanza', path: './environment_inhabitants_stanza'
 gem 'environment_inhabitants_statistics_stanza', path: './environment_inhabitants_statistics_stanza'
 gem 'environment_taxonomic_composition_stanza', path: './environment_taxonomic_composition_stanza'
+gem 'gene_attributes_stanza', path: './gene_attributes_stanza'
+gem 'geneset_stanza', path: './geneset_stanza'
+gem 'geneset_entry_stanza', path: './geneset_entry_stanza'

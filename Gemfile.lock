@@ -35,6 +35,24 @@ PATH
       togostanza
 
 PATH
+  remote: ./gene_attributes_stanza
+  specs:
+    gene_attributes_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./geneset_entry_stanza
+  specs:
+    geneset_entry_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./geneset_stanza
+  specs:
+    geneset_stanza (0.0.1)
+      togostanza
+
+PATH
   remote: ./variation_stanza
   specs:
     variation_stanza (0.0.1)
@@ -124,6 +142,9 @@ DEPENDENCIES
   environment_inhabitants_stanza!
   environment_inhabitants_statistics_stanza!
   environment_taxonomic_composition_stanza!
+  gene_attributes_stanza!
+  geneset_entry_stanza!
+  geneset_stanza!
   togostanza
   unicorn
   variation_stanza!
