@@ -13,3 +13,7 @@ gem 'environment_taxonomic_composition_stanza', path: './environment_taxonomic_c
 gem 'gene_attributes_stanza', path: './gene_attributes_stanza'
 gem 'geneset_stanza', path: './geneset_stanza'
 gem 'geneset_entry_stanza', path: './geneset_entry_stanza'
+gem 'genome_cross_references_stanza', path: './genome_cross_references_stanza'
+gem 'genome_genomic_context_stanza', path: './genome_genomic_context_stanza'
+gem 'genome_information_stanza', path: './genome_information_stanza'
+gem 'genome_plot_stanza', path: './genome_plot_stanza'

@@ -53,6 +53,30 @@ PATH
       togostanza
 
 PATH
+  remote: ./genome_cross_references_stanza
+  specs:
+    genome_cross_references_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./genome_genomic_context_stanza
+  specs:
+    genome_genomic_context_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./genome_information_stanza
+  specs:
+    genome_information_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./genome_plot_stanza
+  specs:
+    genome_plot_stanza (0.0.1)
+      togostanza
+
+PATH
   remote: ./variation_stanza
   specs:
     variation_stanza (0.0.1)
@@ -145,6 +169,10 @@ DEPENDENCIES
   gene_attributes_stanza!
   geneset_entry_stanza!
   geneset_stanza!
+  genome_cross_references_stanza!
+  genome_genomic_context_stanza!
+  genome_information_stanza!
+  genome_plot_stanza!
   togostanza
   unicorn
   variation_stanza!
