@@ -131,6 +131,72 @@ PATH
       togostanza
 
 PATH
+  remote: ./protein_attributes_stanza
+  specs:
+    protein_attributes_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./protein_cross_references_stanza
+  specs:
+    protein_cross_references_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./protein_general_annotation_stanza
+  specs:
+    protein_general_annotation_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./protein_names_stanza
+  specs:
+    protein_names_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./protein_ontologies_stanza
+  specs:
+    protein_ontologies_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./protein_orthologs_stanza
+  specs:
+    protein_orthologs_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./protein_pfam_plot_stanza
+  specs:
+    protein_pfam_plot_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./protein_references_stanza
+  specs:
+    protein_references_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./protein_sequence_annotation_stanza
+  specs:
+    protein_sequence_annotation_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./protein_sequence_stanza
+  specs:
+    protein_sequence_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./taxonomy_ortholog_profile_stanza
+  specs:
+    taxonomy_ortholog_profile_stanza (0.0.1)
+      togostanza
+
+PATH
   remote: ./variation_stanza
   specs:
     variation_stanza (0.0.1)
@@ -236,6 +302,17 @@ DEPENDENCIES
   organism_names_stanza!
   organism_pathogen_information_stanza!
   organism_phenotype_stanza!
+  protein_attributes_stanza!
+  protein_cross_references_stanza!
+  protein_general_annotation_stanza!
+  protein_names_stanza!
+  protein_ontologies_stanza!
+  protein_orthologs_stanza!
+  protein_pfam_plot_stanza!
+  protein_references_stanza!
+  protein_sequence_annotation_stanza!
+  protein_sequence_stanza!
+  taxonomy_ortholog_profile_stanza!
   togostanza
   unicorn
   variation_stanza!
