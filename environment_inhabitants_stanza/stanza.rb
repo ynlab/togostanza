@@ -23,7 +23,7 @@ class EnvironmentInhabitantsStanza < TogoStanza::Stanza::Base
         BIND (CONCAT(REPLACE(STR(?meo_id),"http://purl.jp/bio/11/meo/",""), ?meo_label) AS ?env )
         OPTIONAL
         {
-          ?gold mccv:MCCV_000020 ?tax_id . 
+          ?gold mccv:MCCV_000020 ?tax_id .
           ?tax_id taxo:scientificName ?organism_name
         }
       } GROUP BY ?gold ?tax_id ?organism_name

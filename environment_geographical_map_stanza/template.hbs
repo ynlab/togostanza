@@ -13,10 +13,10 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
     <script type="text/javascript">
     //<![CDATA[
-  
+
     var map;
     var frame_height = 500;
- 
+
     // add mouseover and mousedown event listener
     function attachMessage(marker, msg) {
       google.maps.event.addListener(marker, 'mouseover', function(event) {
@@ -25,11 +25,11 @@
         }).open(marker.getMap(), marker);
       });
     }
-  
-    //initialize 
+
+    //initialize
     function init() {
       var data = new Array();
-      $.getJSON("./environment_geographical_map/resources/place_list/?meo_id={{select_meo_id}}", function(json) {
+      $.getJSON("./environment_geographical_map/resources/place_list?meo_id={{select_meo_id}}", function(json) {
         if(json.place_list != null && json.place_list.length >0) {
           $("#togogenome_css").remove();
           $(document.body).css("height", "100%");
@@ -47,7 +47,7 @@
             data.push({position: new google.maps.LatLng(json.place_list[i].latitude, json.place_list[i].longitude), content: json.place_list[i].place_name + '<br>' + link});
           }
           draw_map(data);
-          
+
           adjust_iframe_height(frame_height);
         } else {
           $("#map").text("No data");
@@ -63,11 +63,11 @@
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         center: latlng
       };
-  
+
       // Create map object
       // Parameters are DOM which is drawn map and optional setting object.
       map = new google.maps.Map(document.getElementById("map"), opts);
-  
+
       for (i = 0; i < data.length; i++) {
         var myMarker = new google.maps.Marker({
           position: data[i].position,
@@ -76,7 +76,7 @@
         attachMessage(myMarker, data[i].content);
       }
     }
-  
+
     function adjust_iframe_height(height_px) {
       var height = 0;
       if(height_px) {

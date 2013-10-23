@@ -21,4 +21,3 @@ Basic information of a environment ontology.
 The above `<div>` will automatically embed the following Stanza in your HTML page.
 
 <div data-stanza="/stanza/environment_attributes" data-stanza-meo-id="MEO_0000006"></div>
-

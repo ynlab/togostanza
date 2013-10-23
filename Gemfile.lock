@@ -1,4 +1,40 @@
 PATH
+  remote: ./environment_attributes_stanza
+  specs:
+    environment_attributes_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./environment_environmental_ontology_stanza
+  specs:
+    environment_environmental_ontology_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./environment_geographical_map_stanza
+  specs:
+    environment_geographical_map_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./environment_inhabitants_stanza
+  specs:
+    environment_inhabitants_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./environment_inhabitants_statistics_stanza
+  specs:
+    environment_inhabitants_statistics_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./environment_taxonomic_composition_stanza
+  specs:
+    environment_taxonomic_composition_stanza (0.0.1)
+      togostanza
+
+PATH
   remote: ./variation_stanza
   specs:
     variation_stanza (0.0.1)
@@ -82,6 +118,12 @@ PLATFORMS
 
 DEPENDENCIES
   bio-svgenes (>= 0.3.3)
+  environment_attributes_stanza!
+  environment_environmental_ontology_stanza!
+  environment_geographical_map_stanza!
+  environment_inhabitants_stanza!
+  environment_inhabitants_statistics_stanza!
+  environment_taxonomic_composition_stanza!
   togostanza
   unicorn
   variation_stanza!
