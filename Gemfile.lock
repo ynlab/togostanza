@@ -77,6 +77,60 @@ PATH
       togostanza
 
 PATH
+  remote: ./lineage_information_stanza
+  specs:
+    lineage_information_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./nucleotide_sequence_stanza
+  specs:
+    nucleotide_sequence_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./organism_cross_references_stanza
+  specs:
+    organism_cross_references_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./organism_culture_collections_stanza
+  specs:
+    organism_culture_collections_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./organism_habitat_stanza
+  specs:
+    organism_habitat_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./organism_medium_information_stanza
+  specs:
+    organism_medium_information_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./organism_names_stanza
+  specs:
+    organism_names_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./organism_pathogen_information_stanza
+  specs:
+    organism_pathogen_information_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./organism_phenotype_stanza
+  specs:
+    organism_phenotype_stanza (0.0.1)
+      togostanza
+
+PATH
   remote: ./variation_stanza
   specs:
     variation_stanza (0.0.1)
@@ -173,6 +227,15 @@ DEPENDENCIES
   genome_genomic_context_stanza!
   genome_information_stanza!
   genome_plot_stanza!
+  lineage_information_stanza!
+  nucleotide_sequence_stanza!
+  organism_cross_references_stanza!
+  organism_culture_collections_stanza!
+  organism_habitat_stanza!
+  organism_medium_information_stanza!
+  organism_names_stanza!
+  organism_pathogen_information_stanza!
+  organism_phenotype_stanza!
   togostanza
   unicorn
   variation_stanza!
