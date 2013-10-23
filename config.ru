@@ -1,6 +1,5 @@
-require 'bundler/setup'
-require 'togostanza'
-require 'variation_stanza'
+require 'bundler'
+Bundler.require
 
 map '/stanza' do
   run TogoStanza::Application
