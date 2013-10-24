@@ -2,6 +2,11 @@ source 'https://rubygems.org'
 
 gem 'togostanza', '>= 0.0.2'
 gem 'unicorn'
+
+group :development do
+  gem 'mina', require: false
+end
+
 gem 'variation_stanza', path: './variation_stanza'
 gem 'environment_attributes_stanza', path: './environment_attributes_stanza'
 gem 'environment_environmental_ontology_stanza', path: './environment_environmental_ontology_stanza'
