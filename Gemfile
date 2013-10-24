@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'togostanza', '>= 0.0.2'
+gem 'togostanza', '>= 0.0.5'
 gem 'unicorn'
 
 group :development do
