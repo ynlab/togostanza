@@ -347,6 +347,7 @@ DEPENDENCIES
   protein_references_stanza!
   protein_sequence_annotation_stanza!
   protein_sequence_stanza!
+  rake
   rspec
   taxonomy_ortholog_profile_stanza!
   togostanza (>= 0.0.5)

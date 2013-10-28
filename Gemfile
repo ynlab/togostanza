@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'togostanza', '>= 0.0.5'
 gem 'unicorn'
+gem 'rake'
 
 group :development do
   gem 'mina', require: false
