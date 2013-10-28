@@ -3,7 +3,6 @@ cache: bundler
 rvm: 1.9.3
 
 bundler_args: --without development:production --deployment
-before_script: bundle exec rake db:create db:migrate RAILS_ENV=test
 script: bundle exec rake
 
 notifications:
