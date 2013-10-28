@@ -7,6 +7,11 @@ group :development do
   gem 'mina', require: false
 end
 
+group :test do
+  gem 'rspec'
+  gem 'capybara'
+end
+
 gem 'variation_stanza', path: './variation_stanza'
 gem 'environment_attributes_stanza', path: './environment_attributes_stanza'
 gem 'environment_environmental_ontology_stanza', path: './environment_environmental_ontology_stanza'
