@@ -1,7 +1,16 @@
-# This file is used by Rack-based servers to start the application.
+require 'bundler'
 
-require ::File.expand_path('../config/environment',  __FILE__)
+env = ENV['RACK_ENV'] || :development
+Bundler.require :default, env
 
-map ActionController::Base.config.relative_url_root || '/' do
+log = open(File.expand_path("../log/#{env}.log", __FILE__), 'a+').tap {|f| f.sync = true }
+
+use Rack::CommonLogger, log
+
+map '/stanza/assets' do
+  run TogoStanza.sprockets
+end
+
+map '/stanza' do
   run TogoStanza::Application
 end

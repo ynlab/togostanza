@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    {{#each css_uri}}
+    <link rel="stylesheet" href="{{this}}" />
+    {{/each}}
+    <link rel="stylesheet" type="text/css" href="http://biointegra.jp/OpenID/css/plot2.css">
+    <link rel="stylesheet" type="text/css" href="http://biointegra.jp/OpenID/css/loading.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript" src="http://biointegra.jp/OpenID/js/plot2.js"></script>
+    <script type="text/javascript" src="http://biointegra.jp/OpenID/js/loading.js"></script>
+
+    <script type="text/javascript">
+/**** initialize ****/
+      /*
+      Init
+      */
+      function init() {
+
+        var option = {
+          'x_axis_items': {
+            'size': {
+              'button_label': 'Genome size' ,
+              'axis_label': 'Genome size'
+            },
+            'num_gene': {
+              'button_label': 'Gene number' ,
+              'axis_label': 'Gene number'
+            },
+            'num_rrna': {
+              'button_label': 'rRNA number',
+              'axis_label': 'rRNA number'
+            },
+            'num_trna': {
+              'button_label': 'tRNA number',
+              'axis_label': 'tRNA number'
+            },
+            'temperature': {
+              'button_label': 'Temperature',
+              'axis_label': 'Temperature'
+            },
+            'ph': {
+              'button_label': 'pH',
+              'axis_label': 'pH'
+            }
+          },
+          'y_axis_items': {
+            'size': {
+              'button_label': 'Genome size',
+              'axis_label': 'Genome size'
+            },
+            'num_gene': {
+              'button_label': 'Gene number',
+              'axis_label': 'Gene number'
+            },
+            'num_rrna': {
+              'button_label': 'rRNA number',
+              'axis_label': 'rRNA number'
+            },
+            'num_trna': {
+              'button_label': 'tRNA number',
+              'axis_label': 'tRNA number'
+            },
+            'temperature': {
+              'button_label': 'Temperature',
+              'axis_label': 'Temperature'
+            },
+            'ph': {
+              'button_label': 'pH',
+              'axis_label': 'pH',
+            }
+          },
+          'range_items': {
+            'temperature': {
+              'min': 'min_temp',
+              'max': 'max_temp',
+              'opt': 'opt_temp',
+            },
+            'ph': {
+              'min': 'min_ph',
+              'max': 'max_ph',
+              'opt': 'opt_ph',
+            },
+          },
+          'tooltips_items': ['organism_name', 'tax', 'bioProject', 'size', 'num_gene', 'num_rrna',
+              'num_trna', 'temperature', 'ph'
+          ],
+          'no_categorize': 'no_categorize',
+          'category_items': {
+            'habitat': {
+              'label': 'Habitat'
+            },
+            'cell_shape_label': {
+              'label': 'Cell Shape'
+            },
+            'oxy_req_label': {
+              'label': 'Oxygen Requirement'
+            },
+            'temp_range_label': {
+              'label': 'Tempreture Range'
+            },
+            no_categorize: {
+              'label': 'Clear'
+            }
+          },
+          'opt_axis_unit_items': ['size'],
+          'init_x_axis_items': 'size',
+          'init_y_axis_items': 'num_gene',
+          'init_point_color': '#7BA67B',
+          'init_selected_point_color': '#F06F60',
+          'point_item': 'tax',
+          'point_item_ex': 'bioProject',
+          'margin': 80,
+          'width': 700,
+          'height': 700,
+          'point_size': 4,
+          'legend_width': 900,
+          'legend_hightlight_width': 450,
+          'legend_height': 300,
+          'legend_rect_size': 12,
+          'no_data_label': 'no data',
+          'no_data_category_color': '#7f7f7f',
+          'elem_id_prefix': 'taxid_',
+          'point_opacity': 0.7,
+          'selected_tax_id': '{{selected_taxonomy_id}}',
+        }
+        d3.json('./genome_plot/resources/taxonomy', function(data) {
+          //console.log(JSON.stringify(data,null," "));
+          create_page(data.taxonomy,option);
+          adjust_iframe_height();
+        })
+      }
+      function adjust_iframe_height(height_px) {
+        var height = 0;
+        if(height_px) {
+          height = height_px;
+        } else {
+          height = document.body.offsetHeight + 30;
+        }
+        parent.postMessage(JSON.stringify({height: height, id: name}), "*");
+      }
+    </script>
+  </head>
+
+  <body>
+    <div>
+      <div id="loader" align="center"><img src="http://biointegra.jp/OpenID/img/loading.gif" width="160" height="160" alt="Loading..." /><br/>Loading...</div>
+      <div id="fade"></div>
+      <div id="container">
+      <div>
+        <table class="taxonomy_plot_area">
+          <tr>
+            <td>
+              <div id="scatter_plot_wrapper">
+                <div id="scatter_plot" class="plot"></div>
+              </div>
+              <div id="menu" class="menu">
+                <table class="category">
+                  <tr>
+                    <td>
+                      <div class="x_axis_area">
+                        <div class="x_axis_update">
+                          <div>X-Axis</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="y_axis_area">
+                        <div class="y_axis_update">
+                          <div>Y-Axis</div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <div class="category_area">
+          <div class="input-append">
+            <input class="span2 input-category" id="appendedDropdownButton" type="text" readonly="readonly">
+            <div class="btn-group">
+              <button class="btn dropdown-toggle" data-toggle="dropdown">Category <span class="caret"></span></button>
+              <ul class="dropdown-menu pull-right"></ul>
+            </div>
+          </div>
+          <div id="legend"></div>
+        </div>
+      </div>
+      <script>
+        init();
+      </script>
+      </div>
+    </div>
+  </body>
+</html>

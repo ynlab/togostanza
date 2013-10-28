@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Protein Attributes</title>
+    {{#each css_uri}}
+    <link rel="stylesheet" href="{{this}}" />
+    {{/each}}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    {{adjust_iframe_height_script}}
+  </head>
+
+  <body>
+    {{#each attributes}}
+      <table class='table'>
+        <tbody>
+          {{#if sequence_length}}
+            <tr><th class='span4'>Sequence length</th><td class='span8'>{{sequence_length}}</td></tr>
+          {{/if}}
+
+          {{#if sequence_status}}
+            <tr><th class='span4'>Sequence status</th><td class='span8'>{{sequence_status}}</td></tr>
+          {{/if}}
+
+          {{#if sequence_processing}}
+            <tr><th class='span4'>Sequence processing</th><td class='span8'>{{sequence_processing}}</td></tr>
+          {{/if}}
+
+          {{#if existence_label}}
+            <tr><th class='span4'>Protein existence</th><td class='span8'>{{existence_label}}</td></tr>
+          {{/if}}
+        </tbody>
+      </table>
+    {{/each}}
+  </body>
+</html>

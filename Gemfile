@@ -1,39 +1,49 @@
 source 'https://rubygems.org'
 
-gem 'rails'
-
-gem 'action_args'
-gem 'flavour_saver', github: 'jamesotron/FlavourSaver' # wait for 0.4.0 release
-gem 'haml-rails'
-gem 'hashie'
-gem 'jquery-rails'
-gem 'parallel'
-gem 'pg'
-gem 'redcarpet'
-gem 'sparql-client'
+gem 'togostanza', '>= 0.0.5'
 gem 'unicorn'
-gem 'bio-svgenes', '>= 0.3.3'
-
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'uglifier', '>= 1.0.3'
-  gem 'bootstrap-sass'
-end
+gem 'rake'
 
 group :development do
-  gem 'launchy', require: false
   gem 'mina', require: false
-  gem 'pry', group: 'test'
-  gem 'tapp', group: 'test'
-  gem 'zeus', require: false
 end
 
 group :test do
+  gem 'rspec'
   gem 'capybara'
-  gem 'json_spec'
-
-  group :development do
-    gem 'rspec-rails'
-  end
 end
+
+gem 'variation_stanza', path: './variation_stanza'
+gem 'environment_attributes_stanza', path: './environment_attributes_stanza'
+gem 'environment_environmental_ontology_stanza', path: './environment_environmental_ontology_stanza'
+gem 'environment_geographical_map_stanza', path: './environment_geographical_map_stanza'
+gem 'environment_inhabitants_stanza', path: './environment_inhabitants_stanza'
+gem 'environment_inhabitants_statistics_stanza', path: './environment_inhabitants_statistics_stanza'
+gem 'environment_taxonomic_composition_stanza', path: './environment_taxonomic_composition_stanza'
+gem 'gene_attributes_stanza', path: './gene_attributes_stanza'
+gem 'geneset_stanza', path: './geneset_stanza'
+gem 'geneset_entry_stanza', path: './geneset_entry_stanza'
+gem 'genome_cross_references_stanza', path: './genome_cross_references_stanza'
+gem 'genome_genomic_context_stanza', path: './genome_genomic_context_stanza'
+gem 'genome_information_stanza', path: './genome_information_stanza'
+gem 'genome_plot_stanza', path: './genome_plot_stanza'
+gem 'lineage_information_stanza', path: './lineage_information_stanza'
+gem 'nucleotide_sequence_stanza', path: './nucleotide_sequence_stanza'
+gem 'organism_cross_references_stanza', path: './organism_cross_references_stanza'
+gem 'organism_culture_collections_stanza', path: './organism_culture_collections_stanza'
+gem 'organism_habitat_stanza', path: './organism_habitat_stanza'
+gem 'organism_medium_information_stanza', path: './organism_medium_information_stanza'
+gem 'organism_names_stanza', path: './organism_names_stanza'
+gem 'organism_pathogen_information_stanza', path: './organism_pathogen_information_stanza'
+gem 'organism_phenotype_stanza', path: './organism_phenotype_stanza'
+gem 'protein_attributes_stanza', path: './protein_attributes_stanza'
+gem 'protein_cross_references_stanza', path: './protein_cross_references_stanza'
+gem 'protein_general_annotation_stanza', path: './protein_general_annotation_stanza'
+gem 'protein_names_stanza', path: './protein_names_stanza'
+gem 'protein_ontologies_stanza', path: './protein_ontologies_stanza'
+gem 'protein_orthologs_stanza', path: './protein_orthologs_stanza'
+gem 'protein_pfam_plot_stanza', path: './protein_pfam_plot_stanza'
+gem 'protein_references_stanza', path: './protein_references_stanza'
+gem 'protein_sequence_stanza', path: './protein_sequence_stanza'
+gem 'protein_sequence_annotation_stanza', path: './protein_sequence_annotation_stanza'
+gem 'taxonomy_ortholog_profile_stanza', path: './taxonomy_ortholog_profile_stanza'

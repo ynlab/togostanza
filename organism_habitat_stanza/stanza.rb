@@ -1,0 +1,44 @@
+class OrganismHabitatStanza < TogoStanza::Stanza::Base
+  property :selected_taxonomy_id do |tax_id|
+    tax_id
+  end
+
+  resource :environment_tree do |tax_id|
+    result = query(:togogenome, <<-SPARQL.strip_heredoc)
+      DEFINE sql:select-option "order"
+      PREFIX idorg:  <http://rdf.identifiers.org/database/>
+      PREFIX mccv: <http://purl.jp/bio/01/mccv#>
+      PREFIX meo: <http://purl.jp/bio/11/meo/>
+      PREFIX taxid: <http://identifiers.org/taxonomy/>
+
+      SELECT DISTINCT ?linage_meo_id ?label ?parent_meo_id ?is_sampled_meo
+      FROM <http://togogenome.org/graph/refseq/>
+      FROM <http://togogenome.org/graph/gold/>
+      FROM <http://togogenome.org/graph/meo/>
+      WHERE
+      {
+        {
+          SELECT DISTINCT ?meo_id
+          WHERE
+          {
+            VALUES ?p_env { meo:MEO_0000437 meo:MEO_0000440 }
+            ?seq rdfs:seeAlso ?tax_id FILTER (?tax_id = taxid:#{ tax_id }) .
+            ?tax_id a idorg:Taxonomy .
+            ?gold_id mccv:MCCV_000020 ?tax_id .
+            ?gold_id ?p_env ?meo_id .
+          }
+        }
+        GRAPH <http://togogenome.org/graph/meo/>
+        {
+          ?meo_id rdfs:subClassOf* ?linage_meo_id .
+          OPTIONAL { ?linage_meo_id rdfs:label ?label . }
+          OPTIONAL { ?linage_meo_id rdfs:subClassOf ?parent_meo_id .}
+          BIND ( IF(?meo_id = ?linage_meo_id, "TRUE","FALSE") AS ?is_sampled_meo) .
+        }
+      }
+    SPARQL
+    root = { :linage_meo_id => "http://www.w3.org/2002/07/owl#Thing", :label => "Root", :parent_meo_id => ""}
+    result.push(root)
+    result
+  end
+end

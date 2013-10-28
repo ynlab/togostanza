@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Organism Medium Information</title>
+    {{#each css_uri}}
+    <link rel="stylesheet" href="{{this}}" />
+    {{/each}}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    {{adjust_iframe_height_script}}
+  </head>
+
+  <body>
+    {{#if medium_information}}
+      {{#each medium_information}}
+        <table class='table'>
+          <tbody>
+            {{#each this}}
+              <tr>
+              <td class='span3'>{{this.row_key}}</td>
+              <td class='span9'>{{this.row_value}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{/each}}
+    {{else}}
+      <div>
+        No data
+      <div>
+    {{/if}}
+  </body>
+</html>
+
