@@ -1,6 +1,6 @@
 language: ruby
 cache: bundler
-rvm: 1.9.3
+rvm: 2.0.0
 
 bundler_args: --without development:production --deployment
 script: bundle exec rake
