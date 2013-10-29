@@ -41,6 +41,12 @@ PATH
       togostanza
 
 PATH
+  remote: ./gene_jbrowse_stanza
+  specs:
+    gene_jbrowse_stanza (0.0.1)
+      togostanza
+
+PATH
   remote: ./geneset_entry_stanza
   specs:
     geneset_entry_stanza (0.0.1)
@@ -99,6 +105,12 @@ PATH
   remote: ./organism_culture_collections_stanza
   specs:
     organism_culture_collections_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./organism_genome_jbrowse_stanza
+  specs:
+    organism_genome_jbrowse_stanza (0.0.1)
       togostanza
 
 PATH
@@ -321,6 +333,7 @@ DEPENDENCIES
   environment_inhabitants_statistics_stanza!
   environment_taxonomic_composition_stanza!
   gene_attributes_stanza!
+  gene_jbrowse_stanza!
   geneset_entry_stanza!
   geneset_stanza!
   genome_cross_references_stanza!
@@ -332,6 +345,7 @@ DEPENDENCIES
   nucleotide_sequence_stanza!
   organism_cross_references_stanza!
   organism_culture_collections_stanza!
+  organism_genome_jbrowse_stanza!
   organism_habitat_stanza!
   organism_medium_information_stanza!
   organism_names_stanza!
