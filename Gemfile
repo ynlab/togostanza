@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.0.0'
+
 gem 'togostanza', '>= 0.0.5'
 gem 'unicorn'
 gem 'rake'
