@@ -22,20 +22,21 @@ class VariationStanza < TogoStanza::Stanza::Base
         ?location,
         ?seqid,
         ?ref_allele
-
       WHERE {
-        ?gene <http://genome.microbedb.jp/terms/genbank#locus_tag> ?gene_id.
-        ?gene <http://genome.microbedb.jp/terms/genome#product> ?gene_product.
-        #{filter}
-        OPTIONAL {?gene <http://genome.microbedb.jp/terms/genbank#gene> ?gene_symbol.}
-        ?valiationid alfred:geneID ?gene.
-        ?valiationid alfred:referenceGenomicLocationInAssembly ?locus.
-        ?valiationid alfred:validationStatus ?valiation_type.
-        ?valiationid alfred:id ?valiation_id.
-        ?valiationid alfred:snpID ?ref_allele.
-        ?valiationid alfred:genomicAllele ?alleleid.
-        ?locus alfred:start ?location.
-        ?locus alfred:chromosomeName ?seqid.
+         ?s ?p ?gene.
+         ?s ?pp ?o.
+         ?s <http://insdc.org/owl/feature_locus_tag> ?gene_id.
+         ?s <http://insdc.org/owl/feature_product> ?gene_product.
+         #{filter}
+         OPTIONAL {?s <http://insdc.org/owl/feature_gene> ?gene_symbol.}
+         ?valiationid alfred:geneID ?gene.
+         ?valiationid alfred:referenceGenomicLocationInAssembly ?locus.
+         ?valiationid alfred:validationStatus ?valiation_type.
+         ?valiationid alfred:id ?valiation_id.
+         ?valiationid alfred:snpID ?ref_allele.
+         ?valiationid alfred:genomicAllele ?alleleid.
+         ?locus alfred:start ?location.
+         ?locus alfred:chromosomeName ?seqid.
         FILTER REGEX(STR(?gene), "http://genome.microbedb.jp/cyanobase/Synechocystis/genes")
       }
     SPARQL
