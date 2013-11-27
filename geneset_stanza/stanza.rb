@@ -8,8 +8,8 @@ class GenesetStanza < TogoStanza::Stanza::Base
         ?geneset,
         REPLACE(str(?db_type), "http://genome.microbedb.jp/terms/", "") AS ?type,
         (sql:GROUP_CONCAT(?gene_label, ", ")) AS ?gene_member,
-        (sql:GROUP_CONCAT(?o, ", ")) AS ?gene_urls
-
+        (sql:GROUP_CONCAT(?o, ", ")) AS ?gene_urls,
+        ?s
       WHERE {
         ?geneset ?p ?o.
         #{filter}
@@ -17,8 +17,9 @@ class GenesetStanza < TogoStanza::Stanza::Base
         ?geneset <http://www.w3.org/2000/01/rdf-schema#label> ?geneset_label.
         ?geneset a <http://www.w3.org/2004/02/skos/core#Collection>.
         FILTER(?p = <http://www.w3.org/2004/02/skos/core#member>)
-        ?o <http://www.w3.org/2000/01/rdf-schema#label> ?gene_label.
-      } ORDER BY ?geneset
+        ?s owl:sameAs ?o.
+        ?s rdfs:label ?gene_label.
+      } ORDER BY ?genese
     SPARQL
   end
 end
