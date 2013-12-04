@@ -1,6 +1,6 @@
 class EnvironmentInhabitantsStanza < TogoStanza::Stanza::Base
   property :inhabitants_statistics do |meo_id|
-    gold_list = query(:togogenome, <<-SPARQL.strip_heredoc)
+    gold_list = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
 
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>
@@ -8,10 +8,10 @@ class EnvironmentInhabitantsStanza < TogoStanza::Stanza::Base
       PREFIX taxo: <http://ddbj.nig.ac.jp/ontologies/taxonomy#>
 
       SELECT
-       ?gold AS ?source_link
-       REPLACE(STR(?gold) ,"http://www.genomesonline.org/cgi-bin/GOLD/GOLDCards.cgi\\\\?goldstamp=" ,"" ) AS ?source_id
-       ?organism_name REPLACE(STR(?tax_id) ,"http://identifiers.org/taxonomy/" ,"" ) AS ?tax_no "" AS ?isolation
-       (sql:GROUP_DIGEST(?env, '||', 1000, 1)) AS ?env_links
+       (?gold AS ?source_link)
+       (REPLACE(STR(?gold) ,"http://www.genomesonline.org/cgi-bin/GOLD/GOLDCards.cgi\\\\?goldstamp=" ,"" ) AS ?source_id)
+       ?organism_name (REPLACE(STR(?tax_id) ,"http://identifiers.org/taxonomy/" ,"" ) AS ?tax_no) ("" AS ?isolation)
+       ((sql:GROUP_DIGEST(?env, '||', 1000, 1)) AS ?env_links)
       FROM <http://togogenome.org/graph/gold/>
       FROM <http://togogenome.org/graph/meo/>
       FROM <http://togogenome.org/graph/taxonomy/>
@@ -29,13 +29,13 @@ class EnvironmentInhabitantsStanza < TogoStanza::Stanza::Base
       } GROUP BY ?gold ?tax_id ?organism_name
     SPARQL
 
-    strain_list = query(:togogenome, <<-SPARQL.strip_heredoc)
+    strain_list = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>
       PREFIX meo: <http://purl.jp/bio/11/meo/>
 
-      SELECT ?strain_id AS ?source_link ?strain_number AS ?source_id ?strain_name AS ?organism_name
-        (sql:GROUP_DIGEST(?tax_no, '||', 1000, 1)) AS ?tax_no
-        ?isolation (sql:GROUP_DIGEST(?env, '||', 1000, 1)) AS ?env_links
+      SELECT (?strain_id AS ?source_link) (?strain_number AS ?source_id) (?strain_name AS ?organism_name)
+        ((sql:GROUP_DIGEST(?tax_no, '||', 1000, 1)) AS ?tax_no)
+        ?isolation ((sql:GROUP_DIGEST(?env, '||', 1000, 1)) AS ?env_links)
       FROM <http://togogenome.org/graph/taxonomy/>
       FROM <http://togogenome.org/graph/brc/>
       FROM <http://togogenome.org/graph/meo/>

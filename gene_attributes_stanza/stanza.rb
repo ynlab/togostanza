@@ -3,17 +3,16 @@ require 'uri'
 
 class GeneAttributesStanza < TogoStanza::Stanza::Base
   property :gene_attributes do |tax_id, gene_id|
-    results = query(:togogenome, <<-SPARQL.strip_heredoc)
+    results = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX obo: <http://purl.obolibrary.org/obo/>
       PREFIX faldo: <http://biohackathon.org/resource/faldo#>
-      PREFIX idorg: <http://rdf.identifiers.org/database/>
-      PREFIX insdc: <http://insdc.org/owl/>
+      PREFIX insdc:  <http://ddbj.nig.ac.jp/ontologies/sequence#>
 
       SELECT DISTINCT ?locus_tag ?gene_type_label ?seq_label ?seq_type_label ?gene_symbol
-        REPLACE(?refseq_label,"RefSeq:","") AS ?refseq_label ?organism ?taxid
+        (REPLACE(?refseq_label,"RefSeq:","") AS ?refseq_label) ?organism ?taxid
         ?faldo_begin_position ?faldo_end_position ?stand ?insdc_location
-        CONCAT("http://togows.dbcls.jp/entry/nucleotide/", REPLACE(?refseq_label,"RefSeq:",""),"/seq/", ?insdc_location) AS ?seqence
+        (CONCAT("http://togows.dbcls.jp/entry/nucleotide/", REPLACE(?refseq_label,"RefSeq:",""),"/seq/", ?insdc_location) AS ?seqence)
       FROM <http://togogenome.org/graph/refseq/>
       FROM <http://togogenome.org/graph/so/>
       FROM <http://togogenome.org/graph/faldo/>
@@ -28,7 +27,7 @@ class GeneAttributesStanza < TogoStanza::Stanza::Base
             VALUES ?seq_type  { obo:SO_0000340 obo:SO_0000155 }
             VALUES ?gene_type { obo:SO_0000704 obo:SO_0000252 obo:SO_0000253 }
             VALUES ?faldo_stand_type { faldo:ForwardStrandPosition faldo:ReverseStrandPosition }
- 
+
             ?gene ?p ?locus_tag ;
               a ?gene_type ;
               obo:so_part_of ?seq .
@@ -38,14 +37,14 @@ class GeneAttributesStanza < TogoStanza::Stanza::Base
             ?seq rdfs:label ?seq_label ;
               a ?seq_type ;
               rdfs:seeAlso ?refseq ;
-              insdc:source_organism ?organism ;
+              insdc:organism ?organism ;
               rdfs:seeAlso ?taxonomy .
             ?seq_type rdfs:label ?seq_type_label .
-            ?refseq a idorg:RefSeq ;
+            ?refseq a <http://identifiers.org/refseq/> ;
               rdfs:label ?refseq_label .
-            ?taxonomy a idorg:Taxonomy ;
+            ?taxonomy a <http://identifiers.org/taxonomy/> ;
               rdfs:label ?taxid .
- 
+
             #faldo
             ?gene faldo:location ?faldo .
             ?faldo insdc:location ?insdc_location ;
@@ -57,9 +56,10 @@ class GeneAttributesStanza < TogoStanza::Stanza::Base
             ?faldo_stand_type rdfs:label ?stand .
           }
         }
-        OPTIONAL { ?gene insdc:feature_gene ?gene_symbol. }
+        OPTIONAL { ?gene insdc:gene ?gene_symbol. }
       }
     SPARQL
+
     results.map {|hash|
       hash.merge(
         :refseq_link => "http://identifiers.org/refseq/" + hash[:refseq_label].split(':').last,

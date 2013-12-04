@@ -5,13 +5,13 @@ class EnvironmentGeographicalMapStanza < TogoStanza::Stanza::Base
 
   resource :place_list do |meo_id|
     gazetter = []
-    results = query(:togogenome, <<-SPARQL.strip_heredoc)
+    results = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
       PREFIX meo: <http://purl.jp/bio/11/meo/>
       PREFIX msv: <http://purl.jp/bio/11/msv/>
 
       SELECT
-        ?gold REPLACE(STR(?gold),"http://www.genomesonline.org/cgi-bin/GOLD/GOLDCards.cgi\\\\?goldstamp=","") AS ?gold_id
-        ?gaz AS ?gaz_id ?place_name ?latitude ?longitude
+        ?gold (REPLACE(STR(?gold),"http://www.genomesonline.org/cgi-bin/GOLD/GOLDCards.cgi\\\\?goldstamp=","") AS ?gold_id)
+        (?gaz AS ?gaz_id) ?place_name ?latitude ?longitude
       FROM <http://togogenome.org/graph/gold/>
       FROM <http://togogenome.org/graph/meo/>
       FROM <http://togogenome.org/graph/gazetteer/>

@@ -1,23 +1,26 @@
 class ProteinOntologiesStanza < TogoStanza::Stanza::Base
   property :keywords do |tax_id, gene_id|
-    keywords = query(:uniprot, <<-SPARQL.strip_heredoc)
+    keywords = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
+      DEFINE sql:select-option "order" 
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
+      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
       SELECT ?root_name ?concept (GROUP_CONCAT(?name, ', ') AS ?names) {
         SELECT DISTINCT ?root_name ?concept ?name
         FROM <http://togogenome.org/graph/uniprot/>
+        FROM <http://togogenome.org/graph/tgup/>
         WHERE {
-          ?protein up:organism  taxonomy:#{tax_id} ;
-                   rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
-
-          ?protein ?p ?concept .
+          <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
+          ?id_upid rdfs:seeAlso ?protein .
+          ?protein a <http://purl.uniprot.org/core/Protein> ;
+            ?p2 ?concept .
           ?concept rdf:type up:Concept .
           FILTER regex(str(?concept), 'keywords') .
-
-          ?concept rdfs:label ?name .
+      
+          ?concept ?label ?name FILTER (?label = skos:prefLabel || ?label = skos:altLabel).
           ?concept rdfs:subClassOf* ?parents .
-          ?parents rdfs:label ?root_name .
+          ?parents skos:prefLabel ?root_name .
           FILTER (str(?root_name) IN ('Biological process', 'Cellular component', 'Domain', 'Ligand', 'Molecular function', 'Technical term')) .
         }
         GROUP BY ?root_name ?concept
@@ -38,17 +41,18 @@ class ProteinOntologiesStanza < TogoStanza::Stanza::Base
     ## [{:concept=>"http://purl.uniprot.org/go/0009635"},
     ##  {:concept=>"http://purl.uniprot.org/go/0009772"},
     ##  ... ]
-    up_go_uris = query(:uniprot, <<-SPARQL.strip_heredoc)
+    up_go_uris = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
       SELECT DISTINCT ?concept
       FROM <http://togogenome.org/graph/uniprot/>
+      FROM <http://togogenome.org/graph/tgup/>
       WHERE {
-        ?protein up:organism  taxonomy:#{tax_id} ;
-                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
-
-        ?protein ?p ?concept .
+        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
+        ?id_upid rdfs:seeAlso ?protein .
+        ?protein a <http://purl.uniprot.org/core/Protein> ;
+         ?p2 ?concept .
         ?concept rdf:type up:Concept .
         FILTER regex(str(?concept), 'go') .
       }
@@ -71,7 +75,7 @@ class ProteinOntologiesStanza < TogoStanza::Stanza::Base
     ##  {:root_name=>"biological_process", :name=>"photosynthetic electron transport in photosystem II"},
     ##  {:root_name=>"molecular_function", :name=>"oxidoreductase activity"},
     ##  ...]
-    gene_ontlogies = query(:go, <<-SPARQL.strip_heredoc)
+    gene_ontlogies = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
       SELECT DISTINCT ?name ?root_name ?obo_go_uri

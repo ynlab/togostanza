@@ -4,15 +4,15 @@ class LineageInformationStanza < TogoStanza::Stanza::Base
   end
 
   property :tax_lineage_list do |tax_id|
-    results_super = query(:togogenome, <<-SPARQL.strip_heredoc)
+    results_super = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
       PREFIX taxo: <http://ddbj.nig.ac.jp/ontologies/taxonomy#>
       PREFIX taxid: <http://identifiers.org/taxonomy/>
       
       SELECT
-       REPLACE(STR(?tax), "http://identifiers.org/taxonomy/", "") AS ?tax_no
-       ?tax AS ?tax_link
+       (REPLACE(STR(?tax), "http://identifiers.org/taxonomy/", "") AS ?tax_no)
+       (?tax AS ?tax_link)
        ?tax_label
-       REPLACE(STR(?rank), "http://ddbj.nig.ac.jp/ontologies/taxonomy#", "") AS ?rank
+       (REPLACE(STR(?rank), "http://ddbj.nig.ac.jp/ontologies/taxonomy#", "") AS ?rank)
       FROM <http://togogenome.org/graph/taxonomy/>
       WHERE
       {
@@ -24,15 +24,15 @@ class LineageInformationStanza < TogoStanza::Stanza::Base
       } ORDER BY DESC(?step)
     SPARQL
 
-    results_sub = query(:togogenome, <<-SPARQL.strip_heredoc)
+    results_sub = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
       PREFIX taxo: <http://ddbj.nig.ac.jp/ontologies/taxonomy#>
       PREFIX taxid: <http://identifiers.org/taxonomy/>
       
       SELECT
-       REPLACE(STR(?tax) ,"http://identifiers.org/taxonomy/" ,"" ) AS ?tax_no
-       ?tax AS ?tax_link
+       (REPLACE(STR(?tax) ,"http://identifiers.org/taxonomy/" ,"" ) AS ?tax_no)
+       (?tax AS ?tax_link)
        ?tax_label
-       REPLACE(STR(?rank) ,"http://ddbj.nig.ac.jp/ontologies/taxonomy#" ,"" ) AS ?rank
+       (REPLACE(STR(?rank) ,"http://ddbj.nig.ac.jp/ontologies/taxonomy#" ,"" ) AS ?rank)
       FROM <http://togogenome.org/graph/taxonomy/>
       WHERE
       {

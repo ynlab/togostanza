@@ -1,16 +1,18 @@
 class ProteinSequenceStanza < TogoStanza::Stanza::Base
   property :sequences do |tax_id, gene_id|
-    sequences = query(:uniprot, <<-SPARQL.strip_heredoc)
+    sequences = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
       SELECT DISTINCT ?protein ?value ?mass ?modified ?version ?checksum
       FROM <http://togogenome.org/graph/uniprot/>
+      FROM <http://togogenome.org/graph/tgup/>
       WHERE {
-        ?protein up:organism  taxonomy:#{tax_id} ;
-                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
+        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
+        ?id_upid rdfs:seeAlso ?protein .
+        ?protein a <http://purl.uniprot.org/core/Protein> ;   
+          up:sequence ?seq .
 
-        ?protein up:sequence ?seq .
         ?seq rdf:value ?value ;
              up:mass ?mass ;
              up:modified ?modified ;

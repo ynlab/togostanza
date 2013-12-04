@@ -1,6 +1,6 @@
 class EnvironmentInhabitantsStatisticsStanza < TogoStanza::Stanza::Base
   property :inhabitants_statistics do |meo_id|
-    results = query(:togogenome, <<-SPARQL.strip_heredoc)
+    results = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>
       PREFIX meo: <http://purl.jp/bio/11/meo/>
@@ -12,7 +12,7 @@ class EnvironmentInhabitantsStatisticsStanza < TogoStanza::Stanza::Base
       WHERE
       {
         {
-          SELECT ?type COUNT(DISTINCT ?gold) AS ?cnt
+          SELECT ?type (COUNT(DISTINCT ?gold) AS ?cnt)
           {
             VALUES ?meo_mapping { meo:MEO_0000437 meo:MEO_0000440 }
             ?gold_meo_id rdfs:subClassOf* meo:#{meo_id} .
@@ -22,7 +22,7 @@ class EnvironmentInhabitantsStatisticsStanza < TogoStanza::Stanza::Base
         }
         UNION
         {
-          SELECT ?type COUNT(DISTINCT ?strain) AS ?cnt
+          SELECT ?type (COUNT(DISTINCT ?strain) AS ?cnt)
           {
             VALUES ?meo_strain_mapping { mccv:MCCV_000059 mccv:MCCV_000060 }
             ?strain_meo_id rdfs:subClassOf* meo:#{meo_id} .

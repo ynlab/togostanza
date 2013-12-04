@@ -1,18 +1,19 @@
 class ProteinGeneralAnnotationStanza < TogoStanza::Stanza::Base
   property :general_annotations do |tax_id, gene_id|
-    uniprot_url = uniprot_url_from_togogenome(gene_id)
 
     # type がup:Annotation のアノテーション
-    annotation_type = query(:uniprot, <<-SPARQL.strip_heredoc)
+    annotation_type = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
       SELECT DISTINCT ?name ?message
       FROM <http://togogenome.org/graph/uniprot/>
+      FROM <http://togogenome.org/graph/tgup/>
       WHERE {
-        ?protein up:organism  taxonomy:#{tax_id} ;
-                 rdfs:seeAlso <#{uniprot_url}> ;
-                 up:annotation ?annotation .
+        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
+        ?id_upid rdfs:seeAlso ?protein .
+        ?protein a <http://purl.uniprot.org/core/Protein> ;         
+          up:annotation ?annotation .
 
         ?annotation rdf:type up:Annotation .
 
@@ -23,16 +24,18 @@ class ProteinGeneralAnnotationStanza < TogoStanza::Stanza::Base
     SPARQL
 
     # subClassOf Annotation で type が up:Subcellular_Location_Annotation のアノテーション
-    subcellular_location_annotation_type = query(:uniprot, <<-SPARQL.strip_heredoc)
+    subcellular_location_annotation_type = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
       SELECT DISTINCT ?name ?message
       FROM <http://togogenome.org/graph/uniprot/>
+      FROM <http://togogenome.org/graph/tgup/>
       WHERE {
-        ?protein up:organism  taxonomy:#{tax_id} ;
-                 rdfs:seeAlso <#{uniprot_url}> ;
-                 up:annotation ?annotation .
+        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
+        ?id_upid rdfs:seeAlso ?protein .
+        ?protein a <http://purl.uniprot.org/core/Protein> ;
+          up:annotation ?annotation .
 
         ?type rdfs:subClassOf up:Annotation .
         ?annotation rdf:type up:Subcellular_Location_Annotation .
@@ -46,16 +49,18 @@ class ProteinGeneralAnnotationStanza < TogoStanza::Stanza::Base
     SPARQL
 
     # type が up:Subcellular_Location_Annotation 以外の subClassOf Annotation のアノテーション
-    subclass_of_annotation_type = query(:uniprot, <<-SPARQL.strip_heredoc)
+    subclass_of_annotation_type = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
       SELECT DISTINCT ?name ?message
       FROM <http://togogenome.org/graph/uniprot/>
+      FROM <http://togogenome.org/graph/tgup/>
       WHERE {
-        ?protein up:organism  taxonomy:#{tax_id} ;
-                 rdfs:seeAlso <#{uniprot_url}> ;
-                 up:annotation ?annotation .
+        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
+        ?id_upid rdfs:seeAlso ?protein .
+        ?protein a <http://purl.uniprot.org/core/Protein> ;
+          up:annotation ?annotation .
 
         ?annotation rdf:type ?type .
         ?type rdfs:subClassOf up:Annotation .

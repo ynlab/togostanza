@@ -1,6 +1,6 @@
 class OrganismMediumInformationStanza < TogoStanza::Stanza::Base
   property :medium_information do |tax_id|
-    medium_list = query("http://biointegra.jp/sparqlTOGOdev", <<-SPARQL.strip_heredoc)
+    medium_list = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>
       PREFIX gmo: <http://purl.jp/bio/11/gmo#>
@@ -20,19 +20,20 @@ class OrganismMediumInformationStanza < TogoStanza::Stanza::Base
         }
         ?medium gmo:GMO_000101 ?medium_id .
         ?medium gmo:GMO_000111 ?medium_type .
-        ?medium_type rdfs:label ?medium_type_label .
+        ?medium_type rdfs:label ?medium_type_label FILTER (lang(?medium_type_label) = "en") .
         OPTIONAL { ?medium gmo:GMO_000102 ?medium_name } .
       }
     SPARQL
 
-    ingredient_list = query("http://biointegra.jp/sparqlTOGOdev", <<-SPARQL.strip_heredoc)
-      DEFINE sql:select-option "order"
+    ingredient_list = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
+#      DEFINE sql:select-option "order"
+# TODO: Uncomment the above line when endpoint data is update. 
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>
       PREFIX gmo: <http://purl.jp/bio/11/gmo#>
       PREFIX taxid: <http://identifiers.org/taxonomy/>
 
-      SELECT ?medium_id ?classification STR(?class_label) AS ?class_label
-        (sql:GROUP_DIGEST(?ingredient_label , ',  ', 1000, 1)) AS ?ingredients
+      SELECT ?medium_id ?classification (STR(?class_label) AS ?class_label)
+        ((sql:GROUP_DIGEST(?ingredient_label , ',  ', 1000, 1)) AS ?ingredients)
       FROM <http://togogenome.org/graph/brc/>
       FROM <http://togogenome.org/graph/gmo/>
       WHERE

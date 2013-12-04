@@ -1,14 +1,15 @@
 class ProteinAttributesStanza < TogoStanza::Stanza::Base
   property :attributes do |tax_id, gene_id|
-    protein_attributes = query(:uniprot, <<-SPARQL.strip_heredoc)
+    protein_attributes = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
       SELECT DISTINCT ?sequence ?fragment ?precursor ?existence_label
       WHERE {
-        ?protein up:organism  taxonomy:#{tax_id} ;
-                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> ;
-                 up:sequence ?seq .
+        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
+        ?id_upid rdfs:seeAlso ?protein .
+        ?protein a <http://purl.uniprot.org/core/Protein> ;
+          up:sequence ?seq .
 
         # Sequence
         OPTIONAL {

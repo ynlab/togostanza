@@ -1,6 +1,6 @@
 class OrganismPhenotypeStanza < TogoStanza::Stanza::Base
   property :phenotype_items do |tax_id|
-    results = query(:togogenome, <<-SPARQL.strip_heredoc)
+    results = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX idtax: <http://purl.uniprot.org/taxonomy/>
@@ -18,7 +18,7 @@ class OrganismPhenotypeStanza < TogoStanza::Stanza::Base
           ?o rdfs:label ?o2 .
           FILTER (lang(?o2) = "en") .
         }
-        BIND( IF(bound(?o2) ,?o2 , ?o) as ?value )
+        BIND( IF(bound(?o2) ,?o2 , ?o) AS ?value )
       } GROUP BY ?mpo ?phenotype ORDER BY ?mpo
     SPARQL
 

@@ -1,11 +1,11 @@
 class EnvironmentAttributesStanza < TogoStanza::Stanza::Base
   property :environment_attr do |meo_id|
-    results = query(:togogenome, <<-SPARQL.strip_heredoc)
+    results = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX meo: <http://purl.jp/bio/11/meo/>
       SELECT
-        REPLACE(STR(?meo_id),"http://purl.jp/bio/11/meo/","") AS ?meo_no ?meo_label ?meo_definition AS ?meo_description
-        (sql:GROUP_DIGEST(?exact_synonym, ', ', 1000, 1)) AS ?exact_synonyms
+        (REPLACE(STR(?meo_id),"http://purl.jp/bio/11/meo/","") AS ?meo_no) ?meo_label (?meo_definition AS ?meo_description)
+        ((sql:GROUP_DIGEST(?exact_synonym, ', ', 1000, 1)) AS ?exact_synonyms)
       FROM <http://togogenome.org/graph/meo/>
       WHERE
         {

@@ -1,10 +1,10 @@
 class OrganismPathogenInformationStanza < TogoStanza::Stanza::Base
   property :pathogen_list do |tax_id|
-    results = query(:togogenome, <<-SPARQL.strip_heredoc)
+    results = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
       PREFIX pdo: <http://purl.jp/bio/11/pdo/>
       PREFIX taxid: <http://identifiers.org/taxonomy/>
 
-      SELECT REPLACE(STR(?tax_id),"http://identifiers.org/taxonomy/","") AS ?tax_no
+      SELECT (REPLACE(STR(?tax_id),"http://identifiers.org/taxonomy/","") AS ?tax_no)
        ?bacterialName (GROUP_CONCAT(?diseaseName; SEPARATOR = ", ") AS ?diseaseNameSet) ?infectiousType ?strainType
       FROM <http://togogenome.org/graph/pdo/>
       FROM <http://togogenome.org/graph/pdo_mapping/>

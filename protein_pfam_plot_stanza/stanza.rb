@@ -1,17 +1,19 @@
 class ProteinPfamPlotStanza < TogoStanza::Stanza::Base
   property :pfam_list do |tax_id,gene_id|
-    results = query(:togogenome,<<-SPARQL.strip_heredoc)
+    results = query("http://ep.dbcls.jp/sparql7upd2",<<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
-      SELECT DISTINCT  REPLACE(STR(?ref), "http://purl.uniprot.org/pfam/","") AS ?pfam_id
+      SELECT DISTINCT (REPLACE(STR(?ref), "http://purl.uniprot.org/pfam/","") AS ?pfam_id)
       FROM <http://togogenome.org/graph/uniprot/>
+      FROM <http://togogenome.org/graph/tgup/>
       WHERE
       {
-        ?protein rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> ;
-          up:organism taxonomy:#{tax_id} .
-        ?protein rdfs:seeAlso ?ref .
+        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
+        ?id_upid rdfs:seeAlso ?protein .
+        ?protein a <http://purl.uniprot.org/core/Protein> ;
+          rdfs:seeAlso ?ref .
         ?ref up:database ?database .
         ?database up:abbreviation ?abbr
         FILTER (?abbr ='Pfam').
@@ -25,7 +27,7 @@ class ProteinPfamPlotStanza < TogoStanza::Stanza::Base
     results.each do |entity|
       pfam_hash = {}
       pfam_id = entity[:pfam_id]
-      pfam_name_list =  query(:togogenome, <<-SPARQL.strip_heredoc)
+      pfam_name_list =  query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
         PREFIX pfam: <http://purl.uniprot.org/pfam/>
 
         SELECT ?label
@@ -60,18 +62,20 @@ class ProteinPfamPlotStanza < TogoStanza::Stanza::Base
      pfam_list = []
      pfam_summary_list = []
 
-    pfam_list = query(:togogenome,<<-SPARQL.strip_heredoc)
+    pfam_list = query("http://ep.dbcls.jp/sparql7upd2",<<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
-      SELECT DISTINCT  REPLACE(STR(?ref), "http://purl.uniprot.org/pfam/","") AS ?pfam_id
+      SELECT DISTINCT (REPLACE(STR(?ref), "http://purl.uniprot.org/pfam/","") AS ?pfam_id)
       FROM <http://togogenome.org/graph/uniprot/>
+      FROM <http://togogenome.org/graph/tgup/>
       WHERE
       {
-        ?protein rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> ;
-          up:organism taxonomy:#{tax_id} .
-        ?protein rdfs:seeAlso ?ref .
+        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
+        ?id_upid rdfs:seeAlso ?protein .
+        ?protein a <http://purl.uniprot.org/core/Protein> ;
+          rdfs:seeAlso ?ref .
         ?ref up:database ?database .
         ?database up:abbreviation ?abbr
         FILTER (?abbr ='Pfam').
@@ -84,12 +88,12 @@ class ProteinPfamPlotStanza < TogoStanza::Stanza::Base
     end
 
     query1 = Thread.new {
-      habitat_list = query(:togogenome,<<-SPARQL.strip_heredoc)
+      habitat_list = query("http://ep.dbcls.jp/sparql7upd2",<<-SPARQL.strip_heredoc)
         PREFIX owl: <http://www.w3.org/2002/07/owl#>
         PREFIX meo: <http://purl.jp/bio/11/meo/>
         PREFIX mccv: <http://purl.jp/bio/01/mccv#>
 
-        SELECT ?tax (sql:GROUP_DIGEST (?label, ', ', 1000, 1)) as ?habitat
+        SELECT ?tax ((sql:GROUP_DIGEST (?label, ', ', 1000, 1)) AS ?habitat)
         FROM <http://togogenome.org/graph/gold/>
         FROM <http://togogenome.org/graph/meo/>
         WHERE
@@ -106,22 +110,20 @@ class ProteinPfamPlotStanza < TogoStanza::Stanza::Base
     }
 
     query2 = Thread.new {
-      genome_list = query(:togogenome,<<-SPARQL.strip_heredoc)
+      genome_list = query("http://ep.dbcls.jp/sparql7upd2",<<-SPARQL.strip_heredoc)
         DEFINE sql:select-option "order"
         PREFIX owl: <http://www.w3.org/2002/07/owl#>
-        PREFIX meo: <http://purl.jp/bio/11/meo/>
         PREFIX mccv: <http://purl.jp/bio/01/mccv#>
         PREFIX mpo:<http://purl.jp/bio/01/mpo#>
         PREFIX obo: <http://purl.obolibrary.org/obo/>
-        PREFIX insdc: <http://insdc.org/owl/>
-        PREFIX idorg:<http://rdf.identifiers.org/database/>
+        PREFIX insdc: <http://ddbj.nig.ac.jp/ontologies/sequence#>
         PREFIX taxo: <http://ddbj.nig.ac.jp/ontologies/taxonomy#>
 
         SELECT
           ?tax ?organism_name ?bioProject ?genome_length
-          (sql:GROUP_DIGEST (?cell_shape_label, ', ', 1000, 1)) AS ?cell_shape_label
-          (sql:GROUP_DIGEST (?temp_range_label, ', ', 1000, 1)) AS ?temp_range_label
-          (sql:GROUP_DIGEST (?oxy_req_label, ', ', 1000, 1)) AS ?oxy_req_label
+          ((sql:GROUP_DIGEST (?cell_shape_label, ', ', 1000, 1)) AS ?cell_shape_label)
+          ((sql:GROUP_DIGEST (?temp_range_label, ', ', 1000, 1)) AS ?temp_range_label)
+          ((sql:GROUP_DIGEST (?oxy_req_label, ', ', 1000, 1)) AS ?oxy_req_label)
           ?opt_temp ?min_temp ?max_temp ?opt_ph ?min_ph ?max_ph
         FROM <http://togogenome.org/graph/refseq/>
         FROM <http://togogenome.org/graph/mpo/>
@@ -129,14 +131,14 @@ class ProteinPfamPlotStanza < TogoStanza::Stanza::Base
         FROM <http://togogenome.org/graph/taxonomy/>
         {
           {
-            SELECT ?tax ?bioProject SUM(?seq_len) AS ?genome_length
+            SELECT ?tax ?bioProject (SUM(?seq_len) AS ?genome_length)
             {
-              ?tax rdf:type idorg:Taxonomy .
+              ?tax rdf:type <http://identifiers.org/taxonomy/> .
               ?seq rdfs:seeAlso ?tax ;
               rdf:type ?obo_type FILTER(?obo_type IN (obo:SO_0000340, obo:SO_0000155 )) .
               ?seq insdc:sequence_length ?seq_len ;
                 rdfs:seeAlso ?bioProject .
-              ?bioProject rdf:type idorg:BioProject .
+              ?bioProject rdf:type <http://identifiers.org/bioproject/> .
             } GROUP BY ?tax  ?bioProject
           }
           OPTIONAL { ?tax mpo:MPO_10001/rdfs:label ?cell_shape_label  FILTER (lang(?cell_shape_label) = "en") . }
@@ -155,18 +157,21 @@ class ProteinPfamPlotStanza < TogoStanza::Stanza::Base
 
     #gene #rrna #trna
     query3 = Thread.new {
-      summary_list = query(:togogenome,<<-SPARQL.strip_heredoc)
+      summary_list = query("http://ep.dbcls.jp/sparql7upd2",<<-SPARQL.strip_heredoc)
+        DEFINE sql:select-option "order"
         PREFIX togo: <http://togogenome.org/stats/>
 
         SELECT ?tax ?project_id ?num_gene ?num_rrna ?num_trna
         FROM <http://togogenome.org/graph/stats/>
+        FROM <http://togogenome.org/graph/refseq/>
         WHERE
         {
-          ?tax togo:genome_stats ?blank .
-          ?blank rdfs:seeAlso ?project_id .
-          ?blank togo:gene_number ?num_gene .
-          ?blank togo:rrna_number ?num_rrna .
-          ?blank togo:trna_number ?num_trna .
+          ?project_id a <http://identifiers.org/bioproject/> .
+          ?tax rdfs:seeAlso ?project_id .
+          ?tax a <http://identifiers.org/taxonomy/> .
+          ?project_id togo:gene ?num_gene .
+          ?project_id togo:rrna ?num_rrna .
+          ?project_id togo:trna ?num_trna.
         }
       SPARQL
     }
@@ -196,14 +201,14 @@ class ProteinPfamPlotStanza < TogoStanza::Stanza::Base
     result_hash = {}
     pfam_list.each do |pfam_entity|
       pfam_id = pfam_entity[:pfam_id]
-      pfam_summary_list = query(:togogenome,<<-SPARQL.strip_heredoc)
+      pfam_summary_list = query("http://ep.dbcls.jp/sparql7upd2",<<-SPARQL.strip_heredoc)
         PREFIX up: <http://purl.uniprot.org/core/>
         PREFIX tax: <http://purl.uniprot.org/taxonomy/>
         PREFIX pfam: <http://purl.uniprot.org/pfam/>
 
         SELECT
-          REPLACE(STR(?tax), "http://purl.uniprot.org/taxonomy/", "http://identifiers.org/taxonomy/") AS ?tax_id
-          (SUM(?hits) as ?num_pfam)
+          (REPLACE(STR(?tax), "http://purl.uniprot.org/taxonomy/", "http://identifiers.org/taxonomy/") AS ?tax_id)
+          ((SUM(?hits) AS ?num_pfam))
           (COUNT(DISTINCT(?prot_id)) AS ?num_pfam_protein)
         FROM <http://togogenome.org/graph/uniprot/>
         WHERE

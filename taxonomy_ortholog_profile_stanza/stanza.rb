@@ -17,7 +17,7 @@ class TaxonomyOrthologProfileStanza < TogoStanza::Stanza::Base
       PREFIX uniprotCore: <http://purl.uniprot.org/core/>
       PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
  
-      SELECT ?group ?comment COUNT(?member) AS ?count
+      SELECT ?group ?comment (COUNT(?member) AS ?count)
       WHERE {
         ?tax rdfs:subClassOf+ taxon:#{tax_id} .
         ?organism orth:taxon ?tax .

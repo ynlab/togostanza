@@ -1,6 +1,6 @@
 class OrganismNamesStanza < TogoStanza::Stanza::Base
   property :organism_name_list do |tax_id|
-    results = query(:togogenome, <<-SPARQL.strip_heredoc)
+    results = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
       PREFIX taxo: <http://ddbj.nig.ac.jp/ontologies/taxonomy#>
       PREFIX taxid: <http://identifiers.org/taxonomy/>
 

@@ -4,7 +4,7 @@ class OrganismHabitatStanza < TogoStanza::Stanza::Base
   end
 
   resource :environment_tree do |tax_id|
-    result = query(:togogenome, <<-SPARQL.strip_heredoc)
+    result = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX idorg:  <http://rdf.identifiers.org/database/>
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>
@@ -23,7 +23,7 @@ class OrganismHabitatStanza < TogoStanza::Stanza::Base
           {
             VALUES ?p_env { meo:MEO_0000437 meo:MEO_0000440 }
             ?seq rdfs:seeAlso ?tax_id FILTER (?tax_id = taxid:#{ tax_id }) .
-            ?tax_id a idorg:Taxonomy .
+            ?tax_id a <http://identifiers.org/taxonomy/> .
             ?gold_id mccv:MCCV_000020 ?tax_id .
             ?gold_id ?p_env ?meo_id .
           }

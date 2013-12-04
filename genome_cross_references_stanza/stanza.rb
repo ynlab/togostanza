@@ -1,17 +1,18 @@
 class GenomeCrossReferencesStanza < TogoStanza::Stanza::Base
   property :xrefs do |tax_id|
-    results = query(:togogenome, <<-SPARQL.strip_heredoc)
-      prefix obo: <http://purl.obolibrary.org/obo/>
-      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      prefix insdc: <http://insdc.org/owl/>
-      prefix idorg: <http://rdf.identifiers.org/database/>
-      prefix idtax: <http://identifiers.org/taxonomy/>
+    results = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
+      DEFINE sql:select-option "order"
+      PREFIX obo: <http://purl.obolibrary.org/obo/>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX insdc: <http://ddbj.nig.ac.jp/ontologies/sequence#>
+      PREFIX idorg: <http://rdf.identifiers.org/database/>
+      PREFIX idtax: <http://identifiers.org/taxonomy/>
 
-      select ?bp ?rs ?desc ?label ?xref
-      from <http://togogenome.org/graph/refseq/>
-      where {
-        values ?tax_id { idtax:#{tax_id} }
-        values ?so { obo:SO_0000340 obo:SO_0000155 }
+      SELECT ?bp ?rs ?desc ?label ?xref
+      FROM <http://togogenome.org/graph/refseq/>
+      WHERE {
+        VALUES ?tax_id { idtax:#{tax_id} }
+        VALUES ?so { obo:SO_0000340 obo:SO_0000155 }
         ?seq rdfs:seeAlso ?tax_id .
         ?seq a ?so .
         ?seq rdfs:label ?desc .
@@ -19,7 +20,7 @@ class GenomeCrossReferencesStanza < TogoStanza::Stanza::Base
         ?seq rdfs:seeAlso ?xref .
         ?xref rdfs:label ?label .
         ?seq rdfs:seeAlso ?xref_bp .
-        ?xref_bp a idorg:BioProject .
+        ?xref_bp a <http://identifiers.org/bioproject/> .
         ?xref_bp rdfs:label ?bp .
       }
     SPARQL

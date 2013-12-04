@@ -1,6 +1,6 @@
 class OrganismCrossReferencesStanza < TogoStanza::Stanza::Base
   property :link_list do |tax_id|
-    link_list1 = query(:togogenome, <<-SPARQL.strip_heredoc)
+    link_list1 = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>
       PREFIX obo: <http://purl.obolibrary.org/obo/>
       PREFIX insdc: <http://insdc.org/owl/>
@@ -12,7 +12,7 @@ class OrganismCrossReferencesStanza < TogoStanza::Stanza::Base
       WHERE
       {
         {
-          SELECT REPLACE(str(?gold),"http://www.genomesonline.org/cgi-bin/GOLD/GOLDCards.cgi\\\\?goldstamp=", "GOLD:" ) as ?label ?gold as ?link
+          SELECT (REPLACE(str(?gold),"http://www.genomesonline.org/cgi-bin/GOLD/GOLDCards.cgi\\\\?goldstamp=", "GOLD:" ) AS ?label) (?gold AS ?link)
           FROM <http://togogenome.org/gold/>
           WHERE
           {
@@ -21,7 +21,7 @@ class OrganismCrossReferencesStanza < TogoStanza::Stanza::Base
         }
         UNION
         {
-          SELECT DISTINCT ?label ?xref as ?link
+          SELECT DISTINCT ?label (?xref AS ?link)
           FROM <http://togogenome.org/graph/refseq/>
           WHERE
           {

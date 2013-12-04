@@ -1,15 +1,17 @@
 class ProteinNamesStanza < TogoStanza::Stanza::Base
   property :genes do |tax_id, gene_id|
-    query(:uniprot, <<-SPARQL.strip_heredoc)
+    query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
       SELECT DISTINCT ?gene_name ?synonyms_name ?locus_name ?orf_name
       FROM <http://togogenome.org/graph/uniprot/>
+      FROM <http://togogenome.org/graph/tgup/>
       WHERE {
-        ?protein up:organism  taxonomy:#{tax_id} ;
-                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
+        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
+        ?id_upid rdfs:seeAlso ?protein .
+        ?protein a <http://purl.uniprot.org/core/Protein> .
 
         # Gene names
         ?protein up:encodedBy ?gene .
@@ -30,15 +32,18 @@ class ProteinNamesStanza < TogoStanza::Stanza::Base
   end
 
   property :summary do |tax_id, gene_id|
-    protein_summary = query(:uniprot, <<-SPARQL.strip_heredoc)
+    protein_summary = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
       SELECT DISTINCT ?recommended_name ?ec_name ?alternative_names ?organism_name ?parent_taxonomy_names
       FROM <http://togogenome.org/graph/uniprot/>
+      FROM <http://togogenome.org/graph/tgup/>
       WHERE {
-        ?protein up:organism  taxonomy:#{tax_id} ;
-                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
+        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
+        ?id_upid rdfs:seeAlso ?protein .
+        ?protein a <http://purl.uniprot.org/core/Protein> ;
+          up:organism ?tax_id .
 
         # Protein names
         ## Recommended name:
@@ -56,13 +61,13 @@ class ProteinNamesStanza < TogoStanza::Stanza::Base
         }
 
         # Organism
-        OPTIONAL { taxonomy:#{tax_id} up:scientificName ?organism_name . }
+        OPTIONAL { ?tax_id up:scientificName ?organism_name . }
 
         # Taxonomic identifier
 
         # Taxonomic lineage
         OPTIONAL {
-          taxonomy:#{tax_id} rdfs:subClassOf* ?parent_taxonomy .
+          ?tax_id rdfs:subClassOf* ?parent_taxonomy .
           ?parent_taxonomy up:scientificName ?parent_taxonomy_names .
         }
       }

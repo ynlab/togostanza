@@ -4,14 +4,14 @@ class EnvironmentTaxonomicCompositionStanza < TogoStanza::Stanza::Base
   end
 
   resource :taxonomy_sunburst do |meo_id|
-    results = query(:togogenome, <<-SPARQL.strip_heredoc)
+    results = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>
       PREFIX meo: <http://purl.jp/bio/11/meo/>
       PREFIX taxo: <http://ddbj.nig.ac.jp/ontologies/taxonomy#>
       PREFIX taxid: <http://identifiers.org/taxonomy/>
 
-      SELECT ?tax ?organism_name AS ?tax_label ?parent ?rank
+      SELECT ?tax (?organism_name AS ?tax_label) ?parent ?rank
       FROM <http://togogenome.org/graph/meo/>
       FROM <http://togogenome.org/graph/gold/>
       FROM <http://togogenome.org/graph/taxonomy/>

@@ -1,16 +1,18 @@
 class ProteinCrossReferencesStanza < TogoStanza::Stanza::Base
   property :references do |tax_id, gene_id|
-    references = query(:uniprot, <<-SPARQL.strip_heredoc)
+    references = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
       SELECT DISTINCT ?protein ?category ?abbr ?ref ?url_template
       FROM <http://togogenome.org/graph/uniprot/>
+      FROM <http://togogenome.org/graph/tgup/>
       WHERE {
-        ?protein up:organism  taxonomy:#{tax_id} ;
-                 rdfs:seeAlso <#{uniprot_url_from_togogenome(gene_id)}> .
 
-        ?protein  rdfs:seeAlso    ?ref .
+        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
+        ?id_upid rdfs:seeAlso ?protein .
+        ?protein a <http://purl.uniprot.org/core/Protein> ;
+          rdfs:seeAlso    ?ref .
         ?ref      up:database     ?database .
         ?database up:category     ?category ;
                   up:abbreviation ?abbr ;

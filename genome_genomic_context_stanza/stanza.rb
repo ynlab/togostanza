@@ -2,16 +2,14 @@ require 'bio-svgenes'
 
 class GenomeGenomicContextStanza < TogoStanza::Stanza::Base
   property :svg do |tax_id, gene_id|
-    results = query(:togogenome, <<-SPARQL.strip_heredoc)
+    results = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
-
       PREFIX rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
       PREFIX obo:    <http://purl.obolibrary.org/obo/>
       PREFIX faldo:  <http://biohackathon.org/resource/faldo#>
-      PREFIX idorg:  <http://rdf.identifiers.org/database/>
-      PREFIX insdc:  <http://insdc.org/owl/>
+      PREFIX insdc:  <http://ddbj.nig.ac.jp/ontologies/sequence#>
 
       SELECT ?gene ?gene_type ?seq ?seq_type ?gene_loc ?gene_begin ?gene_end ?ncbi_taxid ?obj ?b ?e ?strand ?obj_label ?label ?obj_name ?pb ?pe
       FROM <http://togogenome.org/graph/refseq/>
@@ -30,7 +28,7 @@ class GenomeGenomicContextStanza < TogoStanza::Stanza::Base
             VALUES ?offset { 2000 }
 
             # gene
-            ?gene insdc:feature_locus_tag ?locus_tag.
+            ?gene insdc:locus_tag ?locus_tag.
             ?gene a ?gene_type.
 
             # seq
@@ -44,7 +42,7 @@ class GenomeGenomicContextStanza < TogoStanza::Stanza::Base
 
             # taxonomy ncbi
             ?seq rdfs:seeAlso ?taxonomy .
-            ?taxonomy a idorg:Taxonomy .
+            ?taxonomy a <http://identifiers.org/taxonomy/> .
             ?taxonomy rdfs:label ?ncbi_taxid .
 
             # objects around the gene
@@ -62,8 +60,8 @@ class GenomeGenomicContextStanza < TogoStanza::Stanza::Base
             FILTER (?obj_type != obo:SO_0000704)  # gene
           }
         }
-        OPTIONAL { ?obj insdc:feature_locus_tag ?label . }
-        OPTIONAL { ?obj insdc:feature_product ?obj_name . }
+        OPTIONAL { ?obj insdc:locus_tag ?label . }
+        OPTIONAL { ?obj insdc:product ?obj_name . }
         OPTIONAL
         {
           ?obj obo:so_has_part/rdf:rest*/rdf:first ?part .
