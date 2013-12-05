@@ -1,6 +1,6 @@
 class ProteinSequenceAnnotationStanza < TogoStanza::Stanza::Base
   property :sequence_annotations do |tax_id, gene_id|
-    annotations = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
+    annotations = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 

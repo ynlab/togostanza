@@ -1,6 +1,6 @@
 class ProteinAttributesStanza < TogoStanza::Stanza::Base
   property :attributes do |tax_id, gene_id|
-    protein_attributes = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
+    protein_attributes = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 

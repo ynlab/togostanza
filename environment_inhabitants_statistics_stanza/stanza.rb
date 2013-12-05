@@ -1,6 +1,6 @@
 class EnvironmentInhabitantsStatisticsStanza < TogoStanza::Stanza::Base
   property :inhabitants_statistics do |meo_id|
-    results = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
+    results = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>
       PREFIX meo: <http://purl.jp/bio/11/meo/>

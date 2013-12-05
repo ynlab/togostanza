@@ -1,6 +1,6 @@
 class GenomeInformationStanza < TogoStanza::Stanza::Base
   property :genome_info_list do |tax_id|
-    results = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
+    results = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX obo: <http://purl.obolibrary.org/obo/>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
