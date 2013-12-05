@@ -11,13 +11,13 @@ describe 'スタンザ一覧画面にアクセスすると' do
   end
 end
 
-describe 'Protein Names スタンザ(tax_id: 1111708, gene_id: slr1311)にアクセスすると' do
+describe 'Protein Names スタンザ(tax_id: 1148, gene_id: slr1311)にアクセスすると' do
   before do
-    visit '/stanza/protein_names?tax_id=1111708&gene_id=slr1311'
+    visit '/stanza/protein_names?tax_id=1148&gene_id=slr1311'
   end
 
   it '以下の情報が確認できること' do
-    page.should have_text('Photosystem Q(B) protein 2')
+    page.should have_text('Photosystem Q(B) protein')
     page.should have_text('sll1867')
     page.should have_text('Synechocystis sp. (strain PCC 6803 / Kazusa)')
   end
