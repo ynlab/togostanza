@@ -4,7 +4,7 @@ class OrganismHabitatStanza < TogoStanza::Stanza::Base
   end
 
   resource :environment_tree do |tax_id|
-    result = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
+    result = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX idorg:  <http://rdf.identifiers.org/database/>
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>

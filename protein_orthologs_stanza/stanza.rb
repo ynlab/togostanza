@@ -1,6 +1,6 @@
 class ProteinOrthologsStanza < TogoStanza::Stanza::Base
   property :orthologs do |tax_id, gene_id|
-    protein_attributes = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
+    protein_attributes = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
       SELECT (REPLACE(STR(?id_upid),"http://identifiers.org/uniprot/","http://purl.uniprot.org/uniprot/") AS ?upid)
       FROM <http://togogenome.org/graph/tgup/>
       WHERE

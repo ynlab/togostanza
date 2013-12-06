@@ -1,6 +1,6 @@
 class ProteinCrossReferencesStanza < TogoStanza::Stanza::Base
   property :references do |tax_id, gene_id|
-    references = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
+    references = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 

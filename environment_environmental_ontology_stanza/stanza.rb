@@ -8,7 +8,7 @@ class EnvironmentEnvironmentalOntologyStanza < TogoStanza::Stanza::Base
   end
 
   resource :meo_ontology_tree do
-    results = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
+    results = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
       PREFIX meo: <http://purl.jp/bio/11/meo/>
 
       SELECT ?meo_id ?label ?definition ?parent

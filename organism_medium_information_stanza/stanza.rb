@@ -1,6 +1,6 @@
 class OrganismMediumInformationStanza < TogoStanza::Stanza::Base
   property :medium_information do |tax_id|
-    medium_list = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
+    medium_list = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>
       PREFIX gmo: <http://purl.jp/bio/11/gmo#>
@@ -25,7 +25,7 @@ class OrganismMediumInformationStanza < TogoStanza::Stanza::Base
       }
     SPARQL
 
-    ingredient_list = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
+    ingredient_list = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
 #      DEFINE sql:select-option "order"
 # TODO: Uncomment the above line when endpoint data is update. 
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>

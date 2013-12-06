@@ -2,7 +2,7 @@ class ProteinGeneralAnnotationStanza < TogoStanza::Stanza::Base
   property :general_annotations do |tax_id, gene_id|
 
     # type がup:Annotation のアノテーション
-    annotation_type = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
+    annotation_type = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
@@ -24,7 +24,7 @@ class ProteinGeneralAnnotationStanza < TogoStanza::Stanza::Base
     SPARQL
 
     # subClassOf Annotation で type が up:Subcellular_Location_Annotation のアノテーション
-    subcellular_location_annotation_type = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
+    subcellular_location_annotation_type = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
@@ -49,7 +49,7 @@ class ProteinGeneralAnnotationStanza < TogoStanza::Stanza::Base
     SPARQL
 
     # type が up:Subcellular_Location_Annotation 以外の subClassOf Annotation のアノテーション
-    subclass_of_annotation_type = query("http://ep.dbcls.jp/sparql7upd2", <<-SPARQL.strip_heredoc)
+    subclass_of_annotation_type = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
