@@ -1,7 +1,11 @@
 require 'bundler/setup'
 
-require 'rspec/core/rake_task'
+begin
+  require 'rspec/core/rake_task'
+rescue
+  # do nothing (e.g. production environment)
+else
+  RSpec::Core::RakeTask.new(:spec)
 
-RSpec::Core::RakeTask.new(:spec)
-
-task :default => :spec
+  task :default => :spec
+end
