@@ -25,7 +25,7 @@ class OrganismPhenotypeStanza < TogoStanza::Stanza::Base
     #add flag for displaying temperature unit
     results.map {|hash|
       mpo_id = hash[:mpo].split('#').last
-      if mpo_id == "MPO_10008" || mpo_id == "MPO_10009" || mpo_id == "MPO_10010" then
+      if mpo_id == "MPO_10008" || mpo_id == "MPO_10009" || mpo_id == "MPO_10010" || mpo_id == "MPO_10011" then
         hash[:deg_flag] = "true" #flag for adding temperature unit
       end
       hash[:phenotype] = hash[:phenotype][0].upcase + hash[:phenotype][1..-1] #do not use capitalize for 'maximum pH'
