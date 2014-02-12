@@ -28,19 +28,19 @@
         <tbody>
           {{#each strain_list}}
             <tr>
-              <td><a href='{{strain_id}}' target='_blank'>{{strain_number}}</a></td>
-              <td>{{organism_name}}</td>
-              <td>{{isolation}}</td>
-              <td>
+              <td class='span1'><a href='{{strain_id}}' target='_blank'>{{strain_number}}</a></td>
+              <td class='span2'>{{organism_name}}</td>
+              <td class='span1'>{{isolation}}</td>
+              <td class='span2'>
                 {{#if env_link_array}}
                   {{#each env_link_array}}
                     <a href="http://togogenome.org/environment/{{meo_id}}" target="_top">{{meo_label}}</a>{{#unless is_last_data}},&nbsp;{{/unless}}
                   {{/each}}
                 {{/if}}
               </td>
-              <td>{{type_strain_label}}</td>
-              <td>{{application}}</td>
-              <td>{{other_collections}}</td>
+              <td class='span1'>{{type_strain_label}}</td>
+              <td class='span2'>{{application}}</td>
+              <td class='span3'>{{other_collections}}</td>
             </tr>
           {{/each}}
         </tbody>
