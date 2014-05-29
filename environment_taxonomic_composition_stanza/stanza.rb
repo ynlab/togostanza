@@ -39,7 +39,6 @@ class EnvironmentTaxonomicCompositionStanza < TogoStanza::Stanza::Base
       hash[:rank] = (hash[:rank]?hash[:rank].gsub('http://ddbj.nig.ac.jp/ontologies/taxonomy#', ''):'').gsub('NoRank','')
       hash.merge(
         :tag_id => hash[:tax].split('/').last.split('#').last,
-        :link => "http://biointegra.jp/OpenID/?tax=" + hash[:tax].split('/').last.split('#').last
       )
     }
   end
