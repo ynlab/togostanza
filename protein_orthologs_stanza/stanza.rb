@@ -10,7 +10,10 @@ class ProteinOrthologsStanza < TogoStanza::Stanza::Base
       }
     SPARQL
 
-    # uniprot_uri = "<http://purl.uniprot.org/uniprot/P16033>"
+    if protein_attributes == nil || protein_attributes.size == 0 then
+      next nil
+    end
+
     uniprot_uri = protein_attributes.first[:upid]
 
     ortholog_uris = query("http://sparql.nibb.ac.jp/sparql", <<-SPARQL.strip_heredoc)
@@ -20,13 +23,18 @@ class ProteinOrthologsStanza < TogoStanza::Stanza::Base
       PREFIX uniprot: <http://purl.uniprot.org/uniprot/>
       PREFIX uniprotCore: <http://purl.uniprot.org/core/>
 
-      SELECT ?protein
-      WHERE {
-        ?group a orth:OrthologGroup ;
+      SELECT DISTINCT ?protein
+      WHERE
+      {
+        ?group a mbgd:Cluster, mbgd:Default ;
           orth:member/mbgd:gene/mbgd:uniprot <#{uniprot_uri}> ;
           orth:member/mbgd:gene/mbgd:uniprot ?protein .
       }
     SPARQL
+
+    if ortholog_uris == nil || ortholog_uris.size == 0 then
+      next nil
+    end
 
     ortholog_uris.map {|hash|
       hash[:protein_label] = hash[:protein].gsub('http://purl.uniprot.org/uniprot/','')
