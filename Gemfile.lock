@@ -38,6 +38,7 @@ PATH
   remote: ./gene_attributes_stanza
   specs:
     gene_attributes_stanza (0.0.1)
+      bio
       togostanza
 
 PATH
@@ -225,6 +226,7 @@ GEM
       tzinfo (~> 0.3.37)
     atomic (1.1.14)
     backports (3.6.0)
+    bio (1.4.3.0001)
     bio-svgenes (0.4.1)
     capybara (2.2.1)
       mime-types (>= 1.16)
@@ -264,7 +266,7 @@ GEM
     raindrops (0.13.0)
     rake (10.1.1)
     rdf (1.1.2.1)
-    redcarpet (3.1.1)
+    redcarpet (3.1.2)
     rltk (2.2.1)
       ffi (>= 1.0.0)
     rspec (2.14.1)
@@ -312,7 +314,7 @@ GEM
       sprockets
       thor
     tzinfo (0.3.38)
-    unicorn (4.8.2)
+    unicorn (4.8.3)
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
