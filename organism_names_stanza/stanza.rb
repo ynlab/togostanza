@@ -1,4 +1,23 @@
 class OrganismNamesStanza < TogoStanza::Stanza::Base
+  def text_search(q)
+    results = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+      PREFIX taxo: <http://ddbj.nig.ac.jp/ontologies/taxonomy#>
+      PREFIX taxid: <http://identifiers.org/taxonomy/>
+
+      SELECT DISTINCT (REPLACE(STR(?taxonomy),"http://identifiers.org/taxonomy/","") AS ?tax_id)
+      FROM <http://togogenome.org/graph/taxonomy/>
+      WHERE {
+        VALUES ?name_type {
+          taxo:scientificName taxo:synonym taxo:preferredSynonym taxo:acronym taxo:preferredAcronym taxo:anamorph taxo:teleo
+          taxo:misnomer taxo:commonName taxo:preferredCommonName taxo:inPart taxo:includes taxo:equivalentName
+          taxo:genbankSynonym taxo:genbankCommonName taxo:authority taxo:misspelling
+        }
+        ?taxonomy ?name_type ?name .
+        FILTER (regex(?name, "#{q}"))
+      }
+    SPARQL
+  end
+
   property :organism_name_list do |tax_id|
     results = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
       PREFIX taxo: <http://ddbj.nig.ac.jp/ontologies/taxonomy#>
