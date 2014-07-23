@@ -1,6 +1,6 @@
 class OrganismNamesStanza < TogoStanza::Stanza::Base
-  def text_search(q)
-    results = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+  search :organism_name_list do |q|
+    query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
       PREFIX taxo: <http://ddbj.nig.ac.jp/ontologies/taxonomy#>
       PREFIX taxid: <http://identifiers.org/taxonomy/>
 
