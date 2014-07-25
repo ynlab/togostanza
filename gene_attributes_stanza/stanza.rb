@@ -1,5 +1,6 @@
 require 'net/http'
 require 'uri'
+require 'bio'
 
 class GeneAttributesStanza < TogoStanza::Stanza::Base
   property :gene_attributes do |tax_id, gene_id|
@@ -64,26 +65,8 @@ class GeneAttributesStanza < TogoStanza::Stanza::Base
       hash.merge(
         :refseq_link => "http://identifiers.org/refseq/" + hash[:refseq_label].split(':').last,
         :tax_link => "http://identifiers.org/taxonomy/" + hash[:taxid].split(':').last,
-        :seq_length => sequence_length(hash[:insdc_location])
+        :seq_length => Bio::Locations.new(hash[:insdc_location]).length
       )
     }.first
-  end
-
-  def sequence_length(insdc_location)
-    if insdc_location.start_with?('join') then
-      positions = (insdc_location[5..(insdc_location.length) -2]).split(',')
-      length = 0
-      positions.each {|i|
-        length += sequence_length_from_pos_text(i)
-      }
-      length
-    else
-      sequence_length_from_pos_text(insdc_location)
-    end
-  end
-
-  def sequence_length_from_pos_text(pos_text)
-    pos = pos_text.split('..')
-    (pos[1].to_i - pos[0].to_i).abs + 1
   end
 end
