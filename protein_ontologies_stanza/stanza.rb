@@ -13,10 +13,10 @@ class ProteinOntologiesStanza < TogoStanza::Stanza::Base
         WHERE {
           <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
           ?id_upid rdfs:seeAlso ?protein .
-          ?protein a <http://purl.uniprot.org/core/Protein> ;
-            ?p2 ?concept .
+          ?protein a up:Protein ;
+            up:classifiedWith ?concept .
           ?concept rdf:type up:Concept .
-          FILTER regex(str(?concept), 'keywords') .
+          FILTER contains(str(?concept), 'keywords') .
       
           ?concept ?label ?name FILTER (?label = skos:prefLabel || ?label = skos:altLabel).
           ?concept rdfs:subClassOf* ?parents .
@@ -51,10 +51,10 @@ class ProteinOntologiesStanza < TogoStanza::Stanza::Base
       WHERE {
         <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
         ?id_upid rdfs:seeAlso ?protein .
-        ?protein a <http://purl.uniprot.org/core/Protein> ;
-         ?p2 ?concept .
+        ?protein a up:Protein ;
+         up:classifiedWith ?concept .
         ?concept rdf:type up:Concept .
-        FILTER regex(str(?concept), 'go') .
+        FILTER contains(str(?concept), 'go') .
       }
     SPARQL
 
