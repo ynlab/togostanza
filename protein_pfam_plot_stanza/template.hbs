@@ -144,12 +144,16 @@
           'elem_id_prefix': 'taxid_',
           'point_opacity': 0.7,
           'selected_tax_id': '{{selected_tax_id}}',
-          'pfam_list': [{{#each pfam_list}}{"key":"{{id}}","value":"{{name}}"},{{/each}}],
+          'pfam_list': [{{#if pfam_list}}{{#each pfam_list}}{"key":"{{id}}","value":"{{name}}"},{{/each}}{{/if}}],
         }
 
         d3.json('./protein_pfam_plot/resources/plot_data?tax_id={{selected_tax_id}}&gene_id={{selected_gene_id}}', function(data) {
           //console.log(JSON.stringify(data,null," "));
-          create_page(data.plot_data[0],option,'pfam');
+          if(data.plot_data == null) {
+            $("#vis").text("No data");
+          } else {
+            create_page(data.plot_data[0],option,'pfam');
+          }
           adjust_iframe_height();
         })
       }
@@ -168,7 +172,7 @@
   </head>
 
   <body>
-    <div>
+    <div id="vis">
       <div id="loader" align="center"><img src="/stanza/assets/protein_pfam_plot/image/loading.gif" width="160" height="160" alt="Loading..." /><br/>Loading...</div>
       <div id="fade"></div>
       <div id="container">
