@@ -203,7 +203,7 @@ function render_scatterplot(point_label, point_label_ex, x_axis_item, y_axis_ite
   d3.select(".x.axis")
     .append("image")
     .attr("class","x axis-image")
-    .attr("xlink:href","http://biointegra.jp/OpenID/img/menu_button.PNG")
+    .attr("xlink:href","/stanza/assets/genome_plot/image/menu_button.png")
     .attr("width","13px")
     .attr("height","13px")
     .on("mouseover", function (d) {
@@ -271,7 +271,7 @@ function render_scatterplot(point_label, point_label_ex, x_axis_item, y_axis_ite
   d3.select(".y.axis")
     .append("image")
     .attr("class","y axis-image")
-    .attr("xlink:href","http://biointegra.jp/OpenID/img/menu_button.PNG")
+    .attr("xlink:href","/stanza/assets/genome_plot/image/menu_button.png")
     .attr("width","13px")
     .attr("height","13px")
     .on("mouseover", function (d) {
@@ -453,7 +453,7 @@ function redraw_render_scatterplot() {
   d3.select(".x.axis-image")
     .transition()
     .delay(500)
-    .attr("xlink:href","http://biointegra.jp/OpenID/img/menu_button.PNG")
+    .attr("xlink:href","/stanza/assets/genome_plot/image/menu_button.png")
     .attr("width","13px")
     .attr("height","13px")
     .attr("x", function () {
@@ -481,7 +481,7 @@ function redraw_render_scatterplot() {
   d3.select(".y.axis-image")
     .transition()
     .delay(500)
-    .attr("xlink:href","http://biointegra.jp/OpenID/img/menu_button.PNG")
+    .attr("xlink:href","/stanza/assets/genome_plot/image/menu_button.png")
     .attr("width","13px")
     .attr("height","13px")
     .attr("transform", "rotate (-90) translate(" + vertical + "," + horizontal + ")");
@@ -646,7 +646,7 @@ function selected_item_title(key,value) {
       .append("img")
       .attr("id","label_image")
       .attr("class", "title-image")
-      .attr("src","http://biointegra.jp/OpenID/img/menu_button.PNG")
+      .attr("src","/stanza/assets/genome_plot/image/menu_button.png")
       .attr("width","13px")
       .attr("height","13px")
       .attr("alt","")
@@ -1076,7 +1076,7 @@ function update_x(element, item) {
   d3.select(".x.axis-image")
     .transition()
     .delay(500)
-    .attr("xlink:href","http://biointegra.jp/OpenID/img/menu_button.PNG")
+    .attr("xlink:href","/stanza/assets/genome_plot/image/menu_button.png")
     .attr("width","13px")
     .attr("height","13px")
     .attr("x", function () {
@@ -1171,7 +1171,7 @@ function update_y(element, item) {
   d3.select(".y.axis-image")
     .transition()
     .delay(500)
-    .attr("xlink:href","http://biointegra.jp/OpenID/img/menu_button.PNG")
+    .attr("xlink:href","/stanza/assets/genome_plot/image/menu_button.png")
     .attr("width","13px")
     .attr("height","13px")
     .attr("transform", "rotate (-90) translate(" + vertical + "," + horizontal + ")");
