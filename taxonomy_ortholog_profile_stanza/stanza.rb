@@ -8,7 +8,9 @@ class TaxonomyOrthologProfileStanza < TogoStanza::Stanza::Base
   end
 
   resource :taxonomy_ortholog_profile do |tax_id|
-    ortholog_uris = query("http://sparql.nibb.ac.jp/sparql", <<-SPARQL.strip_heredoc)
+#   Uses temporary endpoint due to maintenance
+#   ortholog_uris = query("http://sparql.nibb.ac.jp/sparql", <<-SPARQL.strip_heredoc)
+    ortholog_uris = query("http://mbgd.genome.ad.jp:8047/sparql", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX mbgd: <http://mbgd.genome.ad.jp/owl/mbgd.owl#>
