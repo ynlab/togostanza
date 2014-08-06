@@ -558,8 +558,8 @@ function add_tooltips_event() {
           }
           return tooltipstext;
         })
-        .style("max-width","150px")
-        .style("left", ((600 - (pos[0] + 180) >= 0)?(pos[0] + 30) + "px":(pos[0] - 180) + "px"))
+        .style("max-width","300px")
+        .style("left", ((600 - (pos[0] + 200) >= 0)?(pos[0] + 30) + "px":(pos[0] - 330) + "px"))
         .style("top", (pos[1] - 50) + "px")
         .style("visibility", "visible");
     })
