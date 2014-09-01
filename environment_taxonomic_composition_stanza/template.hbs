@@ -9,6 +9,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
     <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+    {{data_download}}
     <style>
       <!--
       path {
@@ -81,6 +82,8 @@
         var div = d3.select("#" + _id);
 
         var vis = div.append("svg")
+            .attr("xmlns", d3.ns.prefix.svg)
+            .attr("xmlns:xmlns:xlink", d3.ns.prefix.xlink)
             .attr("width", width + padding * 2)
             .attr("height", height + padding * 2)
             .append("g")

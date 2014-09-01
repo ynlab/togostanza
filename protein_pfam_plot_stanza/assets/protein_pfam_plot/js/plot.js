@@ -129,7 +129,9 @@ function render_scatterplot(point_label, point_label_ex, x_axis_item, y_axis_ite
     .append("svg")
     .attr("id", "plot-svg")
     .attr("width", opt.width)
-    .attr("height", opt.height);
+    .attr("height", opt.height)
+    .attr("xmlns", d3.ns.prefix.svg)
+    .attr("xmlns:xmlns:xlink", d3.ns.prefix.xlink);
 
   //add points
   d3.select("svg")
@@ -156,7 +158,7 @@ function render_scatterplot(point_label, point_label_ex, x_axis_item, y_axis_ite
 
   //display tooltips on mouseover
   add_tooltips_event();
-  
+
   var scatter_plot = d3.select("#scatter_plot");
   var menu = d3.select("#menu");
   //axis
@@ -175,7 +177,7 @@ function render_scatterplot(point_label, point_label_ex, x_axis_item, y_axis_ite
     .attr("class", "y axis")
     .attr("transform", "translate(" + opt.margin + ", 0 )")
     .call(y_axis);
-    
+
   d3.select(".x.axis")
     .append("text")
     .attr("class", "x axis-label")
@@ -243,7 +245,7 @@ function render_scatterplot(point_label, point_label_ex, x_axis_item, y_axis_ite
         .style("pointer-events","none");
     })
     .text(opt.y_axis_items[y_axis_item].axis_label);
-  
+
   menu
     .on("click", function (d) {
       title_update
@@ -265,7 +267,7 @@ function render_scatterplot(point_label, point_label_ex, x_axis_item, y_axis_ite
   var vertical = ((opt.height / 2) + (fontsize * opt.y_axis_items[y_axis_item].axis_label.length / 2)) * -1;
   d3.select(".y.axis-label")
     .attr("transform", "rotate (-90) translate(" + vertical + "," + horizontal + ")");
-  
+
   var horizontal = (opt.margin - fontsize - 5) * -1;
   var vertical = ((opt.height / 2) - (fontsize * opt.y_axis_items[y_axis_item].axis_label.length / 2 + 5)) * -1;
   d3.select(".y.axis")
@@ -315,7 +317,7 @@ function redraw_render_scatterplot() {
     d3.selectAll(".min-point.y")
       .remove();
   }
-  
+
   //calculate chart range and domain
   var x_scale = get_axis_scale(current_x_item, "x");
   current_x_scale = x_scale;
@@ -668,7 +670,7 @@ function selected_item_title(key,value) {
   title_update.style("left",((fontsize * (key.length + value.length + 2)) - 25) + "px")
   var title_element_id = "button-id-" + key + "-pfam";
   change_button_status("pfam",key,title_element_id);
-  
+
   data = base[key];
 }
 
@@ -718,7 +720,7 @@ function create_menu() {
   var y_element_id = "button-id-" + opt.init_y_axis_items + "-y";
   change_button_status("y", opt.init_y_axis_items, y_element_id);
 
-  d3.selectAll(".btn")
+  d3.select("#vis").selectAll(".btn")
     .each(function () {
       var t = document.createElement("br");
       this.parentNode.insertBefore(t, this.nextSibling);
