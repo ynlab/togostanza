@@ -16,7 +16,7 @@
         adjust_iframe_height(frame_height);
         $("#jbrowse").css("height", (frame_height - 30) + "px");
         $("#jbrowse").css("border-radius", "4px");
-        $("#jbrowse").css("box-shadow", "0 2px 2px rgba(0,0,0,0.2)");    
+        $("#jbrowse").css("box-shadow", "0 2px 2px rgba(0,0,0,0.2)");
         $("#jbrowse-frame").css("height", (frame_height - 30) + "px");
       } else {
         $("#jbrowse").text("No data");
@@ -34,6 +34,7 @@
       parent.postMessage(JSON.stringify({height: height, id: name}), "*");
     }
     </script>
+    {{data_download}}
   </head>
 
   <body onload="init({{sequence_version.tax_id}})">

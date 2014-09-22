@@ -17,6 +17,7 @@
          background-color: teal;
       }
     </style>
+    {{data_download}}
   </head>
   <body>
     <div id="chart"></div>
@@ -33,7 +34,7 @@
       function init() {
         console.log({{param_tax_id}});
         d3.json('./taxonomy_ortholog_profile/resources/taxonomy_ortholog_profile?tax_id={{param_tax_id}}', function(error, data) {
-          if(data.taxonomy_ortholog_profile.length > 0) { 
+          if(data.taxonomy_ortholog_profile.length > 0) {
             draw(data.taxonomy_ortholog_profile);
           } else {
             $("#chart").text("No data");
@@ -47,7 +48,9 @@
         var svg = d3.select("#chart")
                     .append("svg")
                     .attr("width", w)
-                    .attr("height", h);
+                    .attr("height", h)
+                    .attr("xmlns", d3.ns.prefix.svg)
+                    .attr("xmlns:xmlns:xlink", d3.ns.prefix.xlink);;
 
         var tooltip = d3.select("body")
                         .append("div")
@@ -135,7 +138,7 @@
           height = document.body.offsetHeight + 30;
         }
         parent.postMessage(JSON.stringify({height: height, id: name}), "*");
-      } 
+      }
     </script>
   </body>
 </html>

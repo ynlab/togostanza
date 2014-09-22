@@ -21,6 +21,7 @@ function draw(_id,_fileName,_dataset,_opts,_rootName,_tag,_link,_tips,_width,_he
     root.x0 = vbox_height / 2;
     root.y0 = 0;
     update(root);
+    d3.select('svg').attr("xmlns", d3.ns.prefix.svg).attr("xmlns:xmlns:xlink", d3.ns.prefix.xlink);
   });
   function update(source) {
     var duration = d3.event && d3.event.altKey ? 5000 : 500;
