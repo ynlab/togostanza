@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.0.0'
 
-gem 'togostanza'
+gem 'togostanza', github: 'togostanza/togostanza-gem', branch: 'stanza_data-download'
 gem 'unicorn'
 gem 'rake'
 
