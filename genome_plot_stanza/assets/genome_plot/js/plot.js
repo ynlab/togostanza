@@ -720,7 +720,7 @@ function create_menu() {
   var y_element_id = "button-id-" + opt.init_y_axis_items + "-y";
   change_button_status("y", opt.init_y_axis_items, y_element_id);
 
-  d3.selectAll(".btn")
+  d3.selectAll("#container > .btn")
     .each(function () {
       var t = document.createElement("br");
       this.parentNode.insertBefore(t, this.nextSibling);
