@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.0.0'
 
-gem 'togostanza', github: 'togostanza/togostanza-gem', branch: 'text_search'
+gem 'togostanza', github: 'togostanza/togostanza-gem'
 gem 'unicorn'
 gem 'rake'
 
