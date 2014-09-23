@@ -1,4 +1,23 @@
 class OrganismPhenotypeStanza < TogoStanza::Stanza::Base
+  search :phenotype_items do |q|
+    query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX up: <http://purl.uniprot.org/core/>
+      PREFIX idtax: <http://purl.uniprot.org/taxonomy/>
+
+      SELECT DISTINCT (REPLACE(STR(?tax_id),"http://identifiers.org/taxonomy/","") AS ?tax_id)
+      FROM <http://togogenome.org/graph/mpo/>
+      FROM <http://togogenome.org/graph/gold/>
+      WHERE {
+        ?tax_id ?p ?mpo_id .
+        ?mpo_id rdfs:label ?desc .
+        FILTER (lang(?desc) = "en")
+        FILTER (regex(?desc, "#{q}"))
+        FILTER (regex(?tax_id, "identifiers.org"))
+      }
+    SPARQL
+  end
+
   property :phenotype_items do |tax_id|
     results = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
