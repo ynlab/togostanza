@@ -21,7 +21,7 @@ function draw(_id,_fileName,_dataset,_opts,_rootName,_tag,_link,_tips,_width,_he
     root.x0 = vbox_height / 2;
     root.y0 = 0;
     update(root);
-    d3.select('svg').attr("xmlns", d3.ns.prefix.svg).attr("xmlns:xmlns:xlink", d3.ns.prefix.xlink);
+    d3.select('svg');
   });
   function update(source) {
     var duration = d3.event && d3.event.altKey ? 5000 : 500;
@@ -53,7 +53,7 @@ function draw(_id,_fileName,_dataset,_opts,_rootName,_tag,_link,_tips,_width,_he
         .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
         .attr("id",function(d) { return (d[_tag]?d[_tag]:''); });
 
-    
+
     nodeEnter.append("svg:circle")
         .attr("r", 1e-6)
         .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; })
@@ -64,7 +64,7 @@ function draw(_id,_fileName,_dataset,_opts,_rootName,_tag,_link,_tips,_width,_he
             parent.location.target = '_top';
           }
         });
-    
+
     nodeEnter.append("svg:text")
         .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
         .attr("dy", ".35em")
@@ -78,7 +78,7 @@ function draw(_id,_fileName,_dataset,_opts,_rootName,_tag,_link,_tips,_width,_he
             parent.location.target = "_top";
           }
         });
-    
+
     // Transition nodes to their new position.
     var nodeUpdate = node.transition()
         .duration(duration)
@@ -139,7 +139,7 @@ function draw(_id,_fileName,_dataset,_opts,_rootName,_tag,_link,_tips,_width,_he
     });
     add_tooltips_event();
   }
-  
+
   //displays tooltip
   function add_tooltips_event() {
       tooltips = d3.select("tooltip");
@@ -215,7 +215,7 @@ function draw(_id,_fileName,_dataset,_opts,_rootName,_tag,_link,_tips,_width,_he
         tooltips.transition().duration(200).style("visibility", "hidden");
         });
   }
-  
+
   var drag = d3.behavior.drag().on("drag", function(d) {
       vbox_x -= d3.event.dx;
       vbox_y -= d3.event.dy;
@@ -245,7 +245,7 @@ function sparql2tree(data, opts, root) {
   for (var data_i = 0; data_i < data.length; data_i++) {
     var blanch = {};
     parent = (data[data_i][opts.parent]?data[data_i][opts.parent]:root);
-    
+
     // sets attributes
     for (var key in opts) {
         blanch[key] = data[data_i][opts[key]];

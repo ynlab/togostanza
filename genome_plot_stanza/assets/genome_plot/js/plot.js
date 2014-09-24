@@ -70,7 +70,7 @@ function create_page(sparql_result,option,type) {
     d3.select(".category_area").remove();
     d3.select("#scatter_plot").append("text").text("No items found");
   }
-  d3.select("svg#plot-svg").attr("xmlns", d3.ns.prefix.svg).attr("xmlns:xmlns:xlink", d3.ns.prefix.xlink);
+  d3.select("svg#plot-svg");
 
   fade();
 }

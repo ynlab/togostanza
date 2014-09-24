@@ -129,9 +129,7 @@ function render_scatterplot(point_label, point_label_ex, x_axis_item, y_axis_ite
     .append("svg")
     .attr("id", "plot-svg")
     .attr("width", opt.width)
-    .attr("height", opt.height)
-    .attr("xmlns", d3.ns.prefix.svg)
-    .attr("xmlns:xmlns:xlink", d3.ns.prefix.xlink);
+    .attr("height", opt.height);
 
   //add points
   d3.select("svg")
