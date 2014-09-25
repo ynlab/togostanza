@@ -10,6 +10,10 @@ rescue
   log = $stdout
 end
 
+TogoStanza.configure do |config|
+  config.text_search_method = ENV['TEXT_SEARCH_METHOD'] || :regex # :regex, :contains, :bif_contains
+end
+
 use Rack::CommonLogger, log
 
 map '/stanza/assets' do
