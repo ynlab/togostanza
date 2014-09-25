@@ -3,7 +3,10 @@ ENV['RACK_ENV'] ||= 'test'
 require 'capybara'
 
 RSpec.configure do |config|
-  config.treat_symbols_as_metadata_keys_with_true_values = true
+  config.expect_with :rspec do |c|
+    c.syntax = %i(should expect)
+  end
+
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
 

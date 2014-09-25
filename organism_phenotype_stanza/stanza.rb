@@ -1,5 +1,5 @@
 class OrganismPhenotypeStanza < TogoStanza::Stanza::Base
-  search :phenotype_items do |q|
+  search :phenotype_items do |query|
     query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX up: <http://purl.uniprot.org/core/>
@@ -12,7 +12,7 @@ class OrganismPhenotypeStanza < TogoStanza::Stanza::Base
         ?tax_id ?p ?mpo_id .
         ?mpo_id rdfs:label ?desc .
         FILTER (lang(?desc) = "en")
-        FILTER (regex(?desc, "#{q}"))
+        #{text_search_filter(:desc, query)}
         FILTER (regex(?tax_id, "identifiers.org"))
       }
     SPARQL

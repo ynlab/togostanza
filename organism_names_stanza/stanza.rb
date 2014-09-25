@@ -1,5 +1,5 @@
 class OrganismNamesStanza < TogoStanza::Stanza::Base
-  search :organism_name_list do |q|
+  search :organism_name_list do |query|
     query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
       PREFIX taxo: <http://ddbj.nig.ac.jp/ontologies/taxonomy#>
       PREFIX taxid: <http://identifiers.org/taxonomy/>
@@ -13,7 +13,7 @@ class OrganismNamesStanza < TogoStanza::Stanza::Base
           taxo:genbankSynonym taxo:genbankCommonName taxo:authority taxo:misspelling
         }
         ?taxonomy ?name_type ?name .
-        FILTER (regex(?name, "#{q}"))
+        #{text_search_filter(:name, query)}
       }
     SPARQL
   end
