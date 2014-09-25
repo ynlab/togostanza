@@ -1,21 +1,3 @@
-GIT
-  remote: git://github.com/togostanza/togostanza-gem.git
-  revision: ee27fa3bed50e822b845d31539f9b59b6d09b975
-  branch: motto-search
-  specs:
-    togostanza (1.0.6)
-      activesupport
-      flavour_saver
-      haml
-      hashie
-      parallel
-      redcarpet
-      sinatra
-      sinatra-contrib
-      sparql-client
-      sprockets
-      thor
-
 PATH
   remote: ./environment_attributes_stanza
   specs:
@@ -320,6 +302,18 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.4)
     tilt (1.4.1)
+    togostanza (1.1.0)
+      activesupport
+      flavour_saver
+      haml
+      hashie
+      parallel
+      redcarpet
+      sinatra
+      sinatra-contrib
+      sparql-client
+      sprockets
+      thor
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     unicorn (4.8.3)
@@ -372,6 +366,6 @@ DEPENDENCIES
   rake
   rspec
   taxonomy_ortholog_profile_stanza!
-  togostanza!
+  togostanza
   unicorn
   variation_stanza!
