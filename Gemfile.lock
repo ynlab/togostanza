@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/togostanza/togostanza-gem.git
-  revision: 14732cf4645f59436c414230a87ca7af593a6209
+  revision: 5fb246c2c2f45694fefdd0c931c2f1563c9fc043
   branch: stanza_data-download
   specs:
     togostanza (1.1.0)
@@ -252,7 +252,7 @@ GEM
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
     diff-lcs (1.2.5)
-    ffi (1.9.4)
+    ffi (1.9.5)
     flavour_saver (0.3.3)
       rltk (~> 2.2.0)
       tilt
@@ -268,7 +268,7 @@ GEM
       open4
       rake
     mini_portile (0.6.0)
-    minitest (5.4.1)
+    minitest (5.4.2)
     multi_json (1.10.1)
     net-http-persistent (1.9)
     nokogiri (1.6.3.1)
