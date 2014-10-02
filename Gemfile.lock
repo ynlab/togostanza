@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/togostanza/togostanza-gem.git
-  revision: 28bde0f880926dcbf352aabfa0646cfdd70dd59a
+  revision: b63f7f0bed6af8e49c8a46cac498550c54a345d8
   branch: stanza_data-download
   specs:
     togostanza (1.1.0)
