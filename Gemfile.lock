@@ -1,21 +1,3 @@
-GIT
-  remote: git://github.com/togostanza/togostanza-gem.git
-  revision: c0504109e88b6e613100a9753f0431a98e5fc0ba
-  branch: stanza_data-download
-  specs:
-    togostanza (1.1.0)
-      activesupport
-      flavour_saver
-      haml
-      hashie
-      parallel
-      redcarpet
-      sinatra
-      sinatra-contrib
-      sparql-client
-      sprockets
-      thor
-
 PATH
   remote: ./environment_attributes_stanza
   specs:
@@ -236,7 +218,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.1.6)
+    activesupport (4.1.7)
       i18n (~> 0.6, >= 0.6.9)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
@@ -283,7 +265,7 @@ GEM
     raindrops (0.13.0)
     rake (10.3.2)
     rdf (1.1.6)
-    redcarpet (3.1.2)
+    redcarpet (3.2.0)
     rltk (2.2.1)
       ffi (>= 1.0.0)
     rspec (3.1.0)
@@ -312,7 +294,7 @@ GEM
     sparql-client (1.1.3.1)
       net-http-persistent (~> 2.9)
       rdf (~> 1.1)
-    sprockets (2.12.2)
+    sprockets (2.12.3)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
@@ -320,6 +302,18 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.4)
     tilt (1.4.1)
+    togostanza (1.2.0)
+      activesupport
+      flavour_saver
+      haml
+      hashie
+      parallel
+      redcarpet
+      sinatra
+      sinatra-contrib
+      sparql-client
+      sprockets
+      thor
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     unicorn (4.8.3)
@@ -372,6 +366,6 @@ DEPENDENCIES
   rake
   rspec
   taxonomy_ortholog_profile_stanza!
-  togostanza!
+  togostanza
   unicorn
   variation_stanza!
