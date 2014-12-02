@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title>Organism GC</title>
+    <link rel="stylesheet" href="/stanza/assets/nanostanza.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="/stanza/assets/nanostanza.js"></script>
+  </head>
+
+  <body>
+    <h1>Organism GC</h1>
+    <div id="main-view">
+      {{#if atgc}}
+        <div class="pie-chart gc-content hidden" data-unit="%">
+          <div class="datum" data-name="gc">{{atgc.gc_percentage}}</div>
+          <div class="datum" data-name="at">{{atgc.at_percentage}}</div>
+
+          <line x1="-100" y1="0" x2="300" y2="0" stroke="black" stroke-dasharray="2"/>
+          <text x="200" text-anchor="end">楕円の傾き</text>
+        </div>
+      {{else}}
+        <img src="/stanza/assets/no_data.svg" />
+      {{/if}}
+    </div>
+  </body>
+</html>

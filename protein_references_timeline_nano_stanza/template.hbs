@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title>Protein References Timeline</title>
+    <link rel="stylesheet" href="/stanza/assets/nanostanza.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="/stanza/assets/nanostanza.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.1/d3.min.js"></script>
+  </head>
+
+  <body>
+    <h1>Timeline of references</h1>
+    <div id="main-view">
+      <div class="bar-chart hidden" data-x-graduations-par="10" data-x-axis-unit="decade" data-y-axis-unit="number">
+      {{#each references}}
+        <div class="datum" data-x="{{year}}">{{counts}}</div>
+      {{/each}}
+      </div>
+    </div>
+  </body>
+</html>

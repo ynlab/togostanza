@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title>Organism Gene Number</title>
+    <link rel="stylesheet" href="/stanza/assets/nanostanza.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="/stanza/assets/nanostanza.js"></script>
+  </head>
+
+  <body>
+    <h1>Number of genes</h1>
+    <div id="main-view">
+      {{#if genome_stats}}
+        <table class="key-value-table gene-length vertical-centering">
+          <tr>
+            <th class="gene">Gene</th><td>{{genome_stats.gene_number}}</td>
+          </tr>
+          <tr>
+            <th class="t-rna">tRNA</th><td>{{genome_stats.trna_number}}</td>
+          </tr>
+          <tr>
+            <th class="r-rna">rRNA</th><td>{{genome_stats.rrna_number}}</td>
+          </tr>
+          <tr>
+            <th class="nc-rna">ncRNA</th><td>{{genome_stats.ncrna_number}}</td>
+          </tr>
+        </table>
+      {{else}}
+        <img src="/stanza/assets/no_data.svg" />
+      {{/if}}
+    </div>
+  </body>
+</html>
