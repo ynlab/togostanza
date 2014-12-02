@@ -23,9 +23,27 @@ PATH
       togostanza
 
 PATH
+  remote: ./environment_inhabitants_statistics_nano_stanza
+  specs:
+    environment_inhabitants_statistics_nano_stanza (0.0.1)
+      togostanza
+
+PATH
   remote: ./environment_inhabitants_statistics_stanza
   specs:
     environment_inhabitants_statistics_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./environment_organism_distribution_on_ph_nano_stanza
+  specs:
+    environment_organism_distribution_on_ph_nano_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./environment_organism_distribution_on_temperature_nano_stanza
+  specs:
+    environment_organism_distribution_on_temperature_nano_stanza (0.0.1)
       togostanza
 
 PATH
@@ -35,10 +53,22 @@ PATH
       togostanza
 
 PATH
+  remote: ./environment_top_level_symbolic_image_nano_stanza
+  specs:
+    environment_top_level_symbolic_image_nano_stanza (0.0.1)
+      togostanza
+
+PATH
   remote: ./gene_attributes_stanza
   specs:
     gene_attributes_stanza (0.0.1)
       bio
+      togostanza
+
+PATH
+  remote: ./gene_length_nano_stanza
+  specs:
+    gene_length_nano_stanza (0.0.1)
       togostanza
 
 PATH
@@ -109,6 +139,24 @@ PATH
       togostanza
 
 PATH
+  remote: ./organism_gc_nano_stanza
+  specs:
+    organism_gc_nano_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./organism_gene_number_nano_stanza
+  specs:
+    organism_gene_number_nano_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./organism_genome_size_nano_stanza
+  specs:
+    organism_genome_size_nano_stanza (0.0.1)
+      togostanza
+
+PATH
   remote: ./organism_habitat_stanza
   specs:
     organism_habitat_stanza (0.0.1)
@@ -127,6 +175,12 @@ PATH
       togostanza
 
 PATH
+  remote: ./organism_microbial_cell_shape_nano_stanza
+  specs:
+    organism_microbial_cell_shape_nano_stanza (0.0.1)
+      togostanza
+
+PATH
   remote: ./organism_names_stanza
   specs:
     organism_names_stanza (0.0.1)
@@ -139,9 +193,27 @@ PATH
       togostanza
 
 PATH
+  remote: ./organism_ph_nano_stanza
+  specs:
+    organism_ph_nano_stanza (0.0.1)
+      togostanza
+
+PATH
   remote: ./organism_phenotype_stanza
   specs:
     organism_phenotype_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./organism_related_disease_nano_stanza
+  specs:
+    organism_related_disease_nano_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./protein_3d_structure_nano_stanza
+  specs:
+    protein_3d_structure_nano_stanza (0.0.1)
       togostanza
 
 PATH
@@ -154,6 +226,12 @@ PATH
   remote: ./protein_cross_references_stanza
   specs:
     protein_cross_references_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./protein_ec_number_nano_stanza
+  specs:
+    protein_ec_number_nano_stanza (0.0.1)
       togostanza
 
 PATH
@@ -190,6 +268,12 @@ PATH
   remote: ./protein_references_stanza
   specs:
     protein_references_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./protein_references_timeline_nano_stanza
+  specs:
+    protein_references_timeline_nano_stanza (0.0.1)
       togostanza
 
 PATH
@@ -332,9 +416,14 @@ DEPENDENCIES
   environment_environmental_ontology_stanza!
   environment_geographical_map_stanza!
   environment_inhabitants_stanza!
+  environment_inhabitants_statistics_nano_stanza!
   environment_inhabitants_statistics_stanza!
+  environment_organism_distribution_on_ph_nano_stanza!
+  environment_organism_distribution_on_temperature_nano_stanza!
   environment_taxonomic_composition_stanza!
+  environment_top_level_symbolic_image_nano_stanza!
   gene_attributes_stanza!
+  gene_length_nano_stanza!
   geneset_entry_stanza!
   geneset_stanza!
   genome_cross_references_stanza!
@@ -347,20 +436,29 @@ DEPENDENCIES
   nucleotide_sequence_stanza!
   organism_cross_references_stanza!
   organism_culture_collections_stanza!
+  organism_gc_nano_stanza!
+  organism_gene_number_nano_stanza!
+  organism_genome_size_nano_stanza!
   organism_habitat_stanza!
   organism_jbrowse_stanza!
   organism_medium_information_stanza!
+  organism_microbial_cell_shape_nano_stanza!
   organism_names_stanza!
   organism_pathogen_information_stanza!
+  organism_ph_nano_stanza!
   organism_phenotype_stanza!
+  organism_related_disease_nano_stanza!
+  protein_3d_structure_nano_stanza!
   protein_attributes_stanza!
   protein_cross_references_stanza!
+  protein_ec_number_nano_stanza!
   protein_general_annotation_stanza!
   protein_names_stanza!
   protein_ontologies_stanza!
   protein_orthologs_stanza!
   protein_pfam_plot_stanza!
   protein_references_stanza!
+  protein_references_timeline_nano_stanza!
   protein_sequence_annotation_stanza!
   protein_sequence_stanza!
   rake

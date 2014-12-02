@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title>Protein 3D Structure</title>
+    <link rel="stylesheet" href="/stanza/assets/nanostanza.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="/stanza/assets/nanostanza.js"></script>
+    {{#if pdb}}
+      <script type="text/javascript">
+        var NANO_STANZA = {};
+        NANO_STANZA.EXTENSION = [];
+        NANO_STANZA.EXTENSION.push({label: "Link", functionType: "blank", value: "{{pdb.url}}"});
+        NANO_STANZA.EXTENSION.push({label: "Open this image", functionType: "blank", value: "{{pdb.img_url}}"});
+      </script>
+    {{/if}}
+  </head>
+
+  <body>
+    <h1>3D structure</h1>
+    <div id="main-view">
+      {{#if pdb}}
+        <img class="single-image-view" src={{pdb.img_url}} alt={{pdb.img_url}}>
+      {{else}}
+        <img src="/stanza/assets/no_data.svg" />
+      {{/if}}
+    </div>
+  </body>
+</html>
