@@ -17,6 +17,9 @@
          background-color: teal;
       }
     </style>
+    {{download_json}}
+    {{download_svg}}
+    {{download_image}}
   </head>
   <body>
     <div id="chart"></div>
@@ -33,7 +36,7 @@
       function init() {
         console.log({{param_tax_id}});
         d3.json('./taxonomy_ortholog_profile/resources/taxonomy_ortholog_profile?tax_id={{param_tax_id}}', function(error, data) {
-          if(data.taxonomy_ortholog_profile.length > 0) { 
+          if(data.taxonomy_ortholog_profile.length > 0) {
             draw(data.taxonomy_ortholog_profile);
           } else {
             $("#chart").text("No data");
@@ -135,7 +138,7 @@
           height = document.body.offsetHeight + 30;
         }
         parent.postMessage(JSON.stringify({height: height, id: name}), "*");
-      } 
+      }
     </script>
   </body>
 </html>

@@ -17,13 +17,16 @@
       .node text {
         font: 16px sans-serif;
         pointer-events: none;
-        fill: #45b8cc; 
+        fill: #45b8cc;
         font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
       }
     </style>
     <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></scriprt>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    {{download_json}}
+    {{download_svg}}
+    {{download_image}}
   </head>
 
   <body>
@@ -39,10 +42,10 @@
         var duration = 400;
         var root;
         var root_id = "http://www.w3.org/2002/07/owl#Thing";
-        var selected_id = []; 
+        var selected_id = [];
         var row_cnt = 0;
         var frame_height = 400;
-        var chart_min_height = frame_height - 30 -30; //margin and padding 
+        var chart_min_height = frame_height - 30 -30; //margin and padding
 
         var tree = d3.layout.tree()
           .size([h, 100]);
@@ -75,7 +78,7 @@
               });
               selected_id = selected_meo_id;
               create_page(data.environment_tree);
-              adjust_iframe_height(frame_height);              
+              adjust_iframe_height(frame_height);
             } else {
               $("#chart").text("No data");
               adjust_iframe_height();
@@ -248,7 +251,7 @@
 
         /*
         Toggle children on click.
-        
+
         function click(d) {
           if (d.children) {
             d._children = d.children;
@@ -268,7 +271,7 @@
           }
         }
       })();
-     
+
       function adjust_iframe_height(height_px) {
         var height = 0;
         if(height_px) {
