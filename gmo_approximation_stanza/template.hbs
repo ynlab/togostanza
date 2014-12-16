@@ -13,8 +13,11 @@
 
   <body>
 <div>
+
 <table class="table">
+{{#if medium_information}}
 <caption>{{medium_information.med_id}}{{#if medium_information.desc}} : {{medium_information.desc}}{{/if}}</caption>
+{{/if}}
 <thead>
 	<tr>
 		<th>Medium ID</th>

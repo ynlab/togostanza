@@ -1,8 +1,10 @@
 class GmoApproximationStanza < TogoStanza::Stanza::Base
-	SPARQL_ENDPOINT_URL = 'http://ep.dbcls.jp/sparql7ssd';
+	SPARQL_ENDPOINT_URL = 'http://ep.dbcls.jp/sparql7ssd'
+
 	property :debug_mode do |debug|
 		(debug == "1")
 	end
+
 	property :medium_information do |medium_id|
 		query = <<-SPARQL.strip_heredoc
 			PREFIX gmo: <http://purl.jp/bio/11/gmo#>
@@ -13,14 +15,18 @@ class GmoApproximationStanza < TogoStanza::Stanza::Base
 				?brc gmo:GMO_000102 ?desc .
 			}
 		SPARQL
-		result = query(SPARQL_ENDPOINT_URL, query);
-		if result.empty? then
+
+		result = query(SPARQL_ENDPOINT_URL, query)
+
+		if result.empty?
 			[]
 		else
 			result.first[:med_id] = medium_id
 			result.first
 		end
+		result
 	end
+
 	property :medium_score do |medium_id|
 		# Score List
 		query = <<-SPARQL.strip_heredoc
@@ -95,7 +101,7 @@ class GmoApproximationStanza < TogoStanza::Stanza::Base
 			order by desc(?score) ?title
 		SPARQL
 
-		scorelist = query(SPARQL_ENDPOINT_URL, query);
+		scorelist = query(SPARQL_ENDPOINT_URL, query)
 
 
 		# Is Binded Undefined Components from Request Mediums
@@ -107,7 +113,8 @@ class GmoApproximationStanza < TogoStanza::Stanza::Base
 				?gmo rdfs:subClassOf* gmo:GMO_000016 .
 			}
 		SPARQL
-		is_ud = query(SPARQL_ENDPOINT_URL, query);
+
+		is_ud = query(SPARQL_ENDPOINT_URL, query)
 
 
 		# Get Undefined Components Binding List
@@ -118,20 +125,20 @@ class GmoApproximationStanza < TogoStanza::Stanza::Base
 				?gmo rdfs:subClassOf* gmo:GMO_000016 .
 			}
 		SPARQL
-		udlist = query(SPARQL_ENDPOINT_URL, query);
-		udlist.map!{|item| item[:brc] }
+		udlist = query(SPARQL_ENDPOINT_URL, query)
+		udlist.map! {|item| item[:brc] }
 
 
-		if is_ud.first[:c].to_i == 0 then
+		if is_ud.first[:c].to_i.zero?
 			# ignore undefined components
-			scorelist.delete_if{|item| udlist.index(item[:subject]) }
+			scorelist.delete_if {|item| udlist.index(item[:subject]) }
 		else
 			# ignore defined components
-			scorelist.delete_if{|item| udlist.index(item[:subject]) == nil }
+			scorelist.delete_if {|item| udlist.index(item[:subject]) == nil }
 		end
 
 		# format number (ex. 12.0)
-		scorelist.map{|item|
+		scorelist.map {|item|
 			item[:score] = sprintf('%.1f',item[:score])
 			item
 		}
