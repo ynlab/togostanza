@@ -1,4 +1,10 @@
 PATH
+  remote: ./approximation_tsv_stanza
+  specs:
+    approximation_tsv_stanza (0.0.1)
+      togostanza
+
+PATH
   remote: ./environment_attributes_stanza
   specs:
     environment_attributes_stanza (0.0.1)
@@ -115,9 +121,57 @@ PATH
       togostanza
 
 PATH
+  remote: ./gmo_applied_spices_stanza
+  specs:
+    gmo_applied_spices_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./gmo_approximation_stanza
+  specs:
+    gmo_approximation_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./gmo_genus_stanza
+  specs:
+    gmo_genus_stanza (0.0.1)
+      togostanza
+
+PATH
   remote: ./lineage_information_stanza
   specs:
     lineage_information_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./medium_components_stanza
+  specs:
+    medium_components_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./mpo_environment_stanza
+  specs:
+    mpo_environment_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./mpo_genus_stanza
+  specs:
+    mpo_genus_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./mpo_shape_stanza
+  specs:
+    mpo_shape_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./my_inf_stanza
+  specs:
+    my_inf_stanza (0.0.1)
       togostanza
 
 PATH
@@ -413,6 +467,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  approximation_tsv_stanza!
   capybara
   environment_attributes_stanza!
   environment_environmental_ontology_stanza!
@@ -433,8 +488,16 @@ DEPENDENCIES
   genome_information_stanza!
   genome_jbrowse_stanza!
   genome_plot_stanza!
+  gmo_applied_spices_stanza!
+  gmo_approximation_stanza!
+  gmo_genus_stanza!
   lineage_information_stanza!
+  medium_components_stanza!
   mina
+  mpo_environment_stanza!
+  mpo_genus_stanza!
+  mpo_shape_stanza!
+  my_inf_stanza!
   nucleotide_sequence_stanza!
   organism_cross_references_stanza!
   organism_culture_collections_stanza!

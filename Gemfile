@@ -53,6 +53,17 @@ gem 'taxonomy_ortholog_profile_stanza', path: './taxonomy_ortholog_profile_stanz
 gem 'organism_jbrowse_stanza', path: './organism_jbrowse_stanza'
 gem 'genome_jbrowse_stanza', path: './genome_jbrowse_stanza'
 
+# Phenotype
+gem 'my_inf_stanza', path: './my_inf_stanza'
+gem 'mpo_genus_stanza', path: './mpo_genus_stanza'
+gem 'mpo_environment_stanza', path: './mpo_environment_stanza'
+gem 'mpo_shape_stanza', path: './mpo_shape_stanza'
+gem 'gmo_applied_spices_stanza', path: './gmo_applied_spices_stanza'
+gem 'gmo_genus_stanza', path: './gmo_genus_stanza'
+gem 'gmo_approximation_stanza', path: './gmo_approximation_stanza'
+gem 'approximation_tsv_stanza', path: './approximation_tsv_stanza'
+gem 'medium_components_stanza', path: './medium_components_stanza'
+
 # nanostanza
 gem 'environment_inhabitants_statistics_nano_stanza', path: './environment_inhabitants_statistics_nano_stanza'
 gem 'environment_organism_distribution_on_ph_nano_stanza', path: './environment_organism_distribution_on_ph_nano_stanza'

@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8" />
+  <title>d3.js</title>
+  <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+  Remove this if you use the .htaccess -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+ <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript">
+   google.load("jquery", "1");
+   google.setOnLoadCallback(function() {
+        initialize().then (
+            function (control) {
+                doTheTreeViz(control);
+            }
+        );
+   });
+  </script> <style>
+
+   svg {
+    font: 10px sans-serif;
+   }
+   svg text {
+       font-family: "Helvetica Neue", Helvetica, "Myriad Pro", "メイリオ", sans-serif;
+   }
+   .axis path, .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+   }
+
+
+  </style>
+  <style>
+   #chart {
+    height: 600px;
+   }
+   .node rect {
+    cursor: move;
+    fill-opacity: .9;
+    shape-rendering: crispEdges;
+   }
+   .node text {
+    pointer-events: none;
+    text-shadow: 0 1px 0 #fff;
+   }
+   .link {
+    fill: none;
+    stroke: #000;
+    stroke-opacity: .2;
+   }
+   .link:hover {
+    stroke-opacity: .5;
+   }
+
+   circle.node-dot {
+    fill: DarkSlateGray;
+    stroke: SlateGray;
+    stroke-width: 1px;
+   }
+
+
+   line.link {
+    fill: none;
+    stroke: SlateGray;
+    stroke-width: 1.5px;
+   }
+
+   marker#defaultMarker {
+    fill: SlateGray;
+   }
+
+   line.link.defaultMarker {
+    stroke: SlateGray;
+   }
+
+   circle {
+    fill: #ccc;
+    stroke: #333;
+    stroke-width: 1.5px;
+   }
+
+   text {
+    pointer-events: none;
+   }
+
+   text.shadow {
+    stroke: #fff;
+    stroke-width: 3px;
+    stroke-opacity: .8;
+   }
+
+  </style>  <script>
+  function doTheTreeViz(control) {
+
+    var svg = control.svg;
+
+    var force = control.force;
+    force.nodes(control.nodes)
+        .links(control.links)
+        .start();
+
+    // Update the links
+    var link = svg.selectAll("line.link")
+        .data(control.links, function(d) { return d.unique; } );
+ 
+   // Enter any new links
+    link.enter().insert("svg:line", ".node")
+        .attr("class", "link")
+        .attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; })
+      .append("svg:title")
+        .text(function(d) { return d.source[control.options.nodeLabel] + ":" + d.target[control.options.nodeLabel] ; });
+    
+    // Exit any old links.
+    link.exit().remove();
+
+
+  // Update the nodes
+    var node = svg.selectAll("g.node")
+        .data(control.nodes, function(d) { return d.unique; });
+
+    node.select("circle")
+        .style("fill", function(d) {
+            return getColor(d);
+        })
+        .attr("r", function(d) {
+            return getRadius(d);
+        })
+
+  // Enter any new nodes.
+    var nodeEnter = node.enter()
+      .append("svg:g")
+        .attr("class", "node")
+        .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+        .on("dblclick", function(d){
+            control.nodeClickInProgress=false;
+            if (d.url)window.open(d.url);
+        })
+        .on("click", function(d){
+            // this is a hack so that click doesnt fire on the1st click of a dblclick
+            if (!control.nodeClickInProgress ) {
+                control.nodeClickInProgress = true;
+                setTimeout(function(){
+                    if (control.nodeClickInProgress) { 
+                        control.nodeClickInProgress = false;
+                        if (control.options.nodeFocus) {
+                            d.isCurrentlyFocused = !d.isCurrentlyFocused;
+                            doTheTreeViz(makeFilteredData(control));
+                        }
+                    }
+                },control.clickHack); 
+            }
+        })
+        .call(force.drag);
+
+    nodeEnter
+      .append("svg:circle")
+        .attr("r", function(d) {
+            return getRadius(d);
+        })
+        .style("fill", function(d) {
+            return getColor(d);
+        })
+      .append("svg:title")
+        .text(function(d) { return d[control.options.nodeLabel]; });
+
+   if (control.options.nodeLabel) {       
+       // text is done once for shadow as well as for text
+        nodeEnter.append("svg:text")
+            .attr("x", control.options.labelOffset)
+            .attr("dy", ".31em")
+            .attr("class", "shadow")
+            .style("font-size",control.options.labelFontSize + "px")
+            .text(function(d) {
+                return d.shortName ? d.shortName : d.name;
+            });
+        nodeEnter.append("svg:text")
+            .attr("x", control.options.labelOffset)
+            .attr("dy", ".35em")
+            .attr("class", "text")
+            .style("font-size",control.options.labelFontSize + "px")
+            .text(function(d) {
+                return d.shortName ? d.shortName : d.name;
+            });
+    }
+
+    // Exit any old nodes.
+    node.exit().remove();
+    control.link = svg.selectAll("line.link");
+    control.node = svg.selectAll("g.node");
+    force.on("tick", tick);
+
+
+
+    if (control.options.linkName) {
+        link.append("title")
+            .text(function(d) {
+                return d[control.options.linkName];
+        });
+    }
+
+
+    function tick() {
+        link.attr("x1", function(d) { return d.source.x; })
+            .attr("y1", function(d) { return d.source.y; })
+            .attr("x2", function(d) { return d.target.x; })
+            .attr("y2", function(d) { return d.target.y; });
+        node.attr("transform", function(d) {
+            return "translate(" + d.x + "," + d.y + ")";
+        });
+
+    }
+ 
+    function getRadius(d) {
+     var r = control.options.radius * (control.options.nodeResize ? Math.sqrt(d[control.options.nodeResize]) / Math.PI : 1);
+     return control.options.nodeFocus && d.isCurrentlyFocused ? control.options.nodeFocusRadius  : r;
+    }
+    function getColor(d) {
+        return control.options.nodeFocus && d.isCurrentlyFocused ? control.options.nodeFocusColor  : control.color(d.group) ;
+    }
+
+   }
+
+function makeFilteredData(control,selectedNode){
+    // we'll keep only the data where filterned nodes are the source or target
+    var newNodes = [];
+    var newLinks = [];
+
+    for (var i = 0; i < control.data.links.length ; i++) {
+        var link = control.data.links[i];
+        if (link.target.isCurrentlyFocused || link.source.isCurrentlyFocused) {
+            newLinks.push(link);
+            addNodeIfNotThere(link.source,newNodes);
+            addNodeIfNotThere(link.target,newNodes);
+        }
+    }
+    // if none are selected reinstate the whole dataset
+    if (newNodes.length > 0) {
+        control.links = newLinks;
+        control.nodes = newNodes;
+    }
+    else {
+        control.nodes = control.data.nodes;
+        control.links = control.data.links;
+    }
+    return control;
+    
+    function addNodeIfNotThere( node, nodes) {
+        for ( var i=0; i < nodes.length; i++) {
+            if (nodes[i].unique == node.unique) return i;
+        }
+        return nodes.push(node) -1;
+    }
+}
+function organizeData(control) {
+
+    for (var i=0; i < control.nodes.length; i ++ ) {
+        var node = control.nodes[i]; 
+        node.unique = i;
+        node.isCurrentlyFocused = false;
+    }
+    
+    for (var i=0; i < control.links.length; i ++ ) {
+        var link = control.links[i];
+        link.unique = i;
+        link.source = control.nodes[link.source];
+        link.target = control.nodes[link.target];
+    }
+    return control;
+}
+
+
+function initialize () {
+   
+    var initPromise = $.Deferred();
+
+    getTheData().then( function (data) {  
+        var control = {};
+        control.data = data;
+        control.divName = "#chart";
+
+        control.options = $.extend({
+            stackHeight : 12,
+            radius : 5,
+            fontSize : 14,
+            labelFontSize : 8,
+            nodeLabel : null,
+            markerWidth : 0,
+            markerHeight : 0,
+            width : $(control.divName).outerWidth(),
+            gap : 1.5,
+            nodeResize : "",
+            linkDistance : 80,
+            charge : -120,
+            styleColumn : null,
+            styles : null,
+            linkName : null,
+            nodeFocus: true,
+            nodeFocusRadius: 25,
+            nodeFocusColor: "black",
+            labelOffset: "5",
+            gravity: .05,
+            height : $(control.divName).outerHeight()
+        }, control.data.d3.options);
+    
+        
+        var options = control.options;
+        options.gap = options.gap * options.radius;
+        control.width = options.width;
+        control.height = options.height;
+        control.data = control.data.d3.data;
+        control.nodes = control.data.nodes;
+        control.links = control.data.links;
+        control.color = d3.scale.category20();
+        control.clickHack = 200;
+        organizeData(control);
+    
+        control.svg = d3.select(control.divName)
+            .append("svg:svg")
+            .attr("width", control.width)
+            .attr("height", control.height);
+        
+    
+        // get list of unique values in stylecolumn
+        control.linkStyles = [];
+        if (control.options.styleColumn) {
+         var x;
+         for (var i = 0; i < control.links.length; i++) {
+          if (control.linkStyles.indexOf( x = control.links[i][control.options.styleColumn].toLowerCase()) == -1)
+           control.linkStyles.push(x);
+         }
+        } 
+        else
+         control.linkStyles[0] = "defaultMarker";
+        
+        control.force = d3.layout.force().
+            size([control.width, control.height])
+            .linkDistance(control.options.linkDistance)
+            .charge(control.options.charge)
+            .gravity(control.options.gravity);
+    
+    
+       initPromise.resolve(control);
+    });
+    return initPromise.promise();
+}
+
+            
+function getTheData() {
+    var dataPromise = $.Deferred();
+    // return a promise if data is being received asynch and resolve it when done.
+    dataPromise.resolve (mcpherTreeData);
+    return dataPromise.promise();
+}
+</script><script> window['mcpherTreeData'] = {
+	"d3": {
+		"options": {
+			"radius": 2.5,
+			"fontSize": 9,
+			"labelFontSize": 9,
+			"gravity": 0.1,
+			"height": 800,
+			"nodeFocusColor": "black",
+			"nodeFocusRadius": 25,
+			"nodeFocus": false,
+			"linkDistance": 150,
+			"charge": -220,
+			"nodeResize": "count",
+			"nodeLabel": "label",
+			"linkName": "tag"
+		},
+		"data": {
+			"nodes": [
+				{
+					"group": "master",
+					"name": "NBRC_M1011",
+					"count": 1000,
+					"linkCount": 0,
+					"label": "Modified Pfennig's Medium I (purple sulfur bacteria)",
+					"userCount": true,
+					"url": "",
+					"shortName": "NBRC_M1011"
+				},
+				{
+					"group": "partition",
+					"name": "80%+",
+					"count": 800,
+					"linkCount": 0,
+					"label": "80%+",
+					"userCount": true,
+					"url": "",
+					"shortName": "80%+"
+				},
+				{
+					"group": "partition",
+					"name": "50%+",
+					"count": 500,
+					"linkCount": 0,
+					"label": "50%+",
+					"userCount": true,
+					"url": "",
+					"shortName": "50%+"
+				},
+				{
+					"group": "partition",
+					"name": "20%+",
+					"count": 200,
+					"linkCount": 0,
+					"label": "20%+",
+					"userCount": true,
+					"url": "",
+					"shortName": "20%+"
+				},
+				{
+					"group": "partition",
+					"name": "0%-20%",
+					"count": 100,
+					"linkCount": 0,
+					"label": "20%+",
+					"userCount": true,
+					"url": "",
+					"shortName": "0%-20%"
+				},
+{ "name": "NBRC_M1012", "count": 974.4, "linkCount": 0, "label": "Medium for Ectothiorhodospira", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1012", "shortName": "NBRC_M1012" },
+{ "name": "NBRC_M1013", "count": 864.9, "linkCount": 0, "label": "Modified Pfennig's Medium II (green sulfur bacteria)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1013", "shortName": "NBRC_M1013" },
+{ "name": "NBRC_M1014", "count": 842.1, "linkCount": 0, "label": "Modified Pfennig's Medium II (10 NaCl)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1014", "shortName": "NBRC_M1014" },
+{ "name": "NBRC_M1213", "count": 842.1, "linkCount": 0, "label": "Pfennig's Medium II with Salt (1 0 NaCl)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1213", "shortName": "NBRC_M1213" },
+{ "name": "NBRC_M1216", "count": 842.1, "linkCount": 0, "label": "Pfennig's Medium II with Salt (2 0 NaCl)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1216", "shortName": "NBRC_M1216" },
+{ "name": "NBRC_M1016", "count": 717.9, "linkCount": 0, "label": "Pelobacter acetylenicus Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1016", "shortName": "NBRC_M1016" },
+{ "name": "NBRC_M1008", "count": 717.9, "linkCount": 0, "label": "Pelobacter carbinolicus Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1008", "shortName": "NBRC_M1008" },
+{ "name": "NBRC_M1015", "count": 717.9, "linkCount": 0, "label": "Pelobacter propionicus Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1015", "shortName": "NBRC_M1015" },
+{ "name": "NBRC_M1017", "count": 717.9, "linkCount": 0, "label": "Pelobacter venetianus Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1017", "shortName": "NBRC_M1017" },
+{ "name": "NBRC_M1173", "count": 566, "linkCount": 0, "label": "Methanomethylovorans medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1173", "shortName": "NBRC_M1173" },
+{ "name": "NBRC_M292", "count": 555.6, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M292", "shortName": "NBRC_M292" },
+{ "name": "NBRC_M1007", "count": 549, "linkCount": 0, "label": "Malonomonas rubra Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1007", "shortName": "NBRC_M1007" },
+{ "name": "NBRC_M953", "count": 545.5, "linkCount": 0, "label": "NMS medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M953", "shortName": "NBRC_M953" },
+{ "name": "NBRC_M870", "count": 541.7, "linkCount": 0, "label": "Medium for strain C/L2", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M870", "shortName": "NBRC_M870" },
+{ "name": "NBRC_M1010", "count": 538.5, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1010", "shortName": "NBRC_M1010" },
+{ "name": "NBRC_M1161", "count": 538.5, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1161", "shortName": "NBRC_M1161" },
+{ "name": "NBRC_M1120", "count": 538.5, "linkCount": 0, "label": "Medium for strain 28bB2T", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1120", "shortName": "NBRC_M1120" },
+{ "name": "NBRC_M1069", "count": 528.3, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1069", "shortName": "NBRC_M1069" },
+{ "name": "NBRC_M882", "count": 520, "linkCount": 0, "label": "Deferribacter Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M882", "shortName": "NBRC_M882" },
+{ "name": "NBRC_M1189", "count": 520, "linkCount": 0, "label": "Medium for Desulfuromonas chloroethenica", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1189", "shortName": "NBRC_M1189" },
+{ "name": "NBRC_M1101", "count": 520, "linkCount": 0, "label": "Medium for strain sk43H", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1101", "shortName": "NBRC_M1101" },
+{ "name": "NBRC_M1080", "count": 520, "linkCount": 0, "label": "Medium for strain skB26", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1080", "shortName": "NBRC_M1080" },
+{ "name": "NBRC_M1028", "count": 520, "linkCount": 0, "label": "Modified WS medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1028", "shortName": "NBRC_M1028" },
+{ "name": "NBRC_M1009", "count": 518.5, "linkCount": 0, "label": "Artificial seawater Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1009", "shortName": "NBRC_M1009" },
+{ "name": "NBRC_M896", "count": 514.3, "linkCount": 0, "label": "ACTIVATED CARBON MEDIUM", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M896", "shortName": "NBRC_M896" },
+{ "name": "NBRC_M1171", "count": 511.6, "linkCount": 0, "label": "Fuchs Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1171", "shortName": "NBRC_M1171" },
+{ "name": "NBRC_M869", "count": 510.6, "linkCount": 0, "label": "Medium for strain C/G2", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M869", "shortName": "NBRC_M869" },
+{ "name": "NBRC_M1100", "count": 509.8, "linkCount": 0, "label": "Medium for strain fL4", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1100", "shortName": "NBRC_M1100" },
+{ "name": "NBRC_M1005", "count": 490.6, "linkCount": 0, "label": "Artificial seawater medium for strain JS_SRB250Lac", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1005", "shortName": "NBRC_M1005" },
+{ "name": "NBRC_M830", "count": 484.8, "linkCount": 0, "label": "Acidianus manzaensis Medium for Autotrophic Growth", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M830", "shortName": "NBRC_M830" },
+{ "name": "NBRC_M897", "count": 480, "linkCount": 0, "label": "Methanothrix Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M897", "shortName": "NBRC_M897" },
+{ "name": "NBRC_M391", "count": 470.6, "linkCount": 0, "label": "Thermodesulfobium narugense Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M391", "shortName": "NBRC_M391" },
+{ "name": "NBRC_M840", "count": 461.5, "linkCount": 0, "label": "Archaeoglobus Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M840", "shortName": "NBRC_M840" },
+{ "name": "NBRC_M927", "count": 461.5, "linkCount": 0, "label": "Medium for iron-using methanogen", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M927", "shortName": "NBRC_M927" },
+{ "name": "NBRC_M857", "count": 461.5, "linkCount": 0, "label": "Sulfate Reducer Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M857", "shortName": "NBRC_M857" },
+{ "name": "NBRC_M929", "count": 461.5, "linkCount": 0, "label": "Thiomonas cuprina medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M929", "shortName": "NBRC_M929" },
+{ "name": "NBRC_M855", "count": 457.1, "linkCount": 0, "label": "Green Sulfur Bacterium Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M855", "shortName": "NBRC_M855" },
+{ "name": "NBRC_M1151", "count": 449, "linkCount": 0, "label": "Medium for aerobic growth of strain sk43H", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1151", "shortName": "NBRC_M1151" },
+{ "name": "NBRC_M1034", "count": 449, "linkCount": 0, "label": "Phe82 Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1034", "shortName": "NBRC_M1034" },
+{ "name": "NBRC_M1138", "count": 444.4, "linkCount": 0, "label": "Green Sulfur Bacterium Medium (100 NaCl)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1138", "shortName": "NBRC_M1138" },
+{ "name": "NBRC_M986", "count": 431.4, "linkCount": 0, "label": "Methanobacterium Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M986", "shortName": "NBRC_M986" },
+{ "name": "NBRC_M994", "count": 431.4, "linkCount": 0, "label": "Methanosaeta concilii medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M994", "shortName": "NBRC_M994" },
+{ "name": "NBRC_M888", "count": 416.7, "linkCount": 0, "label": "Sulfur-oxidizing bacteria medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M888", "shortName": "NBRC_M888" },
+{ "name": "NBRC_M810", "count": 415.1, "linkCount": 0, "label": "Methanocaldococcus jannaschii Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M810", "shortName": "NBRC_M810" },
+{ "name": "NBRC_M1194", "count": 410.3, "linkCount": 0, "label": "Thiobacillus plumbophilus Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1194", "shortName": "NBRC_M1194" },
+{ "name": "NBRC_M938", "count": 408.2, "linkCount": 0, "label": "Microaerobic sulfur-oxidizing bacteria medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M938", "shortName": "NBRC_M938" },
+{ "name": "NBRC_M976", "count": 408.2, "linkCount": 0, "label": "Sulfur-oxidizer Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M976", "shortName": "NBRC_M976" },
+{ "name": "NBRC_M998", "count": 400, "linkCount": 0, "label": "Green Sulfur Bacterium Medium (10 NaCl)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M998", "shortName": "NBRC_M998" },
+{ "name": "NBRC_M1106", "count": 375, "linkCount": 0, "label": "1a Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1106", "shortName": "NBRC_M1106" },
+{ "name": "NBRC_M966", "count": 363.6, "linkCount": 0, "label": "URO (DW pH10)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M966", "shortName": "NBRC_M966" },
+{ "name": "NBRC_M829", "count": 357.1, "linkCount": 0, "label": "HEPES Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M829", "shortName": "NBRC_M829" },
+{ "name": "NBRC_M1033", "count": 355.6, "linkCount": 0, "label": "Phe91 Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1033", "shortName": "NBRC_M1033" },
+{ "name": "NBRC_M1087", "count": 352.9, "linkCount": 0, "label": "ONR7a Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1087", "shortName": "NBRC_M1087" },
+{ "name": "NBRC_M407", "count": 344.8, "linkCount": 0, "label": "Medium for Allochromatium vinosum", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M407", "shortName": "NBRC_M407" },
+{ "name": "NBRC_M1081", "count": 339.6, "linkCount": 0, "label": "MMJHS medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1081", "shortName": "NBRC_M1081" },
+{ "name": "NBRC_M1085", "count": 339.6, "linkCount": 0, "label": "MMJHS-2 medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1085", "shortName": "NBRC_M1085" },
+{ "name": "NBRC_M968", "count": 322.6, "linkCount": 0, "label": "KO2(NH4)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M968", "shortName": "NBRC_M968" },
+{ "name": "NBRC_M965", "count": 322.6, "linkCount": 0, "label": "KO2(NO3)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M965", "shortName": "NBRC_M965" },
+{ "name": "NBRC_M1201", "count": 312.5, "linkCount": 0, "label": "MMA medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1201", "shortName": "NBRC_M1201" },
+{ "name": "NBRC_M1090", "count": 312.5, "linkCount": 0, "label": "mTC10 medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1090", "shortName": "NBRC_M1090" },
+{ "name": "NBRC_M886", "count": 296.3, "linkCount": 0, "label": "Allantoin Mineral Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M886", "shortName": "NBRC_M886" },
+{ "name": "NBRC_M289", "count": 285.7, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M289", "shortName": "NBRC_M289" },
+{ "name": "NBRC_M1178", "count": 285.7, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1178", "shortName": "NBRC_M1178" },
+{ "name": "NBRC_M1186", "count": 285.7, "linkCount": 0, "label": "Azospirillum amazonense medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1186", "shortName": "NBRC_M1186" },
+{ "name": "NBRC_M1078", "count": 285.7, "linkCount": 0, "label": "Desulfovibrio magneticus medium for sulfate-reducing growth mode", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1078", "shortName": "NBRC_M1078" },
+{ "name": "NBRC_M1056", "count": 285.7, "linkCount": 0, "label": "Desulfovibrio magneticus medium for magnetosome formation", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1056", "shortName": "NBRC_M1056" },
+{ "name": "NBRC_M995", "count": 277.8, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M995", "shortName": "NBRC_M995" },
+{ "name": "NBRC_M964", "count": 277.8, "linkCount": 0, "label": "AF6", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M964", "shortName": "NBRC_M964" },
+{ "name": "NBRC_M967", "count": 270.3, "linkCount": 0, "label": "AF6 (SW)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M967", "shortName": "NBRC_M967" },
+{ "name": "NBRC_M1196", "count": 250, "linkCount": 0, "label": "Modified W-medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1196", "shortName": "NBRC_M1196" },
+{ "name": "NBRC_M1195", "count": 250, "linkCount": 0, "label": "Terephthalate medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1195", "shortName": "NBRC_M1195" },
+{ "name": "NBRC_M1200", "count": 235.3, "linkCount": 0, "label": "W-medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1200", "shortName": "NBRC_M1200" },
+{ "name": "NBRC_M9", "count": 230.8, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M9", "shortName": "NBRC_M9" },
+{ "name": "NBRC_M235", "count": 230.8, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M235", "shortName": "NBRC_M235" },
+{ "name": "NBRC_M10", "count": 230.8, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M10", "shortName": "NBRC_M10" },
+{ "name": "NBRC_M327", "count": 222.2, "linkCount": 0, "label": "HV Agar", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M327", "shortName": "NBRC_M327" },
+{ "name": "NBRC_M1127", "count": 222.2, "linkCount": 0, "label": "Mineral salts medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1127", "shortName": "NBRC_M1127" },
+{ "name": "NBRC_M971", "count": 222.2, "linkCount": 0, "label": "Pseudomonas saccharophila medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M971", "shortName": "NBRC_M971" },
+{ "name": "NBRC_M1046", "count": 222.2, "linkCount": 0, "label": "Synthetic low-Nutrient Agar (SNA)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1046", "shortName": "NBRC_M1046" },
+{ "name": "NBRC_M980", "count": 214.3, "linkCount": 0, "label": "S6 Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M980", "shortName": "NBRC_M980" },
+{ "name": "NBRC_M305", "count": 206.9, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M305", "shortName": "NBRC_M305" },
+{ "name": "NBRC_M982", "count": 206.9, "linkCount": 0, "label": "CM3 Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M982", "shortName": "NBRC_M982" },
+{ "name": "NBRC_M1210", "count": 200, "linkCount": 0, "label": "A3", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1210", "shortName": "NBRC_M1210" },
+{ "name": "NBRC_M381", "count": 193.5, "linkCount": 0, "label": "Methanol-utilizing Bacteria Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M381", "shortName": "NBRC_M381" },
+{ "name": "NBRC_M966", "count": 181.8, "linkCount": 0, "label": "URO (DW pH10)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M966", "shortName": "NBRC_M966" },
+{ "name": "NBRC_M1002", "count": 166.7, "linkCount": 0, "label": "Acidimicrobium Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1002", "shortName": "NBRC_M1002" },
+{ "name": "NBRC_M324", "count": 160, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M324", "shortName": "NBRC_M324" },
+{ "name": "NBRC_M18", "count": 160, "linkCount": 0, "label": "Petri-Cellulose Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M18", "shortName": "NBRC_M18" },
+{ "name": "NBRC_M379", "count": 160, "linkCount": 0, "label": "Polyangium Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M379", "shortName": "NBRC_M379" },
+{ "name": "NBRC_M1125", "count": 153.8, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1125", "shortName": "NBRC_M1125" },
+{ "name": "NBRC_M240", "count": 153.8, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M240", "shortName": "NBRC_M240" },
+{ "name": "NBRC_M845", "count": 153.8, "linkCount": 0, "label": "Acidic Glycerol-Asparagine Agar (ISP medium No.5)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M845", "shortName": "NBRC_M845" },
+{ "name": "NBRC_M265", "count": 153.8, "linkCount": 0, "label": "Glycerol-Asparagine Agar (ISP Medium No.5)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M265", "shortName": "NBRC_M265" },
+{ "name": "NBRC_M1022", "count": 148.1, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1022", "shortName": "NBRC_M1022" },
+{ "name": "NBRC_M874", "count": 148.1, "linkCount": 0, "label": "Marine acidophilic sulfur-oxidizing bacteria Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M874", "shortName": "NBRC_M874" },
+{ "name": "NBRC_M1000", "count": 148.1, "linkCount": 0, "label": "Xy agar", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1000", "shortName": "NBRC_M1000" },
+{ "name": "NBRC_M113", "count": 142.9, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M113", "shortName": "NBRC_M113" },
+{ "name": "NBRC_M829", "count": 142.9, "linkCount": 0, "label": "HEPES Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M829", "shortName": "NBRC_M829" },
+{ "name": "NBRC_M268", "count": 137.9, "linkCount": 0, "label": "Inorganic Salts Starch Agar (ISP Medium No.4)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M268", "shortName": "NBRC_M268" },
+{ "name": "NBRC_M1210", "count": 133.3, "linkCount": 0, "label": "A3", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1210", "shortName": "NBRC_M1210" },
+{ "name": "NBRC_M968", "count": 129, "linkCount": 0, "label": "KO2(NH4)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M968", "shortName": "NBRC_M968" },
+{ "name": "NBRC_M965", "count": 129, "linkCount": 0, "label": "KO2(NO3)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M965", "shortName": "NBRC_M965" },
+{ "name": "NBRC_M1106", "count": 125, "linkCount": 0, "label": "1a Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1106", "shortName": "NBRC_M1106" },
+{ "name": "NBRC_M1201", "count": 125, "linkCount": 0, "label": "MMA medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1201", "shortName": "NBRC_M1201" },
+{ "name": "NBRC_M391", "count": 117.6, "linkCount": 0, "label": "Thermodesulfobium narugense Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M391", "shortName": "NBRC_M391" },
+{ "name": "NBRC_M1178", "count": 114.3, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1178", "shortName": "NBRC_M1178" },
+{ "name": "NBRC_M995", "count": 111.1, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M995", "shortName": "NBRC_M995" },
+{ "name": "NBRC_M964", "count": 111.1, "linkCount": 0, "label": "AF6", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M964", "shortName": "NBRC_M964" },
+{ "name": "NBRC_M967", "count": 108.1, "linkCount": 0, "label": "AF6 (SW)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M967", "shortName": "NBRC_M967" },
+{ "name": "NBRC_M960", "count": 100, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M960", "shortName": "NBRC_M960" },
+{ "name": "NBRC_M1006", "count": 100, "linkCount": 0, "label": "Hemp Seed Agar (HSA)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1006", "shortName": "NBRC_M1006" },
+{ "name": "NBRC_M209", "count": 95.2, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M209", "shortName": "NBRC_M209" },
+{ "name": "NBRC_M110", "count": 90.9, "linkCount": 0, "label": "Minimal Medium for Yeast", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M110", "shortName": "NBRC_M110" },
+{ "name": "NBRC_M1033", "count": 88.9, "linkCount": 0, "label": "Phe91 Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1033", "shortName": "NBRC_M1033" },
+{ "name": "NBRC_M111", "count": 83.3, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M111", "shortName": "NBRC_M111" },
+{ "name": "NBRC_M1002", "count": 83.3, "linkCount": 0, "label": "Acidimicrobium Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1002", "shortName": "NBRC_M1002" },
+{ "name": "NBRC_M324", "count": 80, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M324", "shortName": "NBRC_M324" },
+{ "name": "NBRC_M887", "count": 80, "linkCount": 0, "label": "Guaiacol-CMC Agar", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M887", "shortName": "NBRC_M887" },
+{ "name": "NBRC_M18", "count": 80, "linkCount": 0, "label": "Petri-Cellulose Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M18", "shortName": "NBRC_M18" },
+{ "name": "NBRC_M379", "count": 80, "linkCount": 0, "label": "Polyangium Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M379", "shortName": "NBRC_M379" },
+{ "name": "NBRC_M235", "count": 76.9, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M235", "shortName": "NBRC_M235" },
+{ "name": "NBRC_M10", "count": 76.9, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M10", "shortName": "NBRC_M10" },
+{ "name": "NBRC_M240", "count": 76.9, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M240", "shortName": "NBRC_M240" },
+{ "name": "NBRC_M9", "count": 76.9, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M9", "shortName": "NBRC_M9" },
+{ "name": "NBRC_M1125", "count": 76.9, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1125", "shortName": "NBRC_M1125" },
+{ "name": "NBRC_M114", "count": 76.9, "linkCount": 0, "label": "Medium for the 2&mu; Mapping Strains", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M114", "shortName": "NBRC_M114" },
+{ "name": "NBRC_M1022", "count": 74.1, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1022", "shortName": "NBRC_M1022" },
+{ "name": "NBRC_M886", "count": 74.1, "linkCount": 0, "label": "Allantoin Mineral Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M886", "shortName": "NBRC_M886" },
+{ "name": "NBRC_M327", "count": 74.1, "linkCount": 0, "label": "HV Agar", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M327", "shortName": "NBRC_M327" },
+{ "name": "NBRC_M874", "count": 74.1, "linkCount": 0, "label": "Marine acidophilic sulfur-oxidizing bacteria Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M874", "shortName": "NBRC_M874" },
+{ "name": "NBRC_M1127", "count": 74.1, "linkCount": 0, "label": "Mineral salts medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1127", "shortName": "NBRC_M1127" },
+{ "name": "NBRC_M304", "count": 74.1, "linkCount": 0, "label": "Oatmeal Agar (B)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M304", "shortName": "NBRC_M304" },
+{ "name": "NBRC_M971", "count": 74.1, "linkCount": 0, "label": "Pseudomonas saccharophila medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M971", "shortName": "NBRC_M971" },
+{ "name": "NBRC_M1046", "count": 74.1, "linkCount": 0, "label": "Synthetic low-Nutrient Agar (SNA)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1046", "shortName": "NBRC_M1046" },
+{ "name": "NBRC_M1000", "count": 74.1, "linkCount": 0, "label": "Xy agar", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1000", "shortName": "NBRC_M1000" },
+{ "name": "NBRC_M1186", "count": 71.4, "linkCount": 0, "label": "Azospirillum amazonense medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1186", "shortName": "NBRC_M1186" },
+{ "name": "NBRC_M980", "count": 71.4, "linkCount": 0, "label": "S6 Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M980", "shortName": "NBRC_M980" },
+{ "name": "NBRC_M305", "count": 69, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M305", "shortName": "NBRC_M305" },
+{ "name": "NBRC_M982", "count": 69, "linkCount": 0, "label": "CM3 Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M982", "shortName": "NBRC_M982" },
+{ "name": "NBRC_M268", "count": 69, "linkCount": 0, "label": "Inorganic Salts Starch Agar (ISP Medium No.4)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M268", "shortName": "NBRC_M268" },
+{ "name": "NBRC_M381", "count": 64.5, "linkCount": 0, "label": "Methanol-utilizing Bacteria Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M381", "shortName": "NBRC_M381" },
+{ "name": "NBRC_M1196", "count": 62.5, "linkCount": 0, "label": "Modified W-medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1196", "shortName": "NBRC_M1196" },
+{ "name": "NBRC_M1195", "count": 62.5, "linkCount": 0, "label": "Terephthalate medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1195", "shortName": "NBRC_M1195" },
+{ "name": "NBRC_M1090", "count": 62.5, "linkCount": 0, "label": "mTC10 medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1090", "shortName": "NBRC_M1090" },
+{ "name": "NBRC_M207", "count": 60.6, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M207", "shortName": "NBRC_M207" },
+{ "name": "NBRC_M239", "count": 60.6, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M239", "shortName": "NBRC_M239" },
+{ "name": "NBRC_M830", "count": 60.6, "linkCount": 0, "label": "Acidianus manzaensis Medium for Autotrophic Growth", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M830", "shortName": "NBRC_M830" },
+{ "name": "NBRC_M953", "count": 60.6, "linkCount": 0, "label": "NMS medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M953", "shortName": "NBRC_M953" },
+{ "name": "NBRC_M1200", "count": 58.8, "linkCount": 0, "label": "W-medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1200", "shortName": "NBRC_M1200" },
+{ "name": "NBRC_M896", "count": 57.1, "linkCount": 0, "label": "ACTIVATED CARBON MEDIUM", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M896", "shortName": "NBRC_M896" },
+{ "name": "NBRC_M855", "count": 57.1, "linkCount": 0, "label": "Green Sulfur Bacterium Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M855", "shortName": "NBRC_M855" },
+{ "name": "NBRC_M998", "count": 57.1, "linkCount": 0, "label": "Green Sulfur Bacterium Medium (10 NaCl)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M998", "shortName": "NBRC_M998" },
+{ "name": "NBRC_M292", "count": 55.6, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M292", "shortName": "NBRC_M292" },
+{ "name": "NBRC_M1138", "count": 55.6, "linkCount": 0, "label": "Green Sulfur Bacterium Medium (100 NaCl)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1138", "shortName": "NBRC_M1138" },
+{ "name": "NBRC_M1194", "count": 51.3, "linkCount": 0, "label": "Thiobacillus plumbophilus Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1194", "shortName": "NBRC_M1194" },
+{ "name": "NBRC_M929", "count": 51.3, "linkCount": 0, "label": "Thiomonas cuprina medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M929", "shortName": "NBRC_M929" },
+{ "name": "NBRC_M289", "count": 40.8, "linkCount": 0, "label": "(No Data)", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M289", "shortName": "NBRC_M289" },
+{ "name": "NBRC_M1078", "count": 40.8, "linkCount": 0, "label": "Desulfovibrio magneticus medium for sulfate-reducing growth mode", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1078", "shortName": "NBRC_M1078" },
+{ "name": "NBRC_M1056", "count": 40.8, "linkCount": 0, "label": "Desulfovibrio magneticus medium for magnetosome formation", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1056", "shortName": "NBRC_M1056" },
+{ "name": "NBRC_M1034", "count": 40.8, "linkCount": 0, "label": "Phe82 Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1034", "shortName": "NBRC_M1034" },
+{ "name": "NBRC_M986", "count": 39.2, "linkCount": 0, "label": "Methanobacterium Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M986", "shortName": "NBRC_M986" },
+{ "name": "NBRC_M994", "count": 39.2, "linkCount": 0, "label": "Methanosaeta concilii medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M994", "shortName": "NBRC_M994" },
+{ "name": "NBRC_M1081", "count": 37.7, "linkCount": 0, "label": "MMJHS medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1081", "shortName": "NBRC_M1081" },
+{ "name": "NBRC_M1085", "count": 37.7, "linkCount": 0, "label": "MMJHS-2 medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1085", "shortName": "NBRC_M1085" },
+{ "name": "NBRC_M810", "count": 37.7, "linkCount": 0, "label": "Methanocaldococcus jannaschii Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M810", "shortName": "NBRC_M810" },
+{ "name": "NBRC_M1009", "count": 37, "linkCount": 0, "label": "Artificial seawater Medium", "userCount": true, "url": "http://192.168.196.129/stanza/gmo_general?med_id=NBRC_M1009", "shortName": "NBRC_M1009" }
+			],
+			
+			"links": [
+				{ "source": 0, "target": 1, "depth": 0, "count": 1 },
+				{ "source": 0, "target": 2, "depth": 0, "count": 1 },
+				{ "source": 0, "target": 3, "depth": 0, "count": 1 },
+				{ "source": 0, "target": 4, "depth": 0, "count": 1 },
+				{ "source": 1, "target": 5, "depth": 0, "count": 1 },
+				{ "source": 1, "target": 6, "depth": 0, "count": 1 },
+				{ "source": 1, "target": 7, "depth": 0, "count": 1 },
+				{ "source": 1, "target": 8, "depth": 0, "count": 1 },
+				{ "source": 1, "target": 9, "depth": 0, "count": 1 },
+				{ "source": 2, "target": 10, "depth": 0, "count": 1 },
+				{ "source": 2, "target": 11, "depth": 0, "count": 1 },
+				{ "source": 2, "target": 12, "depth": 0, "count": 1 },
+				{ "source": 2, "target": 13, "depth": 0, "count": 1 },
+				{ "source": 2, "target": 14, "depth": 0, "count": 1 },
+				{ "source": 2, "target": 15, "depth": 0, "count": 1 },
+				{ "source": 2, "target": 16, "depth": 0, "count": 1 },
+				{ "source": 2, "target": 17, "depth": 0, "count": 1 },
+				{ "source": 2, "target": 18, "depth": 0, "count": 1 },
+				{ "source": 2, "target": 19, "depth": 0, "count": 1 },
+				{ "source": 2, "target": 20, "depth": 0, "count": 1 },
+				{ "source": 2, "target": 21, "depth": 0, "count": 1 },
+				{ "source": 2, "target": 22, "depth": 0, "count": 1 },
+				{ "source": 2, "target": 23, "depth": 0, "count": 1 },
+				{ "source": 2, "target": 24, "depth": 0, "count": 1 },
+				{ "source": 2, "target": 25, "depth": 0, "count": 1 },
+				{ "source": 2, "target": 26, "depth": 0, "count": 1 },
+				{ "source": 2, "target": 27, "depth": 0, "count": 1 },
+				{ "source": 2, "target": 28, "depth": 0, "count": 1 },
+				{ "source": 2, "target": 29, "depth": 0, "count": 1 },
+				{ "source": 2, "target": 30, "depth": 0, "count": 1 },
+				{ "source": 2, "target": 31, "depth": 0, "count": 1 },
+				{ "source": 2, "target": 32, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 33, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 34, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 35, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 36, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 37, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 38, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 39, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 40, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 41, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 42, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 43, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 44, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 45, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 46, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 47, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 48, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 49, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 50, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 51, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 52, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 53, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 54, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 55, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 56, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 57, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 58, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 59, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 60, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 61, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 62, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 63, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 64, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 65, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 66, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 67, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 68, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 69, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 70, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 71, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 72, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 73, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 74, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 75, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 76, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 77, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 78, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 79, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 80, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 81, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 82, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 83, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 84, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 85, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 86, "depth": 0, "count": 1 },
+				{ "source": 3, "target": 87, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 88, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 89, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 90, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 91, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 92, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 93, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 94, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 95, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 96, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 97, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 98, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 99, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 100, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 101, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 102, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 103, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 104, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 105, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 106, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 107, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 108, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 109, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 110, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 111, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 112, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 113, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 114, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 115, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 116, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 117, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 118, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 119, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 120, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 121, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 122, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 123, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 124, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 125, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 126, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 127, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 128, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 129, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 130, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 131, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 132, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 133, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 134, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 135, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 136, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 137, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 138, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 139, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 140, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 141, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 142, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 143, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 144, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 145, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 146, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 147, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 148, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 149, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 150, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 151, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 152, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 153, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 154, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 155, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 156, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 157, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 158, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 159, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 160, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 161, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 162, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 163, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 164, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 165, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 166, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 167, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 168, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 169, "depth": 0, "count": 1 },
+				{ "source": 4, "target": 170, "depth": 0, "count": 1 },
+			]
+		}
+	}
+};
+</script></head><body>
+<div id="chart">
+
+</div>
+
+ </body>
+</html>

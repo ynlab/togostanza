@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Shape Information</title>
+    {{#each css_uri}}
+    <link rel="stylesheet" type="text/css" href="{{this}}" />
+    {{/each}}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    {{adjust_iframe_height_script}}
+  </head>
+<style>
+/* Definition Image */
+div.definitionImage {
+	position:absolute;
+	padding:0;
+	margin:5px;
+	border:none;
+}
+
+/* Definition Common for Table */
+table.table {
+	margin-left:170px;
+	width:auto;
+}
+
+/* Definition Common for Table Data */
+table.table td {
+	border: none;
+	border-collapase: collapase;
+	padding: 4px;
+	padding-right:10px;
+}
+
+/* Definition Header(Synonym and Definition) */
+table.table td.definitionSynonym    h1,
+table.table td.definitionDefinition h1 {
+	font-size: 1em;
+	line-height: 1.2;
+	padding:0;
+	margin:2pt;
+}
+
+/* Definition Body(Synonym and Definition) */
+table.table td.definitionSynonym    article div,
+table.table td.definitionDefinition article div {
+	/* color:red; */
+	margin-left: 1em;
+}
+
+/* Definition Synonym List */
+table.table td.definitionSynonym .synonymList li {
+	white-space:nowrap
+}
+
+/* Definition Title */
+table.table th.definitionTitle {
+	/* color:blue; */
+	font-size: 1.5em;
+	line-height: 1.2;
+	padding:0;
+	margin:0;
+	border:none;
+	white-space:nowrap
+}
+</style>
+
+  <body>
+<div class="definitionImage"><img src="/stanza/assets/mpo_shape/images/{{features.image}}" /></div>
+<table class="table">
+<tr><th colspan="2" class="definitionTitle">{{features.label}}</th></tr>
+<tr>
+	<td class="definitionSynonym">
+		<article class="synonymList">
+			<h1>Synonym</h1>
+			<div>
+				<ul>
+{{#if features.synonymlist}}
+{{#each features.synonymlist}}
+					<li>{{this}}</li>
+{{/each}}
+{{else}}
+					<li>(No Data)</li>
+{{/if}}
+				</ul>
+			</div>
+		</article>
+	</td>
+	<td class="definitionDefinition">
+		<article class="definition">
+			<h1>Definition</h1>
+			<div><p>{{features.definition}}</p></div>
+		</article>
+	</td>
+</tr>
+</table>
+  </body>
+</html>

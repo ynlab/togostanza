@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Genus List (Phenotype based)</title>
+		{{#each css_uri}}
+		<link rel="stylesheet" type="text/css" href="{{this}}" />
+		{{/each}}
+		<link rel="stylesheet" type="text/css" href="/stanza/assets/mpo_genus/nv.d3.min.css" />
+		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script src="/stanza/assets/mpo_genus/d3.v3.min.js"></script>
+		<script src="/stanza/assets/mpo_genus/nv.d3.min.js"></script>
+		<script src="/stanza/assets/mpo_genus/models/legend.js"></script>
+		<script src="/stanza/assets/mpo_genus/models/pie.js"></script>
+		<script src="/stanza/assets/mpo_genus/models/pieChart.js"></script>
+		<script src="/stanza/assets/mpo_genus/utils.js"></script>
+		{{adjust_iframe_height_script}}
+		<script>
+		var data = [
+		{{#each features}}
+		{ key: "{{genus}}", value: {{cnt}}, href: "{{list2}}", nolinked: false },
+		{{/each}}
+		];
+		
+		// etc data pickup
+		var etcIndex = null;
+		var item = null;
+		for( i in data ){
+			if(data[i].href == "" ){
+				data[i].nolink = true;
+				if(data[i].key == ""){
+					etcIndex = i;
+					item = data[i];
+				}
+			}
+			else if(data[i].key == ""){
+				data[i].key = "(No Data)";
+			}
+		}
+		if(etcIndex !== null && item !== null){
+			item.key = "(Unknown)";
+			item.nolinked = true;
+			data.splice(etcIndex,1);
+			data.push(item);
+			
+		}
+		</script>
+		
+		<style>
+			body {
+				position:relative;
+			}
+			h3 {
+				line-height:1.0;
+				font-size: 16px;
+				line-weight: bold;
+			}
+			h3 + p {
+				line-height:1.0;
+			}
+			#piechart {
+				padding:0;
+				border:none;
+				float:left;
+				border-radius:0;
+				-moz-border-radius: 0;
+				-moz-box-shadow: none;
+				box-shadow: none;
+			}
+			#legendTable {
+				margin-left: 520px;
+				height:500px;
+				overflow:scroll;
+			}
+			svg.piechart {
+				width: 500px;
+				height: 500px;
+			}
+			#piechart div.graph-caption {
+				text-align:center;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- Pie Chart -->
+		<div id="piechart" class="with-3d-shadow with-transitions">
+			{{#if general}}<div class="graph-caption">{{general.label}}</div>{{/if}}
+			<svg class="piechart"></svg>
+			<script>
+			var colors = d3.scale.category20().range();
+			//var color1 = d3.scale.category10();
+			//var color2 = d3.scale.category20();
+			//var color3 = d3.scale.category20b();
+			//var color4 = d3.scale.category20c();
+			//var cl = color1.range();
+			//colors = cl.concat( color2.range() );
+			//colors = colors.concat( color3.range() );
+			//colors = colors.concat( color4.range() );
+			
+			nv.addGraph(function() {
+				var width = 500;
+				var height = 500;
+				
+				var chart = nv.models.pieChart()
+				    .x(function(d) { return d.key })
+				    .y(function(d) { return d.value })
+				    .labelThreshold(.05)
+				    .showLabels(true)
+				    .color(colors)
+				    .width(width)
+				    .height(height)
+				    .showLegend(false)
+				    .donut(true)
+				    .donutRatio(0.30);
+				
+				d3.select("#piechart svg")
+					.datum(data)
+					.transition().duration(1200)
+					.attr('width', width)
+					.attr('height', height)
+					.call(chart);
+				
+				return chart;
+			});
+			</script>
+		</div>
+
+		<!-- Legend Tables -->
+		<div id="legendTable">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Color</th>
+						<th>Genus name</th>
+						<th>Organisms</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+			<script>
+			for( var i in data ){
+				// Color Column
+				var clrSpanItem = $("<span />");
+				clrSpanItem.css("background-color", colors[ i % colors.length ]);
+				clrSpanItem.css("display", "inline-block");
+				clrSpanItem.css("height", "1em");
+				clrSpanItem.css("width", "1em");
+				clrSpanItem.text(" ");
+				
+				// Genus Name Column
+				var clrItem = $("<td />");
+				clrSpanItem.appendTo(clrItem);
+				
+				var keyItem = $("<td />");
+				if(!data[i].nolinked){
+					var keyAnchor = $("<a />");
+					keyAnchor.attr("href",data[i].href);
+					keyAnchor.text(data[i].key);
+					keyAnchor.appendTo(keyItem);
+				}
+				else{
+					keyItem.text(data[i].key);
+				}
+				
+				// Count Column
+				var valItem = $("<td />").text(data[i].value);
+				
+				// Appendes
+				var trItem = $("<tr />");
+				clrItem.appendTo(trItem);
+				keyItem.appendTo(trItem);
+				valItem.appendTo(trItem);
+				trItem.appendTo("#legendTable tbody");
+			}
+			</script>
+		</div>
+	</body>
+</html>

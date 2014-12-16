@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Organism List</title>
+    {{#each css_uri}}
+    <link rel="stylesheet" type="text/css" href="{{this}}" />
+    {{/each}}
+		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script src="/stanza/assets/mpo_genus/d3.v3.min.js"></script>
+		<script src="/stanza/assets/mpo_genus/nv.d3.min.js"></script>
+		<script src="/stanza/assets/mpo_genus/models/legend.js"></script>
+		<script src="/stanza/assets/mpo_genus/models/pie.js"></script>
+		<script src="/stanza/assets/mpo_genus/models/pieChart.js"></script>
+		<script src="/stanza/assets/mpo_genus/utils.js"></script>
+    {{adjust_iframe_height_script}}
+<script>
+var data = [
+{{#each features}}
+{ key: "{{genus}}", value: {{cnt}} },
+{{/each}}
+];
+</script>
+  </head>
+  <body>
+<svg id="piechart" class="piechart"></svg>
+<script>
+nv.addGraph(function() {
+
+    var width = 800,
+        height = 1200;
+
+var colors = d3.scale.category20().range();
+//var colors = ['#0000ff','#0033ff','#0066ff','#0099ff','#00ccff','#00ffff','#00ffcc','#00ff99','#00ff66','#00ff33','#00ff00','#33ff00','#66ff00','#99ff00','#ccff00','#ffff00','#ffcc00','#ff9900','#ff6600','#ff3300','#ff0000','#ff0033','#ff0066','#ff0099','#ff00cc','#ff00ff','#cc00ff','#9900ff','#6600ff','#3300ff'];
+//var colors = ['#0000ff','#3333ff','#6666ff','#9999ff','#ccccff','#00ffff','#33ffff','#66ffff','#99ffff','#ccffff','#00ff00','#33ff33','#66ff66','#99ff99','#ccffcc','#ffff00','#ffff33','#ffff66','#ffff99','#ffffcc','#ff0000','#ff3333','#ff6666','#ff9999','#ffcccc','#ff00ff','#ff33ff','#ff66ff','#ff99ff','#ffccff'];
+
+var color1 = d3.scale.category10();
+var color2 = d3.scale.category20();
+var color3 = d3.scale.category20b();
+var color4 = d3.scale.category20c();
+var cl = color1.range();
+colors = cl.concat( color2.range() );
+colors = colors.concat( color3.range() );
+colors = colors.concat( color4.range() );
+
+    var chart = nv.models.pieChart()
+        .x(function(d) { return d.key })
+        .y(function(d) { return d.value })
+        //.labelThreshold(.08)
+        .showLabels(false)
+        .color(colors)
+        .width(width)
+        .height(height)
+        .donut(true)
+        .donutRatio(0.30);
+
+//    chart.pie
+//        .startAngle(function(d) { return d.startAngle/2 -Math.PI/2 })
+//        .endAngle(function(d) { return d.endAngle/2 -Math.PI/2 });
+
+      //chart.pie.donutLabelsOutside(true).donut(true);
+
+      d3.select("#piechart")
+          //.datum(historicalBarChart)
+          .datum(data)
+        .transition().duration(1200)
+          .attr('width', width)
+          .attr('height', height)
+          .call(chart);
+
+    return chart;
+});
+
+</script>
+  </body>
+</html>

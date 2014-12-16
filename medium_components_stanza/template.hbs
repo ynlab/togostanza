@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Medium Components</title>
+    {{#each css_uri}}
+    <link rel="stylesheet" type="text/css" href="{{this}}" />
+    {{/each}}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    {{adjust_iframe_height_script}}
+  </head>
+<style>
+table.table td.link {
+	width: 14%;
+	text-align: center;
+}
+/* border trimming */
+table.table > tbody > tr > td > table.table td {
+	border:none;
+}
+
+</style>
+  <body>
+<div>
+{{#each medium_information}}
+<table class="table">
+<tbody>
+{{#each this}}
+	<tr>
+		<td>{{this.row_key}}</td>
+		<td>
+		{{#if this.is_array}}
+		<table class="table">
+		{{#each this.row_value}}
+		<tr>
+		<td>{{this.label}}</td>
+		<td class="link">{{#if this.pubchem}}<a href="{{this.pubchem}}" target="_blank">PubChem</a>{{/if}}</td>
+		<td class="link">{{#if this.chebi}}<a href="{{this.chebi}}" target="_blank">ChEBI</a>{{/if}}</td>
+		<td class="link">{{#if this.snomedct}}<a href="{{this.snomedct}}" target="_blank">SNOMEDCT</a>{{/if}}</td>
+		<td class="link">{{#if this.mesh}}<a href="{{this.mesh}}" target="_blank">MESH</a>{{/if}}</td>
+		<td class="link">{{#if this.wikipedia}}<a href="{{this.wikipedia}}" target="_blank">Wikipedia</a>{{/if}}</td>
+		</tr>
+		{{/each}}
+		</table>
+		{{else}}{{#if this.row_href}}<a href="{{this.row_href}}" target="_blank">{{this.row_value}}</a>{{else}}{{this.row_value}}{{/if}}{{/if}}
+		</td>
+	</tr>
+{{/each}}
+</tbody>
+</table>
+{{/each}}
+</div>
+  </body>
+</html>
