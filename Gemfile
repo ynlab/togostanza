@@ -61,7 +61,6 @@ gem 'mpo_shape_stanza', path: './mpo_shape_stanza'
 gem 'gmo_applied_spices_stanza', path: './gmo_applied_spices_stanza'
 gem 'gmo_genus_stanza', path: './gmo_genus_stanza'
 gem 'gmo_approximation_stanza', path: './gmo_approximation_stanza'
-gem 'approximation_tsv_stanza', path: './approximation_tsv_stanza'
 gem 'medium_components_stanza', path: './medium_components_stanza'
 
 # nanostanza
