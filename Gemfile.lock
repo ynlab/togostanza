@@ -1,10 +1,4 @@
 PATH
-  remote: ./approximation_tsv_stanza
-  specs:
-    approximation_tsv_stanza (0.0.1)
-      togostanza
-
-PATH
   remote: ./environment_attributes_stanza
   specs:
     environment_attributes_stanza (0.0.1)
@@ -467,7 +461,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  approximation_tsv_stanza!
   capybara
   environment_attributes_stanza!
   environment_environmental_ontology_stanza!
