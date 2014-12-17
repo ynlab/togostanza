@@ -8,9 +8,9 @@ class GmoApproximationStanza < TogoStanza::Stanza::Base
 	property :medium_information do |medium_id|
 		query = <<-SPARQL.strip_heredoc
 			PREFIX gmo: <http://purl.jp/bio/11/gmo#>
-			select distinct ?desc
-			from <http://togogenome.org/graph/brc>
-			where {
+			SELECT distinct ?desc
+			FROM <http://togogenome.org/graph/brc>
+			WHERE {
 				?brc gmo:GMO_000101 "#{medium_id}" .
 				?brc gmo:GMO_000102 ?desc .
 			}
@@ -32,73 +32,73 @@ class GmoApproximationStanza < TogoStanza::Stanza::Base
 		query = <<-SPARQL.strip_heredoc
 			PREFIX gmo: <http://purl.jp/bio/11/gmo#>
 			PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-			select ?subject ?medium_id ?title ?index as ?index2 count(?object) as ?count2 ?original (round((2.0*?index)/(count(?object)+?original)*1000.0)/10.0) as ?score
-			from <http://togogenome.org/graph/brc>
-			from <http://togogenome.org/graph/gmo>
-			where {
+			SELECT ?subject ?medium_id ?title ?index AS ?index2 COUNT(?object) AS ?count2 ?original (ROUND((2.0*?index)/(COUNT(?object)+?original)*1000.0)/10.0) AS ?score
+			FROM <http://togogenome.org/graph/brc>
+			FROM <http://togogenome.org/graph/gmo>
+			WHERE {
 				{
-					select ?subject ?medium_id ?title sum(?found) as ?index where {
-					select ?subject ?medium_id ?title ?list max(?found_src) as ?found
-						where {
+					SELECT ?subject ?medium_id ?title SUM(?found) AS ?index WHERE {
+					SELECT ?subject ?medium_id ?title ?list MAX(?found_src) AS ?found
+						WHERE {
 							?key gmo:GMO_000101 "#{medium_id}" .
 							?subject gmo:GMO_000101 ?medium_id .
 							?subject gmo:GMO_000104 ?list .
 							MINUS { ?key gmo:GMO_000104 ?list }
 
 							?list rdfs:subClassOf* ?cla .
-							filter( isURI(?cla) && ?cla in (gmo:GMO_000015,gmo:GMO_000016) )
+							FILTER( isURI(?cla) && ?cla IN (gmo:GMO_000015, gmo:GMO_000016) )
 
 							OPTIONAL { ?subject gmo:GMO_000102 ?title }.
 
 							?list rdfs:label ?label .
-							filter( lang(?label) != "ja" ) .
+							FILTER( LANG(?label) != "ja" ) .
 
 							{
-								select distinct ?search_keys
-								where {
+								SELECT distinct ?search_keys
+								WHERE {
 									?brc gmo:GMO_000101 "#{medium_id}" .
 									?brc gmo:GMO_000104 ?s .
 									?s rdfs:subClassOf* ?cla .
-									filter( isURI(?cla) && ?cla in (gmo:GMO_000015,gmo:GMO_000016) )
+									FILTER( isURI(?cla) && ?cla IN (gmo:GMO_000015,gmo:GMO_000016) )
 									?s rdfs:label ?label .
-									filter( lang(?label) != "ja" )
-									bind( replace(lcase(?label),"(monohydrate|dihydrate|trihydrate|tetrahydrate|pentahydrate|hexahydrate|hesahydrate|heptahydrate|heptaphydreate|octahydrate|nanohydrate|n-hydrate|x-hydrate)","") as ?search_keys)
+									FILTER( LANG(?label) != "ja" )
+									BIND( REPLACE(LCASE(?label), "(monohydrate|dihydrate|trihydrate|tetrahydrate|pentahydrate|hexahydrate|hesahydrate|heptahydrate|heptaphydreate|octahydrate|nanohydrate|n-hydrate|x-hydrate)", "") AS ?search_keys)
 								}
 							} .
-							bind( contains(lcase(?label),?search_keys) as ?found_src ) .
-							filter( ?found_src != 0 ) .
+							BIND( CONTAINS(LCASE(?label), ?search_keys) AS ?found_src ) .
+							FILTER( ?found_src != 0 ) .
 						}
-						order by ?subject ?list}
+						ORDER BY ?subject ?list}
 				}
 				UNION {
-					select ?subject ?medium_id ?title sum(?found) as ?index where {
+					SELECT ?subject ?medium_id ?title SUM(?found) AS ?index WHERE {
 						?key gmo:GMO_000101 "#{medium_id}" .
 						?key gmo:GMO_000104 ?list .
 						?list rdfs:subClassOf* ?cla .
-						filter( isURI(?cla) && ?cla in (gmo:GMO_000015,gmo:GMO_000016) )
+						FILTER( isURI(?cla) && ?cla IN (gmo:GMO_000015,gmo:GMO_000016) )
 						?subject gmo:GMO_000104 ?list .
 						?subject gmo:GMO_000101 ?medium_id .
-						filter( ?subject != ?key )
+						FILTER( ?subject != ?key )
 
 						OPTIONAL { ?subject gmo:GMO_000102 ?title }.
-						bind( 1 as ?found ) .
+						BIND( 1 AS ?found ) .
 					}
 				} .
 				OPTIONAL {
-					select count(distinct ?oriobj) as ?original where {
+					SELECT COUNT(distinct ?oriobj) AS ?original WHERE {
 						?orisub gmo:GMO_000101 "#{medium_id}" .
 						?orisub gmo:GMO_000104 ?oriobj .
 						?oriobj rdfs:subClassOf* ?cla .
-						filter( isURI(?cla) && ?cla in (gmo:GMO_000015,gmo:GMO_000016) )
+						FILTER( isURI(?cla) && ?cla IN (gmo:GMO_000015, gmo:GMO_000016) )
 					}
 				}
 				OPTIONAL {
 					?subject gmo:GMO_000104 ?object .
 					?object rdfs:subClassOf* ?cla .
-					filter( isURI(?cla) && ?cla in (gmo:GMO_000015,gmo:GMO_000016) )
+					filter( isURI(?cla) && ?cla IN (gmo:GMO_000015, gmo:GMO_000016) )
 				} .
 			}
-			order by desc(?score) ?title
+			ORDER BY DESC(?score) ?title
 		SPARQL
 
 		scorelist = query(SPARQL_ENDPOINT_URL, query)
@@ -107,7 +107,7 @@ class GmoApproximationStanza < TogoStanza::Stanza::Base
 		# Is Binded Undefined Components from Request Mediums
 		query = <<-SPARQL.strip_heredoc
 			PREFIX gmo: <http://purl.jp/bio/11/gmo#>
-			select distinct count(?brc) as ?c {
+			SELECT DISTINCT COUNT(?brc) AS ?c {
 				?brc gmo:GMO_000101 "#{medium_id}" .
 				?brc gmo:GMO_000104 ?gmo .
 				?gmo rdfs:subClassOf* gmo:GMO_000016 .
@@ -120,7 +120,7 @@ class GmoApproximationStanza < TogoStanza::Stanza::Base
 		# Get Undefined Components Binding List
 		query = <<-SPARQL.strip_heredoc
 			PREFIX gmo: <http://purl.jp/bio/11/gmo#>
-			select distinct ?brc {
+			SELECT DISTINCT ?brc {
 				?brc gmo:GMO_000104 ?gmo .
 				?gmo rdfs:subClassOf* gmo:GMO_000016 .
 			}
@@ -134,7 +134,7 @@ class GmoApproximationStanza < TogoStanza::Stanza::Base
 			scorelist.delete_if {|item| udlist.index(item[:subject]) }
 		else
 			# ignore defined components
-			scorelist.delete_if {|item| udlist.index(item[:subject]) == nil }
+			scorelist.delete_if {|item| udlist.index(item[:subject]).nil? }
 		end
 
 		# format number (ex. 12.0)

@@ -1,5 +1,5 @@
 class MpoShapeStanza < TogoStanza::Stanza::Base
-	SPARQL_ENDPOINT_URL = 'http://ep.dbcls.jp/sparql7ssd';
+	SPARQL_ENDPOINT_URL = 'http://ep.dbcls.jp/sparql7ssd'
 
 	property :features do |mpo_id|
 		query = <<-SPARQL.strip_heredoc
@@ -7,39 +7,35 @@ class MpoShapeStanza < TogoStanza::Stanza::Base
 			PREFIX mpo:  <http://purl.jp/bio/01/mpo#>
 
 			SELECT distinct ?label ?definition ?altlabel
-			from <http://togogenome.org/graph/mpo>
-			where{
-				?subject rdfs:label ?label.
-				?subject rdfs:subClassOf* mpo:MPO_01000.
-				OPTIONAL { ?subject skos:definition ?definition. filter(lang(?definition) != "ja") }
-				OPTIONAL { ?subject skos:altLabel ?altlabel. filter(lang(?altlabel) != "ja") }
-				filter(lang(?label) != "ja")
-				filter(?subject = mpo:#{mpo_id})
+			FROM <http://togogenome.org/graph/mpo>
+			WHERE {
+				?subject rdfs:label ?label .
+				?subject rdfs:subClassOf* mpo:MPO_01000 .
+				OPTIONAL { ?subject skos:definition ?definition . FILTER(LANG(?definition) != "ja") }
+				OPTIONAL { ?subject skos:altLabel ?altlabel . FILTER(LANG(?altlabel) != "ja") }
+				FILTER(LANG(?label) != "ja")
+				FILTER(?subject = mpo:#{mpo_id})
 			}
 		SPARQL
 
 		result = query(SPARQL_ENDPOINT_URL, query);
 
 		# Create Image File Name
-		imageNoData = "no_data.png"
-		fileName = result.empty? ? imageNoData : (result.first[:label].downcase + ".png")
-		fileName.tr!(" ","_")
-		filePath = "mpo_shape_stanza/assets/mpo_shape/images/" + fileName
-		unless File.exist?(filePath) then
-			fileName = imageNoData
-		end
+		image_no_data = "no_data.png"
+		file_name = result.empty? ? image_no_data : (result.first[:label].downcase + ".png")
+		file_name.tr!(" ","_")
+		file_path = "mpo_shape_stanza/assets/mpo_shape/images/" + file_name
+		file_name = image_no_data unless File.exist?(file_path)
 
 		# Create Dataset
 		shapes = Hash[
-			:label =>       result.blank? ? "(No Data)" : result.first[:label],
-			:definition =>  result.blank? ? "(No Data)" : result.first[:definition],
-			:synonymlist => result.collect{|item| item[:altlabel].blank? ? "(No Data)" : item[:altlabel] },
-			:image => fileName
+			label:       result.empty? ? "(No Data)" : result.first[:label],
+			definition:  result.empty? ? "(No Data)" : result.first[:definition],
+			synonymlist: result.collect {|item| item[:altlabel].nil? ? "(No Data)" : item[:altlabel] },
+			image:       file_name
 		]
-		shapes[:label]       = shapes[:label].blank?      ? "(No Data)" : shapes[:label]
-		shapes[:definition]  = shapes[:definition].blank? ? "(No Data)" : shapes[:definition]
-		STDERR.puts(Dir::getwd)
-		STDERR.puts(shapes.inspect)
+		shapes[:label]       = shapes[:label].nil?      ? "(No Data)" : shapes[:label]
+		shapes[:definition]  = shapes[:definition].nil? ? "(No Data)" : shapes[:definition]
 		shapes
 	end
 end

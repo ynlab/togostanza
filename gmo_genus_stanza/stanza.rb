@@ -1,11 +1,11 @@
 class GmoGenusStanza < TogoStanza::Stanza::Base
 	property :genus_list do |medium_id|
-		medium_list = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+		query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
 			PREFIX mccv: <http://purl.jp/bio/01/mccv#>
 			PREFIX gmo: <http://purl.jp/bio/11/gmo#>
 			PREFIX taxonomy:  <http://ddbj.nig.ac.jp/ontologies/taxonomy/>
-			select ?genus ?list2 count(*) as ?cnt
-			where {
+			SELECT ?genus ?list2 count(*) AS ?cnt
+			WHERE {
 				?gmo gmo:GMO_000101 "#{medium_id}" .
 				?brc mccv:MCCV_000018 ?gmo .
 				?brc mccv:MCCV_000056 ?tax .
@@ -14,17 +14,18 @@ class GmoGenusStanza < TogoStanza::Stanza::Base
 					?list2 taxonomy:rank taxonomy:Genus .
 					?list2 rdfs:label ?genus
 				}
-				bind('http://identifiers.org/taxonomy/' as ?identifer) .
-				filter( contains(str(?tax),?identifer) )
+				BIND('http://identifiers.org/taxonomy/' AS ?identifer) .
+				FILTER( CONTAINS(STR(?tax), ?identifer) )
 			}
-			order by desc(?cnt)
+			ORDER BY DESC(?cnt)
 		SPARQL
 	end
+
 	property :general_information do |medium_id|
-		medium_list = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+		query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
 			PREFIX gmo: <http://purl.jp/bio/11/gmo#>
-			select ?gmo_title
-			where {
+			SELECT ?gmo_title
+			WHERE {
 				?gmo gmo:GMO_000101 "#{medium_id}" .
 				?gmo gmo:GMO_000102 ?gmo_title .
 			}

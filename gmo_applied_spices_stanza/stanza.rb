@@ -11,8 +11,8 @@ class GmoAppliedSpicesStanza < TogoStanza::Stanza::Base
 				?brc mccv:MCCV_000056 ?tax .
 				OPTIONAL { ?tax rdfs:label ?label . }
 				BIND('http://identifiers.org/taxonomy/' AS ?identifer) .
-				BIND( replace(str(?tax), ?identifer, '') AS ?taxonomy_id ) .
-				FILTER( contains(str(?tax),?identifer) )
+				BIND( REPLACE(STR(?tax), ?identifer, '') AS ?taxonomy_id ) .
+				FILTER( CONTAINS(STR(?tax), ?identifer) )
 			}
 			ORDER BY ?label
 		SPARQL
