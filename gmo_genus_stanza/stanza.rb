@@ -1,6 +1,6 @@
 class GmoGenusStanza < TogoStanza::Stanza::Base
 	property :genus_list do |medium_id|
-		query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+		query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
 			PREFIX mccv: <http://purl.jp/bio/01/mccv#>
 			PREFIX gmo: <http://purl.jp/bio/11/gmo#>
 			PREFIX taxonomy:  <http://ddbj.nig.ac.jp/ontologies/taxonomy/>
@@ -22,7 +22,7 @@ class GmoGenusStanza < TogoStanza::Stanza::Base
 	end
 
 	property :general_information do |medium_id|
-		query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+		query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
 			PREFIX gmo: <http://purl.jp/bio/11/gmo#>
 			SELECT ?gmo_title
 			WHERE {

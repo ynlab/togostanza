@@ -1,5 +1,5 @@
 class GmoApproximationStanza < TogoStanza::Stanza::Base
-	SPARQL_ENDPOINT_URL = 'http://ep.dbcls.jp/sparql7ssd'
+	SPARQL_ENDPOINT_URL = 'http://togogenome.org/sparql'
 
 	property :debug_mode do |debug|
 		(debug == "1")

@@ -1,6 +1,6 @@
 class MediumComponentsStanza < TogoStanza::Stanza::Base
 	property :medium_information do |medium_id|
-		medium_list = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+		medium_list = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
 		PREFIX gmo: <http://purl.jp/bio/11/gmo#>
 
 		SELECT DISTINCT ?medium ?medium_id ?medium_type_label ?medium_name
@@ -16,7 +16,7 @@ class MediumComponentsStanza < TogoStanza::Stanza::Base
 		}
 		SPARQL
 
-		ingredient_list = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+		ingredient_list = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
 		PREFIX mccv: <http://purl.jp/bio/01/mccv#>
 		PREFIX gmo: <http://purl.jp/bio/11/gmo#>
 		SELECT ?medium_id ?classification ?class_label ?ingredient as ?ingredient_id ?ingredient_label ?link_pubchem ?link_chebi ?link_snomedct ?link_mesh ?link_wikipedia

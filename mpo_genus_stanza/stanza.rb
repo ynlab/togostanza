@@ -1,5 +1,5 @@
 class MpoGenusStanza < TogoStanza::Stanza::Base
-  SPARQL_ENDPOINT_URL = 'http://ep.dbcls.jp/sparql7ssd'
+  SPARQL_ENDPOINT_URL = 'http://togogenome.org/sparql'
 
 	property :general do |mpo_id|
 		result = query(SPARQL_ENDPOINT_URL, <<-SPARQL.strip_heredoc)

@@ -1,5 +1,5 @@
 class MyInfStanza < TogoStanza::Stanza::Base
-  SPARQL_ENDPOINT_URL = 'http://ep.dbcls.jp/sparql7ssd'
+  SPARQL_ENDPOINT_URL = 'http://togogenome.org/sparql'
 
   property :features do |mpo_id|
     query = <<-SPARQL.strip_heredoc
