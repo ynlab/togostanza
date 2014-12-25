@@ -8,7 +8,7 @@ class OrganismGcNanoStanza < TogoStanza::Stanza::Base
   property :atgc do |tax_id|
     # http://localhost:9292/stanza/organism_gc_nano?tax_id=192222
 
-    results = query('http://togostanza.org/sparql', <<-SPARQL.strip_heredoc)
+    results = query('http://togogenome.org/sparql', <<-SPARQL.strip_heredoc)
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX tax: <http://identifiers.org/taxonomy/>
       PREFIX insdc: <http://ddbj.nig.ac.jp/ontologies/sequence#>

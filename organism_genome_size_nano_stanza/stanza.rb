@@ -1,6 +1,6 @@
 class OrganismGenomeSizeNanoStanza < TogoStanza::Stanza::Base
   property :genome_size do |tax_id|
-   result = query('http://togostanza.org/sparql', <<-SPARQL.strip_heredoc)
+   result = query('http://togogenome.org/sparql', <<-SPARQL.strip_heredoc)
      PREFIX ddbj:<http://ddbj.nig.ac.jp/ontologies/sequence#>
      PREFIX obo:<http://purl.obolibrary.org/obo/>
      PREFIX taxid:<http://identifiers.org/taxonomy/>
@@ -21,7 +21,7 @@ class OrganismGenomeSizeNanoStanza < TogoStanza::Stanza::Base
        }
      }
    SPARQL
- 
+
    if result == nil || result.first[:project_num].to_i == 0 then
      result = nil
      next
@@ -39,7 +39,7 @@ class OrganismGenomeSizeNanoStanza < TogoStanza::Stanza::Base
      mantissa = (genome_size / (10**3).to_f).round(1)
      unit = "Kb"
    else
-     mantissa = genome_size 
+     mantissa = genome_size
      unit = "b"
    end
 

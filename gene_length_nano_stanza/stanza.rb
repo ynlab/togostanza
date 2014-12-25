@@ -4,7 +4,7 @@ class GeneLengthNanoStanza < TogoStanza::Stanza::Base
   end
 
   property :result do |tax_id, gene_id|
-    query("http://togostanza.org/sparql", <<-SPARQL.strip_heredoc).first
+    query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc).first
       PREFIX rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX obo:    <http://purl.obolibrary.org/obo/>

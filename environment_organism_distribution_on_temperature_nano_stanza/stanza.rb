@@ -1,6 +1,6 @@
 class EnvironmentOrganismDistributionOnTemperatureNanoStanza < TogoStanza::Stanza::Base
   property :num_orgs_with_temperature_range do |meo_id|
-    results = query("http://togostanza.org/sparql", <<-SPARQL.strip_heredoc)
+    results = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       PREFIX mpo: <http://purl.jp/bio/01/mpo#>
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>
       PREFIX meo: <http://purl.jp/bio/11/meo/>
@@ -37,7 +37,7 @@ class EnvironmentOrganismDistributionOnTemperatureNanoStanza < TogoStanza::Stanz
 
     category2num = {Mesophile: 0, Thermophile: 0, Psychrophile: 0}
     results.each do |result|
-      category = find_category(result)      
+      category = find_category(result)
       if category2num.key?(category)
         category2num[category] += 1
       end

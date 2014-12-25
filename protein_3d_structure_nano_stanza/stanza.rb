@@ -1,6 +1,6 @@
 class Protein3dStructureNanoStanza < TogoStanza::Stanza::Base
   property :pdb do |tax_id, gene_id|
-    result = query("http://togostanza.org/sparql", <<-SPARQL.strip_heredoc).first
+    result = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc).first
       PREFIX core: <http://purl.uniprot.org/core/>
 
       SELECT ?up ?attr ?url

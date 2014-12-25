@@ -1,6 +1,6 @@
 class ProteinEcNumberNanoStanza < TogoStanza::Stanza::Base
   property :feature do |tax_id, gene_id|
-    query("http://togostanza.org/sparql", <<-SPARQL.strip_heredoc).first
+    query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc).first
       PREFIX core: <http://purl.uniprot.org/core/>
       PREFIX up: <http://purl.uniprot.org/uniprot/>
       SELECT ?ec_number

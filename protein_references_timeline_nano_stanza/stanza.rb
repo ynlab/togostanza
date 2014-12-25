@@ -6,7 +6,7 @@ class ProteinReferencesTimelineNanoStanza < TogoStanza::Stanza::Base
 
   property :references do |tax_id, gene_id, step|
 
-    refs = query('http://togostanza.org/sparql', <<-SPARQL.strip_heredoc)
+    refs = query('http://togogenome.org/sparql', <<-SPARQL.strip_heredoc)
 PREFIX up: <http://purl.uniprot.org/core/>
 PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>

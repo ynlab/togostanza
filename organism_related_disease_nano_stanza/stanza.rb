@@ -1,6 +1,6 @@
 class OrganismRelatedDiseaseNanoStanza < TogoStanza::Stanza::Base
   property :list_disease do |tax_id|
-    results = query("http://togostanza.org/sparql", <<-SPARQL.strip_heredoc)
+    results = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       PREFIX pdo: <http://purl.jp/bio/11/pdo/>
       PREFIX tax: <http://identifiers.org/taxonomy/>
       SELECT DISTINCT ?pdo_id ?label
