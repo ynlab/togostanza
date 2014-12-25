@@ -4,7 +4,7 @@ require 'bio'
 
 class GeneAttributesStanza < TogoStanza::Stanza::Base
   property :gene_attributes do |tax_id, gene_id|
-    results = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+    results = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX obo: <http://purl.obolibrary.org/obo/>
       PREFIX faldo: <http://biohackathon.org/resource/faldo#>

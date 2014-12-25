@@ -1,6 +1,6 @@
 class ProteinReferencesStanza < TogoStanza::Stanza::Base
   property :references do |tax_id, gene_id|
-    references = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+    references = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX up:   <http://purl.uniprot.org/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>

@@ -1,6 +1,6 @@
 class OrganismMediumInformationStanza < TogoStanza::Stanza::Base
   property :medium_information do |tax_id|
-    medium_list = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+    medium_list = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>
       PREFIX gmo: <http://purl.jp/bio/11/gmo#>
@@ -24,9 +24,9 @@ class OrganismMediumInformationStanza < TogoStanza::Stanza::Base
       }
     SPARQL
 
-    ingredient_list = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+    ingredient_list = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
 #      DEFINE sql:select-option "order"
-# TODO: Uncomment the above line when endpoint data is update. 
+# TODO: Uncomment the above line when endpoint data is update.
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>
       PREFIX gmo: <http://purl.jp/bio/11/gmo#>
       PREFIX taxid: <http://identifiers.org/taxonomy/>
@@ -52,12 +52,12 @@ class OrganismMediumInformationStanza < TogoStanza::Stanza::Base
       } ORDER BY ?classification
     SPARQL
 
-    ## Delete ingredient from GMO_000015(Defined components) if it's member of the GMO_000009(Water) 
+    ## Delete ingredient from GMO_000015(Defined components) if it's member of the GMO_000009(Water)
     ## SPARQL can also do the same processing as this. But There is bug of MINUS in Virtuoso.
     ##  See: http://wiki.lifesciencedb.jp/mw/index.php/BH12.12/TogoStanzaQuery/v201402#medium_classification.28.E6.94.B9.E8.89.AF.E7.89.88.29
     classes_by_medium = ingredient_list.group_by {|hash| hash[:medium_id] }
     classes_by_medium.each {|medium_id, class_info|
-      class_info.delete_if {|item| 
+      class_info.delete_if {|item|
         item[:classification].split("#").last == "GMO_000015" \
         && ((class_info.find { |item2| item2[:classification].split("#").last == "GMO_000009" \
              && item[:ingredient] == item2[:ingredient]}) != nil)
@@ -74,12 +74,12 @@ class OrganismMediumInformationStanza < TogoStanza::Stanza::Base
       ingredients_classes.each{ |classes|
         classifications = classes_by_medium[hash[:medium_id]].find_all {|item| item[:classification].split("#").last == classes }
         ingredients = ''
-        classifications.each_with_index {|item, index| 
+        classifications.each_with_index {|item, index|
           ingredients += item[:ingredient_label]
           if index != classifications.length - 1
             ingredients += ', '
           end
-        } 
+        }
         row.push({:row_key => classifications.first[:class_label], :row_value => ingredients})
       }
       row

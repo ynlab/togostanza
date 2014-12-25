@@ -1,6 +1,6 @@
 class EnvironmentInhabitantsStanza < TogoStanza::Stanza::Base
   property :inhabitants_statistics do |meo_id|
-    gold_list = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+    gold_list = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
 
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>
@@ -29,7 +29,7 @@ class EnvironmentInhabitantsStanza < TogoStanza::Stanza::Base
       } GROUP BY ?gold ?tax_id ?organism_name
     SPARQL
 
-    strain_list = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+    strain_list = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>
       PREFIX meo: <http://purl.jp/bio/11/meo/>
 

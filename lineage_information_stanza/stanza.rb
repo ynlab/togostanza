@@ -4,10 +4,10 @@ class LineageInformationStanza < TogoStanza::Stanza::Base
   end
 
   property :tax_lineage_list do |tax_id|
-    results_super = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+    results_super = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       PREFIX taxo: <http://ddbj.nig.ac.jp/ontologies/taxonomy#>
       PREFIX taxid: <http://identifiers.org/taxonomy/>
-      
+
       SELECT
        (REPLACE(STR(?tax), "http://identifiers.org/taxonomy/", "") AS ?tax_no)
        (?tax AS ?tax_link)
@@ -24,10 +24,10 @@ class LineageInformationStanza < TogoStanza::Stanza::Base
       } ORDER BY DESC(?step)
     SPARQL
 
-    results_sub = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+    results_sub = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       PREFIX taxo: <http://ddbj.nig.ac.jp/ontologies/taxonomy#>
       PREFIX taxid: <http://identifiers.org/taxonomy/>
-      
+
       SELECT
        (REPLACE(STR(?tax) ,"http://identifiers.org/taxonomy/" ,"" ) AS ?tax_no)
        (?tax AS ?tax_link)

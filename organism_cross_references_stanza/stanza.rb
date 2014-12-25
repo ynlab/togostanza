@@ -1,6 +1,6 @@
 class OrganismCrossReferencesStanza < TogoStanza::Stanza::Base
   property :link_list do |tax_id|
-    link_list1 = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+    link_list1 = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>
       PREFIX obo: <http://purl.obolibrary.org/obo/>
       PREFIX insdc: <http://insdc.org/owl/>

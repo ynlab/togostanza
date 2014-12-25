@@ -1,13 +1,13 @@
 class GenomeInformationStanza < TogoStanza::Stanza::Base
   property :genome_info_list do |tax_id|
-    results = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+    results = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX obo: <http://purl.obolibrary.org/obo/>
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX insdc: <http://ddbj.nig.ac.jp/ontologies/sequence#>
       PREFIX idtax: <http://identifiers.org/taxonomy/>
       PREFIX togo: <http://togogenome.org/stats/>
-      
+
       SELECT ?bioproject ?bioproject_id ?refseq_version ?refseq_link ?desc ?replicon_type ?sequence_length
        ?gene_cnt ?trna_cnt ?rrna_cnt ?other_cnt
       FROM <http://togogenome.org/graph/refseq/>

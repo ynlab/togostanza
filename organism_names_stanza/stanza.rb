@@ -1,6 +1,6 @@
 class OrganismNamesStanza < TogoStanza::Stanza::Base
   search :organism_name_list do |query|
-    query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+    query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       PREFIX taxo: <http://ddbj.nig.ac.jp/ontologies/taxonomy#>
       PREFIX taxid: <http://identifiers.org/taxonomy/>
 
@@ -19,7 +19,7 @@ class OrganismNamesStanza < TogoStanza::Stanza::Base
   end
 
   property :organism_name_list do |tax_id|
-    results = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+    results = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       PREFIX taxo: <http://ddbj.nig.ac.jp/ontologies/taxonomy#>
       PREFIX taxid: <http://identifiers.org/taxonomy/>
 
@@ -30,7 +30,7 @@ class OrganismNamesStanza < TogoStanza::Stanza::Base
         VALUES ?name_type
         {
           taxo:scientificName taxo:synonym taxo:preferredSynonym taxo:acronym taxo:preferredAcronym taxo:anamorph taxo:teleomorph
-          taxo:misnomer taxo:commonName taxo:preferredCommonName taxo:inPart taxo:includes taxo:equivalentName 
+          taxo:misnomer taxo:commonName taxo:preferredCommonName taxo:inPart taxo:includes taxo:equivalentName
           taxo:genbankSynonym taxo:genbankCommonName taxo:authority taxo:misspelling
         }
         taxid:#{ tax_id } ?name_type ?name .

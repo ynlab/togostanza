@@ -1,7 +1,7 @@
 class ProteinOntologiesStanza < TogoStanza::Stanza::Base
   property :keywords do |tax_id, gene_id|
-    keywords = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
-      DEFINE sql:select-option "order" 
+    keywords = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
+      DEFINE sql:select-option "order"
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -17,7 +17,7 @@ class ProteinOntologiesStanza < TogoStanza::Stanza::Base
             up:classifiedWith ?concept .
           ?concept rdf:type up:Concept .
           FILTER contains(str(?concept), 'keywords') .
-      
+
           ?concept ?label ?name FILTER (?label = skos:prefLabel || ?label = skos:altLabel).
           ?concept rdfs:subClassOf* ?parents .
           ?parents skos:prefLabel ?root_name .
@@ -41,7 +41,7 @@ class ProteinOntologiesStanza < TogoStanza::Stanza::Base
     ## [{:concept=>"http://purl.uniprot.org/go/0009635"},
     ##  {:concept=>"http://purl.uniprot.org/go/0009772"},
     ##  ... ]
-    up_go_uris = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+    up_go_uris = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
@@ -75,7 +75,7 @@ class ProteinOntologiesStanza < TogoStanza::Stanza::Base
     ##  {:root_name=>"biological_process", :name=>"photosynthetic electron transport in photosystem II"},
     ##  {:root_name=>"molecular_function", :name=>"oxidoreductase activity"},
     ##  ...]
-    gene_ontlogies = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+    gene_ontlogies = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
       SELECT DISTINCT ?name ?root_name ?obo_go_uri

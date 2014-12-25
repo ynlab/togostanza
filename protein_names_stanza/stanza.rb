@@ -1,6 +1,6 @@
 class ProteinNamesStanza < TogoStanza::Stanza::Base
   property :genes do |tax_id, gene_id|
-    query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+    query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
@@ -32,7 +32,7 @@ class ProteinNamesStanza < TogoStanza::Stanza::Base
   end
 
   property :summary do |tax_id, gene_id|
-    protein_summary = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+    protein_summary = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 

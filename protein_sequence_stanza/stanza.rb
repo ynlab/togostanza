@@ -1,6 +1,6 @@
 class ProteinSequenceStanza < TogoStanza::Stanza::Base
   property :sequences do |tax_id, gene_id|
-    sequences = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+    sequences = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
@@ -10,7 +10,7 @@ class ProteinSequenceStanza < TogoStanza::Stanza::Base
       WHERE {
         <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
         ?id_upid rdfs:seeAlso ?protein .
-        ?protein a <http://purl.uniprot.org/core/Protein> ;   
+        ?protein a <http://purl.uniprot.org/core/Protein> ;
           up:sequence ?seq .
 
         ?seq rdf:value ?value ;

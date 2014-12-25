@@ -1,7 +1,7 @@
 class GenomeJbrowseStanza < TogoStanza::Stanza::Base
   property :select_tax_id do |tax_id, gene_id|
     if tax_id.nil? then
-      results = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+      results = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
         DEFINE sql:select-option "order"
         PREFIX obo: <http://purl.obolibrary.org/obo/>
         PREFIX insdc: <http://ddbj.nig.ac.jp/ontologies/sequence#>
@@ -34,7 +34,7 @@ class GenomeJbrowseStanza < TogoStanza::Stanza::Base
   end
 
   property :display_range do |tax_id, gene_id|
-    results = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+    results = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX obo: <http://purl.obolibrary.org/obo/>
       PREFIX faldo: <http://biohackathon.org/resource/faldo#>

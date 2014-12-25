@@ -1,6 +1,6 @@
 class OrganismJbrowseStanza < TogoStanza::Stanza::Base
   property :sequence_version do |tax_id|
-    results = query("http://ep.dbcls.jp/sparql7ssd", <<-SPARQL.strip_heredoc)
+    results = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX obo: <http://purl.obolibrary.org/obo/>
       PREFIX taxid: <http://identifiers.org/taxonomy/>
