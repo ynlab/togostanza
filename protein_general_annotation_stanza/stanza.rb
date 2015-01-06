@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 class ProteinGeneralAnnotationStanza < TogoStanza::Stanza::Base
   property :general_annotations do |tax_id, gene_id|
 
@@ -38,7 +37,7 @@ class ProteinGeneralAnnotationStanza < TogoStanza::Stanza::Base
 
         }UNION{
             # type が up:Subcellular_Location_Annotation 以外の subClassOf Annotation のアノテーション
- 
+
             ?annotation rdf:type ?type .
             ?type rdfs:subClassOf up:Annotation .
             FILTER (?type != up:Subcellular_Location_Annotation)
