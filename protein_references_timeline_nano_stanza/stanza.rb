@@ -1,34 +1,28 @@
 class ProteinReferencesTimelineNanoStanza < TogoStanza::Stanza::Base
-
   property :title do
     "Protein references timeline"
   end
 
   property :references do |tax_id, gene_id, step|
 
-    refs = query('http://togogenome.org/sparql', <<-SPARQL.strip_heredoc)
-PREFIX up: <http://purl.uniprot.org/core/>
-PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
-PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    refs = query('http://dev.togogenome.org/sparql-test', <<-SPARQL.strip_heredoc)
+    PREFIX up: <http://purl.uniprot.org/core/>
 
-SELECT
-#?year (count(?citation) as ?count) (concat('http://www.uniprot.org/citations/?query=',group_concat(distinct replace(str(?citation), 'http://purl.uniprot.org/citations/','') ;separator='+OR+')) as ?citation_uri)
-?year ?citation
-FROM <http://togogenome.org/graph/uniprot/>
-FROM <http://togogenome.org/graph/tgup/>
-WHERE {
-  <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
-  ?id_upid rdfs:seeAlso ?protein .
-  ?protein a <http://purl.uniprot.org/core/Protein> .
-  ?protein up:citation ?citation.
-  ?citation up:date ?date.
-  #?citation owl:sameAs ?same_as.
-  ?citation rdf:type ?type.
-  FILTER(?type = up:Journal_Citation)
-  BIND(year(?date) AS ?year)
-}
-ORDER BY ?year
+    SELECT
+    #?year (count(?citation) as ?count) (concat('http://www.uniprot.org/citations/?query=',group_concat(distinct replace(str(?citation), 'http://purl.uniprot.org/citations/','') ;separator='+OR+')) as ?citation_uri)
+    ?year ?citation
+    FROM <http://togogenome.org/graph/uniprot>
+    FROM <http://togogenome.org/graph/tgup>
+    WHERE {
+      <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
+      ?id_upid rdfs:seeAlso ?protein .
+      ?protein a up:Protein ;
+               up:citation ?citation.
+      ?citation up:date ?date ;
+                a up:Journal_Citation .
+      BIND(year(?date) AS ?year)
+    }
+    ORDER BY ?year
   SPARQL
 
   time = Time.new

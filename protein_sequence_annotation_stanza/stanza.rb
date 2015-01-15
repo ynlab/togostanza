@@ -1,17 +1,18 @@
 class ProteinSequenceAnnotationStanza < TogoStanza::Stanza::Base
   property :sequence_annotations do |tax_id, gene_id|
-    annotations = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
+    annotations = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
+      PREFIX faldo: <http://biohackathon.org/resource/faldo#>
 
       SELECT DISTINCT ?parent_label ?label ?begin_location ?end_location ?seq_length ?comment (GROUP_CONCAT(?substitution, ", ") AS ?substitutions) ?seq ?feature_identifier
-      FROM <http://togogenome.org/graph/uniprot/>
-      FROM <http://togogenome.org/graph/tgup/>
+      FROM <http://togogenome.org/graph/uniprot>
+      FROM <http://togogenome.org/graph/tgup>
       WHERE {
         <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
         ?id_upid rdfs:seeAlso ?protein .
-        ?protein a <http://purl.uniprot.org/core/Protein> ;
-          up:annotation ?annotation .
+        ?protein a up:Protein ;
+                 up:annotation ?annotation .
 
         ?annotation rdf:type ?type .
         ?type rdfs:label ?label .
@@ -23,8 +24,8 @@ class ProteinSequenceAnnotationStanza < TogoStanza::Stanza::Base
 
         ?annotation up:range ?range .
         OPTIONAL { ?annotation rdfs:comment ?comment . }
-        ?range up:begin ?begin_location ;
-               up:end ?end_location .
+        ?range faldo:begin/faldo:position ?begin_location ;
+               faldo:end/faldo:position ?end_location .
 
         # description の一部が取得できるが、内容の表示に必要があるのか
         OPTIONAL{

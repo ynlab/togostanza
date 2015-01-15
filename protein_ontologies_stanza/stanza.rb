@@ -1,6 +1,6 @@
 class ProteinOntologiesStanza < TogoStanza::Stanza::Base
   property :keywords do |tax_id, gene_id|
-    keywords = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
+    keywords = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
@@ -8,8 +8,8 @@ class ProteinOntologiesStanza < TogoStanza::Stanza::Base
 
       SELECT ?root_name ?concept (GROUP_CONCAT(?name, ', ') AS ?names) {
         SELECT DISTINCT ?root_name ?concept ?name
-        FROM <http://togogenome.org/graph/uniprot/>
-        FROM <http://togogenome.org/graph/tgup/>
+        FROM <http://togogenome.org/graph/uniprot>
+        FROM <http://togogenome.org/graph/tgup>
         WHERE {
           <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
           ?id_upid rdfs:seeAlso ?protein .
@@ -41,13 +41,13 @@ class ProteinOntologiesStanza < TogoStanza::Stanza::Base
     ## [{:concept=>"http://purl.uniprot.org/go/0009635"},
     ##  {:concept=>"http://purl.uniprot.org/go/0009772"},
     ##  ... ]
-    up_go_uris = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
+    up_go_uris = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
       SELECT DISTINCT ?concept
-      FROM <http://togogenome.org/graph/uniprot/>
-      FROM <http://togogenome.org/graph/tgup/>
+      FROM <http://togogenome.org/graph/uniprot>
+      FROM <http://togogenome.org/graph/tgup>
       WHERE {
         <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
         ?id_upid rdfs:seeAlso ?protein .
@@ -75,11 +75,11 @@ class ProteinOntologiesStanza < TogoStanza::Stanza::Base
     ##  {:root_name=>"biological_process", :name=>"photosynthetic electron transport in photosystem II"},
     ##  {:root_name=>"molecular_function", :name=>"oxidoreductase activity"},
     ##  ...]
-    gene_ontlogies = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
+    gene_ontlogies = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
       SELECT DISTINCT ?name ?root_name ?obo_go_uri
-      FROM <http://togogenome.org/graph/go/>
+      FROM <http://togogenome.org/graph/go>
       WHERE {
         ?obo_go_uri rdfs:label ?name .
         # comment は無い?

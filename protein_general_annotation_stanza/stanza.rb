@@ -11,7 +11,7 @@ class ProteinGeneralAnnotationStanza < TogoStanza::Stanza::Base
     WHERE {
         <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
         ?id_upid rdfs:seeAlso ?protein .
-                 ?protein a <http://purl.uniprot.org/core/Protein> ;
+        ?protein a up:Protein ;
                  up:annotation ?annotation .
 
         {
@@ -37,7 +37,7 @@ class ProteinGeneralAnnotationStanza < TogoStanza::Stanza::Base
 
         }UNION{
             # type が up:Subcellular_Location_Annotation 以外の subClassOf Annotation のアノテーション
-
+ 
             ?annotation rdf:type ?type .
             ?type rdfs:subClassOf up:Annotation .
             FILTER (?type != up:Subcellular_Location_Annotation)
@@ -49,7 +49,6 @@ class ProteinGeneralAnnotationStanza < TogoStanza::Stanza::Base
         }
     }
     SPARQL
-
 
     # [{name: 'xxx', message: 'aaa'}, {name: 'xxx', message: 'bbb'}, {name: 'yyy', message: 'ccc'}]
     # => [{name: 'xxx', messages: ['aaa', 'bbb']}, {name: 'yyy', messages: ['ccc']}]
