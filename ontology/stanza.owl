@@ -1,0 +1,245 @@
+@prefix :        <http://togostanza.org/resource/stanza#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix spin:    <http://spinrdf.org/spin#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct:     <http://purl.org/dc/terms/> .
+
+<http://togostanza.org/resource/stanza>
+      rdf:type          owl:Ontology ;
+      dct:license       <http://creativecommons.org/publicdomain/zero/1.0/> ;
+      owl:versionInfo   "2015-01-15"^^xsd:date .
+
+# Classes
+
+:Stanza
+      rdf:type          owl:Class ;
+      rdfs:comment      "A generic class for Stanza." ;
+      rdfs:label        "Stanza" ;
+      rdfs:subClassOf   owl:Thing ;
+      owl:hasKey        (:stanza :label :description :usage :type :context :display :provider :license :parameters) .
+
+:TogoStanza
+      rdf:type          owl:Class ;
+      rdfs:comment      "A class for TogoStanza." ;
+      rdfs:label        "TogoStanza" ;
+      rdfs:subClassOf   :Stanza .
+
+:NanoStanza
+      rdf:type          owl:Class ;
+      rdfs:comment      "A class for NanoStanza." ;
+      rdfs:label        "NanoStanza" ;
+      rdfs:subClassOf   :Stanza .
+
+:Context
+      rdf:type          owl:Class ;
+      rdfs:comment      "A generic class for Context describing a context in which the Stanza will be used." ;
+      rdfs:label        "Context" ;
+      rdfs:subClassOf   owl:Thing .
+
+:GeneContext
+      rdf:type          owl:Class ;
+      rdfs:comment      "This class is attributed to a Stanza which will be used in a gene context." ;
+      rdfs:label        "Gene" ;
+      rdfs:subClassOf   :Context .
+
+:OrganismContext
+      rdf:type          owl:Class ;
+      rdfs:comment      "This class is attributed to a Stanza which will be used in a organism context." ;
+      rdfs:label        "Organism" ;
+      rdfs:subClassOf   :Context .
+
+:EnvironmentContext
+      rdf:type          owl:Class ;
+      rdfs:comment      "This class is attributed to a Stanza which will be used in a environment context." ;
+      rdfs:label        "Environment" ;
+      rdfs:subClassOf   :Context .
+
+:PhenotypeContext
+      rdf:type          owl:Class ;
+      rdfs:comment      "This class is attributed to a Stanza which will be used in a phenotype context." ;
+      rdfs:label        "Phenotype" ;
+      rdfs:subClassOf   :Context .
+
+:MediumContext
+      rdf:type          owl:Class ;
+      rdfs:comment      "This class is attributed to a Stanza which will be used in a medium context." ;
+      rdfs:label        "Medium" ;
+      rdfs:subClassOf   :Context .
+
+:OtherContext
+      rdf:type          owl:Class ;
+      rdfs:comment      "This class is attributed to a Stanza which will be used in a other context." ;
+      rdfs:label        "Other" ;
+      rdfs:subClassOf   :Context ;
+      owl:disjointWith  :GeneContext, :OrganismContext, :EnvironmentContext, :PhenotypeContext, :MediumContext .
+
+:Display
+      rdf:type          owl:Class ;
+      rdfs:comment      "A generic class for Display indicating visual style used in the Stanza." ;
+      rdfs:label        "Display" ;
+      rdfs:subClassOf   owl:Thing .
+
+:TableDisplay
+      rdf:type          owl:Class ;
+      rdfs:comment      "This class is used to indicate the Stanza has a table style representation." ;
+      rdfs:label        "Table" ;
+      rdfs:subClassOf   :Display .
+
+:ChartDisplay
+      rdf:type          owl:Class ;
+      rdfs:comment      "This class is used to indicate the Stanza has a chart style representation." ;
+      rdfs:label        "Chart" ;
+      rdfs:subClassOf   :Display .
+
+:TreeDisplay
+      rdf:type          owl:Class ;
+      rdfs:comment      "This class is used to indicate the Stanza has a tree style representation." ;
+      rdfs:label        "Tree" ;
+      rdfs:subClassOf   :Display .
+
+:GraphDisplay
+      rdf:type          owl:Class ;
+      rdfs:comment      "This class is used to indicate the Stanza has a graph style representation." ;
+      rdfs:label        "Graph" ;
+      rdfs:subClassOf   :Display .
+
+:MapDisplay
+      rdf:type          owl:Class ;
+      rdfs:comment      "This class is used to indicate the Stanza has a map style representation." ;
+      rdfs:label        "Map" ;
+      rdfs:subClassOf   :Display .
+
+:TextDisplay
+      rdf:type          owl:Class ;
+      rdfs:comment      "This class is used to indicate the Stanza has a text style representation." ;
+      rdfs:label        "Text" ;
+      rdfs:subClassOf   :Display .
+
+:ImageDisplay
+      rdf:type          owl:Class ;
+      rdfs:comment      "This class is used to indicate the Stanza has a image style representation." ;
+      rdfs:label        "Image" ;
+      rdfs:subClassOf   :Display .
+
+:OtherDisplay
+      rdf:type          owl:Class ;
+      rdfs:comment      "This class is used to indicate the Stanza has an other style representation." ;
+      rdfs:label        "Other" ;
+      rdfs:subClassOf   :Display .
+
+# Properties for Stanza
+
+:stanza
+      rdf:type          owl:DatatypeProperty ;
+      rdf:comment       "This property specifies a name of the Stanza." ;
+      rdfs:domain       :Stanza ;
+      rdfs:range        xsd:string .
+
+:label
+      rdf:type          owl:DatatypeProperty ;
+      rdf:comment       "This property specifies a display name of the Stanza." ;
+      rdfs:domain       :Stanza ;
+      rdfs:range        xsd:string ;
+      rdfs:subPropertyOf rdfs:label .
+
+:description
+      rdf:type          owl:DatatypeProperty ;
+      rdf:comment       "This property is used to describe the Stanza." ;
+      rdfs:domain       :Stanza ;
+      rdfs:range        xsd:string ;
+      rdfs:subPropertyOf rdfs:comment .
+
+:usage
+      rdf:type          owl:DatatypeProperty ;
+      rdf:comment       "This property is used to show how to embed in a Web page." ;
+      rdfs:domain       :Stanza ;
+      rdfs:range        xsd:string .
+
+:type
+      rdf:type          owl:ObjectProperty ;
+      rdf:comment       "This property is used to specify a type of the Stanza." ;
+      rdfs:domain       :Stanza ;
+      rdfs:range        [ rdf:type owl:Class; owl:unionOf (:TogoStanza :NanoStanza) ] .
+
+:context
+      rdf:type          owl:ObjectProperty ;
+      rdf:comment       "This property describes in which context the Stanza will be used"; 
+      rdfs:domain       :Stanza ;
+      rdfs:range        [ rdf:type owl:Class; owl:unionOf (:GeneContext :OrganismContext :EnvironmentContext :PhenotypeContext :MediumContext) ] .
+
+:display
+      rdf:type          owl:ObjectProperty ;
+      rdf:comment       "This propoerty describes in which visual style the Stanza will be displayed" ;
+      rdfs:domain       :Stanza ;
+      rdfs:range        [ rdf:type owl:Class; owl:unionOf (:TableDisplay :ChartDisplay :TreeDisplay :GraphDisplay :MapDisplay :TextDisplay :ImageDisplay :OtherDisplay) ] .
+
+:provider
+      rdf:type          owl:DatatypeProperty ;
+      rdf:comment       "This property is used to indicate a name of the service provider of the Stanza." ;
+      rdfs:domain       :Stanza ;
+      rdfs:range        xsd:string .
+
+:license
+      rdf:type          owl:ObjectProperty ;
+      rdf:comment       "This property is used to specify a license of the Stanza." ;
+      rdfs:domain       :Stanza ;
+      rdfs:range        rdfs:Resource .
+
+:author
+      rdf:type          owl:DatatypeProperty ;
+      rdf:comment       "This property is used to indicate a name of the developer of the Stanza." ;
+      rdfs:domain       :Stanza ;
+      rdfs:range        xsd:string .
+
+:address
+      rdf:type          owl:DatatypeProperty ;
+      rdf:comment       "This property is used to indicate a e-mail address of the developer of the Stanza." ;
+      rdfs:domain       :Stanza ;
+      rdfs:range        xsd:string .
+
+:created
+      rdf:type          owl:DatatypeProperty ;
+      rdf:comment       "This property is used to indicate a initial creation date of the Stanza." ;
+      rdfs:domain       :Stanza ;
+      rdfs:range        xsd:date .
+
+:updated
+      rdf:type          owl:DatatypeProperty ;
+      rdf:comment       "This property is used to indicate a updated date of the Stanza." ;
+      rdfs:domain       :Stanza ;
+      rdfs:range        xsd:date .
+
+:parameters
+      rdf:type          owl:ObjectProperty ;
+      rdf:comment       "This property is used to link with a blank node which has a set of parameters for the Stanza." ;
+      rdfs:domain       :Stanza ;
+      rdfs:range        :Parameter .
+
+# Properties for parameters
+
+:key
+      rdf:type          owl:DatatypeProperty ;
+      rdf:comment       "This property is used to indicate a name of the parameter variable." ;
+      rdfs:domain       :Parameter ;
+      rdfs:range        xsd:string .
+
+:example
+      rdf:type          owl:DatatypeProperty ;
+      rdf:comment       "This property is used to indicate an example of the parameter value." ;
+      rdfs:domain       :Stanza ;
+      rdfs:range        xsd:string .
+
+:description
+      rdf:type          owl:DatatypeProperty ;
+      rdf:comment       "This property is used to describe the parameter." ;
+      rdfs:domain       :Stanza ;
+      rdfs:range        xsd:string .
+
+:required
+      rdf:type          owl:DatatypeProperty ;
+      rdf:comment       "This property is used to indicate if the parameter is mandatory or not." ;
+      rdfs:domain       :Stanza ;
+      rdfs:range        xsd:boolean .
+
