@@ -1,17 +1,17 @@
 class Protein3dStructureNanoStanza < TogoStanza::Stanza::Base
-  property :pdb do |tax_id, gene_id|
+  property :pdb do |refseq_id, gene_id|
     result = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc).first
-      PREFIX core: <http://purl.uniprot.org/core/>
+      PREFIX up: <http://purl.uniprot.org/core/>
 
       SELECT ?protein ?attr ?url
       FROM <http://togogenome.org/graph/uniprot>
       FROM <http://togogenome.org/graph/tgup>
       WHERE {
-        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
+        <http://togogenome.org/gene/#{refseq_id}:#{gene_id}> rdfs:seeAlso ?id_upid .
         ?id_upid rdfs:seeAlso ?protein .
-        ?protein a core:Protein .
+        ?protein a up:Protein .
         ?attr rdf:subject ?protein .
-        ?attr a core:Structure_Mapping_Statement .
+        ?attr a up:Structure_Mapping_Statement .
         ?attr rdf:object ?url .
       }
     SPARQL

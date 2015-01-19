@@ -1,9 +1,8 @@
 class ProteinOntologiesStanza < TogoStanza::Stanza::Base
-  property :keywords do |tax_id, gene_id|
+  property :keywords do |refseq_id, gene_id|
     keywords = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX up: <http://purl.uniprot.org/core/>
-      PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
       SELECT ?root_name ?concept (GROUP_CONCAT(?name, ', ') AS ?names) {
@@ -11,10 +10,10 @@ class ProteinOntologiesStanza < TogoStanza::Stanza::Base
         FROM <http://togogenome.org/graph/uniprot>
         FROM <http://togogenome.org/graph/tgup>
         WHERE {
-          <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
+          <http://togogenome.org/gene/#{refseq_id}:#{gene_id}> rdfs:seeAlso ?id_upid .
           ?id_upid rdfs:seeAlso ?protein .
           ?protein a up:Protein ;
-            up:classifiedWith ?concept .
+                   up:classifiedWith ?concept .
           ?concept rdf:type up:Concept .
           FILTER contains(str(?concept), 'keywords') .
 
@@ -33,7 +32,7 @@ class ProteinOntologiesStanza < TogoStanza::Stanza::Base
     }
   end
 
-  property :gene_ontlogies do |tax_id, gene_id|
+  property :gene_ontlogies do |refseq_id, gene_id|
 
     # slr1311 の時...
 
@@ -49,10 +48,10 @@ class ProteinOntologiesStanza < TogoStanza::Stanza::Base
       FROM <http://togogenome.org/graph/uniprot>
       FROM <http://togogenome.org/graph/tgup>
       WHERE {
-        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
+        <http://togogenome.org/gene/#{refseq_id}:#{gene_id}> rdfs:seeAlso ?id_upid .
         ?id_upid rdfs:seeAlso ?protein .
         ?protein a up:Protein ;
-         up:classifiedWith ?concept .
+                 up:classifiedWith ?concept .
         ?concept rdf:type up:Concept .
         FILTER contains(str(?concept), 'go') .
       }

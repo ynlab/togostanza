@@ -1,15 +1,14 @@
 class ProteinSequenceAnnotationStanza < TogoStanza::Stanza::Base
-  property :sequence_annotations do |tax_id, gene_id|
+  property :sequence_annotations do |refseq_id, gene_id|
     annotations = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
-      PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
       PREFIX faldo: <http://biohackathon.org/resource/faldo#>
 
       SELECT DISTINCT ?parent_label ?label ?begin_location ?end_location ?seq_length ?comment (GROUP_CONCAT(?substitution, ", ") AS ?substitutions) ?seq ?feature_identifier
       FROM <http://togogenome.org/graph/uniprot>
       FROM <http://togogenome.org/graph/tgup>
       WHERE {
-        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
+        <http://togogenome.org/gene/#{refseq_id}:#{gene_id}> rdfs:seeAlso ?id_upid .
         ?id_upid rdfs:seeAlso ?protein .
         ?protein a up:Protein ;
                  up:annotation ?annotation .

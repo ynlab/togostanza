@@ -1,11 +1,11 @@
 class ProteinOrthologsStanza < TogoStanza::Stanza::Base
-  property :orthologs do |tax_id, gene_id|
+  property :orthologs do |refseq_id, gene_id|
     protein_attributes = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       SELECT (REPLACE(STR(?id_upid),"http://identifiers.org/uniprot/","http://purl.uniprot.org/uniprot/") AS ?upid)
       FROM <http://togogenome.org/graph/tgup>
       WHERE
       {
-        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
+        <http://togogenome.org/gene/#{refseq_id}:#{gene_id}> rdfs:seeAlso ?id_upid .
         ?id_upid a <http://identifiers.org/uniprot> .
       }
     SPARQL

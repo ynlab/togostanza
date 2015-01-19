@@ -1,15 +1,14 @@
 class ProteinNamesStanza < TogoStanza::Stanza::Base
-  property :genes do |tax_id, gene_id|
+  property :genes do |refseq_id, gene_id|
     gene_names = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-      PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
       SELECT DISTINCT ?gene_name ?synonyms_name ?locus_name ?orf_name
       FROM <http://togogenome.org/graph/uniprot>
       FROM <http://togogenome.org/graph/tgup>
       WHERE {
-        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
+        <http://togogenome.org/gene/#{refseq_id}:#{gene_id}> rdfs:seeAlso ?id_upid .
         ?id_upid rdfs:seeAlso ?protein .
         ?protein a up:Protein .
 
@@ -34,20 +33,19 @@ class ProteinNamesStanza < TogoStanza::Stanza::Base
     }
   end
 
-  property :summary do |tax_id, gene_id|
+  property :summary do |refseq_id, gene_id|
     protein_summary = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
-      PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
-      SELECT DISTINCT ?recommended_name ?ec_name ?alternative_names ?organism_name ?parent_taxonomy_names (COUNT(?parent_taxonomy) AS ?taxonomy_count)
+      SELECT DISTINCT ?recommended_name ?ec_name ?alternative_names ?organism_name ?parent_taxonomy_names (COUNT(?parent_taxonomy) AS ?taxonomy_count) REPLACE( STR(?tax_id), "http://purl.uniprot.org/taxonomy/", "") AS ?taxonomy_id
+      FROM <http://togogenome.org/graph/taxonomy>
       FROM <http://togogenome.org/graph/uniprot>
       FROM <http://togogenome.org/graph/tgup>
       WHERE {
-        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
-        ?id_upid rdfs:seeAlso ?protein_variant .
-        BIND( IRI( REPLACE( STR(?protein_variant), "-\\\\d+$", "")) AS ?protein)
-        ?protein a up:Protein ;
-                 up:organism ?tax_id .
+        VALUES ?gene { <http://togogenome.org/gene/#{refseq_id}:#{gene_id}> }
+        ?gene rdfs:seeAlso ?id_upid .
+        ?id_upid rdfs:seeAlso ?protein .
+        ?protein a up:Protein .
 
         # Protein names
         ## Recommended name:
@@ -64,10 +62,13 @@ class ProteinNamesStanza < TogoStanza::Stanza::Base
           ?alternative_names_node up:fullName ?alternative_names .
         }
 
+        # Taxonomic identifier
+        ?gene rdfs:seeAlso ?id_taxid.
+        ?id_taxid rdfs:seeAlso ?tax_id .
+        ?tax_id a up:Taxon .
+
         # Organism
         OPTIONAL { ?tax_id up:scientificName ?organism_name . }
-
-        # Taxonomic identifier
 
         # Taxonomic lineage
         OPTIONAL {
@@ -76,7 +77,7 @@ class ProteinNamesStanza < TogoStanza::Stanza::Base
           ?parent_taxonomy rdfs:subClassOf* ?ancestor .
         }
       }
-      ORDER BY DESC(?taxonomy_count) ?alternative_names
+      ORDER BY DESC(?taxonomy_count)
     SPARQL
 
     # alternative_names, parent_taxonomy_names のみ複数取りうる
@@ -85,7 +86,6 @@ class ProteinNamesStanza < TogoStanza::Stanza::Base
       hash[k] = [:alternative_names, :parent_taxonomy_names].include?(k) ? v : v.first
     }
 
-    protein_summary[:taxonomy_id] = tax_id
     protein_summary[:parent_taxonomy_names].reverse! if protein_summary[:parent_taxonomy_names]
     protein_summary
   end

@@ -3,7 +3,7 @@ class ProteinReferencesTimelineNanoStanza < TogoStanza::Stanza::Base
     "Protein references timeline"
   end
 
-  property :references do |tax_id, gene_id, step|
+  property :references do |refseq_id, gene_id, step|
 
     refs = query('http://dev.togogenome.org/sparql-test', <<-SPARQL.strip_heredoc)
     PREFIX up: <http://purl.uniprot.org/core/>
@@ -14,7 +14,7 @@ class ProteinReferencesTimelineNanoStanza < TogoStanza::Stanza::Base
     FROM <http://togogenome.org/graph/uniprot>
     FROM <http://togogenome.org/graph/tgup>
     WHERE {
-      <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
+      <http://togogenome.org/gene/#{refseq_id}:#{gene_id}> rdfs:seeAlso ?id_upid .
       ?id_upid rdfs:seeAlso ?protein .
       ?protein a up:Protein ;
                up:citation ?citation.
