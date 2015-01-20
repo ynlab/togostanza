@@ -16,7 +16,7 @@ class ProteinGeneralAnnotationStanza < TogoStanza::Stanza::Base
         {
             # type がup:Annotation のアノテーション
 
-            ?annotation rdf:type up:Annotation .
+            ?annotation a up:Annotation .
 
             # name, message の取得
             BIND(STR('Miscellaneous') AS ?name) .
@@ -24,18 +24,17 @@ class ProteinGeneralAnnotationStanza < TogoStanza::Stanza::Base
         }UNION{
             # subClassOf Annotation で type が up:Subcellular_Location_Annotation のアノテーション
 
-            ?type rdfs:subClassOf up:Annotation .
-            ?annotation rdf:type up:Subcellular_Location_Annotation .
+            ?annotation a up:Subcellular_Location_Annotation .
 
             # name, message の取得
             up:Subcellular_Location_Annotation rdfs:label ?name .
             ?annotation up:locatedIn ?located_in .
-            ?located_in ?p ?location .
+            ?located_in up:cellularComponent ?location .
             ?location up:alias ?message .
         }UNION{
             # type が up:Subcellular_Location_Annotation 以外の subClassOf Annotation のアノテーション
  
-            ?annotation rdf:type ?type .
+            ?annotation a ?type .
             ?type rdfs:subClassOf up:Annotation .
             FILTER (?type != up:Subcellular_Location_Annotation)
 
