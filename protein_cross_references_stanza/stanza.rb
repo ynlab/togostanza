@@ -1,28 +1,28 @@
 class ProteinCrossReferencesStanza < TogoStanza::Stanza::Base
-  property :references do |tax_id, gene_id|
-    references = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
+  property :references do |refseq_id, gene_id|
+    references = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
-      PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
       SELECT DISTINCT ?protein ?category ?abbr ?ref ?url_template
-      FROM <http://togogenome.org/graph/uniprot/>
-      FROM <http://togogenome.org/graph/tgup/>
+      FROM <http://togogenome.org/graph/uniprot>
+      FROM <http://togogenome.org/graph/tgup>
       WHERE {
 
-        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
+        <http://togogenome.org/gene/#{refseq_id}:#{gene_id}> rdfs:seeAlso ?id_upid .
         ?id_upid rdfs:seeAlso ?protein .
-        ?protein a <http://purl.uniprot.org/core/Protein> ;
-          rdfs:seeAlso    ?ref .
+        ?protein a up:Protein ;
+                 rdfs:seeAlso    ?ref .
         ?ref      up:database     ?database .
         ?database up:category     ?category ;
                   up:abbreviation ?abbr ;
-                  up:UrlTemplate  ?url_template .
+                  up:urlTemplate  ?url_template .
       }
     SPARQL
 
     # merge でデータを付けた後、category、abbr でグループ化している
     # [{category: 'xxx', abbr: 'hoge', ref: 'aaa'}, {category: 'xxx', abbr: 'hoge', ref: 'bbb'}, {category: 'xxx', abbr: 'moge', ref: 'ccc'}, {category: 'yyy', abbr: 'fuga', ref: 'ddd'}]
     # => [[[{:category=>"xxx", :abbr=>"hoge", :ref=>"aaa"}, {:category=>"xxx", :abbr=>"hoge", :ref=>"bbb"}], [{:category=>"xxx", :abbr=>"moge", :ref=>"ccc"}]], [[{:category=>"yyy", :abbr=>"fuga", :ref=>"ddd"}]]]
+    # URL に up_id を含まない場合 UniProt の数だけ同一URLができるので :protein を削除して uniq
     references.map {|hash|
       up_id  = hash[:protein].split('/').last
       ref_id = hash[:ref].split('/').last
@@ -30,8 +30,8 @@ class ProteinCrossReferencesStanza < TogoStanza::Stanza::Base
       hash.merge(
         ref_id: ref_id,
         url:    url(hash[:url_template], hash[:abbr], ref_id, up_id)
-      )
-    }.reverse.group_by {|hash| hash[:category] }.map {|hash|
+      ).except(:protein)
+    }.uniq.reverse.group_by {|hash| hash[:category] }.map {|hash|
       hash.last.group_by {|h| h[:abbr] }.values
     }
   end

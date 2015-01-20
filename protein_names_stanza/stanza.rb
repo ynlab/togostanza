@@ -1,17 +1,16 @@
 class ProteinNamesStanza < TogoStanza::Stanza::Base
-  property :genes do |tax_id, gene_id|
-    query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
+  property :genes do |refseq_id, gene_id|
+    gene_names = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-      PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
       SELECT DISTINCT ?gene_name ?synonyms_name ?locus_name ?orf_name
-      FROM <http://togogenome.org/graph/uniprot/>
-      FROM <http://togogenome.org/graph/tgup/>
+      FROM <http://togogenome.org/graph/uniprot>
+      FROM <http://togogenome.org/graph/tgup>
       WHERE {
-        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
+        <http://togogenome.org/gene/#{refseq_id}:#{gene_id}> rdfs:seeAlso ?id_upid .
         ?id_upid rdfs:seeAlso ?protein .
-        ?protein a <http://purl.uniprot.org/core/Protein> .
+        ?protein a up:Protein .
 
         # Gene names
         ?protein up:encodedBy ?gene .
@@ -29,21 +28,25 @@ class ProteinNamesStanza < TogoStanza::Stanza::Base
         OPTIONAL { ?gene up:orfName ?orf_name . }
       }
     SPARQL
+
+    gene_names.flat_map(&:to_a).group_by(&:first).each_with_object({}) {|(k, vs), hash|
+      hash[k] = vs.map(&:last).uniq
+    }
   end
 
-  property :summary do |tax_id, gene_id|
-    protein_summary = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
+  property :summary do |refseq_id, gene_id|
+    protein_summary = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
-      PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
-      SELECT DISTINCT ?recommended_name ?ec_name ?alternative_names ?organism_name ?parent_taxonomy_names
-      FROM <http://togogenome.org/graph/uniprot/>
-      FROM <http://togogenome.org/graph/tgup/>
+      SELECT DISTINCT ?recommended_name ?ec_name ?alternative_names ?organism_name ?parent_taxonomy_names (COUNT(?parent_taxonomy) AS ?taxonomy_count) REPLACE( STR(?tax_id), "http://purl.uniprot.org/taxonomy/", "") AS ?taxonomy_id
+      FROM <http://togogenome.org/graph/taxonomy>
+      FROM <http://togogenome.org/graph/uniprot>
+      FROM <http://togogenome.org/graph/tgup>
       WHERE {
-        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
+        VALUES ?gene { <http://togogenome.org/gene/#{refseq_id}:#{gene_id}> }
+        ?gene rdfs:seeAlso ?id_upid .
         ?id_upid rdfs:seeAlso ?protein .
-        ?protein a <http://purl.uniprot.org/core/Protein> ;
-          up:organism ?tax_id .
+        ?protein a up:Protein .
 
         # Protein names
         ## Recommended name:
@@ -60,17 +63,22 @@ class ProteinNamesStanza < TogoStanza::Stanza::Base
           ?alternative_names_node up:fullName ?alternative_names .
         }
 
+        # Taxonomic identifier
+        ?gene rdfs:seeAlso ?id_taxid.
+        ?id_taxid rdfs:seeAlso ?tax_id .
+        ?tax_id a up:Taxon .
+
         # Organism
         OPTIONAL { ?tax_id up:scientificName ?organism_name . }
-
-        # Taxonomic identifier
 
         # Taxonomic lineage
         OPTIONAL {
           ?tax_id rdfs:subClassOf* ?parent_taxonomy .
           ?parent_taxonomy up:scientificName ?parent_taxonomy_names .
+          ?parent_taxonomy rdfs:subClassOf* ?ancestor .
         }
       }
+      ORDER BY DESC(?taxonomy_count)
     SPARQL
 
     # alternative_names, parent_taxonomy_names のみ複数取りうる
@@ -79,7 +87,6 @@ class ProteinNamesStanza < TogoStanza::Stanza::Base
       hash[k] = [:alternative_names, :parent_taxonomy_names].include?(k) ? v : v.first
     }
 
-    protein_summary[:taxonomy_id] = tax_id
     protein_summary[:parent_taxonomy_names].reverse! if protein_summary[:parent_taxonomy_names]
     protein_summary
   end

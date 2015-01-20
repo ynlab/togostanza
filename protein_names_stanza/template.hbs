@@ -50,16 +50,36 @@
           <tr>
             <th class='span4'>Gene names</th>
             <td class='span8'>
-              {{#each genes}}
+ 
                 <table class='table'>
                   <tbody>
-                    {{#if gene_name}}<tr><th class='span4'>Name</th><td class='span4'>{{gene_name}}</td></tr>{{/if}}
-                    {{#if synonyms_name}}<tr><th class='span4'>Synonyms</th><td class='span4'>{{synonyms_name}}</td></tr>{{/if}}
-                    {{#if locus_name}}<tr><th class='span4'>Ordered Locus Names</th><td class='span4'>{{locus_name}}</td></tr>{{/if}}
-                    {{#if orf_name}}<tr><th class='span4'>ORF Names</th><td class='span4'>{{orf_name}}</td></tr>{{/if}}
+                    {{#if genes.gene_name}}
+		    <tr>
+		      <th class='span4'>Name</th>
+		      <td class='span4'><ul>{{#each genes.gene_name}}<li>{{this}}</li>{{/each}}</ul></td>
+		    </tr>
+		    {{/if}}
+                    {{#if genes.synonyms_name}}
+		    <tr>
+		      <th class='span4'>Synonyms</th>
+		      <td class='span4'><ul>{{#each genes.synonyms_name}}<li>{{this}}</li>{{/each}}</ul></td>
+		    </tr>
+		    {{/if}}
+                    {{#if genes.locus_name}}
+		    <tr>
+		      <th class='span4'>Ordered Locus Names</th>
+		      <td class='span4'><ul>{{#each genes.locus_name}}<li>{{this}}</li>{{/each}}</ul></td>
+		    </tr>
+		    {{/if}}
+                    {{#if genes.orf_name}}
+		    <tr>
+		      <th class='span4'>ORF Names</th>
+		      <td class='span4'><ul>{{#each genes.orf_name}}<li>{{this}}</li>{{/each}}</ul></td>
+		    </tr>
+		    {{/if}}
                   </tbody>
                 </table>
-              {{/each}}
+
             </td>
           </tr>
         {{/if}}
