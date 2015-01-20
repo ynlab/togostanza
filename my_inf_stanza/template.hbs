@@ -12,24 +12,24 @@
   </head>
 
   <body>
-<div>
-{{#each features}}
-<table class="table">
-<caption>{{#if row_key}}{{row_key}}{{else}}(Unknown){{/if}}</caption>
-<thead>
-<tr><th>Organism name</th><th>Taxonomy ID</th><th>Phenotype</th></tr>
-</thead>
-<tbody>
-{{#each row_value}}
-<tr>
-<td><a href="http://togogenome.org/organism/{{taxonomy_id}}" target="_top">{{#if title}}{{title}}{{else}}(No Data){{/if}}</a></td>
-<td width="15%"><a href="{{subject}}" target="_blank">{{taxonomy_id}}</a></td>
-<td width="25%">{{pheno_merged}}</td>
-</tr>
-{{/each}}
-</tbody>
-</table>
-{{/each}}
-</div>
+    <div>
+      {{#each features}}
+      <table class="table">
+        <caption>{{#if row_key}}{{row_key}}{{else}}(Unknown){{/if}}</caption>
+        <thead>
+          <tr><th>Organism name</th><th>Taxonomy ID</th><th>Phenotype</th></tr>
+        </thead>
+        <tbody>
+          {{#each row_value}}
+          <tr>
+            <td><a href="http://togogenome.org/organism/{{taxonomy_id}}" target="_top">{{#if title}}{{title}}{{else}}(No Data){{/if}}</a></td>
+            <td width="15%"><a href="{{subject}}" target="_blank">{{taxonomy_id}}</a></td>
+            <td width="25%">{{pheno_merged}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      {{/each}}
+    </div>
   </body>
 </html>

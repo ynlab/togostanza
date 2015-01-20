@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Environment List (Phenotype based)</title>
+  <title>Environment List (Phenotype based)</title>
   {{#each css_uri}}
   <link rel="stylesheet" type="text/css" href="{{this}}" />
   {{/each}}
@@ -15,11 +15,11 @@
   <script src="/stanza/assets/mpo_environment/utils.js"></script>
   {{adjust_iframe_height_script}}
   <script>
-  var data = [
+    var data = [
     {{#each features}}
     {key:"{{environment}}", value:{{cnt}}, href:"{{meo_id}}", nolinked: false},
     {{/each}}
-  ];
+    ];
 
   // etc data pickup
   var etcIndex = null;
@@ -41,9 +41,9 @@
     data.splice(etcIndex,1);
     data.push(item);
   }
-  </script>
+</script>
 
-  <style>
+<style>
   body {
     position:relative;
   }
@@ -76,60 +76,60 @@
   #piechart div.graph-caption {
     text-align:center;
   }
-  </style>
+</style>
 </head>
 
 <body>
   <!-- Pie Chart -->
   <div id="piechart" class="with-3d-shadow with-transitions">
-  {{#if general}}<div class="graph-caption">{{general.label}}</div>{{/if}}
-  <svg class="piechart"></svg>
-  <script>
-    var colors = d3.scale.category20().range();
+    {{#if general}}<div class="graph-caption">{{general.label}}</div>{{/if}}
+    <svg class="piechart"></svg>
+    <script>
+      var colors = d3.scale.category20().range();
 
-    nv.addGraph(function() {
-      var width = 500;
-      var height = 500;
+      nv.addGraph(function() {
+        var width = 500;
+        var height = 500;
 
-      var chart = nv.models.pieChart()
-                    .x(function(d) { return d.key })
-                    .y(function(d) { return d.value })
-                    .labelThreshold(.05)
-                    .showLabels(true)
-                    .color(colors)
-                    .width(width)
-                    .height(height)
-                    .showLegend(false)
-                    .donut(true)
-                    .donutRatio(0.30);
+        var chart = nv.models.pieChart()
+        .x(function(d) { return d.key })
+        .y(function(d) { return d.value })
+        .labelThreshold(.05)
+        .showLabels(true)
+        .color(colors)
+        .width(width)
+        .height(height)
+        .showLegend(false)
+        .donut(true)
+        .donutRatio(0.30);
 
-      d3.select("#piechart svg")
+        d3.select("#piechart svg")
         .datum(data)
         .transition().duration(1200)
         .attr('width', width)
         .attr('height', height)
         .call(chart);
 
-      return chart;
-    });
-  </script>
+        return chart;
+      });
+    </script>
   </div>
 
-<!-- Legend Tables -->
+  <!-- Legend Tables -->
   <div id="legendTable">
-  <table class="table">
-    <thead>
-    <tr>
-    <th>Color</th>
-    <th>Environment (MEO)</th>
-    <th>The Number of Organisms</th>
-    </tr>
-  </thead>
-  <tbody>
-  </tbody>
-  </table>
-  <script>
-    for (var i in data) {
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Color</th>
+          <th>Environment (MEO)</th>
+          <th>The Number of Organisms</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+    <script>
+      for (var i in data) {
       // Color Column
       var clrSpanItem = $("<span />");
       clrSpanItem.css("background-color", colors[ i % colors.length ]);
@@ -140,14 +140,14 @@
 
       // Genus Name Column
       var clrItem = $("<td />");
-          clrSpanItem.appendTo(clrItem);
+      clrSpanItem.appendTo(clrItem);
 
       var keyItem = $("<td />");
       if (!data[i].nolinked) {
         var keyAnchor = $("<a />");
-            keyAnchor.attr("href","http://togogenome.org/environment/" + data[i].href);
-            keyAnchor.text(data[i].key);
-            keyAnchor.appendTo(keyItem);
+        keyAnchor.attr("href","http://togogenome.org/environment/" + data[i].href);
+        keyAnchor.text(data[i].key);
+        keyAnchor.appendTo(keyItem);
       }
       else {
         keyItem.text(data[i].key);
@@ -158,12 +158,12 @@
 
       // Appendes
       var trItem = $("<tr />");
-          clrItem.appendTo(trItem);
-          keyItem.appendTo(trItem);
-          valItem.appendTo(trItem);
-          trItem.appendTo("#legendTable tbody");
+      clrItem.appendTo(trItem);
+      keyItem.appendTo(trItem);
+      valItem.appendTo(trItem);
+      trItem.appendTo("#legendTable tbody");
     }
   </script>
-  </div>
+</div>
 </body>
 </html>

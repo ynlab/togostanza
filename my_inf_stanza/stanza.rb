@@ -26,9 +26,9 @@ class MyInfStanza < TogoStanza::Stanza::Base
         FILTER( CONTAINS(STR(?subject),?identifer) )
       }
       ORDER BY ?genus ?title
-	  SPARQL
+    SPARQL
 
-	  result = query(SPARQL_ENDPOINT_URL, query)
+    result = query(SPARQL_ENDPOINT_URL, query)
 
     # move last in empty title data
     result = result.partition {|item| item[:title] }.flatten

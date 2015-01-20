@@ -3,28 +3,28 @@ class MpoShapeStanza < TogoStanza::Stanza::Base
 
   property :features do |mpo_id|
     query = <<-SPARQL.strip_heredoc
-               PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-               PREFIX mpo:  <http://purl.jp/bio/01/mpo#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX mpo:  <http://purl.jp/bio/01/mpo#>
 
-               SELECT distinct ?label ?definition ?altlabel
-               FROM <http://togogenome.org/graph/mpo>
-               WHERE {
-                 ?subject rdfs:label ?label .
-                 ?subject rdfs:subClassOf* mpo:MPO_01000 .
-                 OPTIONAL {
-                   ?subject skos:definition ?definition .
-                   FILTER(LANG(?definition) != "ja")
-                 }
-                 OPTIONAL {
-                   ?subject skos:altLabel ?altlabel .
-                   FILTER(LANG(?altlabel) != "ja")
-                 }
-		 FILTER(LANG(?label) != "ja")
-		 FILTER(?subject = mpo:#{mpo_id})
-               }
-               SPARQL
+      SELECT distinct ?label ?definition ?altlabel
+      FROM <http://togogenome.org/graph/mpo>
+      WHERE {
+        ?subject rdfs:label ?label .
+        ?subject rdfs:subClassOf* mpo:MPO_01000 .
+        OPTIONAL {
+          ?subject skos:definition ?definition .
+          FILTER(LANG(?definition) != "ja")
+        }
+        OPTIONAL {
+          ?subject skos:altLabel ?altlabel .
+          FILTER(LANG(?altlabel) != "ja")
+        }
+        FILTER(LANG(?label) != "ja")
+        FILTER(?subject = mpo:#{mpo_id})
+      }
+    SPARQL
 
-    result = query(SPARQL_ENDPOINT_URL, query);
+    result = query(SPARQL_ENDPOINT_URL, query)
 
     # Create Image File Name
     image_no_data = "no_data.png"

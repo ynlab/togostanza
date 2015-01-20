@@ -11,11 +11,11 @@ class MpoEnvironmentStanza < TogoStanza::Stanza::Base
         FILTER(LANG(?label) = "en")
       }
     SPARQL
+
     (result.nil?) ? [] : result.first
   end
 
   property :features do |mpo_id|
-#    q = <<-SPARQL.strip_heredoc
     query(SPARQL_ENDPOINT_URL, <<-SPARQL.strip_heredoc)
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX mpo:  <http://purl.jp/bio/01/mpo#>
