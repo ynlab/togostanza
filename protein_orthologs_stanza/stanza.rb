@@ -10,7 +10,7 @@ class ProteinOrthologsStanza < TogoStanza::Stanza::Base
       }
     SPARQL
 
-    if protein_attributes == nil || protein_attributes.size == 0 then
+    if protein_attributes.nil? || protein_attributes.size.zero?
       next nil
     end
 
@@ -34,7 +34,7 @@ class ProteinOrthologsStanza < TogoStanza::Stanza::Base
       }
     SPARQL
 
-    if ortholog_uris == nil || ortholog_uris.size == 0 then
+    if ortholog_uris.nil? || ortholog_uris.size.zero?
       next nil
     end
 

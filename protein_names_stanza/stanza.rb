@@ -28,7 +28,8 @@ class ProteinNamesStanza < TogoStanza::Stanza::Base
         OPTIONAL { ?gene up:orfName ?orf_name . }
       }
     SPARQL
-    gene_names = gene_names.flat_map(&:to_a).group_by(&:first).each_with_object({}) {|(k, vs), hash|
+
+    gene_names.flat_map(&:to_a).group_by(&:first).each_with_object({}) {|(k, vs), hash|
       hash[k] = vs.map(&:last).uniq
     }
   end

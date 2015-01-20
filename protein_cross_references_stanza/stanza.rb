@@ -22,7 +22,7 @@ class ProteinCrossReferencesStanza < TogoStanza::Stanza::Base
     # merge でデータを付けた後、category、abbr でグループ化している
     # [{category: 'xxx', abbr: 'hoge', ref: 'aaa'}, {category: 'xxx', abbr: 'hoge', ref: 'bbb'}, {category: 'xxx', abbr: 'moge', ref: 'ccc'}, {category: 'yyy', abbr: 'fuga', ref: 'ddd'}]
     # => [[[{:category=>"xxx", :abbr=>"hoge", :ref=>"aaa"}, {:category=>"xxx", :abbr=>"hoge", :ref=>"bbb"}], [{:category=>"xxx", :abbr=>"moge", :ref=>"ccc"}]], [[{:category=>"yyy", :abbr=>"fuga", :ref=>"ddd"}]]]
-    # URL に up_id を含まない場合 UniProt の数だけ同一URLができるので :protein を削除して uniq 
+    # URL に up_id を含まない場合 UniProt の数だけ同一URLができるので :protein を削除して uniq
     references.map {|hash|
       up_id  = hash[:protein].split('/').last
       ref_id = hash[:ref].split('/').last
@@ -34,7 +34,6 @@ class ProteinCrossReferencesStanza < TogoStanza::Stanza::Base
     }.uniq.reverse.group_by {|hash| hash[:category] }.map {|hash|
       hash.last.group_by {|h| h[:abbr] }.values
     }
-
   end
 
   private
