@@ -30,14 +30,9 @@ class MyInfStanza < TogoStanza::Stanza::Base
 
     result = query(SPARQL_ENDPOINT_URL, query)
 
-    # move last in empty title data
-    result = result.partition {|item| item[:title] }.flatten
-
-    # genus grouping
-    result = result.group_by {|item| item[:genus] }
-    result = result.map {|key, val| {row_key: key, row_value: val} }
-
-    # move last in empty genus data
-    result.partition {|item| item[:row_key] }.flatten
+    result.partition {|item| item[:title] }.flatten # move last in empty title data
+      .group_by {|item| item[:genus] } # genus grouping
+      .map {|key, val| {row_key: key, row_value: val} }
+      .partition {|item| item[:row_key] }.flatten # move last in empty genus data
   end
 end

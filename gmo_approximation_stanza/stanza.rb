@@ -14,12 +14,10 @@ class GmoApproximationStanza < TogoStanza::Stanza::Base
 
     result = query(SPARQL_ENDPOINT_URL, query)
 
-    if result.empty?
-      []
-    else
+    unless result.empty?
       result.first[:med_id] = medium_id
-      result.first
     end
+
     result
   end
 
@@ -121,8 +119,7 @@ class GmoApproximationStanza < TogoStanza::Stanza::Base
         ?gmo rdfs:subClassOf* gmo:GMO_000016 .
       }
     SPARQL
-    udlist = query(SPARQL_ENDPOINT_URL, query)
-    udlist.map! {|item| item[:brc] }
+    udlist = query(SPARQL_ENDPOINT_URL, query).map {|item| item[:brc] }
 
 
     if is_ud.first[:c].to_i.zero?

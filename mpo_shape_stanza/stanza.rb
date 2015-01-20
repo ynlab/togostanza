@@ -29,19 +29,16 @@ class MpoShapeStanza < TogoStanza::Stanza::Base
     # Create Image File Name
     image_no_data = "no_data.png"
     file_name = result.empty? ? image_no_data : (result.first[:label].downcase + ".svg")
-    file_name.tr!(" ","_")
+    file_name.tr!(" ", "_")
     file_path = "mpo_shape_stanza/assets/mpo_shape/images/" + file_name
     file_name = image_no_data unless File.exist?(file_path)
 
     # Create Dataset
-    shapes = Hash[
-      label: result.empty? ? "(No Data)" : result.first[:label],
-      definition: result.empty? ? "(No Data)" : result.first[:definition],
+    Hash[
+      label: result.empty? ? "(No Data)" : (result.first[:label] || "(No Data)") ,
+      definition: result.empty? ? "(No Data)" : (result.first[:definition] || "(No Data)"),
       synonymlist: result.collect {|item| item[:altlabel].nil? ? "(No Data)" : item[:altlabel] },
       image: file_name
     ]
-    shapes[:label] = shapes[:label].nil? ? "(No Data)" : shapes[:label]
-    shapes[:definition] = shapes[:definition].nil? ? "(No Data)" : shapes[:definition]
-    shapes
   end
 end
