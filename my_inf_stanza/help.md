@@ -14,7 +14,7 @@ Organism list of having target phenotype. and groupping genus.
 ## Sample:
 
 ```html
-<div data-stanza="http://stanza-dev.herokuapp.com/stanza/my_inf" data-stanza-mpo-id="MPO_01003"></div>
+<div data-stanza="http://togogenome.org/stanza/my_inf" data-stanza-mpo-id="MPO_01003"></div>
 ```
 
 The above `<div>` will automatically embed the following Stanza in your HTML page.
