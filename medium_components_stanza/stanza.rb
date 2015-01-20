@@ -1,6 +1,6 @@
 class MediumComponentsStanza < TogoStanza::Stanza::Base
 	property :medium_information do |medium_id|
-		medium_list = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
+		medium_list = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
 		PREFIX gmo: <http://purl.jp/bio/11/gmo#>
 
 		SELECT DISTINCT ?medium ?medium_id ?medium_type_label ?medium_name
