@@ -73,10 +73,13 @@ class ProteinNamesStanza < TogoStanza::Stanza::Base
         # Taxonomic lineage
         OPTIONAL {
           ?tax_id rdfs:subClassOf* ?parent_taxonomy .
+          # 真核は階層が多いので rank のあるものだけ表示
+          ?parent_taxonomy up:rank ?rank .
           ?parent_taxonomy up:scientificName ?parent_taxonomy_names .
           ?parent_taxonomy rdfs:subClassOf* ?ancestor .
         }
       }
+      GROUP BY ?recommended_name ?ec_name ?alternative_names ?organism_name ?parent_taxonomy_names ?parent_taxonomy ?tax_id
       ORDER BY DESC(?taxonomy_count)
     SPARQL
 
