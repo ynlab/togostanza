@@ -7,7 +7,7 @@
 		{{/each}}
 		<link rel="stylesheet" type="text/css" href="/stanza/assets/mpo_genus/nv.d3.min.css" />
 		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-		<script src="/stanza/assets/mpo_genus/d3.v3.min.js"></script>
+		<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
 		<script src="/stanza/assets/mpo_genus/nv.d3.min.js"></script>
 		<script src="/stanza/assets/mpo_genus/models/legend.js"></script>
 		<script src="/stanza/assets/mpo_genus/models/pie.js"></script>
@@ -21,7 +21,7 @@
 		{ key: "{{genus}}", value: {{cnt}}, href: "{{list2}}", nolinked: false },
 		{{/each}}
 		];
-		
+
 		// etc data pickup
 		var etcIndex = null;
 		var item = null;
@@ -42,10 +42,10 @@
 			item.nolinked = true;
 			data.splice(etcIndex,1);
 			data.push(item);
-			
+
 		}
 		</script>
-		
+
 		<style>
 			body {
 				position:relative;
@@ -88,11 +88,11 @@
 			<svg class="piechart"></svg>
 			<script>
 			var colors = d3.scale.category20().range();
-			
+
 			nv.addGraph(function() {
 				var width = 500;
 				var height = 500;
-				
+
 				var chart = nv.models.pieChart()
 				    .x(function(d) { return d.key })
 				    .y(function(d) { return d.value })
@@ -104,14 +104,14 @@
 				    .showLegend(false)
 				    .donut(true)
 				    .donutRatio(0.30);
-				
+
 				d3.select("#piechart svg")
 					.datum(data)
 					.transition().duration(1200)
 					.attr('width', width)
 					.attr('height', height)
 					.call(chart);
-				
+
 				return chart;
 			});
 			</script>
@@ -139,11 +139,11 @@
 				clrSpanItem.css("height", "1em");
 				clrSpanItem.css("width", "1em");
 				clrSpanItem.text(" ");
-				
+
 				// Genus Name Column
 				var clrItem = $("<td />");
 				clrSpanItem.appendTo(clrItem);
-				
+
 				var keyItem = $("<td />");
 				if(!data[i].nolinked){
 					var keyAnchor = $('<a target="_blank" />');
@@ -154,10 +154,10 @@
 				else{
 					keyItem.text(data[i].key);
 				}
-				
+
 				// Count Column
 				var valItem = $("<td />").text(data[i].value);
-				
+
 				// Appendes
 				var trItem = $("<tr />");
 				clrItem.appendTo(trItem);
