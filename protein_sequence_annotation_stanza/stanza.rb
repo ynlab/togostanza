@@ -26,15 +26,22 @@ class ProteinSequenceAnnotationStanza < TogoStanza::Stanza::Base
         ?range faldo:begin/faldo:position ?begin_location ;
                faldo:end/faldo:position ?end_location .
 
+
+        # 互いに isoform なUniprotがあるので (e.g. P42166, P42167) 同じIDの isoform で配列のあるものに絞る
+        ?protein up:sequence ?isoform .
+        BIND( REPLACE( STR(?protein), "http://purl.uniprot.org/uniprot/", "") AS ?up_id)
+        FILTER( REGEX(?isoform, ?up_id))
+        ?isoform rdf:value ?value .
+
         # description の一部が取得できるが、内容の表示に必要があるのか
-        OPTIONAL{
-          ?annotation up:substitution ?substitution .
-          ?protein up:sequence/rdf:value ?seq .
+        OPTIONAL {
+          ?annotation up:substitution ?substitution . 
+          ?isoform rdf:value ?seq .
         }
 
-        # sequence の長さ取得用
-        OPTIONAL{
-          ?protein up:sequence/rdf:value ?seq_txt .
+        # sequence の長さ取得
+        OPTIONAL {
+          ?isoform rdf:value ?seq_txt .
           BIND (STRLEN(?seq_txt) AS ?seq_length) .
         }
 
