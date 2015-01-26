@@ -3,7 +3,7 @@ class ProteinSequenceStanza < TogoStanza::Stanza::Base
     sequences = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
 
-      SELECT DISTINCT ?up_id ?value ?mass ?modified ?version ?checksum
+      SELECT DISTINCT ?up_id ?aminoacid ?mass ?modified ?version ?checksum ?fragment ?precursor ?existence_label
       FROM <http://togogenome.org/graph/uniprot>
       FROM <http://togogenome.org/graph/tgup>
       WHERE {
@@ -16,22 +16,52 @@ class ProteinSequenceStanza < TogoStanza::Stanza::Base
         BIND( REPLACE( STR(?protein), "http://purl.uniprot.org/uniprot/", "") AS ?up_id)
         FILTER( REGEX(?isoform, ?up_id))
 
-        ?isoform rdf:value ?value ;
+        ?isoform rdf:value ?aminoacid ;
                  up:mass ?mass ;
                  up:modified ?modified ;
                  up:version ?version ;
                  up:crc64Checksum ?checksum .
+
+        # Sequence status
+        OPTIONAL {
+          ?isoform up:fragment ?fragment .
+        }
+
+        # Sequence processing
+        OPTIONAL {
+          ?isoform up:precursor ?precursor .
+        }
+
+        # Protein existence
+        OPTIONAL {
+          ?protein up:existence ?existence .
+          ?existence rdfs:label ?existence_label .
+        }
       }
     SPARQL
 
     sequences.map {|hash|
-      value, protein = hash.values_at(:value, :protein)
-
       hash.merge(
-        sequence_length: value.size,
-        # 'http://purl.uniprot.org/uniprot/P72587' => 'P72587'
-        # up_id: protein.split('/').last
+        sequence_length:     hash[:aminoacid].try(:length),
+        sequence_status:     sequence_status(hash[:fragment].to_s),
+        sequence_processing: is_true?(hash[:precursor]) ? 'precursor' : nil
       )
     }
+  end
+
+  private
+
+  def sequence_status(fragment)
+    case fragment
+    when 'single', 'multiple'
+      'Fragment'
+    else
+      'Complete'
+    end
+  end
+
+  def is_true?(val)
+    # XXX Owlimだと 'true' が、Virtuosoだと '1' が返ってくるよ...
+    val == 'true' || val == '1'
   end
 end

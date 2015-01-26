@@ -22,6 +22,9 @@
               <th>Sequence</th>
               <th>Length</th>
               <th>Mass (Da)</th>
+              <th>Status</th>
+              {{#if sequence_processing}}<th>Processing</th>{{/if}}
+              {{#if existence_label}}<th>Existence</th>{{/if}}
             </tr>
           </thead>
           <tbody>
@@ -29,13 +32,16 @@
               <td>{{up_id}}</td>
               <td>{{sequence_length}}</td>
               <td>{{mass}}</td>
+              <td>{{sequence_status}}</td>
+              {{#if sequence_processing}}<td>{{sequence_processing}}</td>{{/if}}
+              {{#if existence_label}}<td>{{existence_label}}</td>{{/if}}
             </tr>
           </tbody>
         </table>
         <div>
           Last modified: {{modified}}, Version {{version}} <br />
           Checksum: {{checksum}}
-          <pre>{{value}}</pre>
+          <pre>{{aminoacid}}</pre>
         </div>
       {{/each}}
     {{/if}}
