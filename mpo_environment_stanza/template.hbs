@@ -5,14 +5,9 @@
   {{#each css_uri}}
   <link rel="stylesheet" type="text/css" href="{{this}}" />
   {{/each}}
-  <link rel="stylesheet" type="text/css" href="/stanza/assets/mpo_genus/nv.d3.min.css" />
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-  <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
-  <script src="/stanza/assets/mpo_environment/nv.d3.min.js"></script>
-  <script src="/stanza/assets/mpo_environment/models/legend.js"></script>
-  <script src="/stanza/assets/mpo_environment/models/pie.js"></script>
-  <script src="/stanza/assets/mpo_environment/models/pieChart.js"></script>
-  <script src="/stanza/assets/mpo_environment/utils.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.min.js"></script>
   {{adjust_iframe_height_script}}
   <script>
     var data = [
