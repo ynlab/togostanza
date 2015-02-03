@@ -18,7 +18,7 @@
       rdfs:comment      "A generic class for Stanza." ;
       rdfs:label        "Stanza" ;
       rdfs:subClassOf   owl:Thing ;
-      owl:hasKey        (:stanza :label :description :usage :type :context :display :provider :license :parameters) .
+      owl:hasKey        (:stanza :label :definition :usage :type :context :display :provider :license :parameters) .
 
 :TogoStanza
       rdf:type          owl:Class ;
@@ -36,7 +36,8 @@
       rdf:type          owl:Class ;
       rdfs:comment      "A class for parameters of a Stanza." ;
       rdfs:label        "Parameter" ;
-      rdfs:subClassOf   owl:Thing .
+      rdfs:subClassOf   owl:Thing ;
+      owl:hasKey        (:key :example :description :required) .
 
 :Context
       rdf:type          owl:Class ;
@@ -150,7 +151,7 @@
       rdfs:range        xsd:string ;
       rdfs:subPropertyOf rdfs:label .
 
-:description
+:definition
       rdf:type          owl:DatatypeProperty ;
       rdf:comment       "This property is used to describe the Stanza." ;
       rdfs:domain       :Stanza ;
