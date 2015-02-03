@@ -32,6 +32,12 @@
       rdfs:label        "NanoStanza" ;
       rdfs:subClassOf   :Stanza .
 
+:Parameter
+      rdf:type          owl:Class ;
+      rdfs:comment      "A class for parameters of a Stanza." ;
+      rdfs:label        "Parameter" ;
+      rdfs:subClassOf   owl:Thing .
+
 :Context
       rdf:type          owl:Class ;
       rdfs:comment      "A generic class for Context describing a context in which the Stanza will be used." ;
@@ -228,18 +234,18 @@
 :example
       rdf:type          owl:DatatypeProperty ;
       rdf:comment       "This property is used to indicate an example of the parameter value." ;
-      rdfs:domain       :Stanza ;
+      rdfs:domain       :Parameter ;
       rdfs:range        xsd:string .
 
 :description
       rdf:type          owl:DatatypeProperty ;
       rdf:comment       "This property is used to describe the parameter." ;
-      rdfs:domain       :Stanza ;
+      rdfs:domain       :Parameter ;
       rdfs:range        xsd:string .
 
 :required
       rdf:type          owl:DatatypeProperty ;
       rdf:comment       "This property is used to indicate if the parameter is mandatory or not." ;
-      rdfs:domain       :Stanza ;
+      rdfs:domain       :Parameter ;
       rdfs:range        xsd:boolean .
 
