@@ -1,17 +1,17 @@
 class ProteinSequenceAnnotationStanza < TogoStanza::Stanza::Base
-  property :sequence_annotations do |tax_id, gene_id|
-    annotations = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
+  property :sequence_annotations do |refseq_id, gene_id|
+    annotations = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
-      PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
+      PREFIX faldo: <http://biohackathon.org/resource/faldo#>
 
       SELECT DISTINCT ?parent_label ?label ?begin_location ?end_location ?seq_length ?comment (GROUP_CONCAT(?substitution, ", ") AS ?substitutions) ?seq ?feature_identifier
-      FROM <http://togogenome.org/graph/uniprot/>
-      FROM <http://togogenome.org/graph/tgup/>
+      FROM <http://togogenome.org/graph/uniprot>
+      FROM <http://togogenome.org/graph/tgup>
       WHERE {
-        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
+        <http://togogenome.org/gene/#{refseq_id}:#{gene_id}> rdfs:seeAlso ?id_upid .
         ?id_upid rdfs:seeAlso ?protein .
-        ?protein a <http://purl.uniprot.org/core/Protein> ;
-          up:annotation ?annotation .
+        ?protein a up:Protein ;
+                 up:annotation ?annotation .
 
         ?annotation rdf:type ?type .
         ?type rdfs:label ?label .
@@ -23,18 +23,25 @@ class ProteinSequenceAnnotationStanza < TogoStanza::Stanza::Base
 
         ?annotation up:range ?range .
         OPTIONAL { ?annotation rdfs:comment ?comment . }
-        ?range up:begin ?begin_location ;
-               up:end ?end_location .
+        ?range faldo:begin/faldo:position ?begin_location ;
+               faldo:end/faldo:position ?end_location .
+
+
+        # 互いに isoform なUniprotがあるので (e.g. P42166, P42167) 同じIDの isoform で配列のあるものに絞る
+        ?protein up:sequence ?isoform .
+        BIND( REPLACE( STR(?protein), "http://purl.uniprot.org/uniprot/", "") AS ?up_id)
+        FILTER( REGEX(?isoform, ?up_id))
+        ?isoform rdf:value ?value .
 
         # description の一部が取得できるが、内容の表示に必要があるのか
-        OPTIONAL{
-          ?annotation up:substitution ?substitution .
-          ?protein up:sequence/rdf:value ?seq .
+        OPTIONAL {
+          ?annotation up:substitution ?substitution . 
+          ?isoform rdf:value ?seq .
         }
 
-        # sequence の長さ取得用
-        OPTIONAL{
-          ?protein up:sequence/rdf:value ?seq_txt .
+        # sequence の長さ取得
+        OPTIONAL {
+          ?isoform rdf:value ?seq_txt .
           BIND (STRLEN(?seq_txt) AS ?seq_length) .
         }
 

@@ -1,16 +1,16 @@
 class ProteinOrthologsStanza < TogoStanza::Stanza::Base
-  property :orthologs do |tax_id, gene_id|
-    protein_attributes = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
+  property :orthologs do |refseq_id, gene_id|
+    protein_attributes = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       SELECT (REPLACE(STR(?id_upid),"http://identifiers.org/uniprot/","http://purl.uniprot.org/uniprot/") AS ?upid)
-      FROM <http://togogenome.org/graph/tgup/>
+      FROM <http://togogenome.org/graph/tgup>
       WHERE
       {
-        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
-        ?id_upid a <http://identifiers.org/uniprot/> .
+        <http://togogenome.org/gene/#{refseq_id}:#{gene_id}> rdfs:seeAlso ?id_upid .
+        ?id_upid a <http://identifiers.org/uniprot> .
       }
     SPARQL
 
-    if protein_attributes == nil || protein_attributes.size == 0 then
+    if protein_attributes.nil? || protein_attributes.size.zero?
       next nil
     end
 
@@ -34,7 +34,7 @@ class ProteinOrthologsStanza < TogoStanza::Stanza::Base
       }
     SPARQL
 
-    if ortholog_uris == nil || ortholog_uris.size == 0 then
+    if ortholog_uris.nil? || ortholog_uris.size.zero?
       next nil
     end
 
