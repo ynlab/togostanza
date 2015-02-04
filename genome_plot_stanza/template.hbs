@@ -30,6 +30,10 @@
               'button_label': 'Number of genes' ,
               'axis_label': 'Number of genes'
             },
+            'num_pseudo': {
+              'button_label': 'Number of pseudo genes' ,
+              'axis_label': 'Number of pseudo genes'
+            },
             'num_rrna': {
               'button_label': 'Number of rRNAs',
               'axis_label': 'Number of rRNAs'
@@ -37,6 +41,10 @@
             'num_trna': {
               'button_label': 'Number of tRNAs',
               'axis_label': 'Number of tRNAs'
+            },
+            'num_ncrna': {
+              'button_label': 'Number of ncRNAs',
+              'axis_label': 'Number of ncRNAs'
             },
             'temperature': {
               'button_label': 'Temperature',
@@ -56,6 +64,10 @@
               'button_label': 'Number of genes',
               'axis_label': 'Number of genes'
             },
+            'num_pseudo': {
+              'button_label': 'Number of pseudo genes',
+              'axis_label': 'Number of pseudo genes'
+            },
             'num_rrna': {
               'button_label': 'Number of rRNAs',
               'axis_label': 'Number of rRNAs'
@@ -63,6 +75,10 @@
             'num_trna': {
               'button_label': 'Number of tRNAs',
               'axis_label': 'Number of tRNAs'
+            },
+            'num_ncrna': {
+              'button_label': 'Number of ncRNAs',
+              'axis_label': 'Number of ncRNAs'
             },
             'temperature': {
               'button_label': 'Temperature',
@@ -85,8 +101,8 @@
               'opt': 'opt_ph',
             },
           },
-          'tooltips_items': ['organism_name', 'tax', 'bioProject', 'size', 'num_gene', 'num_rrna',
-              'num_trna', 'temperature', 'ph'
+          'tooltips_items': ['organism_name', 'tax', 'size', 'num_gene', 'num_pseudo',
+              'num_rrna', 'num_trna', 'num_ncrna', 'temperature', 'ph'
           ],
           'no_categorize': 'no_categorize',
           'category_items': {
@@ -112,7 +128,6 @@
           'init_point_color': '#7BA67B',
           'init_selected_point_color': '#F06F60',
           'point_item': 'tax',
-          'point_item_ex': 'bioProject',
           'margin': 80,
           'width': 700,
           'height': 700,

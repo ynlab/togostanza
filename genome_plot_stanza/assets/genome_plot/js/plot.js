@@ -141,7 +141,7 @@ function render_scatterplot(point_label, point_label_ex, x_axis_item, y_axis_ite
     .append("circle")
     .attr("class", "point")
     .attr("id", function (d) {
-      return opt.elem_id_prefix + trim_tax_prefix(d[point_label]) + "_" + trim_bioproject_prefix(d[point_label_ex])
+      return opt.elem_id_prefix + trim_tax_prefix(d[point_label])
     })
     .attr("cx", function (d) {
       return x_scale(d[x_axis_item])
@@ -353,7 +353,7 @@ function redraw_render_scatterplot() {
       .data(data)
       .attr("class", "point")
       .attr("id", function (d) {
-        return opt.elem_id_prefix + trim_tax_prefix(d.tax) + "_" + trim_bioproject_prefix(d.bioProject)
+        return opt.elem_id_prefix + trim_tax_prefix(d.tax)
       })
       .attr("fill", opt.init_point_color)
       .transition()
@@ -395,7 +395,7 @@ function redraw_render_scatterplot() {
       .data(data)
       .attr("class", "point")
       .attr("id", function (d) {
-        return opt.elem_id_prefix + trim_tax_prefix(d.tax) + "_" + trim_bioproject_prefix(d.bioProject)
+        return opt.elem_id_prefix + trim_tax_prefix(d.tax)
       })
       .attr("fill", opt.init_point_color)
       .attr("cx", function(d){
@@ -554,7 +554,7 @@ function add_tooltips_event() {
               if (opt.x_axis_items[item]) { //is axis item
                 tooltipstext += ("<tr><td>" + opt.x_axis_items[item].button_label + ": " + d[item] + "</td></tr>");
               } else {
-                tooltipstext += ("<tr><td>" + replace_tax_prefix(replace_bioproject_prefix(d[item])) + "</td></tr>");
+                tooltipstext += ("<tr><td>" + replace_tax_prefix(d[item]) + "</td></tr>");
               }
             }
           }
@@ -586,30 +586,10 @@ function trim_tax_prefix(taxid) {
 //TODO specified by opt
 Returns taxonomy id from url
 */
-function trim_bioproject_prefix(bioproject) {
-  bioproject = bioproject.replace("http://identifiers.org/bioproject/", "");
-  bioproject = bioproject.replace("http://www.ncbi.nlm.nih.gov/bioproject/", "");
-  return bioproject;
-}
-
-/*
-//TODO specified by opt
-Returns taxonomy id from url
-*/
 function replace_tax_prefix(taxid) {
   taxid = taxid.replace("http://identifiers.org/taxonomy/", "NCBI Taxonomy: ");
   taxid = taxid.replace("http://www.ncbi.nlm.nih.gov/taxonomy/", "NCBI Taxonomy: ");
   return taxid;
-}
-
-/*
-//TODO specified by opt
-Returns taxonomy id from url
-*/
-function replace_bioproject_prefix(bioproject) {
-  bioproject = bioproject.replace("http://identifiers.org/bioproject/", "NCBI BioProject: ");
-  bioproject = bioproject.replace("http://www.ncbi.nlm.nih.gov/bioproject/", "NCBI BioProject: ");
-  return bioproject;
 }
 
 /*
