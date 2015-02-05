@@ -1,6 +1,6 @@
 class OrganismCultureCollectionsStanza < TogoStanza::Stanza::Base
   property :strain_list do |tax_id|
-    results = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
+    results = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>
       PREFIX taxid: <http://identifiers.org/taxonomy/>
 
@@ -8,9 +8,9 @@ class OrganismCultureCollectionsStanza < TogoStanza::Stanza::Base
         ?isolation ((sql:GROUP_DIGEST(?env, '||', 1000, 1)) AS ?env_links)
         ?type_strain_label ?application
         ((sql:GROUP_DIGEST(?other_link, ', ', 1000, 1)) AS ?other_collections)
-      FROM <http://togogenome.org/graph/taxonomy/>
-      FROM <http://togogenome.org/graph/brc/>
-      FROM <http://togogenome.org/graph/meo/>
+      FROM <http://togogenome.org/graph/taxonomy>
+      FROM <http://togogenome.org/graph/brc>
+      FROM <http://togogenome.org/graph/meo>
       WHERE
       {
         { SELECT DISTINCT ?strain_id

@@ -1,16 +1,16 @@
 class EnvironmentOrganismDistributionOnTemperatureNanoStanza < TogoStanza::Stanza::Base
   property :num_orgs_with_temperature_range do |meo_id|
-    results = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
+    results = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       PREFIX mpo: <http://purl.jp/bio/01/mpo#>
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>
       PREFIX meo: <http://purl.jp/bio/11/meo/>
       SELECT DISTINCT ?tax_id ?opt_temp ?min_temp ?max_temp
                       ?opt_temp_brc ?min_temp_brc ?max_temp_brc ?l
-      FROM <http://togogenome.org/graph/gold/>
-      FROM <http://togogenome.org/graph/mpo/>
-      FROM <http://togogenome.org/graph/meo/>
-      FROM <http://togogenome.org/graph/brc/>
-      FROM <http://togogenome.org/graph/mccv/>
+      FROM <http://togogenome.org/graph/gold>
+      FROM <http://togogenome.org/graph/mpo>
+      FROM <http://togogenome.org/graph/meo>
+      FROM <http://togogenome.org/graph/brc>
+      FROM <http://togogenome.org/graph/mccv>
       WHERE {
         VALUES ?meo_mapping { meo:MEO_0000437 meo:MEO_0000440 } .
         ?descendant rdfs:subClassOf* meo:#{meo_id} .

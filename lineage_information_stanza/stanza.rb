@@ -4,7 +4,7 @@ class LineageInformationStanza < TogoStanza::Stanza::Base
   end
 
   property :tax_lineage_list do |tax_id|
-    results_super = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
+    results_super = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       PREFIX taxo: <http://ddbj.nig.ac.jp/ontologies/taxonomy#>
       PREFIX taxid: <http://identifiers.org/taxonomy/>
 
@@ -13,7 +13,7 @@ class LineageInformationStanza < TogoStanza::Stanza::Base
        (?tax AS ?tax_link)
        ?tax_label
        (REPLACE(STR(?rank), "http://ddbj.nig.ac.jp/ontologies/taxonomy#", "") AS ?rank)
-      FROM <http://togogenome.org/graph/taxonomy/>
+      FROM <http://togogenome.org/graph/taxonomy>
       WHERE
       {
         ?search_tax rdfs:label ?o FILTER (?search_tax = taxid:#{tax_id} ) .
@@ -24,7 +24,7 @@ class LineageInformationStanza < TogoStanza::Stanza::Base
       } ORDER BY DESC(?step)
     SPARQL
 
-    results_sub = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
+    results_sub = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       PREFIX taxo: <http://ddbj.nig.ac.jp/ontologies/taxonomy#>
       PREFIX taxid: <http://identifiers.org/taxonomy/>
 
@@ -33,7 +33,7 @@ class LineageInformationStanza < TogoStanza::Stanza::Base
        (?tax AS ?tax_link)
        ?tax_label
        (REPLACE(STR(?rank) ,"http://ddbj.nig.ac.jp/ontologies/taxonomy#" ,"" ) AS ?rank)
-      FROM <http://togogenome.org/graph/taxonomy/>
+      FROM <http://togogenome.org/graph/taxonomy>
       WHERE
       {
         ?search_tax rdfs:label ?label FILTER (?search_tax = taxid:#{tax_id} ) .
