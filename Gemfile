@@ -68,3 +68,5 @@ gem 'organism_related_disease_nano_stanza', path: './organism_related_disease_na
 gem 'protein_3d_structure_nano_stanza', path: './protein_3d_structure_nano_stanza'
 gem 'protein_ec_number_nano_stanza', path: './protein_ec_number_nano_stanza'
 gem 'protein_references_timeline_nano_stanza', path: './protein_references_timeline_nano_stanza'
+gem 'refgs_dev_stanza', path: './refgs_dev_stanza'
+gem 'refgs_dev2_stanza', path: './refgs_dev2_stanza'

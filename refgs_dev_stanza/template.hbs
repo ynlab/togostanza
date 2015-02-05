@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Refgs Dev</title>
+    {{#each css_uri}}
+    <link rel="stylesheet" href="{{this}}" />
+    {{/each}}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    {{adjust_iframe_height_script}}
+  </head>
+
+  <body>
+    <table class='table'>
+      <tbody>
+        <tr>
+          <th>SRA experiment id</th>
+          <th>Biosample id</th>
+          <th>SRA sample id</th>
+          <th>Bioproject id</th>
+          <th>RefSeq assembly id</th>
+          <th>Organism name</th>
+          <th>Infraspecific name</th>
+          <th>Taxonomy id</th>
+          <th>RefSeq id</th>
+        </tr>
+        {{#each features}}
+          <tr>
+            <td>{{srx_id}}</td>
+            <td>{{biosample_id}}</td>
+            <td>{{srs_id}}</td>
+            <td>{{bioproject_id}}</td>
+            <td>{{asm_id}}</td>
+            <td>{{organism_name}}</td>
+            <td>{{infraspecific_name}}</td>
+            <td>{{tax_id}}</td>
+            <td>{{refseq_id}}</td>
+          </tr>
+         {{/each}}
+      </tbody>
+    </table>
+  </body>
+</html>
