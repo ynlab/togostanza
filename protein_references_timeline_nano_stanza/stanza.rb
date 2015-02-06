@@ -25,12 +25,12 @@ class ProteinReferencesTimelineNanoStanza < TogoStanza::Stanza::Base
 
     time = Time.new
 
-    references = (1941..time.year).map{ |y|
-      {year: "#{y}",citation: ""}
+    references = (1941..time.year).map {|y|
+      {year: y.to_s, citation: ""}
     }
-    grouping(references.concat(refs),:year,:citation).map{ |y|
+    grouping(references.concat(refs), :year, :citation).map {|y|
       y[:citation].delete_at(0)
-      {year: "#{y[:year]}", counts: "#{y[:citation].size}", citations: "#{y[:citation]}"}
+      {year: y[:year], counts: y[:citation].size, citations: y[:citation]}
     }
   end
 end
