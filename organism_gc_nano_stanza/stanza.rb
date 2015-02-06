@@ -8,18 +8,20 @@ class OrganismGcNanoStanza < TogoStanza::Stanza::Base
   property :atgc do |tax_id|
     # http://localhost:9292/stanza/organism_gc_nano?tax_id=192222
 
-    results = query('http://togogenome.org/sparql', <<-SPARQL.strip_heredoc)
-      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      PREFIX tax: <http://identifiers.org/taxonomy/>
-      PREFIX insdc: <http://ddbj.nig.ac.jp/ontologies/sequence#>
+    results = query('http://dev.togogenome.org/sparql-test', <<-SPARQL.strip_heredoc)
+      PREFIX taxid:<http://identifiers.org/taxonomy/>
+      PREFIX stats: <http://togogenome.org/stats/>
+      PREFIX ddbj: <http://ddbj.nig.ac.jp/ontologies/nucleotide/>
 
       SELECT ?refseq
-      WHERE {
-        GRAPH <http://togogenome.org/graph/refseq/> {
-          ?seq rdfs:seeAlso tax:#{tax_id} .
-          ?seq insdc:sequence_version ?refseq .
-#         ?seq rdfs:seeAlso ?refseq_uri .
-#         ?refseq_uri a <http://identifiers.org/refseq/> .
+      WHERE
+      {
+        GRAPH <http://togogenome.org/graph/stats> {
+           taxid:#{tax_id} rdfs:seeAlso/rdfs:seeAlso ?refseq_id .
+        }
+        GRAPH <http://togogenome.org/graph/refseq> {
+          ?refseq_id rdf:type ddbj:Entry ;
+            ddbj:sequence_version ?refseq .
         }
       }
     SPARQL
