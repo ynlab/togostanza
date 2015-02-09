@@ -1,14 +1,14 @@
 class OrganismMediumInformationStanza < TogoStanza::Stanza::Base
   property :medium_information do |tax_id|
-    medium_list = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
+    medium_list = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>
       PREFIX gmo: <http://purl.jp/bio/11/gmo#>
       PREFIX taxid: <http://identifiers.org/taxonomy/>
 
       SELECT DISTINCT ?medium_id ?medium_type_label ?medium_name
-      FROM <http://togogenome.org/graph/brc/>
-      FROM <http://togogenome.org/graph/gmo/>
+      FROM <http://togogenome.org/graph/brc>
+      FROM <http://togogenome.org/graph/gmo>
       WHERE
       {
         { SELECT DISTINCT ?medium
@@ -24,7 +24,7 @@ class OrganismMediumInformationStanza < TogoStanza::Stanza::Base
       }
     SPARQL
 
-    ingredient_list = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
+    ingredient_list = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
 #      DEFINE sql:select-option "order"
 # TODO: Uncomment the above line when endpoint data is update.
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>
@@ -33,8 +33,8 @@ class OrganismMediumInformationStanza < TogoStanza::Stanza::Base
 
       SELECT ?medium_id ?classification (STR(?class_label) AS ?class_label)
         ?ingredient (STR(?ingredient_label) AS ?ingredient_label)
-      FROM <http://togogenome.org/graph/brc/>
-      FROM <http://togogenome.org/graph/gmo/>
+      FROM <http://togogenome.org/graph/brc>
+      FROM <http://togogenome.org/graph/gmo>
       WHERE
       {
         VALUES ?classification { gmo:GMO_000015 gmo:GMO_000016 gmo:GMO_000008 gmo:GMO_000009 }
