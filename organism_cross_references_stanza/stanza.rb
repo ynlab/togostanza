@@ -1,50 +1,43 @@
 class OrganismCrossReferencesStanza < TogoStanza::Stanza::Base
   property :link_list do |tax_id|
-    link_list1 = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
+    link_list = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX tax: <http://identifiers.org/taxonomy/>
+      PREFIX insdc: <http://ddbj.nig.ac.jp/ontologies/nucleotide/>
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>
-      PREFIX obo: <http://purl.obolibrary.org/obo/>
-      PREFIX insdc: <http://insdc.org/owl/>
-      PREFIX idtax: <http://identifiers.org/taxonomy/>
 
-      SELECT ?label ?link
-      FROM <http://togogenome.org/graph/gold/>
-      FROM <http://togogenome.org/graph/refseq/>
+      SELECT DISTINCT ?type_label ?link
       WHERE
       {
         {
-          SELECT (REPLACE(str(?gold),"http://www.genomesonline.org/cgi-bin/GOLD/GOLDCards.cgi\\\\?goldstamp=", "GOLD:" ) AS ?label) (?gold AS ?link)
-          FROM <http://togogenome.org/gold/>
-          WHERE
+          GRAPH <http://togogenome.org/graph/gold>
           {
-            ?gold mccv:MCCV_000020 idtax:#{tax_id} .
+            ?link mccv:MCCV_000020 tax:#{tax_id} .
+             BIND ("GOLD" AS ?type_label) .
           }
         }
         UNION
         {
-          SELECT DISTINCT ?label (?xref AS ?link)
-          FROM <http://togogenome.org/graph/refseq/>
-          WHERE
+          GRAPH <http://togogenome.org/graph/stats>
           {
-            values ?tax_id { idtax:#{tax_id} }
-            values ?so { obo:SO_0000340 obo:SO_0000155 }
-            ?seq rdfs:seeAlso ?tax_id .
-            ?seq a ?so .
-            ?seq rdfs:seeAlso ?xref .
-            ?xref rdfs:label ?label .
-          } ORDER BY ?label
+            tax:#{tax_id} rdfs:seeAlso/rdfs:seeAlso ?refseq .
+          }
+          GRAPH  <http://togogenome.org/graph/refseq>
+          {
+            ?refseq a insdc:Entry ;
+              rdfs:seeAlso ?link .
+            ?link a ?type .
+            FILTER(STRSTARTS(STR(?type), "http://ddbj.nig.ac.jp/ontologies/nucleotide/" ) && (?type != insdc:Entry)) .
+            BIND (REPLACE(STR(?type), "http://ddbj.nig.ac.jp/ontologies/nucleotide/", "") AS ?type_label)
+          }
         }
-      }
+      } ORDER BY ?type_label ?link
     SPARQL
 
-    #TODO query for other endpoints.
-
-    link_list1.map {|hash|
-      # temporary replace. identifiers.org's links are not available.
-      hash[:link].gsub!('http://identifiers.org/bioproject/', 'http://www.ncbi.nlm.nih.gov/bioproject/?term=')
-      hash[:link].gsub!('http://identifiers.org/ncbigi/', 'http://www.ncbi.nlm.nih.gov/nuccore/')
-
-      xref_db, xref_id = hash[:label].split(':')
-      hash.merge(:xref_db => xref_db, :xref_id => xref_id)
+    link_list.map {|hash|
+      xref_id = hash[:link].split('/').last.split('?').last.split('#').last.split('=').last
+      puts xref_id
+      hash.merge(:xref_db => hash[:type_label], :xref_id => xref_id)
     }.group_by{|hash| hash[:xref_db] }.map {|hash|
       hash.last.last.merge!(:is_last_data => true) #flag for separator character
       hash.last
