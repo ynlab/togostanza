@@ -1,4 +1,4 @@
-class MpoShapeStanza < TogoStanza::Stanza::Base
+class MicrobialPhenotypeCellShapeStanza < TogoStanza::Stanza::Base
   SPARQL_ENDPOINT_URL = 'http://dev.togogenome.org/sparql-test'
 
   property :features do |mpo_id|
@@ -30,7 +30,7 @@ class MpoShapeStanza < TogoStanza::Stanza::Base
     image_no_data = "no_data.png"
     file_name = result.empty? ? image_no_data : (result.first[:label].downcase + ".svg")
     file_name.tr!(" ", "_")
-    file_path = "mpo_shape_stanza/assets/mpo_shape/images/" + file_name
+    file_path = "microbial_phenotype_cell_shape_stanza/assets/microbial_phenotype_cell_shape/images/" + file_name
     file_name = image_no_data unless File.exist?(file_path)
 
     # Create Dataset

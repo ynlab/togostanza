@@ -1,6 +1,6 @@
-Organism List
-======
-Organism list of having target phenotype. and groupping genus.
+Shape Information
+=========
+phenotype's (with shaped, arrengement) visualizetion.
 
 
 ## Parameters:
@@ -14,9 +14,9 @@ Organism list of having target phenotype. and groupping genus.
 ## Sample:
 
 ```html
-<div data-stanza="http://togogenome.org/stanza/my_inf" data-stanza-mpo-id="MPO_01003"></div>
+<div data-stanza="http://togogenome.org/stanza/microbial_phenotype_cell_shape" data-stanza-mpo-id="MPO_01003"></div>
 ```
 
 The above `<div>` will automatically embed the following Stanza in your HTML page.
 
-<div data-stanza="/stanza/my_inf" data-stanza-mpo-id="MPO_01003"></div>
+<div data-stanza="/stanza/microbial_phenotype_cell_shape" data-stanza-mpo-id="MPO_01003"></div>

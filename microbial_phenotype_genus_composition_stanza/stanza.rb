@@ -1,4 +1,4 @@
-class MpoGenusStanza < TogoStanza::Stanza::Base
+class MicrobialPhenotypeGenusCompositionStanza < TogoStanza::Stanza::Base
   SPARQL_ENDPOINT_URL = 'http://dev.togogenome.org/sparql-test'
 
   property :general do |mpo_id|
