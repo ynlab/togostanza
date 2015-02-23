@@ -145,6 +145,12 @@ PATH
       togostanza
 
 PATH
+  remote: ./microbial_phenotype_cell_shape_stanza
+  specs:
+    microbial_phenotype_cell_shape_stanza (0.0.1)
+      togostanza
+
+PATH
   remote: ./mpo_environment_stanza
   specs:
     mpo_environment_stanza (0.0.1)
@@ -154,12 +160,6 @@ PATH
   remote: ./mpo_genus_stanza
   specs:
     mpo_genus_stanza (0.0.1)
-      togostanza
-
-PATH
-  remote: ./mpo_shape_stanza
-  specs:
-    mpo_shape_stanza (0.0.1)
       togostanza
 
 PATH
@@ -486,10 +486,10 @@ DEPENDENCIES
   gmo_genus_stanza!
   lineage_information_stanza!
   medium_components_stanza!
+  microbial_phenotype_cell_shape_stanza!
   mina
   mpo_environment_stanza!
   mpo_genus_stanza!
-  mpo_shape_stanza!
   my_inf_stanza!
   nucleotide_sequence_stanza!
   organism_cross_references_stanza!

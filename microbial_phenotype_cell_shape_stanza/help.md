@@ -14,9 +14,9 @@ phenotype's (with shaped, arrengement) visualizetion.
 ## Sample:
 
 ```html
-<div data-stanza="http://togogenome.org/stanza/mpo_shape" data-stanza-mpo-id="MPO_01003"></div>
+<div data-stanza="http://togogenome.org/stanza/microbial_phenotype_cell_shape" data-stanza-mpo-id="MPO_01003"></div>
 ```
 
 The above `<div>` will automatically embed the following Stanza in your HTML page.
 
-<div data-stanza="/stanza/mpo_shape" data-stanza-mpo-id="MPO_01003"></div>
+<div data-stanza="/stanza/microbial_phenotype_cell_shape" data-stanza-mpo-id="MPO_01003"></div>
