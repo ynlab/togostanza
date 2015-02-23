@@ -56,7 +56,7 @@ gem 'genome_jbrowse_stanza', path: './genome_jbrowse_stanza'
 # Phenotype
 gem 'my_inf_stanza', path: './my_inf_stanza'
 gem 'microbial_phenotype_genus_composition_stanza', path: './microbial_phenotype_genus_composition_stanza'
-gem 'mpo_environment_stanza', path: './mpo_environment_stanza'
+gem 'microbial_phenotype_environment_composition_stanza', path: './microbial_phenotype_environment_composition_stanza'
 gem 'microbial_phenotype_cell_shape_stanza', path: './microbial_phenotype_cell_shape_stanza'
 gem 'gmo_applied_spices_stanza', path: './gmo_applied_spices_stanza'
 gem 'gmo_genus_stanza', path: './gmo_genus_stanza'

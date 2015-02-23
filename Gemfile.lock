@@ -151,15 +151,15 @@ PATH
       togostanza
 
 PATH
-  remote: ./microbial_phenotype_genus_composition_stanza
+  remote: ./microbial_phenotype_environment_composition_stanza
   specs:
-    microbial_phenotype_genus_composition_stanza (0.0.1)
+    microbial_phenotype_environment_composition_stanza (0.0.1)
       togostanza
 
 PATH
-  remote: ./mpo_environment_stanza
+  remote: ./microbial_phenotype_genus_composition_stanza
   specs:
-    mpo_environment_stanza (0.0.1)
+    microbial_phenotype_genus_composition_stanza (0.0.1)
       togostanza
 
 PATH
@@ -487,9 +487,9 @@ DEPENDENCIES
   lineage_information_stanza!
   medium_components_stanza!
   microbial_phenotype_cell_shape_stanza!
+  microbial_phenotype_environment_composition_stanza!
   microbial_phenotype_genus_composition_stanza!
   mina
-  mpo_environment_stanza!
   my_inf_stanza!
   nucleotide_sequence_stanza!
   organism_cross_references_stanza!
