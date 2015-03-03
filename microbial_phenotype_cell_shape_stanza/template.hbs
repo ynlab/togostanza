@@ -19,10 +19,10 @@
       border:none;
     }
 
-    /* Definition Common for Table */
-    table.table {
-      margin-left:170px;
-      width:auto;
+    #legendTable {
+      margin-left: 170px;
+      height: 140px;
+      overflow-y: scroll;
     }
 
     /* Definition Common for Table Data */
@@ -68,32 +68,34 @@
 
   <body>
     <div class="definitionImage"><img src="/stanza/assets/microbial_phenotype_cell_shape/images/{{features.image}}" /></div>
-    <table class="table">
-      <tr><th colspan="2" class="definitionTitle">{{features.label}}</th></tr>
-      <tr>
-        <td class="definitionSynonym">
-          <article class="synonymList">
-            <h1>Synonym</h1>
-            <div>
-              <ul>
-                {{#if features.synonymlist}}
-                {{#each features.synonymlist}}
-                <li>{{this}}</li>
-                {{/each}}
-                {{else}}
-                <li>(No Data)</li>
-                {{/if}}
-              </ul>
-            </div>
-          </article>
-        </td>
-        <td class="definitionDefinition">
-          <article class="definition">
-            <h1>Definition</h1>
-            <div><p>{{features.definition}}</p></div>
-          </article>
-        </td>
-      </tr>
-    </table>
+    <div id="legendTable">
+      <table class="table">
+        <tr><th colspan="2" class="definitionTitle">{{features.label}}</th></tr>
+        <tr>
+          <td class="definitionSynonym">
+            <article class="synonymList">
+              <h1>Synonym</h1>
+              <div>
+                <ul>
+                  {{#if features.synonymlist}}
+                  {{#each features.synonymlist}}
+                  <li>{{this}}</li>
+                  {{/each}}
+                  {{else}}
+                  <li>(No Data)</li>
+                  {{/if}}
+                </ul>
+              </div>
+            </article>
+          </td>
+          <td class="definitionDefinition">
+            <article class="definition">
+              <h1>Definition</h1>
+              <div><p>{{features.definition}}</p></div>
+            </article>
+          </td>
+        </tr>
+      </table>
+    </div>
   </body>
 </html>
