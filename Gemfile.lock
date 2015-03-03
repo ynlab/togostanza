@@ -193,6 +193,12 @@ PATH
       togostanza
 
 PATH
+  remote: ./organism_gene_list_stanza
+  specs:
+    organism_gene_list_stanza (0.0.1)
+      togostanza
+
+PATH
   remote: ./organism_gene_number_nano_stanza
   specs:
     organism_gene_number_nano_stanza (0.0.1)
@@ -495,6 +501,7 @@ DEPENDENCIES
   organism_cross_references_stanza!
   organism_culture_collections_stanza!
   organism_gc_nano_stanza!
+  organism_gene_list_stanza!
   organism_gene_number_nano_stanza!
   organism_genome_size_nano_stanza!
   organism_habitat_stanza!
