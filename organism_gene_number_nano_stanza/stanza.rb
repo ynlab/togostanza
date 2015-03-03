@@ -4,12 +4,11 @@ class OrganismGeneNumberNanoStanza < TogoStanza::Stanza::Base
       PREFIX tgstat:<http://togogenome.org/stats/>
       PREFIX taxid:<http://identifiers.org/taxonomy/>
 
-      SELECT DISTINCT ?gene_number ?pseudogene_number ?rrna_number ?trna_number ?ncrna_number
+      SELECT DISTINCT ?gene_number ?rrna_number ?trna_number ?ncrna_number
       FROM <http://togogenome.org/graph/stats>
       WHERE
       {
         taxid:#{tax_id} tgstat:gene ?gene_number ;
-        tgstat:pseudogene ?pseudogene_number ;
         tgstat:rrna ?rrna_number ;
         tgstat:trna ?trna_number ;
         tgstat:ncrna ?ncrna_number .
