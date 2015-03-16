@@ -19,7 +19,7 @@
       "stanza:display": "Table",
       "stanza:provider": "DBCLS",
       "stanza:license": "CC-BY",
-      "stanza:uthor": "Stanza Togo",
+      "stanza:author": "Stanza Togo",
       "stanza:address": "hoge@example.org",
       "stanza:contributor": [ "Taro Stanza", "Hanako Stanza" ],
       "stanza:version": "1",
