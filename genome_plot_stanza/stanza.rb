@@ -12,6 +12,9 @@ class GenomePlotStanza < TogoStanza::Stanza::Base
        BIND (REPLACE(STR(?tax_id), "http://identifiers.org/taxonomy/","") AS ?tax_no)
       }
     SPARQL
+
+    next if tax_id.empty?
+
     tax_id.first[:tax_no]
   end
 
