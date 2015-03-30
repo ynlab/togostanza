@@ -18,15 +18,11 @@ class GenomeJbrowseStanza < TogoStanza::Stanza::Base
       }
     SPARQL
 
-    if results.length == 1 then
-      select_tax_id = results.first[:tax_id]
-    else
-      select_tax_id = nil
-    end
+    (results.length == 1) ? results.first[:tax_id] : nil
   end
 
   property :display_range do |refseq_id, gene_id|
-    results = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
+    result = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc).first
       DEFINE sql:select-option "order"
       PREFIX obo: <http://purl.obolibrary.org/obo/>
       PREFIX insdc: <http://ddbj.nig.ac.jp/ontologies/nucleotide/>
@@ -44,7 +40,7 @@ class GenomeJbrowseStanza < TogoStanza::Stanza::Base
           ?feature_uri insdc:location  ?insdc_location ;
             faldo:location  ?faldo .
           ?faldo faldo:begin/faldo:position ?start .
-          ?faldo faldo:end/faldo:position ?end . 
+          ?faldo faldo:end/faldo:position ?end .
 
           ?feature_uri obo:so_part_of* ?seq .
           ?refseq insdc:sequence ?seq ;
@@ -54,11 +50,13 @@ class GenomeJbrowseStanza < TogoStanza::Stanza::Base
       }
     SPARQL
 
-    start_pos = [results.first[:start].to_i, results.first[:end].to_i].min
-    end_pos = [results.first[:start].to_i, results.first[:end].to_i].max
+    first, last, seq_length, seq_label = result.values_at(:start, :end, :seq_length, :seq_label)
+
+    start_pos, end_pos = [first.to_i, last.to_i].minmax
     gene_length = (end_pos - start_pos).abs + 1
     display_start_pos = [1, start_pos - (gene_length*5)].max
-    display_end_pos = [end_pos + (gene_length*5), results.first[:seq_length].to_i].min
-    display_range = {:ref => results.first[:seq_label], :disp_start => display_start_pos, :disp_end => display_end_pos }
+    display_end_pos = [end_pos + (gene_length*5), seq_length.to_i].min
+
+    {ref: seq_label, disp_start: display_start_pos, disp_end: display_end_pos }
   end
 end
