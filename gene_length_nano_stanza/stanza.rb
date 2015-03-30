@@ -3,8 +3,8 @@ class GeneLengthNanoStanza < TogoStanza::Stanza::Base
     "Gene length"
   end
 
-  property :result do |tax_id, gene_id|
-    query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc).first
+  property :result do |refseq_id, gene_id|
+    query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc).first
       PREFIX rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX obo:    <http://purl.obolibrary.org/obo/>
@@ -12,13 +12,17 @@ class GeneLengthNanoStanza < TogoStanza::Stanza::Base
       PREFIX insdc:  <http://ddbj.nig.ac.jp/ontologies/sequence#>
       SELECT (ABS(?gene_end - ?gene_begin) + 1 AS ?gene_length)
       WHERE {
-        GRAPH <http://togogenome.org/graph/refseq/> {
-          ?gene insdc:locus_tag "#{gene_id}" .
-          ?gene rdf:type obo:SO_0000704 .  # SO:gene
-          ?gene faldo:location/faldo:begin/faldo:position ?gene_begin .
-          ?gene faldo:location/faldo:end/faldo:position ?gene_end .
-          ?gene faldo:location/faldo:end/faldo:reference ?seq .
-          ?seq  rdfs:seeAlso <http://identifiers.org/taxonomy/#{tax_id}> .
+        GRAPH <http://togogenome.org/graph/tgup>
+        {
+          <http://togogenome.org/gene/#{refseq_id}:#{gene_id}> skos:exactMatch ?feature_uri .
+        }
+        GRAPH <http://togogenome.org/graph/refseq>
+        {
+          VALUES ?feature_type { obo:SO_0000704 obo:SO_0000252 obo:SO_0000253 } #gene, rRNA, tRNA
+          ?feature_uri rdfs:subClassOf ?feature_type ;
+             faldo:location ?loc .
+           ?loc faldo:begin/faldo:position ?gene_begin .
+           ?loc faldo:end/faldo:position ?gene_end .
         }
       }
     SPARQL
