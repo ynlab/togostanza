@@ -16,8 +16,6 @@ Basic information of the specified gene.
 
 ```html
 <div data-stanza="http://togogenome.org/stanza/gene_attributes" data-stanza-refseq-id="NC_003272" data-stanza-gene-id="all1455"></div>
-
-
 ```
 
 The above `<div>` will automatically embed the following Stanza in your HTML page.
