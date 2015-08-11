@@ -3,7 +3,7 @@ require 'uri'
 require 'bio'
 
 class GeneAttributesStanza < TogoStanza::Stanza::Base
-  property :gene_attributes do |refseq_id, gene_id|
+  property :gene_attributes do |tax_id, gene_id|
     results = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX obo: <http://purl.obolibrary.org/obo/>
@@ -19,7 +19,7 @@ class GeneAttributesStanza < TogoStanza::Stanza::Base
       {
         GRAPH <http://togogenome.org/graph/tgup>
         {
-          <http://togogenome.org/gene/#{refseq_id}:#{gene_id}> skos:exactMatch ?feature_uri .
+          <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?feature_uri .
         }
         GRAPH <http://togogenome.org/graph/refseq>
         {
