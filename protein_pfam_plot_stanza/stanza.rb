@@ -1,5 +1,5 @@
 class ProteinPfamPlotStanza < TogoStanza::Stanza::Base
-  property :pfam_list do |refseq_id, gene_id|
+  property :pfam_list do |tax_id, gene_id|
     results = query("http://dev.togogenome.org/sparql-test",<<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX up: <http://purl.uniprot.org/core/>
@@ -10,7 +10,14 @@ class ProteinPfamPlotStanza < TogoStanza::Stanza::Base
       FROM <http://togogenome.org/graph/tgup>
       WHERE
       {
-        <http://togogenome.org/gene/#{refseq_id}:#{gene_id}> ?p ?id_upid .
+        {
+          SELECT ?gene
+          {
+            <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?gene .
+          } ORDER BY ?gene LIMIT 1
+        }
+        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?gene ;
+          rdfs:seeAlso ?id_upid .
         ?id_upid rdfs:seeAlso ?protein .
         ?protein a <http://purl.uniprot.org/core/Protein> ;
           rdfs:seeAlso ?ref .
@@ -46,7 +53,7 @@ class ProteinPfamPlotStanza < TogoStanza::Stanza::Base
     pfam_list
   end
 
-  property :selected_tax_id do |refseq_id, gene_id|
+  property :selected_tax_id do |tax_id, gene_id|
     tax_id =  query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       PREFIX tax: <http://ddbj.nig.ac.jp/ontologies/taxonomy/>
       SELECT DISTINCT ?tax_no
@@ -54,23 +61,30 @@ class ProteinPfamPlotStanza < TogoStanza::Stanza::Base
       FROM <http://togogenome.org/graph/taxonomy>
       WHERE
       {
-       <http://togogenome.org/gene/#{refseq_id}:#{gene_id}> rdfs:seeAlso ?tax_id .
-       ?tax_id a tax:Taxon .
-       BIND (REPLACE(STR(?tax_id), "http://identifiers.org/taxonomy/","") AS ?tax_no)
+        {
+          SELECT ?gene
+          {
+            <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?gene .
+          } ORDER BY ?gene LIMIT 1
+        }
+        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?gene ;
+          rdfs:seeAlso ?tax_id .
+        ?tax_id a tax:Taxon .
+        BIND (REPLACE(STR(?tax_id), "http://identifiers.org/taxonomy/","") AS ?tax_no)
       }
     SPARQL
     tax_id.first[:tax_no]
   end
 
-  property :selected_refseq_id do |refseq_id|
-    refseq_id
+  property :selected_tax_id do |tax_id|
+    tax_id
   end
 
   property :selected_gene_id do |gene_id|
     gene_id
   end
 
-  resource :plot_data do |refseq_id, gene_id|
+  resource :plot_data do |tax_id, gene_id|
      habitat_list =[]
      summary_list = []
      genome_list = []
@@ -87,7 +101,14 @@ class ProteinPfamPlotStanza < TogoStanza::Stanza::Base
       FROM <http://togogenome.org/graph/tgup>
       WHERE
       {
-        <http://togogenome.org/gene/#{refseq_id}:#{gene_id}> ?p ?id_upid .
+        {
+          SELECT ?gene
+          {
+            <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?gene .
+          } ORDER BY ?gene LIMIT 1
+        }
+        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?gene ;
+          rdfs:seeAlso ?id_upid .
         ?id_upid rdfs:seeAlso ?protein .
         ?protein a <http://purl.uniprot.org/core/Protein> ;
           rdfs:seeAlso ?ref .

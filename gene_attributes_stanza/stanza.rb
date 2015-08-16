@@ -17,9 +17,14 @@ class GeneAttributesStanza < TogoStanza::Stanza::Base
         ?strand ?insdc_location
       WHERE
       {
-        GRAPH <http://togogenome.org/graph/tgup>
         {
-          <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?feature_uri .
+          SELECT ?feature_uri
+          {
+            GRAPH <http://togogenome.org/graph/tgup>
+            {
+              <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?feature_uri .
+            }
+          } ORDER BY ?feature_uri LIMIT 1
         }
         GRAPH <http://togogenome.org/graph/refseq>
         {

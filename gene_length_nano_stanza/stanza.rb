@@ -3,7 +3,7 @@ class GeneLengthNanoStanza < TogoStanza::Stanza::Base
     "Gene length"
   end
 
-  property :result do |refseq_id, gene_id|
+  property :result do |tax_id, gene_id|
     query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc).first
       PREFIX rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>
@@ -12,9 +12,14 @@ class GeneLengthNanoStanza < TogoStanza::Stanza::Base
       PREFIX insdc:  <http://ddbj.nig.ac.jp/ontologies/sequence#>
       SELECT (ABS(?gene_end - ?gene_begin) + 1 AS ?gene_length)
       WHERE {
-        GRAPH <http://togogenome.org/graph/tgup>
         {
-          <http://togogenome.org/gene/#{refseq_id}:#{gene_id}> skos:exactMatch ?feature_uri .
+          SELECT ?feature_uri
+          {
+            GRAPH <http://togogenome.org/graph/tgup>
+            {
+              <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?feature_uri .
+            }
+          } ORDER BY ?feature_uri LIMIT 1
         }
         GRAPH <http://togogenome.org/graph/refseq>
         {

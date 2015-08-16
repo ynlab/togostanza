@@ -1,5 +1,5 @@
 class ProteinNamesStanza < TogoStanza::Stanza::Base
-  property :genes do |refseq_id, gene_id|
+  property :genes do |tax_id, gene_id|
     gene_names = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -8,24 +8,31 @@ class ProteinNamesStanza < TogoStanza::Stanza::Base
       FROM <http://togogenome.org/graph/uniprot>
       FROM <http://togogenome.org/graph/tgup>
       WHERE {
-        <http://togogenome.org/gene/#{refseq_id}:#{gene_id}> rdfs:seeAlso ?id_upid .
+        {
+          SELECT ?gene
+          {
+            <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?gene .
+          } ORDER BY ?gene LIMIT 1
+        }
+        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?gene ;
+          rdfs:seeAlso ?id_upid .
         ?id_upid rdfs:seeAlso ?protein .
         ?protein a up:Protein .
 
         # Gene names
-        ?protein up:encodedBy ?gene .
+        ?protein up:encodedBy ?gene_hash .
 
         ## Name:
-        OPTIONAL { ?gene skos:prefLabel ?gene_name . }
+        OPTIONAL { ?gene_hash skos:prefLabel ?gene_name . }
 
         ## Synonyms:
-        OPTIONAL { ?gene skos:altLabel ?synonyms_name . }
+        OPTIONAL { ?gene_hash skos:altLabel ?synonyms_name . }
 
         ## Ordered Locus Names:
-        OPTIONAL { ?gene up:locusName ?locus_name . }
+        OPTIONAL { ?gene_hash up:locusName ?locus_name . }
 
         ## ORF Names:
-        OPTIONAL { ?gene up:orfName ?orf_name . }
+        OPTIONAL { ?gene_hash up:orfName ?orf_name . }
       }
     SPARQL
 
@@ -34,7 +41,7 @@ class ProteinNamesStanza < TogoStanza::Stanza::Base
     }
   end
 
-  property :summary do |refseq_id, gene_id|
+  property :summary do |tax_id, gene_id|
     protein_summary = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
 
@@ -43,8 +50,14 @@ class ProteinNamesStanza < TogoStanza::Stanza::Base
       FROM <http://togogenome.org/graph/uniprot>
       FROM <http://togogenome.org/graph/tgup>
       WHERE {
-        VALUES ?gene { <http://togogenome.org/gene/#{refseq_id}:#{gene_id}> }
-        ?gene rdfs:seeAlso ?id_upid .
+        {
+          SELECT ?gene
+          {
+            <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?gene . 
+          } ORDER BY ?gene LIMIT 1
+        }
+        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?gene ;
+          rdfs:seeAlso ?id_upid .
         ?id_upid rdfs:seeAlso ?protein .
         ?protein a up:Protein .
 
@@ -64,7 +77,8 @@ class ProteinNamesStanza < TogoStanza::Stanza::Base
         }
 
         # Taxonomic identifier
-        ?gene rdfs:seeAlso ?id_taxid.
+        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?gene ;
+          rdfs:seeAlso ?id_taxid.
         ?id_taxid rdfs:seeAlso ?tax_id .
         ?tax_id a up:Taxon .
 

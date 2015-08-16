@@ -1,5 +1,5 @@
 class GenomeJbrowseStanza < TogoStanza::Stanza::Base
-  property :select_tax_id do |refseq_id, gene_id|
+  property :select_tax_id do |tax_id, gene_id|
     results = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX obo: <http://purl.obolibrary.org/obo/>
@@ -7,9 +7,14 @@ class GenomeJbrowseStanza < TogoStanza::Stanza::Base
       SELECT DISTINCT (REPLACE(STR(?taxonomy),"http://identifiers.org/taxonomy/","") AS ?tax_id)
       WHERE
       {
-        GRAPH <http://togogenome.org/graph/tgup>
         {
-          <http://togogenome.org/gene/#{refseq_id}:#{gene_id}> skos:exactMatch ?feature_uri .
+          SELECT ?feature_uri
+          {
+            GRAPH <http://togogenome.org/graph/tgup>
+            {
+              <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?feature_uri .
+            }
+          } ORDER BY ?feature_uri LIMIT 1
         }
         GRAPH <http://togogenome.org/graph/refseq>
         {
@@ -21,7 +26,7 @@ class GenomeJbrowseStanza < TogoStanza::Stanza::Base
     (results.length == 1) ? results.first[:tax_id] : nil
   end
 
-  property :display_range do |refseq_id, gene_id|
+  property :display_range do |tax_id, gene_id|
     result = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc).first
       DEFINE sql:select-option "order"
       PREFIX obo: <http://purl.obolibrary.org/obo/>
@@ -31,9 +36,14 @@ class GenomeJbrowseStanza < TogoStanza::Stanza::Base
       SELECT ?seq_label ?start ?end ?seq_length
       WHERE
       {
-        GRAPH <http://togogenome.org/graph/tgup>
         {
-          <http://togogenome.org/gene/#{refseq_id}:#{gene_id}> skos:exactMatch ?feature_uri .
+          SELECT ?feature_uri
+          {
+            GRAPH <http://togogenome.org/graph/tgup>
+            {
+              <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?feature_uri .
+            }
+          } ORDER BY ?feature_uri LIMIT 1
         }
         GRAPH <http://togogenome.org/graph/refseq>
         {

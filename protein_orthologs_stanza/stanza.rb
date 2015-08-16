@@ -1,12 +1,23 @@
 class ProteinOrthologsStanza < TogoStanza::Stanza::Base
-  property :orthologs do |refseq_id, gene_id|
+  property :orthologs do |tax_id, gene_id|
     protein_attributes = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
-      SELECT (REPLACE(STR(?id_upid),"http://identifiers.org/uniprot/","http://purl.uniprot.org/uniprot/") AS ?upid)
+      PREFIX up: <http://purl.uniprot.org/core/>
+
+      SELECT ?protein
       FROM <http://togogenome.org/graph/tgup>
+      FROM <http://togogenome.org/graph/uniprot>
       WHERE
       {
-        <http://togogenome.org/gene/#{refseq_id}:#{gene_id}> rdfs:seeAlso ?id_upid .
-        ?id_upid a <http://identifiers.org/uniprot> .
+        {
+          SELECT ?gene
+          {
+            <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?gene .
+          } ORDER BY ?gene LIMIT 1
+        }
+        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?gene ;
+          rdfs:seeAlso ?id_upid .
+        ?id_upid rdfs:seeAlso ?protein .
+        ?protein a up:Protein .
       }
     SPARQL
 
@@ -14,8 +25,8 @@ class ProteinOrthologsStanza < TogoStanza::Stanza::Base
       next nil
     end
 
-    uniprot_uri = protein_attributes.first[:upid]
-
+    uniprot_uri = protein_attributes.first[:protein]
+    p uniprot_uri
 #   Uses temporary endpoint due to maintenance
 #   ortholog_uris = query("http://sparql.nibb.ac.jp/sparql", <<-SPARQL.strip_heredoc)
     ortholog_uris = query("http://mbgd.genome.ad.jp:8047/sparql", <<-SPARQL.strip_heredoc)
