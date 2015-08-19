@@ -2,7 +2,7 @@ require 'net/http'
 require 'uri'
 
 class NucleotideSequenceStanza < TogoStanza::Stanza::Base
-  property :nucleotide_sequences do |refseq_id, gene_id|
+  property :nucleotide_sequences do |tax_id, gene_id|
     results = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX obo:    <http://purl.obolibrary.org/obo/>
@@ -12,9 +12,14 @@ class NucleotideSequenceStanza < TogoStanza::Stanza::Base
       SELECT DISTINCT ?nuc_seq_pos
       WHERE
       {
-        GRAPH <http://togogenome.org/graph/tgup>
         {
-          <http://togogenome.org/gene/#{refseq_id}:#{gene_id}> skos:exactMatch ?feature_uri .
+          SELECT ?feature_uri
+          {
+            GRAPH <http://togogenome.org/graph/tgup>
+            {
+              <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?feature_uri .
+            }
+          } ORDER BY ?feature_uri LIMIT 1
         }
         GRAPH <http://togogenome.org/graph/refseq>
         {

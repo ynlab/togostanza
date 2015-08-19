@@ -1,5 +1,5 @@
 class GenomePlotStanza < TogoStanza::Stanza::Base
-  property :selected_taxonomy_id do |refseq_id, gene_id|
+  property :selected_taxonomy_id do |tax_id, gene_id|
     tax_id =  query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       PREFIX tax: <http://ddbj.nig.ac.jp/ontologies/taxonomy/>
       SELECT DISTINCT ?tax_no
@@ -7,9 +7,16 @@ class GenomePlotStanza < TogoStanza::Stanza::Base
       FROM <http://togogenome.org/graph/taxonomy>
       WHERE
       {
-       <http://togogenome.org/gene/#{refseq_id}:#{gene_id}> rdfs:seeAlso ?tax_id .
-       ?tax_id a tax:Taxon .
-       BIND (REPLACE(STR(?tax_id), "http://identifiers.org/taxonomy/","") AS ?tax_no)
+        {
+          SELECT ?gene
+          {
+            <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?gene .
+          } ORDER BY ?gene LIMIT 1
+        }
+        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?gene ;
+          rdfs:seeAlso ?tax_id .
+        ?tax_id a tax:Taxon .
+        BIND (REPLACE(STR(?tax_id), "http://identifiers.org/taxonomy/","") AS ?tax_no)
       }
     SPARQL
 

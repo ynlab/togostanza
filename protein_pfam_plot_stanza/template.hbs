@@ -162,7 +162,7 @@
           'pfam_list': [{{#if pfam_list}}{{#each pfam_list}}{"key":"{{id}}","value":"{{name}}"},{{/each}}{{/if}}],
         }
 
-        d3.json('./protein_pfam_plot/resources/plot_data?refseq_id={{selected_refseq_id}}&gene_id={{selected_gene_id}}', function(data) {
+        d3.json('./protein_pfam_plot/resources/plot_data?tax_id={{selected_tax_id}}&gene_id={{selected_gene_id}}', function(data) {
           //console.log(JSON.stringify(data,null," "));
           if(data.plot_data == null) {
             $("#vis").text("No data");
