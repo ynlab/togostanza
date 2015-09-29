@@ -23,7 +23,7 @@ class OrganismJbrowseStanza < TogoStanza::Stanza::Base
     if results.length > 0 then
       display_start_pos = 1
       display_end_pos = [ results.first[:length].to_i, 200000 ].min
-      sequence_version = {:tax_id => tax_id, :ref => results.first[:version], :display_end_pos => display_start_pos, :display_end_pos => display_end_pos}
+      sequence_version = {:tax_id => tax_id, :ref => results.first[:version], :display_start_pos => display_start_pos, :display_end_pos => display_end_pos}
     else
       sequence_version = {:tax_id => nil}
     end
