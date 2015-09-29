@@ -5,9 +5,9 @@ Gem::Specification.new do |spec|
   spec.name          = 'environment_geographical_map_stanza'
   spec.version       = '0.0.1'
   spec.authors       = ['TODO: Write your name']
-  spec.email         = ['TODO: Write your email address']
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.email         = ['']
+  spec.summary       = %q{Geographical map}
+  spec.description   = %q{Place where GOLD samples have sampled. }
   spec.homepage      = ''
   spec.license       = 'MIT'
 

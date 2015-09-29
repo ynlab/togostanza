@@ -5,9 +5,9 @@ Gem::Specification.new do |spec|
   spec.name          = 'organism_related_disease_nano_stanza'
   spec.version       = '0.0.1'
   spec.authors       = ['TODO: Write your name']
-  spec.email         = ['TODO: Write your email address']
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.email         = ['']
+  spec.summary       = %q{Organism Related Disease Nano}
+  spec.description   = %q{NanoStanza: Show a pathogen symbol}
   spec.homepage      = ''
   spec.license       = 'MIT'
 

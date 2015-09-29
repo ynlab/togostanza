@@ -5,9 +5,9 @@ Gem::Specification.new do |spec|
   spec.name          = 'environment_top_level_symbolic_image_nano_stanza'
   spec.version       = '0.0.1'
   spec.authors       = ['TODO: Write your name']
-  spec.email         = ['TODO: Write your email address']
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.email         = ['']
+  spec.summary       = %q{Environment Top Level Symbolic Image Nano}
+  spec.description   = %q{NanoStanza: Display an symbolic image for the MEO's toplevel category related to the given MEO ID.}
   spec.homepage      = ''
   spec.license       = 'MIT'
 

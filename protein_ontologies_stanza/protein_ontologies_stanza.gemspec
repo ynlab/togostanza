@@ -5,9 +5,9 @@ Gem::Specification.new do |spec|
   spec.name          = 'protein_ontologies_stanza'
   spec.version       = '0.0.1'
   spec.authors       = ['TODO: Write your name']
-  spec.email         = ['TODO: Write your email address']
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.email         = ['']
+  spec.summary       = %q{Protein ontologies}
+  spec.description   = %q{See also: http://www.uniprot.org/manual/?query=category%3Aontologies}
   spec.homepage      = ''
   spec.license       = 'MIT'
 
