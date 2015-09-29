@@ -809,7 +809,7 @@
       "stanza:created": "2015-02-03",
       "stanza:updated": "2015-02-03"
     },
-    { "@id": "http://togostanza.org/stanza/protein3d_structure_nano",
+    { "@id": "http://togostanza.org/stanza/protein_3d_structure_nano",
       "stanza:label": "Protein 3D structure",
       "stanza:definition": "NanoStanza for showing a schematic mage of protein 3D structure of specifined genes.",
       "stanza:parameter": [
