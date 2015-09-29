@@ -1,23 +1,4 @@
 class OrganismNamesStanza < TogoStanza::Stanza::Base
-  search :organism_name_list do |query|
-    query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
-      PREFIX tax: <http://ddbj.nig.ac.jp/ontologies/taxonomy#>
-      PREFIX taxid: <http://identifiers.org/taxonomy/>
-
-      SELECT DISTINCT (REPLACE(STR(?taxonomy),"http://identifiers.org/taxonomy/","") AS ?tax_id)
-      FROM <http://togogenome.org/graph/taxonomy>
-      WHERE {
-        VALUES ?name_type {
-          tax:scientificName tax:synonym tax:preferredSynonym tax:acronym tax:preferredAcronym tax:anamorph tax:teleo
-          tax:misnomer tax:commonName tax:preferredCommonName tax:inPart tax:includes tax:equivalentName
-          tax:genbankSynonym tax:genbankCommonName tax:authority tax:misspelling
-        }
-        ?taxonomy ?name_type ?name .
-        #{text_search_filter(:name, query)}
-      }
-    SPARQL
-  end
-
   property :organism_name_list do |tax_id|
     results = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       PREFIX tax: <http://ddbj.nig.ac.jp/ontologies/taxonomy/>
