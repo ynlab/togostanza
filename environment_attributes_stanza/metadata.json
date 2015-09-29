@@ -10,7 +10,7 @@
       "stanza:required": true
     }
   ],
-  "stanza:usage": "<iframe src=\"http://togogenome.org/stanza/environment_attributes?meo_id=MEO_0000006\"></iframe>",
+  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/environment_attributes\" data-stanza-meo-id=\"MEO_0000006\"></div>",
   "stanza:type": "Stanza",
   "stanza:context": "Environment",
   "stanza:display": "Table",
