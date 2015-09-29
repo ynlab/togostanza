@@ -1,0 +1,24 @@
+{
+  "@id": "http://togostanza.org/stanza/organism_pathogen_information",
+  "stanza:label": "Pathogen information",
+  "stanza:definition": "List of organisms and associated pathogen which have linage of the specified taxonomy.",
+  "stanza:parameter": [
+    {
+      "stanza:key": "tax_id",
+      "stanza:example": "1763",
+      "stanza:description": "Taxonomy identifier. (e.g., 1763 )",
+      "stanza:required": true
+    }
+  ],
+  "stanza:usage": "<div data-stanza=\"http://togogenome.org/organism_pathogen_information\" data-stanza-tax-id=\"1763\"></div>",
+  "stanza:type": "Stanza",
+  "stanza:context": "Organism",
+  "stanza:display": "Table",
+  "stanza:provider": "DBCLS",
+  "stanza:license": "CC-BY",
+  "stanza:author": "Stanza Togo",
+  "stanza:address": "hoge@example.org",
+  "stanza:version": "1",
+  "stanza:created": "2015-02-03",
+  "stanza:updated": "2015-02-03"
+}

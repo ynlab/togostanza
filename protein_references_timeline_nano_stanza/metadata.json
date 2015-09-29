@@ -1,0 +1,30 @@
+{
+  "@id": "http://togostanza.org/stanza/protein_references_timeline_nano",
+  "stanza:label": "Reference timeline",
+  "stanza:definition": "NanoStanza for showing a timeline view of protein reference.",
+  "stanza:parameter": [
+    {
+      "stanza:key": "tax_id",
+      "stanza:example": "1148",
+      "stanza:description": "Taxonomy identifier (e.g. 1148)",
+      "stanza:required": true
+    },
+    {
+      "stanza:key": "gene_id",
+      "stanza:example": "slr0473",
+      "stanza:description": "Gene identifier (e.g. slr0473)",
+      "stanza:required": true
+    }
+  ],
+  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/protein_references_timeline_nano\" data-stanza-tax-id=\"1148\" data-stanza-gene-id=\"slr0473\"></div>",
+  "stanza:type": "NanoStanza",
+  "stanza:context": "Other",
+  "stanza:display": "Graph",
+  "stanza:provider": "DBCLS",
+  "stanza:license": "CC-BY",
+  "stanza:author": "Stanza Togo",
+  "stanza:address": "hoge@example.org",
+  "stanza:version": "1",
+  "stanza:created": "2015-02-03",
+  "stanza:updated": "2015-02-03"
+}

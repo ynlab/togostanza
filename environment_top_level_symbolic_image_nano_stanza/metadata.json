@@ -1,0 +1,24 @@
+{
+  "@id": "http://togostanza.org/stanza/environment_top_level_symbolic_image_nano",
+  "stanza:label": "Environmental image",
+  "stanza:definition": "NanoStanza for showing an symbolic image for the MEO's toplevel category related to the given MEO ID.",
+  "stanza:parameter": [
+    {
+      "stanza:key": "meo_id",
+      "stanza:example": "MEO_0000039",
+      "stanza:description": "MEO identifier. (e.g., MEO_0000039)",
+      "stanza:required": true
+    }
+  ],
+  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/environment_top_level_symbolic_image_nano\" data-stanza-meo-id=\"MEO_0000039\"></div>",
+  "stanza:type": "NanoStanza",
+  "stanza:context": "Environment",
+  "stanza:display": "Image",
+  "stanza:provider": "DBCLS",
+  "stanza:license": "CC-BY",
+  "stanza:author": "Stanza Togo",
+  "stanza:address": "hoge@example.org",
+  "stanza:version": "1",
+  "stanza:created": "2015-02-03",
+  "stanza:updated": "2015-02-03"
+}

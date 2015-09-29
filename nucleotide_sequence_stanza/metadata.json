@@ -1,0 +1,30 @@
+{
+  "@id": "http://togostanza.org/stanza/nucleotide_sequence",
+  "stanza:label": "Nucleotide sequence",
+  "stanza:definition": "Nucleotide sequences of the specified gene ID.",
+  "stanza:parameter": [
+    {
+      "stanza:key": "gene_id",
+      "stanza:example": "slr1311",
+      "stanza:description": "Gene identifier. (e.g., slr1311)",
+      "stanza:required": true
+    },
+    {
+      "stanza:key": "tax_id",
+      "stanza:example": "1111708",
+      "stanza:description": "Taxonomy identifier. (e.g., 1111708)",
+      "stanza:required": false
+    }
+  ],
+  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/nucleotide_sequence\" data-stanza-tax-id=\"1111708\" data-stanza-gene-id=\"slr1311\"></div>",
+  "stanza:type": "Stanza",
+  "stanza:context": "Gene",
+  "stanza:display": "Text",
+  "stanza:provider": "DBCLS",
+  "stanza:license": "CC-BY",
+  "stanza:author": "Stanza Togo",
+  "stanza:address": "hoge@example.org",
+  "stanza:version": "1",
+  "stanza:created": "2015-02-03",
+  "stanza:updated": "2015-02-03"
+}

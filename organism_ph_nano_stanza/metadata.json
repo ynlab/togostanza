@@ -1,0 +1,24 @@
+{
+  "@id": "http://togostanza.org/stanza/organism_ph_nano",
+  "stanza:label": "Growth pH",
+  "stanza:definition": "Display growth pH of the specified organism.",
+  "stanza:parameter": [
+    {
+      "stanza:key": "tax_id",
+      "stanza:example": "666510",
+      "stanza:description": "Taxonomy identifier",
+      "stanza:required": true
+    }
+  ],
+  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/organism_ph_nano\" data-stanza-tax-id=\"666510\"></div>",
+  "stanza:type": "NanoStanza",
+  "stanza:context": "Organism",
+  "stanza:display": "Numeral",
+  "stanza:provider": "DBCLS",
+  "stanza:license": "CC-BY",
+  "stanza:author": "Stanza Togo",
+  "stanza:address": "hoge@example.org",
+  "stanza:version": "1",
+  "stanza:created": "2015-02-03",
+  "stanza:updated": "2015-02-03"
+}

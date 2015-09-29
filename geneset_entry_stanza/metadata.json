@@ -1,0 +1,36 @@
+{
+  "@id": "http://togostanza.org/stanza/geneset_entry",
+  "stanza:label": "Geneset Entry",
+  "stanza:definition": "TODO: Write a stanza description.",
+  "stanza:parameter": [
+    {
+      "stanza:key": "uri",
+      "stanza:example": "",
+      "stanza:description": "A page uri of MicrobeBase GeneSetEntryView",
+      "stanza:required": true
+    },
+    {
+      "stanza:key": "p",
+      "stanza:example": "",
+      "stanza:description": "Predicate label",
+      "stanza:required": false
+    },
+    {
+      "stanza:key": "o",
+      "stanza:example": "",
+      "stanza:description": "Object label",
+      "stanza:required": false
+    }
+  ],
+  "stanza:usage": "",
+  "stanza:type": "Stanza",
+  "stanza:context": "Other",
+  "stanza:display": "Other",
+  "stanza:provider": "DBCLS",
+  "stanza:license": "CC-BY",
+  "stanza:author": "Stanza Togo",
+  "stanza:address": "hoge@example.org",
+  "stanza:version": "1",
+  "stanza:created": "2015-02-03",
+  "stanza:updated": "2015-02-03"
+}

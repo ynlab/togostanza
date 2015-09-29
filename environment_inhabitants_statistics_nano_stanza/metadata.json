@@ -1,0 +1,24 @@
+{
+  "@id": "http://togostanza.org/stanza/environment_inhabitants_statistics_nano",
+  "stanza:label": "Inhabitants statistics",
+  "stanza:definition": "NanoStanza for showing the number of organisms of a specified environment.",
+  "stanza:parameter": [
+    {
+      "stanza:key": "meo_id",
+      "stanza:example": "MEO_0000038",
+      "stanza:description": "MEO identifier (e.g. MEO_0000038 # Fresh water )",
+      "stanza:required": true
+    }
+  ],
+  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/environment_inhabitants_statistics_nano\" data-stanza-meo-id=\"MEO_0000038\"></div>",
+  "stanza:type": "NanoStanza",
+  "stanza:context": "Environment",
+  "stanza:display": "Numeral",
+  "stanza:provider": "DBCLS",
+  "stanza:license": "CC-BY",
+  "stanza:author": "Stanza Togo",
+  "stanza:address": "hoge@example.org",
+  "stanza:version": "1",
+  "stanza:created": "2015-02-03",
+  "stanza:updated": "2015-02-03"
+}

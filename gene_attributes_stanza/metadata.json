@@ -1,0 +1,30 @@
+{
+  "@id": "http://togostanza.org/stanza/gene_attributes",
+  "stanza:label": "Gene attributes",
+  "stanza:definition": "Basic information of the specified gene.",
+  "stanza:parameter": [
+    {
+      "stanza:key": "gene_id",
+      "stanza:example": "slr0473",
+      "stanza:description": "Gene identifier. (e.g., slr0473)",
+      "stanza:required": true
+    },
+    {
+      "stanza:key": "tax_id",
+      "stanza:example": "",
+      "stanza:description": "Taxonomy identifier. (e.g., 1148)",
+      "stanza:required": false
+    }
+  ],
+  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/gene_attributes\" data-stanza-gene-id=\"slr0473\"></div>",
+  "stanza:type": "Stanza",
+  "stanza:context": "Gene",
+  "stanza:display": "Table",
+  "stanza:provider": "DBCLS",
+  "stanza:license": "CC-BY",
+  "stanza:author": "Stanza Togo",
+  "stanza:address": "hoge@example.org",
+  "stanza:version": "1",
+  "stanza:created": "2015-02-03",
+  "stanza:updated": "2015-02-03"
+}

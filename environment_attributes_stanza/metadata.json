@@ -1,0 +1,28 @@
+{
+  "@id": "http://togostanza.org/stanza/environment_attributes",
+  "stanza:label": "Environmental attributes",
+  "stanza:definition": "Basic information of an environment ontology.",
+  "stanza:parameter": [
+    {
+      "stanza:key": "meo_id",
+      "stanza:example": "MEO_0000006",
+      "stanza:description": "MEO identifier. (e.g., MEO_0000006)",
+      "stanza:required": true
+    }
+  ],
+  "stanza:usage": "<iframe src=\"http://togogenome.org/stanza/environment_attributes?meo_id=MEO_0000006\"></iframe>",
+  "stanza:type": "Stanza",
+  "stanza:context": "Environment",
+  "stanza:display": "Table",
+  "stanza:provider": "DBCLS",
+  "stanza:license": "CC-BY",
+  "stanza:author": "Stanza Togo",
+  "stanza:address": "hoge@example.org",
+  "stanza:contributor": [
+    "Taro Stanza",
+    "Hanako Stanza"
+  ],
+  "stanza:version": "1",
+  "stanza:created": "2015-02-03",
+  "stanza:updated": "2015-02-03"
+}

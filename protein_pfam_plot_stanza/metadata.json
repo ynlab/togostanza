@@ -1,0 +1,30 @@
+{
+  "@id": "http://togostanza.org/stanza/protein_pfam_plot",
+  "stanza:label": "Pfam plot",
+  "stanza:definition": "Scatter plot of Pfam corresponding with genes.",
+  "stanza:parameter": [
+    {
+      "stanza:key": "gene_id",
+      "stanza:example": "all1455",
+      "stanza:description": "Gene identifier (e.g. all1455)",
+      "stanza:required": true
+    },
+    {
+      "stanza:key": "tax_id",
+      "stanza:example": "103690",
+      "stanza:description": "Taxonomy identifier (e.g. 103690)",
+      "stanza:required": true
+    }
+  ],
+  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/protein_pfam_plot\" data-stanza-tax-id=\"103690\" data-stanza-gene-id=\"all1455\"></div>",
+  "stanza:type": "Stanza",
+  "stanza:context": "Phenotype",
+  "stanza:display": "Graph",
+  "stanza:provider": "DBCLS",
+  "stanza:license": "CC-BY",
+  "stanza:author": "Stanza Togo",
+  "stanza:address": "hoge@example.org",
+  "stanza:version": "1",
+  "stanza:created": "2015-02-03",
+  "stanza:updated": "2015-02-03"
+}

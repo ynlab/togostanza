@@ -1,0 +1,30 @@
+{
+  "@id": "http://togostanza.org/stanza/genome_genomic_context",
+  "stanza:label": "Genomic context",
+  "stanza:definition": "Schematic view of the structure and surroundings of a gene.",
+  "stanza:parameter": [
+    {
+      "stanza:key": "gene_id",
+      "stanza:example": "Z2546m",
+      "stanza:description": "Locus tag of a gene",
+      "stanza:required": true
+    },
+    {
+      "stanza:key": "tax_id",
+      "stanza:example": "155864",
+      "stanza:description": "Taxonomy identifier",
+      "stanza:required": true
+    }
+  ],
+  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/genome_genomic_context\" data-stanza-tax-id=\"155864\" data-stanza-gene-id=\"Z2546m\"></div>\n<div data-stanza=\"http://togogenome.org/stanza/genome_genomic_context\" data-stanza-tax-id=\"155864\" data-stanza-gene-id=\"Z0217\"></div>",
+  "stanza:type": "Stanza",
+  "stanza:context": "Gene",
+  "stanza:display": "Chart",
+  "stanza:provider": "DBCLS",
+  "stanza:license": "CC-BY",
+  "stanza:author": "Stanza Togo",
+  "stanza:address": "hoge@example.org",
+  "stanza:version": "1",
+  "stanza:created": "2015-02-03",
+  "stanza:updated": "2015-02-03"
+}

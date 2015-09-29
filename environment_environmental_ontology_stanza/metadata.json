@@ -1,0 +1,24 @@
+{
+  "@id": "http://togostanza.org/stanza/environment_environmental_ontology",
+  "stanza:label": "Environmental ontology",
+  "stanza:definition": "Visualization for the structure of MEO (Metagenome/Microbes Environment Ontology).",
+  "stanza:parameter": [
+    {
+      "stanza:key": "meo_id",
+      "stanza:example": "MEO_0000029",
+      "stanza:description": "MEO identifier. (e.g., MEO_0000029)",
+      "stanza:required": true
+    }
+  ],
+  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/environment_environmental_ontology\" meo_id=\"MEO_0000029\"></div>",
+  "stanza:type": "Stanza",
+  "stanza:context": "Environment",
+  "stanza:display": "Tree",
+  "stanza:provider": "DBCLS",
+  "stanza:license": "CC-BY",
+  "stanza:author": "Stanza Togo",
+  "stanza:address": "hoge@example.org",
+  "stanza:version": "1",
+  "stanza:created": "2015-02-03",
+  "stanza:updated": "2015-02-03"
+}

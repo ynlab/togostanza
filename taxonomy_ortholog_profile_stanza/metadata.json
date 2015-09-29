@@ -1,0 +1,24 @@
+{
+  "@id": "http://togostanza.org/stanza/taxonomy_ortholog_profile",
+  "stanza:label": "Ortholog profile",
+  "stanza:definition": "Taxonomic profile of an ortholog group",
+  "stanza:parameter": [
+    {
+      "stanza:key": "tax_id",
+      "stanza:example": "562",
+      "stanza:description": "Taxonomy identifier (e.g. 562)",
+      "stanza:required": true
+    }
+  ],
+  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/taxonomy_ortholog_profile\" tax_id=\"562\"></div>",
+  "stanza:type": "Stanza",
+  "stanza:context": "Other",
+  "stanza:display": "Graph",
+  "stanza:provider": "DBCLS",
+  "stanza:license": "CC-BY",
+  "stanza:author": "Stanza Togo",
+  "stanza:address": "hoge@example.org",
+  "stanza:version": "1",
+  "stanza:created": "2015-02-03",
+  "stanza:updated": "2015-02-03"
+}

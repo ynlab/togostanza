@@ -1,0 +1,30 @@
+{
+  "@id": "http://togostanza.org/stanza/protein_ontologies",
+  "stanza:label": "Protein ontologies",
+  "stanza:definition": "See also: <a href=\"http://www.uniprot.org/manual/?query=category%3Aontologies\" target=\"_blank\">http://www.uniprot.org/manual/?query=category%3Aontologies</a>",
+  "stanza:parameter": [
+    {
+      "stanza:key": "tax_id",
+      "stanza:example": "103690",
+      "stanza:description": "Taxonomy identifier (e.g. 103690)",
+      "stanza:required": true
+    },
+    {
+      "stanza:key": "gene_id",
+      "stanza:example": "all1455",
+      "stanza:description": "Gene identifier (e.g. all1455)",
+      "stanza:required": true
+    }
+  ],
+  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/protein_ontologies\" data-stanza-tax-id=\"103690\" data-stanza-gene-id=\"all1455\"></div>",
+  "stanza:type": "Stanza",
+  "stanza:context": "Phenotype",
+  "stanza:display": "Table",
+  "stanza:provider": "DBCLS",
+  "stanza:license": "CC-BY",
+  "stanza:author": "Stanza Togo",
+  "stanza:address": "hoge@example.org",
+  "stanza:version": "1",
+  "stanza:created": "2015-02-03",
+  "stanza:updated": "2015-02-03"
+}

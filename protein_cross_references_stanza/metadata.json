@@ -1,0 +1,30 @@
+{
+  "@id": "http://togostanza.org/stanza/protein_cross_references",
+  "stanza:label": "Protein cross references",
+  "stanza:definition": "See also: <a hfef=\"http://www.uniprot.org/manual/?query=category%3Across_references\" target=\"_blank\">http://www.uniprot.org/manual/?query=category%3Across_references</a>",
+  "stanza:parameter": [
+    {
+      "stanza:key": "tax_id",
+      "stanza:example": "1111708",
+      "stanza:description": "Taxonomy identifier (e.g. 1111708)",
+      "stanza:required": true
+    },
+    {
+      "stanza:key": "gene_id",
+      "stanza:example": "slr1311",
+      "stanza:description": "Gene identifier (e.g. slr1311)",
+      "stanza:required": true
+    }
+  ],
+  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/protein_cross_references\" data-stanza-tax-id=\"1111708\" data-stanza-gene-id=\"slr1311\"></div>",
+  "stanza:type": "Stanza",
+  "stanza:context": "Phenotype",
+  "stanza:display": "Other",
+  "stanza:provider": "DBCLS",
+  "stanza:license": "CC-BY",
+  "stanza:author": "Stanza Togo",
+  "stanza:address": "hoge@example.org",
+  "stanza:version": "1",
+  "stanza:created": "2015-02-03",
+  "stanza:updated": "2015-02-03"
+}

@@ -1,0 +1,24 @@
+{
+  "@id": "http://togostanza.org/stanza/genome_cross_references",
+  "stanza:label": "Cross references",
+  "stanza:definition": "Table of cross references of a given genome.",
+  "stanza:parameter": [
+    {
+      "stanza:key": "tax_id",
+      "stanza:example": "1148",
+      "stanza:description": "Taxonomy identifier",
+      "stanza:required": true
+    }
+  ],
+  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/genome_cross_references\" data-stanza-tax-id=\"1148\"></div>",
+  "stanza:type": "Stanza",
+  "stanza:context": "Gene",
+  "stanza:display": "Table",
+  "stanza:provider": "DBCLS",
+  "stanza:license": "CC-BY",
+  "stanza:author": "Stanza Togo",
+  "stanza:address": "hoge@example.org",
+  "stanza:version": "1",
+  "stanza:created": "2015-02-03",
+  "stanza:updated": "2015-02-03"
+}

@@ -1,0 +1,24 @@
+{
+  "@id": "http://togostanza.org/stanza/organism_culture_collections",
+  "stanza:label": "Culture collections",
+  "stanza:definition": "List of strains that is related to the specified taxonomy. These strains are related to taxonomy by NCBI taxonomy database or by sequence or by StrainInfo database or by strain name.",
+  "stanza:parameter": [
+    {
+      "stanza:key": "tax_id",
+      "stanza:example": "228599",
+      "stanza:description": "Taxonomy identifier. (e.g., 228599)",
+      "stanza:required": true
+    }
+  ],
+  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/organism_culture_collections\" data-stanza-tax-id=\"228599\"></div>",
+  "stanza:type": "Stanza",
+  "stanza:context": "Organism",
+  "stanza:display": "Table",
+  "stanza:provider": "DBCLS",
+  "stanza:license": "CC-BY",
+  "stanza:author": "Stanza Togo",
+  "stanza:address": "hoge@example.org",
+  "stanza:version": "1",
+  "stanza:created": "2015-02-03",
+  "stanza:updated": "2015-02-03"
+}

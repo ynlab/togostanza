@@ -1,0 +1,30 @@
+{
+  "@id": "http://togostanza.org/stanza/protein_ec_number_nano",
+  "stanza:label": "EC number",
+  "stanza:definition": "NanoStanza for showing an schematic mage of protein 3D structure of specifined genes.",
+  "stanza:parameter": [
+    {
+      "stanza:key": "tax_id",
+      "stanza:example": "1035377",
+      "stanza:description": "Taxonomy identifier (e.g. 1035377)",
+      "stanza:required": true
+    },
+    {
+      "stanza:key": "gene_id",
+      "stanza:example": "A1122_00435",
+      "stanza:description": "Gene identifier (e.g. A1122_00435)",
+      "stanza:required": true
+    }
+  ],
+  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/protein_ec_number_nano\" data-stanza-tax-id=\"1035377\" data-stanza-gene-id=\"A1122_00435\"></div>",
+  "stanza:type": "NanoStanza",
+  "stanza:context": "Phenotype",
+  "stanza:display": "Numeral",
+  "stanza:provider": "DBCLS",
+  "stanza:license": "CC-BY",
+  "stanza:author": "Stanza Togo",
+  "stanza:address": "hoge@example.org",
+  "stanza:version": "1",
+  "stanza:created": "2015-02-03",
+  "stanza:updated": "2015-02-03"
+}

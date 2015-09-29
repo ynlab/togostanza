@@ -1,0 +1,24 @@
+{
+  "@id": "http://togostanza.org/stanza/genome_plot",
+  "stanza:label": "Genomic plot",
+  "stanza:definition": "Scatter plot of genomic information.",
+  "stanza:parameter": [
+    {
+      "stanza:key": "tax_id",
+      "stanza:example": "103690",
+      "stanza:description": "Taxonomy identifier. (e.g., 103690)",
+      "stanza:required": true
+    }
+  ],
+  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/genome_plot\" data-stanza-tax-id=\"103690\"></div>",
+  "stanza:type": "Stanza",
+  "stanza:context": "Gene",
+  "stanza:display": "Chart",
+  "stanza:provider": "DBCLS",
+  "stanza:license": "CC-BY",
+  "stanza:author": "Stanza Togo",
+  "stanza:address": "hoge@example.org",
+  "stanza:version": "1",
+  "stanza:created": "2015-02-03",
+  "stanza:updated": "2015-02-03"
+}
