@@ -6,8 +6,8 @@ Gem::Specification.new do |spec|
   spec.version       = '0.0.1'
   spec.authors       = ['TODO: Write your name']
   spec.email         = ['']
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{Organism Microbial Cell Shape Nano}
+  spec.description   = %q{NanoStanza: Display an illustlation of the cell shape or arrangement of the specified organism.}
   spec.homepage      = ''
   spec.license       = 'MIT'
 

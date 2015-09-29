@@ -6,8 +6,8 @@ Gem::Specification.new do |spec|
   spec.version       = '0.0.1'
   spec.authors       = ['TODO: Write your name']
   spec.email         = ['']
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{Pathogen information}
+  spec.description   = %q{List of organisms and associated pathogen which have linage of the specified taxonomy.}
   spec.homepage      = ''
   spec.license       = 'MIT'
 

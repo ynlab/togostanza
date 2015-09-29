@@ -6,8 +6,8 @@ Gem::Specification.new do |spec|
   spec.version       = '0.0.1'
   spec.authors       = ['TODO: Write your name']
   spec.email         = ['']
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{Gene Attributes}
+  spec.description   = %q{Basic information of the specified gene.}
   spec.homepage      = ''
   spec.license       = 'MIT'
 
