@@ -1,19 +1,19 @@
 {
-  "@id": "http://togostanza.org/stanza/lineage_information",
-  "stanza:label": "Taxonomic information",
-  "stanza:definition": "Lineage of the specified organism.",
+  "@id": "http://togostanza.org/stanza/organism_gene_list",
+  "stanza:label": "Organism Gene List",
+  "stanza:definition": "List of organism genes",
   "stanza:parameter": [
     {
       "stanza:key": "data-stanza-tax-id",
-      "stanza:example": "103690",
+      "stanza:example": "559292",
       "stanza:description": "Taxonomy identifier.",
       "stanza:required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/lineage_information\" data-stanza-tax-id=\"103690\"></div>",
+  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/organism_gene_list\" data-stanza-tax-id=\"559292\"></div>",
   "stanza:type": "Stanza",
-  "stanza:context": "Gene",
-  "stanza:display": "Table",
+  "stanza:context": "Organism",
+  "stanza:display": "List",
   "stanza:provider": "DBCLS",
   "stanza:license": "CC-BY",
   "stanza:author": "Stanza Togo",

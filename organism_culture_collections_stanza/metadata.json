@@ -4,9 +4,9 @@
   "stanza:definition": "List of strains that is related to the specified taxonomy. These strains are related to taxonomy by NCBI taxonomy database or by sequence or by StrainInfo database or by strain name.",
   "stanza:parameter": [
     {
-      "stanza:key": "tax_id",
+      "stanza:key": "data-stanza-tax-id",
       "stanza:example": "228599",
-      "stanza:description": "Taxonomy identifier. (e.g., 228599)",
+      "stanza:description": "Taxonomy identifier.",
       "stanza:required": true
     }
   ],
@@ -20,5 +20,5 @@
   "stanza:address": "hoge@example.org",
   "stanza:version": "1",
   "stanza:created": "2015-02-03",
-  "stanza:updated": "2015-02-03"
+  "stanza:updated": "2015-09-30"
 }

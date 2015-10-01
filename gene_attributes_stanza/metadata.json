@@ -4,19 +4,19 @@
   "stanza:definition": "Basic information of the specified gene.",
   "stanza:parameter": [
     {
-      "stanza:key": "gene_id",
-      "stanza:example": "slr0473",
-      "stanza:description": "Gene identifier. (e.g., slr0473)",
+      "stanza:key": "data-stanza-gene-id",
+      "stanza:example": "b0015",
+      "stanza:description": "Gene identifier.",
       "stanza:required": true
     },
     {
-      "stanza:key": "tax_id",
-      "stanza:example": "",
-      "stanza:description": "Taxonomy identifier. (e.g., 1148)",
-      "stanza:required": false
+      "stanza:key": "data-stanza-tax-id",
+      "stanza:example": "511145",
+      "stanza:description": "Taxonomy identifier.",
+      "stanza:required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/gene_attributes\" data-stanza-gene-id=\"slr0473\"></div>",
+  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/gene_attributes\" data-stanza-gene-id=\"b0015\" data-stanza-tax-id=\"511145\"></div>",
   "stanza:type": "Stanza",
   "stanza:context": "Gene",
   "stanza:display": "Table",
@@ -26,5 +26,5 @@
   "stanza:address": "hoge@example.org",
   "stanza:version": "1",
   "stanza:created": "2015-02-03",
-  "stanza:updated": "2015-02-03"
+  "stanza:updated": "2015-09-30"
 }

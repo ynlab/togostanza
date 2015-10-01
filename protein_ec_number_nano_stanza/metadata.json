@@ -4,19 +4,19 @@
   "stanza:definition": "NanoStanza for showing an schematic mage of protein 3D structure of specifined genes.",
   "stanza:parameter": [
     {
-      "stanza:key": "tax_id",
-      "stanza:example": "1035377",
-      "stanza:description": "Taxonomy identifier (e.g. 1035377)",
+      "stanza:key": "data-stanza-tax-id",
+      "stanza:example": "103690",
+      "stanza:description": "Taxonomy identifier.",
       "stanza:required": true
     },
     {
-      "stanza:key": "gene_id",
-      "stanza:example": "A1122_00435",
-      "stanza:description": "Gene identifier (e.g. A1122_00435)",
+      "stanza:key": "data-stanza-gene-id",
+      "stanza:example": "all1455",
+      "stanza:description": "Gene identifier.",
       "stanza:required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/protein_ec_number_nano\" data-stanza-tax-id=\"1035377\" data-stanza-gene-id=\"A1122_00435\"></div>",
+  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/protein_ec_number_nano\" data-stanza-tax-id=\"103690\" data-stanza-gene-id=\"all1455\"></div>",
   "stanza:type": "NanoStanza",
   "stanza:context": "Phenotype",
   "stanza:display": "Numeral",
@@ -26,5 +26,5 @@
   "stanza:address": "hoge@example.org",
   "stanza:version": "1",
   "stanza:created": "2015-02-03",
-  "stanza:updated": "2015-02-03"
+  "stanza:updated": "2015-09-30"
 }

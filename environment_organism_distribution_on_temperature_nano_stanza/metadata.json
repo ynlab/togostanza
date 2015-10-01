@@ -4,7 +4,7 @@
   "stanza:definition": "NanoStanza for showing the number of Psychrophiles, Mesophiles and Thermophiles with the specified environmental feature.",
   "stanza:parameter": [
     {
-      "stanza:key": "meo_id",
+      "stanza:key": "data-stanza-meo-id",
       "stanza:example": "MEO_0000005",
       "stanza:description": "MEO identifier",
       "stanza:required": true
@@ -20,5 +20,5 @@
   "stanza:address": "hoge@example.org",
   "stanza:version": "1",
   "stanza:created": "2015-02-03",
-  "stanza:updated": "2015-02-03"
+  "stanza:updated": "2015-09-30"
 }

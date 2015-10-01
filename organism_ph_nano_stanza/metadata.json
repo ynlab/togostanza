@@ -4,7 +4,7 @@
   "stanza:definition": "Display growth pH of the specified organism.",
   "stanza:parameter": [
     {
-      "stanza:key": "tax_id",
+      "stanza:key": "data-stanza-tax-id",
       "stanza:example": "666510",
       "stanza:description": "Taxonomy identifier",
       "stanza:required": true
@@ -20,5 +20,5 @@
   "stanza:address": "hoge@example.org",
   "stanza:version": "1",
   "stanza:created": "2015-02-03",
-  "stanza:updated": "2015-02-03"
+  "stanza:updated": "2015-09-30"
 }

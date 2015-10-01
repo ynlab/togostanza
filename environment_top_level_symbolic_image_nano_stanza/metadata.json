@@ -4,9 +4,9 @@
   "stanza:definition": "NanoStanza for showing an symbolic image for the MEO's toplevel category related to the given MEO ID.",
   "stanza:parameter": [
     {
-      "stanza:key": "meo_id",
+      "stanza:key": "data-stanza-meo-id",
       "stanza:example": "MEO_0000039",
-      "stanza:description": "MEO identifier. (e.g., MEO_0000039)",
+      "stanza:description": "MEO identifier.",
       "stanza:required": true
     }
   ],
@@ -20,5 +20,5 @@
   "stanza:address": "hoge@example.org",
   "stanza:version": "1",
   "stanza:created": "2015-02-03",
-  "stanza:updated": "2015-02-03"
+  "stanza:updated": "2015-09-30"
 }

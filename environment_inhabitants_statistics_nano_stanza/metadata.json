@@ -4,9 +4,9 @@
   "stanza:definition": "NanoStanza for showing the number of organisms of a specified environment.",
   "stanza:parameter": [
     {
-      "stanza:key": "meo_id",
-      "stanza:example": "MEO_0000038",
-      "stanza:description": "MEO identifier (e.g. MEO_0000038 # Fresh water )",
+      "stanza:key": "data-stanza-meo-id",
+      "stanza:example": "MEO_0000038 # Fresh water",
+      "stanza:description": "MEO identifier .",
       "stanza:required": true
     }
   ],
@@ -20,5 +20,5 @@
   "stanza:address": "hoge@example.org",
   "stanza:version": "1",
   "stanza:created": "2015-02-03",
-  "stanza:updated": "2015-02-03"
+  "stanza:updated": "2015-09-30"
 }

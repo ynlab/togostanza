@@ -4,13 +4,13 @@
   "stanza:definition": "NanoStanza for showing the number of organisms along with growth pH for the specified environmental feature.",
   "stanza:parameter": [
     {
-      "stanza:key": "meo_id",
+      "stanza:key": "data-stanza-meo-id",
       "stanza:example": "MEO_0000007",
       "stanza:description": "MEO identifier",
       "stanza:required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togogeome.org/stanza/environment_organism_distribution_on_ph_nano\" data-stanza-meo-id=\"MEO_0000007\"></div>",
+  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/environment_organism_distribution_on_ph_nano\" data-stanza-meo-id=\"MEO_0000007\"></div>",
   "stanza:type": "NanoStanza",
   "stanza:context": "Environment",
   "stanza:display": "Graph",
@@ -20,5 +20,5 @@
   "stanza:address": "hoge@example.org",
   "stanza:version": "1",
   "stanza:created": "2015-02-03",
-  "stanza:updated": "2015-02-03"
+  "stanza:updated": "2015-09-30"
 }
