@@ -13,7 +13,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<iframe src=\"http://togogenome.org/stanza/environment_attributes?meo_id=MEO_0000006\"></iframe>",
+      "stanza:usage": "<iframe src=\"http://togostanza.org/stanza/environment_attributes?meo_id=MEO_0000006\"></iframe>",
       "stanza:type": "Stanza",
       "stanza:context": "Environment",
       "stanza:display": "Table",
@@ -36,7 +36,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/environment_environmental_ontology\" meo_id=\"MEO_0000029\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/environment_environmental_ontology\" meo_id=\"MEO_0000029\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Environment",
       "stanza:display": "Tree",
@@ -58,7 +58,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/environment_geographical_map\" data-stanza-meo-id=\"MEO_0000029\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/environment_geographical_map\" data-stanza-meo-id=\"MEO_0000029\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Environment",
       "stanza:display": "Map",
@@ -80,7 +80,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/environment_geographical_map\" data-stanza-meo-id=\"MEO_0000029\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/environment_geographical_map\" data-stanza-meo-id=\"MEO_0000029\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Environment",
       "stanza:display": "Table",
@@ -102,7 +102,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/environment_inhabitants_statistics\" data-stanza-meo-id=\"MEO_0000029\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/environment_inhabitants_statistics\" data-stanza-meo-id=\"MEO_0000029\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Environment",
       "stanza:display": "Table",
@@ -124,7 +124,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/environment_inhabitants_statistics_nano\" data-stanza-meo-id=\"MEO_0000038\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/environment_inhabitants_statistics_nano\" data-stanza-meo-id=\"MEO_0000038\"></div>",
       "stanza:type": "NanoStanza",
       "stanza:context": "Environment",
       "stanza:display": "Numeral",
@@ -168,7 +168,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/environment_organism_distribution_on_temperature_nano\" data-stanza-meo-id=\"MEO_0000005\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/environment_organism_distribution_on_temperature_nano\" data-stanza-meo-id=\"MEO_0000005\"></div>",
       "stanza:type": "NanoStanza",
       "stanza:context": "Environment",
       "stanza:display": "Chart",
@@ -190,7 +190,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/environment_taxonomic_composition\" data-stanza-meo-id=\"MEO_0000029\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/environment_taxonomic_composition\" data-stanza-meo-id=\"MEO_0000029\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Environment",
       "stanza:display": "Chart",
@@ -212,7 +212,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/environment_top_level_symbolic_image_nano\" data-stanza-meo-id=\"MEO_0000039\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/environment_top_level_symbolic_image_nano\" data-stanza-meo-id=\"MEO_0000039\"></div>",
       "stanza:type": "NanoStanza",
       "stanza:context": "Environment",
       "stanza:display": "Image",
@@ -239,7 +239,7 @@
           "stanza:required": false
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/gene_attributes\" data-stanza-gene-id=\"slr0473\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/gene_attributes\" data-stanza-gene-id=\"slr0473\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Gene",
       "stanza:display": "Table",
@@ -266,7 +266,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/gene_length_nano\" data-stanza-tax-id=\"1148\" data-stanza-gene-id=\"slr0473\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/gene_length_nano\" data-stanza-tax-id=\"1148\" data-stanza-gene-id=\"slr0473\"></div>",
       "stanza:type": "NanoStanza",
       "stanza:context": "Gene",
       "stanza:display": "Numeral",
@@ -342,7 +342,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/genome_cross_references\" data-stanza-tax-id=\"1148\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/genome_cross_references\" data-stanza-tax-id=\"1148\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Gene",
       "stanza:display": "Table",
@@ -369,7 +369,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/genome_genomic_context\" data-stanza-tax-id=\"155864\" data-stanza-gene-id=\"Z2546m\"></div>\n<div data-stanza=\"http://togogenome.org/stanza/genome_genomic_context\" data-stanza-tax-id=\"155864\" data-stanza-gene-id=\"Z0217\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/genome_genomic_context\" data-stanza-tax-id=\"155864\" data-stanza-gene-id=\"Z2546m\"></div>\n<div data-stanza=\"http://togostanza.org/stanza/genome_genomic_context\" data-stanza-tax-id=\"155864\" data-stanza-gene-id=\"Z0217\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Gene",
       "stanza:display": "Chart",
@@ -391,7 +391,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/genome_information\" data-stanza-tax-id=\"1148\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/genome_information\" data-stanza-tax-id=\"1148\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Gene",
       "stanza:display": "Table",
@@ -418,7 +418,7 @@
           "stanza:required": false
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/genome_jbrowse\" data-stanza-tax-id=\"1148\" data-stanza-gene-id=\"slr0473\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/genome_jbrowse\" data-stanza-tax-id=\"1148\" data-stanza-gene-id=\"slr0473\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Gene",
       "stanza:display": "Other",
@@ -440,7 +440,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/genome_plot\" data-stanza-tax-id=\"103690\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/genome_plot\" data-stanza-tax-id=\"103690\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Gene",
       "stanza:display": "Chart",
@@ -462,7 +462,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/lineage_information\" data-stanza-tax-id=\"103690\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/lineage_information\" data-stanza-tax-id=\"103690\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Gene",
       "stanza:display": "Table",
@@ -489,7 +489,7 @@
           "stanza:required": false
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/nucleotide_sequence\" data-stanza-tax-id=\"1111708\" data-stanza-gene-id=\"slr1311\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/nucleotide_sequence\" data-stanza-tax-id=\"1111708\" data-stanza-gene-id=\"slr1311\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Gene",
       "stanza:display": "Text",
@@ -511,7 +511,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/organism_cross_references\" data-stanza-tax-id=\"103690\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/organism_cross_references\" data-stanza-tax-id=\"103690\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Organism",
       "stanza:display": "Table",
@@ -533,7 +533,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/organism_culture_collections\" data-stanza-tax-id=\"228599\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/organism_culture_collections\" data-stanza-tax-id=\"228599\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Organism",
       "stanza:display": "Table",
@@ -555,7 +555,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/organism_gc_nano\" data-stanza-tax-id=\"192222\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/organism_gc_nano\" data-stanza-tax-id=\"192222\"></div>",
       "stanza:type": "NanoStanza",
       "stanza:context": "Organism",
       "stanza:display": "Chart",
@@ -577,7 +577,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/organism_gene_number_nano\" data-stanza-tax-id=\"103690\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/organism_gene_number_nano\" data-stanza-tax-id=\"103690\"></div>",
       "stanza:type": "NanoStanza",
       "stanza:context": "Organism",
       "stanza:display": "Table",
@@ -599,7 +599,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/organism_genome_size_nano\" data-stanza-tax-id=\"103690\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/organism_genome_size_nano\" data-stanza-tax-id=\"103690\"></div>",
       "stanza:type": "NanoStanza",
       "stanza:context": "Organism",
       "stanza:display": "Numeral",
@@ -621,7 +621,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/organism_habitat\" data-stanza-tax-id=\"103690\">",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/organism_habitat\" data-stanza-tax-id=\"103690\">",
       "stanza:type": "Stanza",
       "stanza:context": "Organism",
       "stanza:display": "Tree",
@@ -643,7 +643,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/organism_jbrowse\" data-stanza-tax-id=\"1148\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/organism_jbrowse\" data-stanza-tax-id=\"1148\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Organism",
       "stanza:display": "Other",
@@ -665,7 +665,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/organism_medium_information\" data-stanza-tax-id=\"1351\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/organism_medium_information\" data-stanza-tax-id=\"1351\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Organism",
       "stanza:display": "Table",
@@ -687,7 +687,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/organism_microbial_cell_shape_nano\" data-stanza-tax-id=\"1148\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/organism_microbial_cell_shape_nano\" data-stanza-tax-id=\"1148\"></div>",
       "stanza:type": "NanoStanza",
       "stanza:context": "Organism",
       "stanza:display": "Image",
@@ -709,7 +709,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/organism_names\" data-stanza-tax-id=\"103690\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/organism_names\" data-stanza-tax-id=\"103690\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Organism",
       "stanza:display": "Table",
@@ -731,7 +731,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/organism_pathogen_information\" data-stanza-tax-id=\"1763\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/organism_pathogen_information\" data-stanza-tax-id=\"1763\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Organism",
       "stanza:display": "Table",
@@ -753,7 +753,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/organism_ph_nano\" data-stanza-tax-id=\"666510\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/organism_ph_nano\" data-stanza-tax-id=\"666510\"></div>",
       "stanza:type": "NanoStanza",
       "stanza:context": "Organism",
       "stanza:display": "Numeral",
@@ -775,7 +775,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/organism_phenotype\" data-stanza-tax-id=\"103690\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/organism_phenotype\" data-stanza-tax-id=\"103690\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Phenotype",
       "stanza:display": "Table",
@@ -797,7 +797,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/organism_related_disease_nano\" data-stanza-tax-id=\"400667\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/organism_related_disease_nano\" data-stanza-tax-id=\"400667\"></div>",
       "stanza:type": "NanoStanza",
       "stanza:context": "Organism",
       "stanza:display": "Image",
@@ -809,7 +809,7 @@
       "stanza:created": "2015-02-03",
       "stanza:updated": "2015-02-03"
     },
-    { "@id": "http://togostanza.org/stanza/protein3d_structure_nano",
+    { "@id": "http://togostanza.org/stanza/protein_3d_structure_nano",
       "stanza:label": "Protein 3D structure",
       "stanza:definition": "NanoStanza for showing a schematic mage of protein 3D structure of specifined genes.",
       "stanza:parameter": [
@@ -824,7 +824,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/protein_3d_structure\" data-stanza-tax-id=\"103690\" data-stanza-gene-id=\"alr3421\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/protein_3d_structure\" data-stanza-tax-id=\"103690\" data-stanza-gene-id=\"alr3421\"></div>",
       "stanza:type": "NanoStanza",
       "stanza:context": "Phenotype",
       "stanza:display": "Image",
@@ -851,7 +851,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/protein_attributes\" data-stanza-tax-id=\"1111708\" data-stanza-gene-id=\"slr1311\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/protein_attributes\" data-stanza-tax-id=\"1111708\" data-stanza-gene-id=\"slr1311\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Phenotype",
       "stanza:display": "Other",
@@ -878,7 +878,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/protein_cross_references\" data-stanza-tax-id=\"1111708\" data-stanza-gene-id=\"slr1311\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/protein_cross_references\" data-stanza-tax-id=\"1111708\" data-stanza-gene-id=\"slr1311\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Phenotype",
       "stanza:display": "Other",
@@ -905,7 +905,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/protein_ec_number_nano\" data-stanza-tax-id=\"1035377\" data-stanza-gene-id=\"A1122_00435\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/protein_ec_number_nano\" data-stanza-tax-id=\"1035377\" data-stanza-gene-id=\"A1122_00435\"></div>",
       "stanza:type": "NanoStanza",
       "stanza:context": "Phenotype",
       "stanza:display": "Numeral",
@@ -932,7 +932,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/protein_general_annotation\" data-stanza-tax-id=\"1111708\" data-stanza-gene-id=\"slr1311\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/protein_general_annotation\" data-stanza-tax-id=\"1111708\" data-stanza-gene-id=\"slr1311\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Phenotype",
       "stanza:display": "Other",
@@ -959,7 +959,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/protein_names\" data-stanza-tax-id=\"1111708\" data-stanza-gene-id=\"slr1311\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/protein_names\" data-stanza-tax-id=\"1111708\" data-stanza-gene-id=\"slr1311\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Phenotype",
       "stanza:display": "Table",
@@ -986,7 +986,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/protein_ontologies\" data-stanza-tax-id=\"103690\" data-stanza-gene-id=\"all1455\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/protein_ontologies\" data-stanza-tax-id=\"103690\" data-stanza-gene-id=\"all1455\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Phenotype",
       "stanza:display": "Table",
@@ -1013,7 +1013,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/protein_orthologs\" gene_id=\"alr3431\" tax_id=\"103690\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/protein_orthologs\" gene_id=\"alr3431\" tax_id=\"103690\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Phenotype",
       "stanza:display": "Text",
@@ -1040,7 +1040,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/protein_pfam_plot\" data-stanza-tax-id=\"103690\" data-stanza-gene-id=\"all1455\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/protein_pfam_plot\" data-stanza-tax-id=\"103690\" data-stanza-gene-id=\"all1455\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Phenotype",
       "stanza:display": "Graph",
@@ -1067,7 +1067,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/protein_references\" data-stanza-tax-id=\"1111708\" data-stanza-gene-id=\"slr1311\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/protein_references\" data-stanza-tax-id=\"1111708\" data-stanza-gene-id=\"slr1311\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Other",
       "stanza:display": "Other",
@@ -1094,7 +1094,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/protein_references_timeline_nano\" data-stanza-tax-id=\"1148\" data-stanza-gene-id=\"slr0473\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/protein_references_timeline_nano\" data-stanza-tax-id=\"1148\" data-stanza-gene-id=\"slr0473\"></div>",
       "stanza:type": "NanoStanza",
       "stanza:context": "Other",
       "stanza:display": "Graph",
@@ -1121,7 +1121,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/protein_sequence\" data-stanza-tax-id=\"1111708\" data-stanza-gene-id=\"slr1311\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/protein_sequence\" data-stanza-tax-id=\"1111708\" data-stanza-gene-id=\"slr1311\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Other",
       "stanza:display": "Other",
@@ -1148,7 +1148,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/protein_sequence_annotation\" data-stanza-tax-id=\"1111708\" data-stanza-gene-id=\"slr1311\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/protein_sequence_annotation\" data-stanza-tax-id=\"1111708\" data-stanza-gene-id=\"slr1311\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Other",
       "stanza:display": "Other",
@@ -1170,7 +1170,7 @@
           "stanza:required": true
         }
       ],
-      "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/taxonomy_ortholog_profile\" tax_id=\"562\"></div>",
+      "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/taxonomy_ortholog_profile\" tax_id=\"562\"></div>",
       "stanza:type": "Stanza",
       "stanza:context": "Other",
       "stanza:display": "Graph",

@@ -1,0 +1,24 @@
+{
+  "@id": "http://togostanza.org/stanza/organism_related_disease_nano",
+  "stanza:label": "Disease pathogen",
+  "stanza:definition": "NanoStanza for showing a pathogen symbol.",
+  "stanza:parameter": [
+    {
+      "stanza:key": "data-stanza-tax-id",
+      "stanza:example": "400667",
+      "stanza:description": "Taxonomy identifier",
+      "stanza:required": true
+    }
+  ],
+  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/organism_related_disease_nano\" data-stanza-tax-id=\"400667\"></div>",
+  "stanza:type": "NanoStanza",
+  "stanza:context": "Organism",
+  "stanza:display": "Image",
+  "stanza:provider": "DBCLS",
+  "stanza:license": "CC-BY",
+  "stanza:author": "Stanza Togo",
+  "stanza:address": "hoge@example.org",
+  "stanza:version": "1",
+  "stanza:created": "2015-02-03",
+  "stanza:updated": "2015-09-30"
+}
