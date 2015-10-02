@@ -10,7 +10,7 @@
       "stanza:required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/gmo_applied_spices\" data-stanza-medium-id=\"NBRC_M231\"></div>",
+  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/gmo_applied_spices\" data-stanza-medium-id=\"NBRC_M231\"></div>",
   "stanza:type": "Stanza",
   "stanza:context": "Medium",
   "stanza:display": "Table",

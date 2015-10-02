@@ -10,7 +10,7 @@
       "stanza:required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/organism_related_disease_nano\" data-stanza-tax-id=\"400667\"></div>",
+  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/organism_related_disease_nano\" data-stanza-tax-id=\"400667\"></div>",
   "stanza:type": "NanoStanza",
   "stanza:context": "Organism",
   "stanza:display": "Image",

@@ -10,7 +10,7 @@
       "stanza:required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/environment_organism_distribution_on_temperature_nano\" data-stanza-meo-id=\"MEO_0000005\"></div>",
+  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/environment_organism_distribution_on_temperature_nano\" data-stanza-meo-id=\"MEO_0000005\"></div>",
   "stanza:type": "NanoStanza",
   "stanza:context": "Environment",
   "stanza:display": "Chart",

@@ -16,7 +16,7 @@
       "stanza:required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/genome_plot\" data-stanza-tax-id=\"103690\" data-stanza-gene-id=\"all1455\"></div>",
+  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/genome_plot\" data-stanza-tax-id=\"103690\" data-stanza-gene-id=\"all1455\"></div>",
   "stanza:type": "Stanza",
   "stanza:context": "Gene",
   "stanza:display": "Chart",

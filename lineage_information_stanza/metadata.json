@@ -10,7 +10,7 @@
       "stanza:required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/lineage_information\" data-stanza-tax-id=\"103690\"></div>",
+  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/lineage_information\" data-stanza-tax-id=\"103690\"></div>",
   "stanza:type": "Stanza",
   "stanza:context": "Gene",
   "stanza:display": "Table",

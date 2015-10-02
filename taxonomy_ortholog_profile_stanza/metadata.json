@@ -10,7 +10,7 @@
       "stanza:required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/taxonomy_ortholog_profile\" data-stanza-tax-id=\"562\"></div>",
+  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/taxonomy_ortholog_profile\" data-stanza-tax-id=\"562\"></div>",
   "stanza:type": "Stanza",
   "stanza:context": "Other",
   "stanza:display": "Graph",

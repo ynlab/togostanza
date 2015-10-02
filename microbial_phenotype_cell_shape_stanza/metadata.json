@@ -10,7 +10,7 @@
       "stanza:required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/microbial_phenotype_cell_shape\" data-stanza-mpo-id=\"MPO_01003\"></div>",
+  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/microbial_phenotype_cell_shape\" data-stanza-mpo-id=\"MPO_01003\"></div>",
   "stanza:type": "Stanza",
   "stanza:context": "Phenotype",
   "stanza:display": "Image",

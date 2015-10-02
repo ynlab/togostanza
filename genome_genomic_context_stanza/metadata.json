@@ -16,7 +16,7 @@
       "stanza:required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/genome_genomic_context\" data-stanza-tax-id=\"155864\" data-stanza-gene-id=\"Z2546m\"></div>\n<div data-stanza=\"http://togogenome.org/stanza/genome_genomic_context\" data-stanza-tax-id=\"155864\" data-stanza-gene-id=\"Z0217\"></div>",
+  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/genome_genomic_context\" data-stanza-tax-id=\"155864\" data-stanza-gene-id=\"Z2546m\"></div>\n<div data-stanza=\"http://togostanza.org/stanza/genome_genomic_context\" data-stanza-tax-id=\"155864\" data-stanza-gene-id=\"Z0217\"></div>",
   "stanza:type": "Stanza",
   "stanza:context": "Gene",
   "stanza:display": "Chart",

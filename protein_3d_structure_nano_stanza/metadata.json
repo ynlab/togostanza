@@ -16,7 +16,7 @@
       "stanza:required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/protein_3d_structure_nano\" data-stanza-tax-id=\"103690\" data-stanza-gene-id=\"alr3421\"></div>",
+  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/protein_3d_structure_nano\" data-stanza-tax-id=\"103690\" data-stanza-gene-id=\"alr3421\"></div>",
   "stanza:type": "NanoStanza",
   "stanza:context": "Phenotype",
   "stanza:display": "Image",

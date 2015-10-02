@@ -10,7 +10,7 @@
       "stanza:required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/environment_top_level_symbolic_image_nano\" data-stanza-meo-id=\"MEO_0000039\"></div>",
+  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/environment_top_level_symbolic_image_nano\" data-stanza-meo-id=\"MEO_0000039\"></div>",
   "stanza:type": "NanoStanza",
   "stanza:context": "Environment",
   "stanza:display": "Image",

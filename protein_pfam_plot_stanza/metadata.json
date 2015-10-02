@@ -16,7 +16,7 @@
       "stanza:required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/protein_pfam_plot\" data-stanza-tax-id=\"103690\" data-stanza-gene-id=\"all4233\"></div>",
+  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/protein_pfam_plot\" data-stanza-tax-id=\"103690\" data-stanza-gene-id=\"all4233\"></div>",
   "stanza:type": "Stanza",
   "stanza:context": "Phenotype",
   "stanza:display": "Graph",

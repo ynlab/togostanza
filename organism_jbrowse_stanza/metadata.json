@@ -10,7 +10,7 @@
       "stanza:required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/organism_jbrowse\" data-stanza-tax-id=\"1148\"></div>",
+  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/organism_jbrowse\" data-stanza-tax-id=\"1148\"></div>",
   "stanza:type": "Stanza",
   "stanza:context": "Organism",
   "stanza:display": "Other",

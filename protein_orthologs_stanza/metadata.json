@@ -16,7 +16,7 @@
       "stanza:required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togogenome.org/stanza/protein_orthologs\" data-stanza-gene-id=\"alr3431\" data-stanza-tax-id=\"103690\"></div>",
+  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/protein_orthologs\" data-stanza-gene-id=\"alr3431\" data-stanza-tax-id=\"103690\"></div>",
   "stanza:type": "Stanza",
   "stanza:context": "Phenotype",
   "stanza:display": "Text",
