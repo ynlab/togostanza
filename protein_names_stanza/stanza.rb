@@ -36,6 +36,11 @@ class ProteinNamesStanza < TogoStanza::Stanza::Base
       }
     SPARQL
 
+    if gene_names.nil? || gene_names.size.zero?
+      gene_names = nil
+      next
+    end
+
     gene_names.flat_map(&:to_a).group_by(&:first).each_with_object({}) {|(k, vs), hash|
       hash[k] = vs.map(&:last).uniq
     }
@@ -53,7 +58,7 @@ class ProteinNamesStanza < TogoStanza::Stanza::Base
         {
           SELECT ?gene
           {
-            <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?gene . 
+            <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?gene .
           } ORDER BY ?gene LIMIT 1
         }
         <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?gene ;
@@ -97,6 +102,11 @@ class ProteinNamesStanza < TogoStanza::Stanza::Base
       GROUP BY ?recommended_name ?ec_name ?alternative_names ?organism_name ?parent_taxonomy_names ?parent_taxonomy ?tax_id
       ORDER BY DESC(?taxonomy_count)
     SPARQL
+
+    if protein_summary.nil? || protein_summary.size.zero?
+      protein_summary = nil
+      next
+    end
 
     # alternative_names, parent_taxonomy_names のみ複数取りうる
     protein_summary = protein_summary.flat_map(&:to_a).group_by(&:first).each_with_object({}) {|(k, vs), hash|
