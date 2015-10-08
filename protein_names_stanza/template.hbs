@@ -16,6 +16,7 @@
   <body>
     <table class='table'>
       <tbody>
+        {{#if summary}}
         <tr>
           <th class='span4'>Protein names</th>
           <td class='span8'>
@@ -45,7 +46,7 @@
             </table>
           </td>
         </tr>
-
+        {{/if}}
         {{#if genes}}
           <tr>
             <th class='span4'>Gene names</th>
@@ -79,9 +80,12 @@
 		    {{/if}}
                   </tbody>
                 </table>
-
             </td>
           </tr>
+        {{else}}
+          {{#unless summary}}
+            No data
+          {{/unless}}
         {{/if}}
 
         {{#if summary.organism_name}}

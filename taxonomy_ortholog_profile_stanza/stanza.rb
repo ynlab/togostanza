@@ -20,7 +20,7 @@ class TaxonomyOrthologProfileStanza < TogoStanza::Stanza::Base
 
       SELECT ?group ?comment (COUNT(?member) AS ?count)
       WHERE {
-        ?tax rdfs:subClassOf+ taxon:#{tax_id} .
+        ?tax rdfs:subClassOf* taxon:#{tax_id} .
         ?organism uniprotCore:organism ?tax .
         ?member mbgd:organism ?organism .
         ?group orth:member ?member ;
