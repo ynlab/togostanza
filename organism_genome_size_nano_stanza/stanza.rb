@@ -12,7 +12,7 @@ class OrganismGenomeSizeNanoStanza < TogoStanza::Stanza::Base
      }
    SPARQL
 
-   if result == nil || result.size == 0 then
+   if result.nil? || result.size.zero?
      result = nil
      next
    end

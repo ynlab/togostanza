@@ -60,11 +60,11 @@ class GenomeJbrowseStanza < TogoStanza::Stanza::Base
       }
     SPARQL
 
-    if result == nil || result.size == 0 then
+    if result.nil? || result.size.zero?
      result = nil
      next
     end
- 
+
     first, last, seq_length, seq_label = result.values_at(:start, :end, :seq_length, :seq_label)
 
     start_pos, end_pos = [first.to_i, last.to_i].minmax

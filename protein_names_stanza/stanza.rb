@@ -36,7 +36,7 @@ class ProteinNamesStanza < TogoStanza::Stanza::Base
       }
     SPARQL
 
-    if gene_names == nil || gene_names.size == 0 then
+    if gene_names.nil? || gene_names.size.zero?
       gene_names = nil
       next
     end
@@ -58,7 +58,7 @@ class ProteinNamesStanza < TogoStanza::Stanza::Base
         {
           SELECT ?gene
           {
-            <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?gene . 
+            <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?gene .
           } ORDER BY ?gene LIMIT 1
         }
         <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?gene ;
@@ -103,7 +103,7 @@ class ProteinNamesStanza < TogoStanza::Stanza::Base
       ORDER BY DESC(?taxonomy_count)
     SPARQL
 
-    if protein_summary == nil || protein_summary.size == 0 then
+    if protein_summary.nil? || protein_summary.size.zero?
       protein_summary = nil
       next
     end
