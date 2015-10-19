@@ -1,15 +1,20 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
+require 'json'
+metadata = open('./metadata.json') do |io|
+  JSON.load(io)
+end
+
 Gem::Specification.new do |spec|
   spec.name          = 'gene_length_nano_stanza'
   spec.version       = '0.0.1'
   spec.authors       = ['Toshiaki Katayama']
   spec.email         = ['ktym@dbcls.jp']
-  spec.summary       = %q{NanoStanza for showing gene length.}
-  spec.description   = %q{Total length of a gene region including exons and introns.}
+  spec.summary       = metadata["stanza:label"]
+  spec.description   = metadata["stanza:definition"]
   spec.homepage      = ''
-  spec.license       = 'MIT'
+  spec.license       = metadata["stanza:license"]
 
   spec.files         = Dir.glob('**/*')
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }

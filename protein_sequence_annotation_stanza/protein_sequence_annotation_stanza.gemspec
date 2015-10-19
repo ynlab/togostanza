@@ -1,15 +1,20 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
+require 'json'
+metadata = open('./metadata.json') do |io|
+  JSON.load(io)
+end
+
 Gem::Specification.new do |spec|
   spec.name          = 'protein_sequence_annotation_stanza'
   spec.version       = '0.0.1'
-  spec.authors       = ['TODO: Write your name']
-  spec.email         = ['']
-  spec.summary       = %q{Protein sequence annotation}
-  spec.description   = %q{See also: http://www.uniprot.org/manual/?query=category%3Asequence_annotation}
+  spec.authors       = Array(metadata["stanza:author"])
+  spec.email         = Array(metadata["stanza:address"])
+  spec.summary       = metadata["stanza:label"]
+  spec.description   = metadata["stanza:definition"]
   spec.homepage      = ''
-  spec.license       = 'MIT'
+  spec.license       = metadata["stanza:license"]
 
   spec.files         = Dir.glob('**/*')
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
