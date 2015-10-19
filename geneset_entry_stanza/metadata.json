@@ -1,7 +1,7 @@
 {
   "@id": "http://togostanza.org/stanza/geneset_entry",
   "stanza:label": "Geneset Entry",
-  "stanza:definition": "TODO: Write a stanza description.",
+  "stanza:definition": "Geneset Entry",
   "stanza:parameter": [
     {
       "stanza:key": "uri",
