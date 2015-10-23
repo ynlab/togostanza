@@ -14,28 +14,28 @@
   </head>
 
   <body>
+    {{#if protein_names}}
     <table class='table'>
       <tbody>
-        {{#if summary}}
         <tr>
           <th class='span4'>Protein names</th>
           <td class='span8'>
             <table class='table'>
               <tbody>
-                {{#if summary.recommended_name}}
-                  <tr><th class='span4'>Recommended Name</th><td class='span4'>{{summary.recommended_name}}</td></tr>
+                {{#if protein_names.recommended_name}}
+                  <tr><th class='span4'>Recommended Name</th><td class='span4'>{{protein_names.recommended_name}}</td></tr>
                 {{/if}}
 
-                {{#if summary.ec_name}}
-                  <tr><th class='span4'>EC number</th><td class='span4'>{{summary.ec_name}}</td></tr>
+                {{#if protein_names.ec_name}}
+                  <tr><th class='span4'>EC number</th><td class='span4'>{{protein_names.ec_name}}</td></tr>
                 {{/if}}
 
-                {{#if summary.alternative_names}}
+                {{#if protein_names.alternative_names}}
                   <tr>
                     <th class='span4'>Alternative Name(s)</th>
                     <td class='span4'>
                       <ul>
-                        {{#each summary.alternative_names}}
+                        {{#each protein_names.alternative_names}}
                           <li>{{this}}</li>
                         {{/each}}
                       </ul>
@@ -46,62 +46,53 @@
             </table>
           </td>
         </tr>
-        {{/if}}
-        {{#if genes}}
-          <tr>
-            <th class='span4'>Gene names</th>
-            <td class='span8'>
- 
-                <table class='table'>
-                  <tbody>
-                    {{#if genes.gene_name}}
-		    <tr>
-		      <th class='span4'>Name</th>
-		      <td class='span4'><ul>{{#each genes.gene_name}}<li>{{this}}</li>{{/each}}</ul></td>
-		    </tr>
-		    {{/if}}
-                    {{#if genes.synonyms_name}}
-		    <tr>
-		      <th class='span4'>Synonyms</th>
-		      <td class='span4'><ul>{{#each genes.synonyms_name}}<li>{{this}}</li>{{/each}}</ul></td>
-		    </tr>
-		    {{/if}}
-                    {{#if genes.locus_name}}
-		    <tr>
-		      <th class='span4'>Ordered Locus Names</th>
-		      <td class='span4'><ul>{{#each genes.locus_name}}<li>{{this}}</li>{{/each}}</ul></td>
-		    </tr>
-		    {{/if}}
-                    {{#if genes.orf_name}}
-		    <tr>
-		      <th class='span4'>ORF Names</th>
-		      <td class='span4'><ul>{{#each genes.orf_name}}<li>{{this}}</li>{{/each}}</ul></td>
-		    </tr>
-		    {{/if}}
-                  </tbody>
-                </table>
-            </td>
-          </tr>
-        {{else}}
-          {{#unless summary}}
-            No data
-          {{/unless}}
+        <tr>
+          <th class='span4'>Gene names</th>
+          <td class='span8'>
+            <table class='table'>
+              <tbody>
+                {{#if protein_names.gene_name}}
+	        <tr>
+                  <th class='span4'>Name</th>
+	          <td class='span4'><ul>{{#each protein_names.gene_name}}<li>{{this}}</li>{{/each}}</ul></td>
+	        </tr>
+                {{/if}}
+                {{#if protein_names.synonyms_name}}
+                <tr>
+                  <th class='span4'>Synonyms</th>
+                  <td class='span4'><ul>{{#each protein_names.synonyms_name}}<li>{{this}}</li>{{/each}}</ul></td>
+                </tr>
+                {{/if}}
+                {{#if protein_names.locus_name}}
+                <tr>
+                  <th class='span4'>Ordered Locus Names</th>
+                  <td class='span4'><ul>{{#each protein_names.locus_name}}<li>{{this}}</li>{{/each}}</ul></td>
+                </tr>
+                {{/if}}
+                {{#if protein_names.orf_name}}
+                <tr>
+                  <th class='span4'>ORF Names</th>
+                  <td class='span4'><ul>{{#each protein_names.orf_name}}<li>{{this}}</li>{{/each}}</ul></td>
+                </tr>
+                {{/if}}
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        {{#if protein_names.organism_name}}
+          <tr><th>Organism</th><td>{{protein_names.organism_name}}</td></tr>
         {{/if}}
 
-        {{#if summary.organism_name}}
-          <tr><th>Organism</th><td>{{summary.organism_name}}</td></tr>
+        {{#if protein_names.taxonomy_id}}
+          <tr><th>Taxonomic identifier</th><td>{{protein_names.taxonomy_id}}</td></tr>
         {{/if}}
 
-        {{#if summary.taxonomy_id}}
-          <tr><th>Taxonomic identifier</th><td>{{summary.taxonomy_id}}</td></tr>
-        {{/if}}
-
-        {{#if summary.parent_taxonomy_names}}
+        {{#if protein_names.parent_taxonomy_names}}
           <tr>
             <th>Taxonomic lineage</th>
             <td>
               <ul>
-                {{#each summary.parent_taxonomy_names}}
+                {{#each protein_names.parent_taxonomy_names}}
                   <li>{{this}}</li>
                 {{/each}}
               </ul>
@@ -110,6 +101,11 @@
         {{/if}}
       </tbody>
     </table>
+    {{else}}
+      <div>
+        No data
+      </div>
+    {{/if}}
   </body>
 </html>
 

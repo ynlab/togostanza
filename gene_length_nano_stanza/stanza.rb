@@ -1,35 +1,77 @@
+require 'bio'
 class GeneLengthNanoStanza < TogoStanza::Stanza::Base
   property :title do
     "Gene length"
   end
 
   property :result do |tax_id, gene_id|
-    query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc).first
-      PREFIX rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-      PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>
+    # At first selects a feature of gene.
+    results = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
+      DEFINE sql:select-option "order"
       PREFIX obo:    <http://purl.obolibrary.org/obo/>
-      PREFIX faldo:  <http://biohackathon.org/resource/faldo#>
-      PREFIX insdc:  <http://ddbj.nig.ac.jp/ontologies/sequence#>
-      SELECT (ABS(?gene_end - ?gene_begin) + 1 AS ?gene_length)
-      WHERE {
+      PREFIX insdc: <http://ddbj.nig.ac.jp/ontologies/nucleotide/>
+      PREFIX uniprot: <http://purl.uniprot.org/core/>
+
+      SELECT ?insdc_location
+      {
         {
-          SELECT ?feature_uri
+          SELECT ?feature
           {
-            GRAPH <http://togogenome.org/graph/tgup>
+            VALUES ?tggene { <http://togogenome.org/gene/#{tax_id}:#{gene_id}> }
             {
-              <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?feature_uri .
+              GRAPH <http://togogenome.org/graph/tgup>
+              {
+                ?tggene skos:exactMatch ?gene ;
+                  rdfs:seeAlso/rdfs:seeAlso ?uniprot .
+              }
+              GRAPH <http://togogenome.org/graph/uniprot>
+              {
+                ?uniprot a uniprot:Protein ;
+                  uniprot:sequence ?isoform .
+                ?isoform rdf:value ?protein_seq .
+              }
+              GRAPH <http://togogenome.org/graph/refseq>
+              {
+                VALUES ?feature_type { insdc:Coding_Sequence }
+                ?feature obo:so_part_of ?gene ;
+                  a ?feature_type ;
+                  insdc:translation ?translation .
+              }
+              FILTER (?protein_seq = ?translation)
             }
-          } ORDER BY ?feature_uri LIMIT 1
+            UNION
+            {
+              GRAPH <http://togogenome.org/graph/tgup>
+              {
+                ?tggene skos:exactMatch ?gene .
+              }
+              GRAPH <http://togogenome.org/graph/refseq>
+              {
+                VALUES ?feature_type { insdc:Transfer_RNA insdc:Ribosomal_RNA insdc:Non_Coding_RNA }
+                ?feature obo:so_part_of ?gene ;
+                  insdc:location ?insdc_location ;
+                  a ?feature_type .
+              }
+            }
+          } LIMIT 1
         }
         GRAPH <http://togogenome.org/graph/refseq>
         {
-          VALUES ?feature_type { obo:SO_0000704 obo:SO_0000252 obo:SO_0000253 } #gene, rRNA, tRNA
-          ?feature_uri rdfs:subClassOf ?feature_type ;
-             faldo:location ?loc .
-           ?loc faldo:begin/faldo:position ?gene_begin .
-           ?loc faldo:end/faldo:position ?gene_end .
+          ?feature insdc:location ?insdc_location .
         }
       }
     SPARQL
+
+    if results.nil? || results.size == 0
+      nil
+      next
+    end
+
+    results.map {|hash|
+      length = Bio::Locations.new(hash[:insdc_location]).length
+      hash.merge(
+        gene_length: length
+      )
+    }.first
   end
 end

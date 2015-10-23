@@ -11,36 +11,27 @@ class OrganismGcNanoStanza < TogoStanza::Stanza::Base
     results = query('http://dev.togogenome.org/sparql-test', <<-SPARQL.strip_heredoc)
       PREFIX taxid:<http://identifiers.org/taxonomy/>
       PREFIX stats: <http://togogenome.org/stats/>
-      PREFIX ddbj: <http://ddbj.nig.ac.jp/ontologies/nucleotide/>
 
-      SELECT ?refseq
+      SELECT ?gc ?at
       WHERE
       {
         GRAPH <http://togogenome.org/graph/stats> {
-           taxid:#{tax_id} rdfs:seeAlso/rdfs:seeAlso ?refseq_id .
-        }
-        GRAPH <http://togogenome.org/graph/refseq> {
-          ?refseq_id rdf:type ddbj:Entry ;
-            ddbj:sequence_version ?refseq .
+          VALUES ?tax_id { taxid:#{tax_id} }
+          ?tax_id stats:gc_count ?gc ;
+            stats:at_count ?at .
         }
       }
     SPARQL
-
-    count = results.inject({at: 0, gc: 0}) do |result, res|
-      # {:refseq=>"NC_002163.1"}
-      seq = open("http://togows.org/entry/nucleotide/#{res[:refseq]}/seq").read
-
-      result[:at] += seq.count('a') + seq.count('t')
-      result[:gc] += seq.count('g') + seq.count('c')
-      result
+    if results.nil? || results.size == 0
+      nil
+      next
     end
-
-
-
-    unless (sum = count[:gc] + count[:at]).zero?
+    gc = results.first[:gc].to_i
+    at = results.first[:at].to_i
+    unless (sum = gc + at).zero?
       {
-        gc_percentage: calc_percent(count[:gc], sum) ,
-        at_percentage: calc_percent(count[:at], sum)
+        gc_percentage: calc_percent(gc, sum) ,
+        at_percentage: calc_percent(at, sum)
       }
     else
       nil
