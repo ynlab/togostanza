@@ -402,7 +402,7 @@ GEM
       rack (>= 1.0)
     raindrops (0.13.0)
     rake (10.3.2)
-    rdf (1.1.16.1)
+    rdf (1.1.17.1)
       link_header (~> 0.0, >= 0.0.8)
     rltk (2.2.1)
       ffi (>= 1.0.0)
@@ -526,3 +526,6 @@ DEPENDENCIES
   togostanza
   unicorn
   variation_stanza!
+
+BUNDLED WITH
+   1.10.6
