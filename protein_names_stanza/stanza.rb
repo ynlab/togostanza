@@ -1,5 +1,6 @@
 class ProteinNamesStanza < TogoStanza::Stanza::Base
-  property :genes do |tax_id, gene_id|
+  property :protein_names do |tax_id, gene_id|
+    # genes
     gene_names = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -35,18 +36,14 @@ class ProteinNamesStanza < TogoStanza::Stanza::Base
         OPTIONAL { ?gene_hash up:orfName ?orf_name . }
       }
     SPARQL
-
-    if gene_names.nil? || gene_names.size.zero?
-      gene_names = nil
-      next
+    genes = {}
+    unless gene_names.nil? || gene_names.size.zero?
+      genes = gene_names.flat_map(&:to_a).group_by(&:first).each_with_object({}) {|(k, vs), hash|
+        hash[k] = vs.map(&:last).uniq
+      }
     end
 
-    gene_names.flat_map(&:to_a).group_by(&:first).each_with_object({}) {|(k, vs), hash|
-      hash[k] = vs.map(&:last).uniq
-    }
-  end
-
-  property :summary do |tax_id, gene_id|
+    # summary
     protein_summary = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
 
@@ -103,18 +100,24 @@ class ProteinNamesStanza < TogoStanza::Stanza::Base
       ORDER BY DESC(?taxonomy_count)
     SPARQL
 
-    if protein_summary.nil? || protein_summary.size.zero?
-      protein_summary = nil
+    summary = {}
+    unless protein_summary.nil? || protein_summary.size.zero?
+      # alternative_names, parent_taxonomy_names のみ複数取りうる
+      summary = protein_summary.flat_map(&:to_a).group_by(&:first).each_with_object({}) {|(k, vs), hash|
+        v = vs.map(&:last).uniq
+        hash[k] = [:alternative_names, :parent_taxonomy_names].include?(k) ? v : v.first
+      }
+
+      summary[:parent_taxonomy_names].reverse! if summary[:parent_taxonomy_names]
+    end
+
+    protein_names = genes.merge(summary)
+
+    if protein_names.keys.size == 0
+      nil
       next
     end
 
-    # alternative_names, parent_taxonomy_names のみ複数取りうる
-    protein_summary = protein_summary.flat_map(&:to_a).group_by(&:first).each_with_object({}) {|(k, vs), hash|
-      v = vs.map(&:last).uniq
-      hash[k] = [:alternative_names, :parent_taxonomy_names].include?(k) ? v : v.first
-    }
-
-    protein_summary[:parent_taxonomy_names].reverse! if protein_summary[:parent_taxonomy_names]
-    protein_summary
+    protein_names
   end
 end
