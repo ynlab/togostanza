@@ -1,6 +1,6 @@
 class ProteinSequenceAnnotationStanza < TogoStanza::Stanza::Base
   property :sequence_annotations do |tax_id, gene_id|
-    annotations = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
+    annotations = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX faldo: <http://biohackathon.org/resource/faldo#>
 

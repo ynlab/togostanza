@@ -1,6 +1,6 @@
 class ProteinOntologiesStanza < TogoStanza::Stanza::Base
   property :keywords do |tax_id, gene_id|
-    keywords = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
+    keywords = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -44,7 +44,7 @@ class ProteinOntologiesStanza < TogoStanza::Stanza::Base
     ##  {:root_name=>"biological_process", :name=>"photosynthetic electron transport in photosystem II"},
     ##  {:root_name=>"molecular_function", :name=>"oxidoreductase activity"},
     ##  ...]
-    gene_ontlogies = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
+    gene_ontlogies = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 

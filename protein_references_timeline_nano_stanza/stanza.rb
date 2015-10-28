@@ -4,7 +4,7 @@ class ProteinReferencesTimelineNanoStanza < TogoStanza::Stanza::Base
   end
 
   property :references do |tax_id, gene_id, step|
-    refs = query('http://dev.togogenome.org/sparql-test', <<-SPARQL.strip_heredoc)
+    refs = query('http://togogenome.org/sparql', <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
 
       # "SAMPLE" for multi-year citation (publish, Epub)(e.g. <http://purl.uniprot.org/citations/20978534> up:date ?date)

@@ -1,7 +1,7 @@
 class ProteinGeneralAnnotationStanza < TogoStanza::Stanza::Base
   property :general_annotations do |tax_id, gene_id|
 
-    result = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
+    result = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
     PREFIX up: <http://purl.uniprot.org/core/>
 
     SELECT DISTINCT ?name ?message

@@ -1,6 +1,6 @@
 class OrganismMicrobialCellShapeNanoStanza < TogoStanza::Stanza::Base
   property :cell_shapes do |tax_id|
-    result = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc).first
+    result = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc).first
       DEFINE sql:select-option "order"
 
       PREFIX mpo: <http://purl.jp/bio/01/mpo#>

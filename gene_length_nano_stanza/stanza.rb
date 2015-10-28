@@ -6,7 +6,7 @@ class GeneLengthNanoStanza < TogoStanza::Stanza::Base
 
   property :result do |tax_id, gene_id|
     # At first selects a feature of gene.
-    results = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
+    results = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX obo:    <http://purl.obolibrary.org/obo/>
       PREFIX insdc: <http://ddbj.nig.ac.jp/ontologies/nucleotide/>

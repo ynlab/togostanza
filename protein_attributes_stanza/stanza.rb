@@ -1,6 +1,6 @@
 class ProteinAttributesStanza < TogoStanza::Stanza::Base
   property :attributes do |tax_id, gene_id|
-    protein_attributes = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
+    protein_attributes = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
 
       SELECT DISTINCT ?sequence ?fragment ?precursor ?existence_label

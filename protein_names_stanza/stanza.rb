@@ -1,7 +1,7 @@
 class ProteinNamesStanza < TogoStanza::Stanza::Base
   property :protein_names do |tax_id, gene_id|
     # genes
-    gene_names = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
+    gene_names = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
@@ -44,7 +44,7 @@ class ProteinNamesStanza < TogoStanza::Stanza::Base
     end
 
     # summary
-    protein_summary = query("http://dev.togogenome.org/sparql-test", <<-SPARQL.strip_heredoc)
+    protein_summary = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
 
       SELECT DISTINCT ?recommended_name ?ec_name ?alternative_names ?organism_name ?parent_taxonomy_names (COUNT(?parent_taxonomy) AS ?taxonomy_count) REPLACE( STR(?tax_id), "http://purl.uniprot.org/taxonomy/", "") AS ?taxonomy_id
