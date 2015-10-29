@@ -1,0 +1,24 @@
+{
+  "@id": "http://togostanza.org/stanza/microbial_phenotype_genus_composition",
+  "stanza:label": "Genus List (Phenotype-based)",
+  "stanza:definition": "Phenotype-based organism count list and group by genus.",
+  "stanza:parameter": [
+    {
+      "stanza:key": "data-stanza-mpo-id",
+      "stanza:example": "MPO_01003",
+      "stanza:description": "Phenotype(MPO) identifier.",
+      "stanza:required": true
+    }
+  ],
+  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/microbial_phenotype_genus_composition\" data-stanza-mpo-id=\"MPO_01003\"></div>",
+  "stanza:type": "Stanza",
+  "stanza:context": "Phenotype",
+  "stanza:display": "Chart",
+  "stanza:provider": "DBCLS",
+  "stanza:license": "CC-BY",
+  "stanza:author": "Stanza Togo",
+  "stanza:address": "hoge@example.org",
+  "stanza:version": "1",
+  "stanza:created": "2015-09-30",
+  "stanza:updated": "2015-09-30"
+}

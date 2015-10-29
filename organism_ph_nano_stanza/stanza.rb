@@ -6,8 +6,8 @@ class OrganismPhNanoStanza < TogoStanza::Stanza::Base
       PREFIX tax: <http://identifiers.org/taxonomy/>
 
       SELECT DISTINCT ?min_ph ?opt_ph ?max_ph
-      FROM <http://togogenome.org/graph/mpo/>
-      FROM <http://togogenome.org/graph/gold/>
+      FROM <http://togogenome.org/graph/mpo>
+      FROM <http://togogenome.org/graph/gold>
       WHERE {
         OPTIONAL {
           tax:#{tax_id} mpo:MPO_10006 ?min_ph .

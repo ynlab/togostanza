@@ -1,23 +1,4 @@
 class OrganismPhenotypeStanza < TogoStanza::Stanza::Base
-  search :phenotype_items do |query|
-    query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
-      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      PREFIX up: <http://purl.uniprot.org/core/>
-      PREFIX idtax: <http://purl.uniprot.org/taxonomy/>
-
-      SELECT DISTINCT (REPLACE(STR(?tax_id),"http://identifiers.org/taxonomy/","") AS ?tax_id)
-      FROM <http://togogenome.org/graph/mpo/>
-      FROM <http://togogenome.org/graph/gold/>
-      WHERE {
-        ?tax_id ?p ?mpo_id .
-        ?mpo_id rdfs:label ?desc .
-        FILTER (lang(?desc) = "en")
-        #{text_search_filter(:desc, query)}
-        FILTER (regex(?tax_id, "identifiers.org"))
-      }
-    SPARQL
-  end
-
   property :phenotype_items do |tax_id|
     results = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -25,8 +6,8 @@ class OrganismPhenotypeStanza < TogoStanza::Stanza::Base
       PREFIX idtax: <http://purl.uniprot.org/taxonomy/>
 
       SELECT ?mpo ?phenotype (GROUP_CONCAT(?value; SEPARATOR = ", ") AS ?value)
-      FROM <http://togogenome.org/graph/mpo/>
-      FROM <http://togogenome.org/graph/gold/>
+      FROM <http://togogenome.org/graph/mpo>
+      FROM <http://togogenome.org/graph/gold>
       WHERE
       {
         idtax:#{tax_id} ?mpo ?o .

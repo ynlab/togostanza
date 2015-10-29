@@ -7,8 +7,8 @@ class OrganismMediumInformationStanza < TogoStanza::Stanza::Base
       PREFIX taxid: <http://identifiers.org/taxonomy/>
 
       SELECT DISTINCT ?medium_id ?medium_type_label ?medium_name
-      FROM <http://togogenome.org/graph/brc/>
-      FROM <http://togogenome.org/graph/gmo/>
+      FROM <http://togogenome.org/graph/brc>
+      FROM <http://togogenome.org/graph/gmo>
       WHERE
       {
         { SELECT DISTINCT ?medium
@@ -33,8 +33,8 @@ class OrganismMediumInformationStanza < TogoStanza::Stanza::Base
 
       SELECT ?medium_id ?classification (STR(?class_label) AS ?class_label)
         ?ingredient (STR(?ingredient_label) AS ?ingredient_label)
-      FROM <http://togogenome.org/graph/brc/>
-      FROM <http://togogenome.org/graph/gmo/>
+      FROM <http://togogenome.org/graph/brc>
+      FROM <http://togogenome.org/graph/gmo>
       WHERE
       {
         VALUES ?classification { gmo:GMO_000015 gmo:GMO_000016 gmo:GMO_000008 gmo:GMO_000009 }

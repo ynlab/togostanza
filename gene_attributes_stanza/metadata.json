@@ -1,0 +1,30 @@
+{
+  "@id": "http://togostanza.org/stanza/gene_attributes",
+  "stanza:label": "Gene attributes",
+  "stanza:definition": "Basic information of the specified gene.",
+  "stanza:parameter": [
+    {
+      "stanza:key": "data-stanza-gene-id",
+      "stanza:example": "b0015",
+      "stanza:description": "Gene identifier.",
+      "stanza:required": true
+    },
+    {
+      "stanza:key": "data-stanza-tax-id",
+      "stanza:example": "511145",
+      "stanza:description": "Taxonomy identifier.",
+      "stanza:required": true
+    }
+  ],
+  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/gene_attributes\" data-stanza-gene-id=\"b0015\" data-stanza-tax-id=\"511145\"></div>",
+  "stanza:type": "Stanza",
+  "stanza:context": "Gene",
+  "stanza:display": "Table",
+  "stanza:provider": "DBCLS",
+  "stanza:license": "CC-BY",
+  "stanza:author": "Stanza Togo",
+  "stanza:address": "hoge@example.org",
+  "stanza:version": "1",
+  "stanza:created": "2015-02-03",
+  "stanza:updated": "2015-09-30"
+}

@@ -115,9 +115,57 @@ PATH
       togostanza
 
 PATH
+  remote: ./gmo_applied_spices_stanza
+  specs:
+    gmo_applied_spices_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./gmo_approximation_stanza
+  specs:
+    gmo_approximation_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./gmo_genus_stanza
+  specs:
+    gmo_genus_stanza (0.0.1)
+      togostanza
+
+PATH
   remote: ./lineage_information_stanza
   specs:
     lineage_information_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./medium_components_stanza
+  specs:
+    medium_components_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./microbial_phenotype_cell_shape_stanza
+  specs:
+    microbial_phenotype_cell_shape_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./microbial_phenotype_environment_composition_stanza
+  specs:
+    microbial_phenotype_environment_composition_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./microbial_phenotype_genus_composition_stanza
+  specs:
+    microbial_phenotype_genus_composition_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./microbial_phenotype_information_stanza
+  specs:
+    microbial_phenotype_information_stanza (0.0.1)
       togostanza
 
 PATH
@@ -142,6 +190,12 @@ PATH
   remote: ./organism_gc_nano_stanza
   specs:
     organism_gc_nano_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./organism_gene_list_stanza
+  specs:
+    organism_gene_list_stanza (0.0.1)
       togostanza
 
 PATH
@@ -302,107 +356,102 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.2.0)
+    activesupport (4.2.4)
       i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    backports (3.6.4)
-    bio (1.4.3.0001)
+    backports (3.6.6)
+    bio (1.5.0)
     bio-svgenes (0.4.1)
-    capybara (2.4.3)
+    capybara (2.5.0)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
     diff-lcs (1.2.5)
-    ffi (1.9.6)
-    flavour_saver (0.3.3)
+    ffi (1.9.10)
+    flavour_saver (0.3.6)
       rltk (~> 2.2.0)
       tilt
-    haml (4.0.6)
+    haml (4.0.7)
       tilt
-    hashie (3.3.2)
-    hike (1.2.3)
+    hashie (3.4.3)
     i18n (0.7.0)
-    json (1.8.1)
-    kgio (2.9.2)
+    json (1.8.3)
+    kgio (2.10.0)
     link_header (0.0.8)
-    mime-types (2.3)
-    mina (0.3.0)
-      open4
+    mime-types (2.6.2)
+    mina (0.3.7)
+      open4 (~> 1.3.4)
       rake
-    mini_portile (0.6.0)
-    minitest (5.5.0)
-    multi_json (1.10.1)
+    mini_portile (0.6.2)
+    minitest (5.8.2)
+    multi_json (1.11.2)
     net-http-persistent (2.9.4)
-    nokogiri (1.6.3.1)
-      mini_portile (= 0.6.0)
+    nokogiri (1.6.6.2)
+      mini_portile (~> 0.6.0)
     open4 (1.3.4)
-    parallel (1.3.3)
-    rack (1.6.0)
+    parallel (1.6.1)
+    rack (1.6.4)
     rack-protection (1.5.3)
       rack
-    rack-test (0.6.2)
+    rack-test (0.6.3)
       rack (>= 1.0)
-    raindrops (0.13.0)
-    rake (10.3.2)
-    rdf (1.1.7)
+    raindrops (0.15.0)
+    rake (10.4.2)
+    rdf (1.1.17.1)
       link_header (~> 0.0, >= 0.0.8)
-    redcarpet (3.2.2)
     rltk (2.2.1)
       ffi (>= 1.0.0)
-    rspec (3.1.0)
-      rspec-core (~> 3.1.0)
-      rspec-expectations (~> 3.1.0)
-      rspec-mocks (~> 3.1.0)
-    rspec-core (3.1.4)
-      rspec-support (~> 3.1.0)
-    rspec-expectations (3.1.1)
+    rspec (3.3.0)
+      rspec-core (~> 3.3.0)
+      rspec-expectations (~> 3.3.0)
+      rspec-mocks (~> 3.3.0)
+    rspec-core (3.3.2)
+      rspec-support (~> 3.3.0)
+    rspec-expectations (3.3.1)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.1.0)
-    rspec-mocks (3.1.1)
-      rspec-support (~> 3.1.0)
-    rspec-support (3.1.0)
-    sinatra (1.4.5)
+      rspec-support (~> 3.3.0)
+    rspec-mocks (3.3.2)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.3.0)
+    rspec-support (3.3.0)
+    sinatra (1.4.6)
       rack (~> 1.4)
       rack-protection (~> 1.4)
-      tilt (~> 1.3, >= 1.3.4)
-    sinatra-contrib (1.4.2)
+      tilt (>= 1.3, < 3)
+    sinatra-contrib (1.4.6)
       backports (>= 2.0)
       multi_json
       rack-protection
       rack-test
       sinatra (~> 1.4.0)
-      tilt (~> 1.3)
-    sparql-client (1.1.3.1)
+      tilt (>= 1.3, < 3)
+    sparql-client (1.1.6)
       net-http-persistent (~> 2.9)
       rdf (~> 1.1)
-    sprockets (2.12.3)
-      hike (~> 1.2)
-      multi_json (~> 1.0)
-      rack (~> 1.0)
-      tilt (~> 1.1, != 1.3.0)
+    sprockets (3.4.0)
+      rack (> 1, < 3)
     thor (0.19.1)
-    thread_safe (0.3.4)
-    tilt (1.4.1)
-    togostanza (1.2.2)
-      activesupport
-      flavour_saver
-      haml
-      hashie
-      parallel
-      redcarpet
-      sinatra
-      sinatra-contrib
-      sparql-client
-      sprockets
-      thor
+    thread_safe (0.3.5)
+    tilt (2.0.1)
+    togostanza (1.4.1)
+      activesupport (~> 4.2)
+      flavour_saver (~> 0.3)
+      haml (~> 4.0)
+      hashie (~> 3.4)
+      parallel (~> 1.6)
+      sinatra (~> 1.4)
+      sinatra-contrib (~> 1.4)
+      sparql-client (~> 1.1)
+      sprockets (~> 3.4)
+      thor (~> 0.19)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    unicorn (4.8.3)
+    unicorn (4.9.0)
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
@@ -433,12 +482,21 @@ DEPENDENCIES
   genome_information_stanza!
   genome_jbrowse_stanza!
   genome_plot_stanza!
+  gmo_applied_spices_stanza!
+  gmo_approximation_stanza!
+  gmo_genus_stanza!
   lineage_information_stanza!
+  medium_components_stanza!
+  microbial_phenotype_cell_shape_stanza!
+  microbial_phenotype_environment_composition_stanza!
+  microbial_phenotype_genus_composition_stanza!
+  microbial_phenotype_information_stanza!
   mina
   nucleotide_sequence_stanza!
   organism_cross_references_stanza!
   organism_culture_collections_stanza!
   organism_gc_nano_stanza!
+  organism_gene_list_stanza!
   organism_gene_number_nano_stanza!
   organism_genome_size_nano_stanza!
   organism_habitat_stanza!
@@ -469,3 +527,6 @@ DEPENDENCIES
   togostanza
   unicorn
   variation_stanza!
+
+BUNDLED WITH
+   1.10.6

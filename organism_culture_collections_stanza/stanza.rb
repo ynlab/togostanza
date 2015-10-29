@@ -8,9 +8,9 @@ class OrganismCultureCollectionsStanza < TogoStanza::Stanza::Base
         ?isolation ((sql:GROUP_DIGEST(?env, '||', 1000, 1)) AS ?env_links)
         ?type_strain_label ?application
         ((sql:GROUP_DIGEST(?other_link, ', ', 1000, 1)) AS ?other_collections)
-      FROM <http://togogenome.org/graph/taxonomy/>
-      FROM <http://togogenome.org/graph/brc/>
-      FROM <http://togogenome.org/graph/meo/>
+      FROM <http://togogenome.org/graph/taxonomy>
+      FROM <http://togogenome.org/graph/brc>
+      FROM <http://togogenome.org/graph/meo>
       WHERE
       {
         { SELECT DISTINCT ?strain_id

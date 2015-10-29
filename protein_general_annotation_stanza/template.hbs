@@ -14,21 +14,27 @@
   </head>
 
   <body>
-    <table class='table'>
-      <tbody>
-        {{#each general_annotations}}
-          <tr>
-            <th class='span4'>{{name}}</th>
-            <td class='span8'>
-              <ul>
-                {{#each messages}}
-                  <li>{{this}}</li>
-                {{/each}}
-              </ul>
-            </td>
-          </tr>
-        {{/each}}
-      </tbody>
-    </table>
+    {{#if general_annotations}}
+      <table class='table'>
+        <tbody>
+          {{#each general_annotations}}
+            <tr>
+              <th class='span4'>{{name}}</th>
+              <td class='span8'>
+                <ul>
+                  {{#each messages}}
+                    <li>{{this}}</li>
+                  {{/each}}
+                </ul>
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    {{else}}
+      <div>
+        No data
+      </div>
+    {{/if}}
   </body>
 </html>

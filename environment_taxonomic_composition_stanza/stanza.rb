@@ -8,13 +8,13 @@ class EnvironmentTaxonomicCompositionStanza < TogoStanza::Stanza::Base
       DEFINE sql:select-option "order"
       PREFIX mccv: <http://purl.jp/bio/01/mccv#>
       PREFIX meo: <http://purl.jp/bio/11/meo/>
-      PREFIX taxo: <http://ddbj.nig.ac.jp/ontologies/taxonomy#>
+      PREFIX tax: <http://ddbj.nig.ac.jp/ontologies/taxonomy/>
       PREFIX taxid: <http://identifiers.org/taxonomy/>
 
       SELECT ?tax (?organism_name AS ?tax_label) ?parent ?rank
-      FROM <http://togogenome.org/graph/meo/>
-      FROM <http://togogenome.org/graph/gold/>
-      FROM <http://togogenome.org/graph/taxonomy/>
+      FROM <http://togogenome.org/graph/meo>
+      FROM <http://togogenome.org/graph/gold>
+      FROM <http://togogenome.org/graph/taxonomy>
       WHERE
       {
         {
@@ -27,9 +27,9 @@ class EnvironmentTaxonomicCompositionStanza < TogoStanza::Stanza::Base
             ?hit_tax rdfs:subClassOf* ?tax .
           } GROUP BY ?tax
         }
-        ?tax taxo:scientificName ?organism_name .
+        ?tax tax:scientificName ?organism_name .
         OPTIONAL { ?tax rdfs:subClassOf ?parent . }
-        OPTIONAL { ?tax taxo:rank ?rank . }
+        OPTIONAL { ?tax tax:rank ?rank . }
       }
     SPARQL
 

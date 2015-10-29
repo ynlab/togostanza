@@ -103,6 +103,12 @@
           {{/if}}
         </tbody>
       </table>
+    {{else}}
+      {{#unless summary}}
+        <div>
+          No data
+        </div>
+      {{/unless}}
     {{/if}}
 
     {{#if gene_ontlogies}}

@@ -6,9 +6,9 @@ class EnvironmentInhabitantsStatisticsStanza < TogoStanza::Stanza::Base
       PREFIX meo: <http://purl.jp/bio/11/meo/>
 
       SELECT ?type ?cnt
-      FROM <http://togogenome.org/graph/gold/>
-      FROM <http://togogenome.org/graph/meo/>
-      FROM <http://togogenome.org/graph/brc/>
+      FROM <http://togogenome.org/graph/gold>
+      FROM <http://togogenome.org/graph/meo>
+      FROM <http://togogenome.org/graph/brc>
       WHERE
       {
         {
