@@ -8,24 +8,22 @@ class TaxonomyOrthologProfileStanza < TogoStanza::Stanza::Base
   end
 
   resource :taxonomy_ortholog_profile do |tax_id|
-#   Uses temporary endpoint due to maintenance
-#   ortholog_uris = query("http://sparql.nibb.ac.jp/sparql", <<-SPARQL.strip_heredoc)
-    ortholog_uris = query("http://mbgd.genome.ad.jp:8047/sparql", <<-SPARQL.strip_heredoc)
+    ortholog_uris = query("http://sparql.nibb.ac.jp/sparql", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      PREFIX mbgd: <http://mbgd.genome.ad.jp/owl/mbgd.owl#>
-      PREFIX orth: <http://mbgd.genome.ad.jp/owl/ortholog.owl#>
-      PREFIX uniprotCore: <http://purl.uniprot.org/core/>
+      PREFIX mbgd: <http://purl.jp/bio/11/mbgd#>
+      PREFIX orth: <http://purl.jp/bio/11/orth#>
+      PREFIX dct: <http://purl.org/dc/terms/>
       PREFIX taxon: <http://purl.uniprot.org/taxonomy/>
 
       SELECT ?group ?comment (COUNT(?member) AS ?count)
       WHERE {
         ?tax rdfs:subClassOf* taxon:#{tax_id} .
-        ?organism uniprotCore:organism ?tax .
-        ?member mbgd:organism ?organism .
+        ?organism orth:taxon ?tax .
+        ?member orth:organism ?organism .
         ?group orth:member ?member ;
-          mbgd:description ?comment ;
-          a mbgd:Cluster, mbgd:Default .
+          dct:description ?comment ;
+          a orth:OrthologGroup .
       } ORDER BY DESC (?count) limit 10
     SPARQL
   end
