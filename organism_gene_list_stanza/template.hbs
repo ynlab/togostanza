@@ -81,7 +81,7 @@ $(document).ready(function()
     </thead>
     <tbody>
     {{#each organism_gene_list}}
-      <tr class="hl_tr"><td class="left"><a href="http://bio.tky.esm.co.jp/gene/{{gene_id}}">{{gene_name}}</a></td><td class="left limit300">{{attr}}</td><td class="left limit100">{{ec}}</td><td>{{citation}}</td><td class="left limit200">{{#if reactome}}<ul class="ul_none">{{#each reactome}}<li>{{this}}</li>{{/each}}</ul>{{/if}}</td><td class="left">{{seq}}</td><td>{{begin}}</td></tr>
+      <tr class="hl_tr"><td class="left"><a href="{{gene}}">{{gene_name}}</a></td><td class="left limit300">{{attr}}</td><td class="left limit100">{{ec}}</td><td>{{citation}}</td><td class="left limit200">{{#if reactome}}<ul class="ul_none">{{#each reactome}}<li>{{this}}</li>{{/each}}</ul>{{/if}}</td><td class="left">{{seq}}</td><td>{{begin}}</td></tr>
     {{/each}}
     </tbody>
     </table>
