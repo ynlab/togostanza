@@ -524,7 +524,7 @@ DEPENDENCIES
   rake
   rspec
   taxonomy_ortholog_profile_stanza!
-  togostanza
+  togostanza (~> 2.0)
   unicorn
   variation_stanza!
 
