@@ -1,24 +1,23 @@
 {
-  "@id": "http://togostanza.org/stanza/environment_inhabitants_statistics",
-  "stanza:label": "Inhabitants statistics",
-  "stanza:definition": "Number of samples and cultures which were sampled in specified environment.",
-  "stanza:parameter": [
+  "id": "environment_inhabitants_statistics",
+  "label": "Inhabitants statistics",
+  "definition": "Number of samples and cultures which were sampled in specified environment.",
+  "parameter": [
     {
-      "stanza:key": "data-stanza-meo-id",
-      "stanza:example": "MEO_0000029",
-      "stanza:description": "MEO identifier.",
-      "stanza:required": true
+      "key": "data-stanza-meo-id",
+      "example": "MEO_0000029",
+      "description": "MEO identifier.",
+      "required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/environment_inhabitants_statistics\" data-stanza-meo-id=\"MEO_0000029\"></div>",
-  "stanza:type": "Stanza",
-  "stanza:context": "Environment",
-  "stanza:display": "Table",
-  "stanza:provider": "DBCLS",
-  "stanza:license": "CC-BY",
-  "stanza:author": "Stanza Togo",
-  "stanza:address": "hoge@example.org",
-  "stanza:version": "1",
-  "stanza:created": "2015-02-03",
-  "stanza:updated": "2015-09-30"
+  "type": "Stanza",
+  "context": "Environment",
+  "display": "Table",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-02-03",
+  "updated": "2015-09-30"
 }

@@ -1,24 +1,23 @@
 {
-  "@id": "http://togostanza.org/stanza/microbial_phenotype_environment_composition",
-  "stanza:label": "Environment List (Phenotype-based)",
-  "stanza:definition": "Phenotype-based organism count list and group by environment.",
-  "stanza:parameter": [
+  "id": "microbial_phenotype_environment_composition",
+  "label": "Environment List (Phenotype-based)",
+  "definition": "Phenotype-based organism count list and group by environment.",
+  "parameter": [
     {
-      "stanza:key": "data-stanza-mpo-id",
-      "stanza:example": "MPO_01003",
-      "stanza:description": "Phenotype(MPO) identifier.",
-      "stanza:required": true
+      "key": "data-stanza-mpo-id",
+      "example": "MPO_01003",
+      "description": "Phenotype(MPO) identifier.",
+      "required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/microbial_phenotype_environment_composition\" data-stanza-mpo-id=\"MPO_01003\"></div>",
-  "stanza:type": "Stanza",
-  "stanza:context": "Phenotype",
-  "stanza:display": "Chart",
-  "stanza:provider": "DBCLS",
-  "stanza:license": "CC-BY",
-  "stanza:author": "Stanza Togo",
-  "stanza:address": "hoge@example.org",
-  "stanza:version": "1",
-  "stanza:created": "2015-09-30",
-  "stanza:updated": "2015-09-30"
+  "type": "Stanza",
+  "context": "Phenotype",
+  "display": "Chart",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-09-30",
+  "updated": "2015-09-30"
 }

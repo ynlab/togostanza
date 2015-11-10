@@ -1,24 +1,23 @@
 {
-  "@id": "http://togostanza.org/stanza/organism_gene_number_nano",
-  "stanza:label": "Gene number",
-  "stanza:definition": "NanoStanza for showing the number of gene, rrna and trna of a specified organism.",
-  "stanza:parameter": [
+  "id": "organism_gene_number_nano",
+  "label": "Gene number",
+  "definition": "NanoStanza for showing the number of gene, rrna and trna of a specified organism.",
+  "parameter": [
     {
-      "stanza:key": "data-stanza-tax-id",
-      "stanza:example": "103690",
-      "stanza:description": "Taxonomy identifier.",
-      "stanza:required": true
+      "key": "data-stanza-tax-id",
+      "example": "103690",
+      "description": "Taxonomy identifier.",
+      "required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/organism_gene_number_nano\" data-stanza-tax-id=\"103690\"></div>",
-  "stanza:type": "NanoStanza",
-  "stanza:context": "Organism",
-  "stanza:display": "Table",
-  "stanza:provider": "DBCLS",
-  "stanza:license": "CC-BY",
-  "stanza:author": "Stanza Togo",
-  "stanza:address": "hoge@example.org",
-  "stanza:version": "1",
-  "stanza:created": "2015-02-03",
-  "stanza:updated": "2015-09-30"
+  "type": "NanoStanza",
+  "context": "Organism",
+  "display": "Table",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-02-03",
+  "updated": "2015-09-30"
 }

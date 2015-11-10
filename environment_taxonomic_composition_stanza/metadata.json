@@ -1,24 +1,23 @@
 {
-  "@id": "http://togostanza.org/stanza/environment_taxonomic_composition",
-  "stanza:label": "Taxonomic composition",
-  "stanza:definition": "Visualization of the kind of organism which lives in specified environment.",
-  "stanza:parameter": [
+  "id": "environment_taxonomic_composition",
+  "label": "Taxonomic composition",
+  "definition": "Visualization of the kind of organism which lives in specified environment.",
+  "parameter": [
     {
-      "stanza:key": "data-stanza-meo-id",
-      "stanza:example": "MEO_0000029",
-      "stanza:description": "MEO identifier.",
-      "stanza:required": true
+      "key": "data-stanza-meo-id",
+      "example": "MEO_0000029",
+      "description": "MEO identifier.",
+      "required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/environment_taxonomic_composition\" data-stanza-meo-id=\"MEO_0000029\"></div>",
-  "stanza:type": "Stanza",
-  "stanza:context": "Environment",
-  "stanza:display": "Chart",
-  "stanza:provider": "DBCLS",
-  "stanza:license": "CC-BY",
-  "stanza:author": "Stanza Togo",
-  "stanza:address": "hoge@example.org",
-  "stanza:version": "1",
-  "stanza:created": "2015-02-03",
-  "stanza:updated": "2015-09-30"
+  "type": "Stanza",
+  "context": "Environment",
+  "display": "Chart",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-02-03",
+  "updated": "2015-09-30"
 }

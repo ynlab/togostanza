@@ -1,24 +1,23 @@
 {
-  "@id": "http://togostanza.org/stanza/environment_organism_distribution_on_temperature_nano",
-  "stanza:label": "Growth temperature distribution",
-  "stanza:definition": "NanoStanza for showing the number of Psychrophiles, Mesophiles and Thermophiles with the specified environmental feature.",
-  "stanza:parameter": [
+  "id": "environment_organism_distribution_on_temperature_nano",
+  "label": "Growth temperature distribution",
+  "definition": "NanoStanza for showing the number of Psychrophiles, Mesophiles and Thermophiles with the specified environmental feature.",
+  "parameter": [
     {
-      "stanza:key": "data-stanza-meo-id",
-      "stanza:example": "MEO_0000005",
-      "stanza:description": "MEO identifier",
-      "stanza:required": true
+      "key": "data-stanza-meo-id",
+      "example": "MEO_0000005",
+      "description": "MEO identifier",
+      "required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/environment_organism_distribution_on_temperature_nano\" data-stanza-meo-id=\"MEO_0000005\"></div>",
-  "stanza:type": "NanoStanza",
-  "stanza:context": "Environment",
-  "stanza:display": "Chart",
-  "stanza:provider": "DBCLS",
-  "stanza:license": "CC-BY",
-  "stanza:author": "Stanza Togo",
-  "stanza:address": "hoge@example.org",
-  "stanza:version": "1",
-  "stanza:created": "2015-02-03",
-  "stanza:updated": "2015-09-30"
+  "type": "NanoStanza",
+  "context": "Environment",
+  "display": "Chart",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-02-03",
+  "updated": "2015-09-30"
 }

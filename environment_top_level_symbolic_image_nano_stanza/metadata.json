@@ -1,24 +1,23 @@
 {
-  "@id": "http://togostanza.org/stanza/environment_top_level_symbolic_image_nano",
-  "stanza:label": "Environmental image",
-  "stanza:definition": "NanoStanza for showing an symbolic image for the MEO's toplevel category related to the given MEO ID.",
-  "stanza:parameter": [
+  "id": "environment_top_level_symbolic_image_nano",
+  "label": "Environmental image",
+  "definition": "NanoStanza for showing an symbolic image for the MEO's toplevel category related to the given MEO ID.",
+  "parameter": [
     {
-      "stanza:key": "data-stanza-meo-id",
-      "stanza:example": "MEO_0000039",
-      "stanza:description": "MEO identifier.",
-      "stanza:required": true
+      "key": "data-stanza-meo-id",
+      "example": "MEO_0000039",
+      "description": "MEO identifier.",
+      "required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/environment_top_level_symbolic_image_nano\" data-stanza-meo-id=\"MEO_0000039\"></div>",
-  "stanza:type": "NanoStanza",
-  "stanza:context": "Environment",
-  "stanza:display": "Image",
-  "stanza:provider": "DBCLS",
-  "stanza:license": "CC-BY",
-  "stanza:author": "Stanza Togo",
-  "stanza:address": "hoge@example.org",
-  "stanza:version": "1",
-  "stanza:created": "2015-02-03",
-  "stanza:updated": "2015-09-30"
+  "type": "NanoStanza",
+  "context": "Environment",
+  "display": "Image",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-02-03",
+  "updated": "2015-09-30"
 }

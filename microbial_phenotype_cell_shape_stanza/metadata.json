@@ -1,24 +1,23 @@
 {
-  "@id": "http://togostanza.org/stanza/microbial_phenotype_cell_shape",
-  "stanza:label": "Shape Information",
-  "stanza:definition": "phenotype's (with shaped, arrengement) visualizetion.",
-  "stanza:parameter": [
+  "id": "microbial_phenotype_cell_shape",
+  "label": "Shape Information",
+  "definition": "phenotype's (with shaped, arrengement) visualizetion.",
+  "parameter": [
     {
-      "stanza:key": "data-stanza-mpo-id",
-      "stanza:example": "MPO_01003",
-      "stanza:description": "Phenotype(MPO) identifier.",
-      "stanza:required": true
+      "key": "data-stanza-mpo-id",
+      "example": "MPO_01003",
+      "description": "Phenotype(MPO) identifier.",
+      "required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/microbial_phenotype_cell_shape\" data-stanza-mpo-id=\"MPO_01003\"></div>",
-  "stanza:type": "Stanza",
-  "stanza:context": "Phenotype",
-  "stanza:display": "Image",
-  "stanza:provider": "DBCLS",
-  "stanza:license": "CC-BY",
-  "stanza:author": "Stanza Togo",
-  "stanza:address": "hoge@example.org",
-  "stanza:version": "1",
-  "stanza:created": "2015-09-30",
-  "stanza:updated": "2015-09-30"
+  "type": "Stanza",
+  "context": "Phenotype",
+  "display": "Image",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-09-30",
+  "updated": "2015-09-30"
 }

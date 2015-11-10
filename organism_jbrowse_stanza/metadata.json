@@ -1,24 +1,23 @@
 {
-  "@id": "http://togostanza.org/stanza/organism_jbrowse",
-  "stanza:label": "Genomic context",
-  "stanza:definition": "Schematic view of the genome of the specified organism.",
-  "stanza:parameter": [
+  "id": "organism_jbrowse",
+  "label": "Genomic context",
+  "definition": "Schematic view of the genome of the specified organism.",
+  "parameter": [
     {
-      "stanza:key": "data-stanza-tax-id",
-      "stanza:example": "1148",
-      "stanza:description": "Taxonomy identifier",
-      "stanza:required": true
+      "key": "data-stanza-tax-id",
+      "example": "1148",
+      "description": "Taxonomy identifier",
+      "required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/organism_jbrowse\" data-stanza-tax-id=\"1148\"></div>",
-  "stanza:type": "Stanza",
-  "stanza:context": "Organism",
-  "stanza:display": "Other",
-  "stanza:provider": "DBCLS",
-  "stanza:license": "CC-BY",
-  "stanza:author": "Stanza Togo",
-  "stanza:address": "hoge@example.org",
-  "stanza:version": "1",
-  "stanza:created": "2015-02-03",
-  "stanza:updated": "2015-09-30"
+  "type": "Stanza",
+  "context": "Organism",
+  "display": "Other",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-02-03",
+  "updated": "2015-09-30"
 }

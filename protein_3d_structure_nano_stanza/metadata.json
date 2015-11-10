@@ -1,30 +1,29 @@
 {
-  "@id": "http://togostanza.org/stanza/protein_3d_structure_nano",
-  "stanza:label": "Protein 3D structure",
-  "stanza:definition": "NanoStanza for showing a schematic mage of protein 3D structure of specifined genes.",
-  "stanza:parameter": [
+  "id": "protein_3d_structure_nano",
+  "label": "Protein 3D structure",
+  "definition": "NanoStanza for showing a schematic mage of protein 3D structure of specifined genes.",
+  "parameter": [
     {
-      "stanza:key": "data-stanza-tax-id",
-      "stanza:example": "103690",
-      "stanza:description": "Taxonomy identifier .",
-      "stanza:required": true
+      "key": "data-stanza-tax-id",
+      "example": "103690",
+      "description": "Taxonomy identifier .",
+      "required": true
     },
     {
-      "stanza:key": "data-stanza-gene-id",
-      "stanza:example": "alr3421",
-      "stanza:description": "Gene identifier .",
-      "stanza:required": true
+      "key": "data-stanza-gene-id",
+      "example": "alr3421",
+      "description": "Gene identifier .",
+      "required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/protein_3d_structure_nano\" data-stanza-tax-id=\"103690\" data-stanza-gene-id=\"alr3421\"></div>",
-  "stanza:type": "NanoStanza",
-  "stanza:context": "Phenotype",
-  "stanza:display": "Image",
-  "stanza:provider": "DBCLS",
-  "stanza:license": "CC-BY",
-  "stanza:author": "Stanza Togo",
-  "stanza:address": "hoge@example.org",
-  "stanza:version": "1",
-  "stanza:created": "2015-02-03",
-  "stanza:updated": "2015-09-30"
+  "type": "NanoStanza",
+  "context": "Phenotype",
+  "display": "Image",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-02-03",
+  "updated": "2015-09-30"
 }

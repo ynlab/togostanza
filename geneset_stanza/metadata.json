@@ -1,24 +1,23 @@
 {
-  "@id": "http://togostanza.org/stanza/geneset",
-  "stanza:label": "Geneset",
-  "stanza:definition": "A stanza for genesets.",
-  "stanza:parameter": [
+  "id": "geneset",
+  "label": "Geneset",
+  "definition": "A stanza for genesets.",
+  "parameter": [
     {
-      "stanza:key": "uri",
-      "stanza:example": "",
-      "stanza:description": "A page uri of MicrobeBase GeneView",
-      "stanza:required": false
+      "key": "uri",
+      "example": "",
+      "description": "A page uri of MicrobeBase GeneView",
+      "required": false
     }
   ],
-  "stanza:usage": "",
-  "stanza:type": "Stanza",
-  "stanza:context": "Other",
-  "stanza:display": "Other",
-  "stanza:provider": "DBCLS",
-  "stanza:license": "CC-BY",
-  "stanza:author": "Stanza Togo",
-  "stanza:address": "hoge@example.org",
-  "stanza:version": "1",
-  "stanza:created": "2015-02-03",
-  "stanza:updated": "2015-02-03"
+  "type": "Stanza",
+  "context": "Other",
+  "display": "Other",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-02-03",
+  "updated": "2015-02-03"
 }
