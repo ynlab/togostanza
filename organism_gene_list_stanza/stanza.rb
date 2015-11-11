@@ -2,23 +2,25 @@ class OrganismGeneListStanza < TogoStanza::Stanza::Base
   property :organism_gene_list do |tax_id|
 
     endpoint = "http://togogenome.org/sparql"
-    end_reactome = "http://www.ebi.ac.uk/rdf/services/reactome/sparql"
+    #end_reactome = "http://www.ebi.ac.uk/rdf/services/reactome/sparql"
+    end_reactome = "http://ep.dbcls.jp/sparql71ebi"
 
     ### gene - gene name, position, etc.
     result = query(endpoint, <<-SPARQL.strip_heredoc)
-      PREFIX insdc: <http://ddbj.nig.ac.jp/ontologies/nucleotide/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       PREFIX faldo: <http://biohackathon.org/resource/faldo#>
-      SELECT ?gene ?gene_id ?gene_name (REPLACE( STR(?gene_id), ":.+$", "") AS ?seq) ?begin
-      FROM <http://togogenome.org/graph/tgup>
-      FROM <http://togogenome.org/graph/refseq>
+      PREFIX obo: <http://purl.obolibrary.org/obo/>
+      SELECT ?gene ?gene_name REPLACE (REPLACE( STR(?sequence), "#sequence$", ""), "http://identifiers.org/refseq/", "") AS ?seq ?begin
       WHERE {
-        ?gene rdfs:seeAlso <http://identifiers.org/taxonomy/#{tax_id}> ;
-              skos:exactMatch ?refseq_gene .
-        ?refseq_gene a insdc:Gene ;
-                     rdfs:label ?gene_name ;
-                     faldo:location/faldo:begin/faldo:position ?begin .
-        BIND (REPLACE( STR(?gene), "http://togogenome.org/gene/", "") AS ?gene_id)
+          GRAPH <http://togogenome.org/graph/tgup> {
+              ?gene rdfs:seeAlso <http://identifiers.org/taxonomy/#{tax_id}> ;
+                  skos:exactMatch ?refseq_gene .
+          }
+          GRAPH <http://togogenome.org/graph/refseq> {
+              ?refseq_gene rdfs:label ?gene_name ;
+                  obo:so_part_of ?sequence ;
+                  faldo:location/faldo:begin/faldo:position ?begin .
+          }
       }
       ORDER BY ?seq ?begin
     SPARQL
@@ -31,13 +33,14 @@ class OrganismGeneListStanza < TogoStanza::Stanza::Base
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       PREFIX faldo: <http://biohackathon.org/resource/faldo#>
       SELECT ?gene
-      FROM <http://togogenome.org/graph/tgup>
-      FROM <http://togogenome.org/graph/refseq>
       WHERE {
-        ?gene rdfs:seeAlso <http://identifiers.org/taxonomy/#{tax_id}> ;
-              skos:exactMatch ?refseq_gene .
-        ?refseq_gene a insdc:Gene ;
-                     insdc:pseudo true .
+          GRAPH <http://togogenome.org/graph/tgup> {
+              ?gene rdfs:seeAlso <http://identifiers.org/taxonomy/#{tax_id}> ;
+                  skos:exactMatch ?refseq_gene .
+          }
+          GRAPH <http://togogenome.org/graph/refseq> {
+              ?refseq_gene insdc:pseudo true .
+          }
       }
     SPARQL
 
@@ -52,16 +55,18 @@ class OrganismGeneListStanza < TogoStanza::Stanza::Base
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       PREFIX obo: <http://purl.obolibrary.org/obo/>
       SELECT ?gene ?product
-      FROM <http://togogenome.org/graph/tgup>
-      FROM <http://togogenome.org/graph/refseq>
-      FROM <http://togogenome.org/graph/uniprot>
       WHERE {
-        ?gene rdfs:seeAlso <http://identifiers.org/taxonomy/#{tax_id}> ;
-              skos:exactMatch ?refseq_gene .
-        ?rna obo:so_part_of ?refseq_gene .
-        FILTER( REGEX(?rna, "tRNA") || REGEX(?rna, "ncRNA"))
-        ?rna insdc:product ?product .
-        FILTER(! REGEX(?product, "uncharacterized", "i"))
+          GRAPH <http://togogenome.org/graph/tgup> {
+              ?gene rdfs:seeAlso <http://identifiers.org/taxonomy/#{tax_id}> ;
+                  skos:exactMatch ?refseq_gene .
+          }
+          GRAPH <http://togogenome.org/graph/refseq> {
+              ?rna obo:so_part_of ?refseq_gene ;
+                  a ?type .
+              FILTER (?type IN (insdc:Non_Coding_RNA, insdc:Transfer_RNA))
+              ?rna insdc:product ?product .
+              FILTER(! REGEX(?product, "uncharacterized", "i"))
+          }
       }
     SPARQL
 
@@ -75,13 +80,16 @@ class OrganismGeneListStanza < TogoStanza::Stanza::Base
     gene_citation = query(endpoint, <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
       SELECT ?gene (COUNT(DISTINCT ?cite) AS ?citation)
-      FROM <http://togogenome.org/graph/tgup>
-      FROM <http://togogenome.org/graph/uniprot>
       WHERE {
-        ?gene rdfs:seeAlso <http://identifiers.org/taxonomy/#{tax_id}> .
-        FILTER( REGEX(?gene, "http://togogenome.org/gene/"))
-        ?gene rdfs:seeAlso/rdfs:seeAlso/up:citation ?cite .
-        ?cite a up:Journal_Citation .
+          GRAPH <http://togogenome.org/graph/tgup>  {
+              ?gene rdfs:seeAlso <http://identifiers.org/taxonomy/#{tax_id}> .
+              ?gene skos:exactMatch ?refseq_gene .
+              ?gene rdfs:seeAlso/rdfs:seeAlso ?uniprot .
+          }
+          GRAPH <http://togogenome.org/graph/uniprot> {
+              ?uniprot up:citation ?cite .
+              ?cite a up:Journal_Citation .
+          }
       }
     SPARQL
 
@@ -103,13 +111,14 @@ class OrganismGeneListStanza < TogoStanza::Stanza::Base
     reactome = query(end_reactome, <<-SPARQL.strip_heredoc)
       PREFIX bpx: <http://www.biopax.org/release/biopax-level3.owl#>
       SELECT DISTINCT (REPLACE( STR(?reactome), "http://identifiers.org/reactome/", "") AS ?reactome_id) ?parent_name
-      FROM <#{graph}>
       WHERE {
-        ?reactome a bpx:Pathway .
-        ?parent bpx:pathwayComponent+ ?reactome .
-        OPTIONAL { ?root bpx:pathwayComponent ?parent . }
-        FILTER(! REGEX(?root, "reactome"))
-        ?parent  bpx:displayName ?parent_name .
+        GRAPH <#{graph}> {
+            ?reactome a bpx:Pathway .
+            ?parent bpx:pathwayComponent+ ?reactome .
+            OPTIONAL { ?root bpx:pathwayComponent ?parent . }
+            FILTER(! REGEX(?root, "reactome"))
+            ?parent  bpx:displayName ?parent_name .
+        }
       }
     SPARQL
 
@@ -123,14 +132,18 @@ class OrganismGeneListStanza < TogoStanza::Stanza::Base
     # gene - reactome_id
     gene_reactome = query(endpoint, <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
+      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       SELECT ?gene (REPLACE( STR(?reactome), "http://purl.uniprot.org/reactome/", "") AS ?reactome_id)
-      FROM <http://togogenome.org/graph/tgup>
-      FROM <http://togogenome.org/graph/uniprot>
       WHERE {
-        ?gene rdfs:seeAlso <http://identifiers.org/taxonomy/#{tax_id}> .
-        FILTER( REGEX(?gene, "http://togogenome.org/gene/"))
-        ?gene rdfs:seeAlso/rdfs:seeAlso/rdfs:seeAlso ?reactome .
-        ?reactome up:database <http://purl.uniprot.org/database/Reactome> .
+          GRAPH <http://togogenome.org/graph/tgup> {
+              ?gene rdfs:seeAlso <http://identifiers.org/taxonomy/#{tax_id}> ;
+                  skos:exactMatch ?refseq_gene ;
+                  rdfs:seeAlso/rdfs:seeAlso ?uniprot .
+          }
+          GRAPH <http://togogenome.org/graph/uniprot> {
+              ?uniprot rdfs:seeAlso ?reactome .
+              ?reactome up:database <http://purl.uniprot.org/database/Reactome> .
+          }
       }
     SPARQL
 
@@ -145,18 +158,19 @@ class OrganismGeneListStanza < TogoStanza::Stanza::Base
     ### gene - protein name, ec
     gene_protein = query(endpoint, <<-SPARQL.strip_heredoc)
       PREFIX up: <http://purl.uniprot.org/core/>
+      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       SELECT DISTINCT ?gene ?protein_name ?ec_name
-      FROM <http://togogenome.org/graph/tgup>
-      FROM <http://togogenome.org/graph/uniprot>
       WHERE {
-        ?gene rdfs:seeAlso <http://identifiers.org/taxonomy/#{tax_id}> .
-         FILTER( REGEX(?gene, "http://togogenome.org/gene/"))
-        ?gene rdfs:seeAlso/rdfs:seeAlso ?protein .
-        ?protein a up:Protein ;
-                 up:recommendedName ?recommended_name_node .
-        ?recommended_name_node up:fullName ?protein_name .
-
-        OPTIONAL { ?recommended_name_node up:ecName ?ec_name . }
+          GRAPH <http://togogenome.org/graph/tgup> {
+              ?gene rdfs:seeAlso <http://identifiers.org/taxonomy/#{tax_id}> ;
+                  skos:exactMatch ?refseq_gene ;
+                  rdfs:seeAlso/rdfs:seeAlso ?uniprot .
+          }
+          GRAPH <http://togogenome.org/graph/uniprot> {
+              ?uniprot up:recommendedName ?recommended_name_node .
+              ?recommended_name_node up:fullName ?protein_name .
+              OPTIONAL { ?recommended_name_node up:ecName ?ec_name . }
+          }
       }
     SPARQL
 
