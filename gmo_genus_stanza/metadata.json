@@ -1,24 +1,23 @@
 {
-  "@id": "http://togostanza.org/stanza/gmo_genus",
-  "stanza:label": "Genus List (Medium-based)",
-  "stanza:definition": "Medium-based organism count list and group by genus.",
-  "stanza:parameter": [
+  "id": "gmo_genus",
+  "label": "Genus List (Medium-based)",
+  "definition": "Medium-based organism count list and group by genus.",
+  "parameter": [
     {
-      "stanza:key": "data-stanza-medium-id",
-      "stanza:example": "NBRC_M231",
-      "stanza:description": "Medium identifier.",
-      "stanza:required": true
+      "key": "data-stanza-medium-id",
+      "example": "NBRC_M231",
+      "description": "Medium identifier.",
+      "required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/gmo_genus\" data-stanza-medium-id=\"NBRC_M231\"></div>",
-  "stanza:type": "Stanza",
-  "stanza:context": "Medium",
-  "stanza:display": "Chart",
-  "stanza:provider": "DBCLS",
-  "stanza:license": "CC-BY",
-  "stanza:author": "Stanza Togo",
-  "stanza:address": "hoge@example.org",
-  "stanza:version": "1",
-  "stanza:created": "2015-09-30",
-  "stanza:updated": "2015-09-30"
+  "type": "Stanza",
+  "context": "Medium",
+  "display": "Chart",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-09-30",
+  "updated": "2015-09-30"
 }

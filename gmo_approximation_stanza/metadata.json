@@ -1,24 +1,23 @@
 {
-  "@id": "http://togostanza.org/stanza/gmo_approximation",
-  "stanza:label": "Approximation",
-  "stanza:definition": "Medium to medium relevance ratio.",
-  "stanza:parameter": [
+  "id": "gmo_approximation",
+  "label": "Approximation",
+  "definition": "Medium to medium relevance ratio.",
+  "parameter": [
     {
-      "stanza:key": "data-stanza-medium-id",
-      "stanza:example": "NBRC_M231",
-      "stanza:description": "Medium identifier.",
-      "stanza:required": true
+      "key": "data-stanza-medium-id",
+      "example": "NBRC_M231",
+      "description": "Medium identifier.",
+      "required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/gmo_approximation\" data-stanza-medium-id=\"NBRC_M231\"></div>",
-  "stanza:type": "Stanza",
-  "stanza:context": "Medium",
-  "stanza:display": "Table",
-  "stanza:provider": "DBCLS",
-  "stanza:license": "CC-BY",
-  "stanza:author": "Stanza Togo",
-  "stanza:address": "hoge@example.org",
-  "stanza:version": "1",
-  "stanza:created": "2015-09-30",
-  "stanza:updated": "2015-09-30"
+  "type": "Stanza",
+  "context": "Medium",
+  "display": "Table",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-09-30",
+  "updated": "2015-09-30"
 }

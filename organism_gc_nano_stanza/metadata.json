@@ -1,24 +1,23 @@
 {
-  "@id": "http://togostanza.org/stanza/organism_gc_nano",
-  "stanza:label": "GC percent",
-  "stanza:definition": "NanoStanza for showing GC percent of specified organism.",
-  "stanza:parameter": [
+  "id": "organism_gc_nano",
+  "label": "GC percent",
+  "definition": "NanoStanza for showing GC percent of specified organism.",
+  "parameter": [
     {
-      "stanza:key": "data-stanza-tax-id",
-      "stanza:example": "192222",
-      "stanza:description": "Taxonomy identifier.",
-      "stanza:required": true
+      "key": "data-stanza-tax-id",
+      "example": "192222",
+      "description": "Taxonomy identifier.",
+      "required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/organism_gc_nano\" data-stanza-tax-id=\"192222\"></div>",
-  "stanza:type": "NanoStanza",
-  "stanza:context": "Organism",
-  "stanza:display": "Chart",
-  "stanza:provider": "DBCLS",
-  "stanza:license": "CC-BY",
-  "stanza:author": "Stanza Togo",
-  "stanza:address": "hoge@example.org",
-  "stanza:version": "1",
-  "stanza:created": "2015-02-03",
-  "stanza:updated": "2015-09-30"
+  "type": "NanoStanza",
+  "context": "Organism",
+  "display": "Chart",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-02-03",
+  "updated": "2015-09-30"
 }

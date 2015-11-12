@@ -1,36 +1,35 @@
 {
-  "@id": "http://togostanza.org/stanza/geneset_entry",
-  "stanza:label": "Geneset Entry",
-  "stanza:definition": "Geneset Entry",
-  "stanza:parameter": [
+  "id": "geneset_entry",
+  "label": "Geneset Entry",
+  "definition": "Geneset Entry",
+  "parameter": [
     {
-      "stanza:key": "uri",
-      "stanza:example": "",
-      "stanza:description": "A page uri of MicrobeBase GeneSetEntryView",
-      "stanza:required": true
+      "key": "uri",
+      "example": "",
+      "description": "A page uri of MicrobeBase GeneSetEntryView",
+      "required": true
     },
     {
-      "stanza:key": "p",
-      "stanza:example": "",
-      "stanza:description": "Predicate label",
-      "stanza:required": false
+      "key": "p",
+      "example": "",
+      "description": "Predicate label",
+      "required": false
     },
     {
-      "stanza:key": "o",
-      "stanza:example": "",
-      "stanza:description": "Object label",
-      "stanza:required": false
+      "key": "o",
+      "example": "",
+      "description": "Object label",
+      "required": false
     }
   ],
-  "stanza:usage": "",
-  "stanza:type": "Stanza",
-  "stanza:context": "Other",
-  "stanza:display": "Other",
-  "stanza:provider": "DBCLS",
-  "stanza:license": "CC-BY",
-  "stanza:author": "Stanza Togo",
-  "stanza:address": "hoge@example.org",
-  "stanza:version": "1",
-  "stanza:created": "2015-02-03",
-  "stanza:updated": "2015-02-03"
+  "type": "Stanza",
+  "context": "Other",
+  "display": "Other",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-02-03",
+  "updated": "2015-02-03"
 }

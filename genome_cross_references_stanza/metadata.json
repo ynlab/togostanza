@@ -1,24 +1,23 @@
 {
-  "@id": "http://togostanza.org/stanza/genome_cross_references",
-  "stanza:label": "Cross references",
-  "stanza:definition": "Table of cross references of a given genome.",
-  "stanza:parameter": [
+  "id": "genome_cross_references",
+  "label": "Cross references",
+  "definition": "Table of cross references of a given genome.",
+  "parameter": [
     {
-      "stanza:key": "data-stanza-tax-id",
-      "stanza:example": "1148",
-      "stanza:description": "Taxonomy identifier",
-      "stanza:required": true
+      "key": "data-stanza-tax-id",
+      "example": "1148",
+      "description": "Taxonomy identifier",
+      "required": true
     }
   ],
-  "stanza:usage": "<div data-stanza=\"http://togostanza.org/stanza/genome_cross_references\" data-stanza-tax-id=\"1148\"></div>",
-  "stanza:type": "Stanza",
-  "stanza:context": "Gene",
-  "stanza:display": "Table",
-  "stanza:provider": "DBCLS",
-  "stanza:license": "CC-BY",
-  "stanza:author": "Stanza Togo",
-  "stanza:address": "hoge@example.org",
-  "stanza:version": "1",
-  "stanza:created": "2015-02-03",
-  "stanza:updated": "2015-09-30"
+  "type": "Stanza",
+  "context": "Gene",
+  "display": "Table",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-02-03",
+  "updated": "2015-09-30"
 }
