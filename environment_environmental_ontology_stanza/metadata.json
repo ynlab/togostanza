@@ -1,0 +1,23 @@
+{
+  "id": "environment_environmental_ontology",
+  "label": "Environmental ontology",
+  "definition": "Visualization for the structure of MEO (Metagenome/Microbes Environment Ontology).",
+  "parameter": [
+    {
+      "key": "data-stanza-meo-id",
+      "example": "MEO_0000029",
+      "description": "MEO identifier.",
+      "required": true
+    }
+  ],
+  "type": "Stanza",
+  "context": "Environment",
+  "display": "Tree",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-02-03",
+  "updated": "2015-09-30"
+}

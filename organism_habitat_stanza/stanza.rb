@@ -12,23 +12,18 @@ class OrganismHabitatStanza < TogoStanza::Stanza::Base
       PREFIX taxid: <http://identifiers.org/taxonomy/>
 
       SELECT DISTINCT ?linage_meo_id ?label ?parent_meo_id ?is_sampled_meo
-      FROM <http://togogenome.org/graph/refseq/>
-      FROM <http://togogenome.org/graph/gold/>
-      FROM <http://togogenome.org/graph/meo/>
+      FROM <http://togogenome.org/graph/refseq>
+      FROM <http://togogenome.org/graph/gold>
+      FROM <http://togogenome.org/graph/meo>
       WHERE
       {
+        GRAPH <http://togogenome.org/graph/gold>
         {
-          SELECT DISTINCT ?meo_id
-          WHERE
-          {
-            VALUES ?p_env { meo:MEO_0000437 meo:MEO_0000440 }
-            ?seq rdfs:seeAlso ?tax_id FILTER (?tax_id = taxid:#{ tax_id }) .
-            ?tax_id a <http://identifiers.org/taxonomy/> .
-            ?gold_id mccv:MCCV_000020 ?tax_id .
-            ?gold_id ?p_env ?meo_id .
-          }
+          VALUES ?p_env { meo:MEO_0000437 meo:MEO_0000440 }
+          ?gold_id mccv:MCCV_000020 taxid:103690.
+          ?gold_id ?p_env ?meo_id .
         }
-        GRAPH <http://togogenome.org/graph/meo/>
+        GRAPH <http://togogenome.org/graph/meo>
         {
           ?meo_id rdfs:subClassOf* ?linage_meo_id .
           OPTIONAL { ?linage_meo_id rdfs:label ?label . }

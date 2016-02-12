@@ -1,0 +1,23 @@
+{
+  "id": "environment_top_level_symbolic_image_nano",
+  "label": "Environmental image",
+  "definition": "NanoStanza for showing an symbolic image for the MEO's toplevel category related to the given MEO ID.",
+  "parameter": [
+    {
+      "key": "data-stanza-meo-id",
+      "example": "MEO_0000039",
+      "description": "MEO identifier.",
+      "required": true
+    }
+  ],
+  "type": "NanoStanza",
+  "context": "Environment",
+  "display": "Image",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-02-03",
+  "updated": "2015-09-30"
+}

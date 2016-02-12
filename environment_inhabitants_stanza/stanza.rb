@@ -12,9 +12,9 @@ class EnvironmentInhabitantsStanza < TogoStanza::Stanza::Base
        (REPLACE(STR(?gold) ,"http://www.genomesonline.org/cgi-bin/GOLD/GOLDCards.cgi\\\\?goldstamp=" ,"" ) AS ?source_id)
        ?organism_name (REPLACE(STR(?tax_id) ,"http://identifiers.org/taxonomy/" ,"" ) AS ?tax_no) ("" AS ?isolation)
        ((sql:GROUP_DIGEST(?env, '||', 1000, 1)) AS ?env_links)
-      FROM <http://togogenome.org/graph/gold/>
-      FROM <http://togogenome.org/graph/meo/>
-      FROM <http://togogenome.org/graph/taxonomy/>
+      FROM <http://togogenome.org/graph/gold>
+      FROM <http://togogenome.org/graph/meo>
+      FROM <http://togogenome.org/graph/taxonomy>
       {
         VALUES ?meo_mapping { meo:MEO_0000437 meo:MEO_0000440 }
         ?meo_id rdfs:subClassOf* meo:#{meo_id} .
@@ -36,9 +36,9 @@ class EnvironmentInhabitantsStanza < TogoStanza::Stanza::Base
       SELECT (?strain_id AS ?source_link) (?strain_number AS ?source_id) (?strain_name AS ?organism_name)
         ((sql:GROUP_DIGEST(?tax_no, '||', 1000, 1)) AS ?tax_no)
         ?isolation ((sql:GROUP_DIGEST(?env, '||', 1000, 1)) AS ?env_links)
-      FROM <http://togogenome.org/graph/taxonomy/>
-      FROM <http://togogenome.org/graph/brc/>
-      FROM <http://togogenome.org/graph/meo/>
+      FROM <http://togogenome.org/graph/taxonomy>
+      FROM <http://togogenome.org/graph/brc>
+      FROM <http://togogenome.org/graph/meo>
       WHERE
       {
         VALUES ?related_type { mccv:MCCV_000056 mccv:MCCV_000022 mccv:MCCV_000057 }

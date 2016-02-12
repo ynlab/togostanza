@@ -1,0 +1,29 @@
+{
+  "id": "protein_3d_structure_nano",
+  "label": "Protein 3D structure",
+  "definition": "NanoStanza for showing a schematic mage of protein 3D structure of specifined genes.",
+  "parameter": [
+    {
+      "key": "data-stanza-tax-id",
+      "example": "103690",
+      "description": "Taxonomy identifier .",
+      "required": true
+    },
+    {
+      "key": "data-stanza-gene-id",
+      "example": "alr3421",
+      "description": "Gene identifier .",
+      "required": true
+    }
+  ],
+  "type": "NanoStanza",
+  "context": "Phenotype",
+  "display": "Image",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-02-03",
+  "updated": "2015-09-30"
+}

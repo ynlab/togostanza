@@ -1,0 +1,23 @@
+{
+  "id": "organism_gene_list",
+  "label": "Organism Gene List",
+  "definition": "List of organism genes",
+  "parameter": [
+    {
+      "key": "data-stanza-tax-id",
+      "example": "559292",
+      "description": "Taxonomy identifier.",
+      "required": true
+    }
+  ],
+  "type": "Stanza",
+  "context": "Organism",
+  "display": "List",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-02-03",
+  "updated": "2015-09-30"
+}

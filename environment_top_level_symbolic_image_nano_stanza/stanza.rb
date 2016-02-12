@@ -3,7 +3,7 @@ class EnvironmentTopLevelSymbolicImageNanoStanza < TogoStanza::Stanza::Base
     result = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc).first
       PREFIX meo: <http://purl.jp/bio/11/meo/>
       SELECT DISTINCT ?ancestor
-      FROM <http://togogenome.org/graph/meo/>
+      FROM <http://togogenome.org/graph/meo>
       WHERE {
         ?ancestor rdf:type owl:Class
         FILTER (?ancestor IN (meo:MEO_0000001, meo:MEO_0000002, meo:MEO_0000003, meo:MEO_0000004, meo:MEO_0000005) ).

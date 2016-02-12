@@ -1,0 +1,23 @@
+{
+  "id": "taxonomy_ortholog_profile",
+  "label": "Ortholog profile",
+  "definition": "Taxonomic profile of an ortholog group",
+  "parameter": [
+    {
+      "key": "data-stanza-tax-id",
+      "example": "562",
+      "description": "Taxonomy identifier.",
+      "required": true
+    }
+  ],
+  "type": "Stanza",
+  "context": "Other",
+  "display": "Graph",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-02-03",
+  "updated": "2015-09-30"
+}

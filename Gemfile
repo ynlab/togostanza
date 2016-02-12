@@ -1,8 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.0.0'
-
-gem 'togostanza'
+gem 'togostanza', '~> 2.0'
 
 gem 'unicorn'
 gem 'rake'
@@ -35,6 +33,7 @@ gem 'nucleotide_sequence_stanza', path: './nucleotide_sequence_stanza'
 gem 'organism_cross_references_stanza', path: './organism_cross_references_stanza'
 gem 'organism_culture_collections_stanza', path: './organism_culture_collections_stanza'
 gem 'organism_habitat_stanza', path: './organism_habitat_stanza'
+gem 'organism_gene_list_stanza', path: './organism_gene_list_stanza'
 gem 'organism_medium_information_stanza', path: './organism_medium_information_stanza'
 gem 'organism_names_stanza', path: './organism_names_stanza'
 gem 'organism_pathogen_information_stanza', path: './organism_pathogen_information_stanza'
@@ -52,6 +51,16 @@ gem 'protein_sequence_annotation_stanza', path: './protein_sequence_annotation_s
 gem 'taxonomy_ortholog_profile_stanza', path: './taxonomy_ortholog_profile_stanza'
 gem 'organism_jbrowse_stanza', path: './organism_jbrowse_stanza'
 gem 'genome_jbrowse_stanza', path: './genome_jbrowse_stanza'
+
+# Phenotype
+gem 'microbial_phenotype_information_stanza', path: './microbial_phenotype_information_stanza'
+gem 'microbial_phenotype_genus_composition_stanza', path: './microbial_phenotype_genus_composition_stanza'
+gem 'microbial_phenotype_environment_composition_stanza', path: './microbial_phenotype_environment_composition_stanza'
+gem 'microbial_phenotype_cell_shape_stanza', path: './microbial_phenotype_cell_shape_stanza'
+gem 'gmo_applied_spices_stanza', path: './gmo_applied_spices_stanza'
+gem 'gmo_genus_stanza', path: './gmo_genus_stanza'
+gem 'gmo_approximation_stanza', path: './gmo_approximation_stanza'
+gem 'medium_components_stanza', path: './medium_components_stanza'
 
 # nanostanza
 gem 'environment_inhabitants_statistics_nano_stanza', path: './environment_inhabitants_statistics_nano_stanza'

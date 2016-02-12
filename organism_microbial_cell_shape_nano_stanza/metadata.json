@@ -1,0 +1,23 @@
+{
+  "id": "organism_microbial_cell_shape_nano",
+  "label": "Microbial cell shape",
+  "definition": "Display an illustlation of the cell shape or arrangement of the specified organism.",
+  "parameter": [
+    {
+      "key": "data-stanza-tax-id",
+      "example": "2110",
+      "description": "Taxonomy identifier.",
+      "required": true
+    }
+  ],
+  "type": "NanoStanza",
+  "context": "Organism",
+  "display": "Image",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-02-03",
+  "updated": "2015-09-30"
+}

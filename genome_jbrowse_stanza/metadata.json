@@ -1,0 +1,29 @@
+{
+  "id": "genome_jbrowse",
+  "label": "Genomic context",
+  "definition": "Schematic view of the structure and surroundings of a gene.",
+  "parameter": [
+    {
+      "key": "data-stanza-gene-id",
+      "example": "all1455",
+      "description": "Locus tag of a gene",
+      "required": true
+    },
+    {
+      "key": "data-stanza-tax-id",
+      "example": "103690",
+      "description": "Taxonomy identifier",
+      "required": false
+    }
+  ],
+  "type": "Stanza",
+  "context": "Gene",
+  "display": "Other",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-02-03",
+  "updated": "2015-09-30"
+}

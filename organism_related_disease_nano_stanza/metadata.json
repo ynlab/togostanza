@@ -1,0 +1,23 @@
+{
+  "id": "organism_related_disease_nano",
+  "label": "Disease pathogen",
+  "definition": "NanoStanza for showing a pathogen symbol.",
+  "parameter": [
+    {
+      "key": "data-stanza-tax-id",
+      "example": "400667",
+      "description": "Taxonomy identifier",
+      "required": true
+    }
+  ],
+  "type": "NanoStanza",
+  "context": "Organism",
+  "display": "Image",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-02-03",
+  "updated": "2015-09-30"
+}

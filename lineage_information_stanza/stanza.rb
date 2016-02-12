@@ -13,7 +13,7 @@ class LineageInformationStanza < TogoStanza::Stanza::Base
        (?tax AS ?tax_link)
        ?tax_label
        (REPLACE(STR(?rank), "http://ddbj.nig.ac.jp/ontologies/taxonomy#", "") AS ?rank)
-      FROM <http://togogenome.org/graph/taxonomy/>
+      FROM <http://togogenome.org/graph/taxonomy>
       WHERE
       {
         ?search_tax rdfs:label ?o FILTER (?search_tax = taxid:#{tax_id} ) .
@@ -33,7 +33,7 @@ class LineageInformationStanza < TogoStanza::Stanza::Base
        (?tax AS ?tax_link)
        ?tax_label
        (REPLACE(STR(?rank) ,"http://ddbj.nig.ac.jp/ontologies/taxonomy#" ,"" ) AS ?rank)
-      FROM <http://togogenome.org/graph/taxonomy/>
+      FROM <http://togogenome.org/graph/taxonomy>
       WHERE
       {
         ?search_tax rdfs:label ?label FILTER (?search_tax = taxid:#{tax_id} ) .

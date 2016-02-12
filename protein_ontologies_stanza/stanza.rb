@@ -3,18 +3,24 @@ class ProteinOntologiesStanza < TogoStanza::Stanza::Base
     keywords = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
       DEFINE sql:select-option "order"
       PREFIX up: <http://purl.uniprot.org/core/>
-      PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
       SELECT ?root_name ?concept (GROUP_CONCAT(?name, ', ') AS ?names) {
         SELECT DISTINCT ?root_name ?concept ?name
-        FROM <http://togogenome.org/graph/uniprot/>
-        FROM <http://togogenome.org/graph/tgup/>
+        FROM <http://togogenome.org/graph/uniprot>
+        FROM <http://togogenome.org/graph/tgup>
         WHERE {
-          <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
+          {
+            SELECT ?gene
+            {
+              <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?gene .
+            } ORDER BY ?gene LIMIT 1
+          }
+          <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?gene ;
+            rdfs:seeAlso ?id_upid .
           ?id_upid rdfs:seeAlso ?protein .
           ?protein a up:Protein ;
-            up:classifiedWith ?concept .
+                   up:classifiedWith ?concept .
           ?concept rdf:type up:Concept .
           FILTER contains(str(?concept), 'keywords') .
 
@@ -34,62 +40,36 @@ class ProteinOntologiesStanza < TogoStanza::Stanza::Base
   end
 
   property :gene_ontlogies do |tax_id, gene_id|
-
-    # slr1311 の時...
-
-    # UniProt の go の URI と UniProt のエントリの関係
-    ## [{:concept=>"http://purl.uniprot.org/go/0009635"},
-    ##  {:concept=>"http://purl.uniprot.org/go/0009772"},
-    ##  ... ]
-    up_go_uris = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
-      PREFIX up: <http://purl.uniprot.org/core/>
-      PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
-
-      SELECT DISTINCT ?concept
-      FROM <http://togogenome.org/graph/uniprot/>
-      FROM <http://togogenome.org/graph/tgup/>
-      WHERE {
-        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> ?p ?id_upid .
-        ?id_upid rdfs:seeAlso ?protein .
-        ?protein a up:Protein ;
-         up:classifiedWith ?concept .
-        ?concept rdf:type up:Concept .
-        FILTER contains(str(?concept), 'go') .
-      }
-    SPARQL
-
-    next if up_go_uris.empty?
-
-    # OBO の go の URI を UniProt の go の URI へ変換
-    obo_go_uris = up_go_uris.map {|e| {obo_go_uri: e[:concept].gsub("http://purl.uniprot.org/go/", "http://purl.obolibrary.org/obo/GO_")} }
-
-    next if obo_go_uris.empty?
-
-    # OBO の go の階層とラベル
-    # "<http://purl.obolibrary.org/obo/GO_0009635>, <http://purl.obolibrary.org/obo/GO_0009772>, ..."
-    obo_go_uri_values = obo_go_uris.flat_map {|uri|
-      "<#{uri[:obo_go_uri]}>"
-    }.join(', ')
-
     ## [{:root_name=>"biological_process", :name=>"response to herbicide"},
     ##  {:root_name=>"biological_process", :name=>"photosynthetic electron transport in photosystem II"},
     ##  {:root_name=>"molecular_function", :name=>"oxidoreductase activity"},
     ##  ...]
     gene_ontlogies = query("http://togogenome.org/sparql", <<-SPARQL.strip_heredoc)
-      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX up: <http://purl.uniprot.org/core/>
+      PREFIX taxonomy: <http://purl.uniprot.org/taxonomy/>
 
       SELECT DISTINCT ?name ?root_name ?obo_go_uri
-      FROM <http://togogenome.org/graph/go/>
+      FROM <http://togogenome.org/graph/uniprot>
+      FROM <http://togogenome.org/graph/tgup>
+      FROM <http://togogenome.org/graph/go>
       WHERE {
-        ?obo_go_uri rdfs:label ?name .
-        # comment は無い?
-        # cf) http://lod.dbcls.jp/openrdf-workbench5l/repositories/go/explore?resource=obo%3AGO_0009635
-        #?obo_go_uri rdfs:comment ?comment .
-
-        ?obo_go_uri rdfs:subClassOf* ?parents .
-        ?parents rdfs:label ?root_name .
-        FILTER (str(?root_name) IN ('biological_process', 'cellular_component', 'molecular_function')) .
-        FILTER (?obo_go_uri in (#{obo_go_uri_values})) .
+        {
+          SELECT ?gene
+          {
+            <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?gene .
+          } ORDER BY ?gene LIMIT 1
+        }
+        <http://togogenome.org/gene/#{tax_id}:#{gene_id}> skos:exactMatch ?gene ;
+          rdfs:seeAlso ?id_upid .
+        ?id_upid rdfs:seeAlso ?protein .
+        ?protein a up:Protein ;
+                 up:classifiedWith ?obo_go_uri .
+        GRAPH <http://togogenome.org/graph/go> {
+          ?obo_go_uri rdfs:label ?name .
+          ?obo_go_uri rdfs:subClassOf* ?parents .
+          ?parents rdfs:label ?root_name .
+          FILTER (str(?root_name) IN ('biological_process', 'cellular_component', 'molecular_function')) . 
+        }
       }
     SPARQL
 

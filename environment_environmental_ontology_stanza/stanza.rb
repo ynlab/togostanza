@@ -12,7 +12,7 @@ class EnvironmentEnvironmentalOntologyStanza < TogoStanza::Stanza::Base
       PREFIX meo: <http://purl.jp/bio/11/meo/>
 
       SELECT ?meo_id ?label ?definition ?parent
-      FROM <http://togogenome.org/graph/meo/>
+      FROM <http://togogenome.org/graph/meo>
       WHERE
       {
        ?meo_id a owl:Class .

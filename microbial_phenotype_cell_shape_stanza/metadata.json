@@ -1,0 +1,23 @@
+{
+  "id": "microbial_phenotype_cell_shape",
+  "label": "Shape Information",
+  "definition": "phenotype's (with shaped, arrengement) visualizetion.",
+  "parameter": [
+    {
+      "key": "data-stanza-mpo-id",
+      "example": "MPO_01003",
+      "description": "Phenotype(MPO) identifier.",
+      "required": true
+    }
+  ],
+  "type": "Stanza",
+  "context": "Phenotype",
+  "display": "Image",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-09-30",
+  "updated": "2015-09-30"
+}

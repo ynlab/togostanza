@@ -12,16 +12,20 @@ class EnvironmentGeographicalMapStanza < TogoStanza::Stanza::Base
       SELECT
         ?gold (REPLACE(STR(?gold),"http://www.genomesonline.org/cgi-bin/GOLD/GOLDCards.cgi\\\\?goldstamp=","") AS ?gold_id)
         (?gaz AS ?gaz_id) ?place_name ?latitude ?longitude
-      FROM <http://togogenome.org/graph/gold/>
-      FROM <http://togogenome.org/graph/meo/>
-      FROM <http://togogenome.org/graph/gazetteer/>
       {
-        ?meo_id rdfs:subClassOf* meo:#{meo_id} .
-        ?gold meo:MEO_0000437 ?meo_id .
-        ?gold meo:MEO_0000438 ?gaz .
-        ?gaz rdfs:label ?place_name .
-        ?gaz msv:latitude ?latitude .
-        ?gaz msv:longitude ?longitude .
+        GRAPH <http://togogenome.org/graph/meo> {
+          ?meo_id a owl:Class .
+          ?meo_id rdfs:subClassOf* meo:#{meo_id} .
+        }
+        GRAPH <http://togogenome.org/graph/gold> {
+          ?gold meo:MEO_0000437 ?meo_id .
+          ?gold meo:MEO_0000438 ?gaz .
+        }
+        GRAPH <http://togogenome.org/graph/gazetteer> {
+          ?gaz rdfs:label ?place_name .
+          ?gaz msv:latitude ?latitude .
+          ?gaz msv:longitude ?longitude .
+        }
       }
     SPARQL
 

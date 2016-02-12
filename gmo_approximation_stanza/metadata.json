@@ -1,0 +1,23 @@
+{
+  "id": "gmo_approximation",
+  "label": "Approximation",
+  "definition": "Medium to medium relevance ratio.",
+  "parameter": [
+    {
+      "key": "data-stanza-medium-id",
+      "example": "NBRC_M231",
+      "description": "Medium identifier.",
+      "required": true
+    }
+  ],
+  "type": "Stanza",
+  "context": "Medium",
+  "display": "Table",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-09-30",
+  "updated": "2015-09-30"
+}

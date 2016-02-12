@@ -1,0 +1,23 @@
+{
+  "id": "environment_inhabitants_statistics_nano",
+  "label": "Inhabitants statistics",
+  "definition": "NanoStanza for showing the number of organisms of a specified environment.",
+  "parameter": [
+    {
+      "key": "data-stanza-meo-id",
+      "example": "MEO_0000038 # Fresh water",
+      "description": "MEO identifier .",
+      "required": true
+    }
+  ],
+  "type": "NanoStanza",
+  "context": "Environment",
+  "display": "Numeral",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-02-03",
+  "updated": "2015-09-30"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "organism_names",
+  "label": "Organism names",
+  "definition": "List of organism names and synonyms.",
+  "parameter": [
+    {
+      "key": "data-stanza-tax-id",
+      "example": "103690",
+      "description": "Taxonomy identifier.",
+      "required": true
+    }
+  ],
+  "type": "Stanza",
+  "context": "Organism",
+  "display": "Table",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-02-03",
+  "updated": "2015-09-30"
+}

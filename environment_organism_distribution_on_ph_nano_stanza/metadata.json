@@ -1,0 +1,23 @@
+{
+  "id": "environment_organism_distribution_on_ph_nano",
+  "label": "Growth pH distribution",
+  "definition": "NanoStanza for showing the number of organisms along with growth pH for the specified environmental feature.",
+  "parameter": [
+    {
+      "key": "data-stanza-meo-id",
+      "example": "MEO_0000007",
+      "description": "MEO identifier",
+      "required": true
+    }
+  ],
+  "type": "NanoStanza",
+  "context": "Environment",
+  "display": "Graph",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-02-03",
+  "updated": "2015-09-30"
+}

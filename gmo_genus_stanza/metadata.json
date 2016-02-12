@@ -1,0 +1,23 @@
+{
+  "id": "gmo_genus",
+  "label": "Genus List (Medium-based)",
+  "definition": "Medium-based organism count list and group by genus.",
+  "parameter": [
+    {
+      "key": "data-stanza-medium-id",
+      "example": "NBRC_M231",
+      "description": "Medium identifier.",
+      "required": true
+    }
+  ],
+  "type": "Stanza",
+  "context": "Medium",
+  "display": "Chart",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-09-30",
+  "updated": "2015-09-30"
+}

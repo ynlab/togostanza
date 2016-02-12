@@ -1,0 +1,29 @@
+{
+  "id": "protein_pfam_plot",
+  "label": "Pfam plot",
+  "definition": "Scatter plot of Pfam corresponding with genes.",
+  "parameter": [
+    {
+      "key": "data-stanza-gene-id",
+      "example": "all4233",
+      "description": "Gene identifier.",
+      "required": true
+    },
+    {
+      "key": "data-stanza-tax-id",
+      "example": "103690",
+      "description": "Taxonomy identifier.",
+      "required": true
+    }
+  ],
+  "type": "Stanza",
+  "context": "Phenotype",
+  "display": "Graph",
+  "provider": "DBCLS",
+  "license": "CC-BY",
+  "author": "Stanza Togo",
+  "address": "hoge@example.org",
+  "version": "1",
+  "created": "2015-02-03",
+  "updated": "2015-09-30"
+}
