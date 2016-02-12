@@ -343,6 +343,18 @@ PATH
       togostanza
 
 PATH
+  remote: ./refgs_dev2_stanza
+  specs:
+    refgs_dev2_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./refgs_dev_stanza
+  specs:
+    refgs_dev_stanza (0.0.1)
+      togostanza
+
+PATH
   remote: ./taxonomy_ortholog_profile_stanza
   specs:
     taxonomy_ortholog_profile_stanza (0.0.1)
@@ -522,6 +534,8 @@ DEPENDENCIES
   protein_sequence_annotation_stanza!
   protein_sequence_stanza!
   rake
+  refgs_dev2_stanza!
+  refgs_dev_stanza!
   rspec
   taxonomy_ortholog_profile_stanza!
   togostanza (~> 2.0)
