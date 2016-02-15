@@ -4,8 +4,8 @@
   "definition": "A stanza for genesets.",
   "parameter": [
     {
-      "key": "uri",
-      "example": "http://genome.microbedb.jp/cyanobase/Synechocystis",
+      "key": "data-stanza-uri",
+      "example": "http://genome.microbedb.jp/cyanobase/Synechocystis/genes/slr0611",
       "description": "A page uri of MicrobeBase GeneView",
       "required": false
     }

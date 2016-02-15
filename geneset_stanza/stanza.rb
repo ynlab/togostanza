@@ -19,7 +19,7 @@ class GenesetStanza < TogoStanza::Stanza::Base
         FILTER(?p = <http://www.w3.org/2004/02/skos/core#member>)
         ?s owl:sameAs ?o.
         ?s rdfs:label ?gene_label.
-      } ORDER BY ?genese
+      } ORDER BY ?geneset
     SPARQL
   end
 end
