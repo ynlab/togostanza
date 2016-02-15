@@ -4,8 +4,8 @@
   "definition": "Geneset Entry",
   "parameter": [
     {
-      "key": "uri",
-      "example": "",
+      "key": "data-stanza-uri",
+      "example": "http://genome.microbedb.jp/cyanobase/Synechocystis/genesets/ppi,ssl3076,slr1638",
       "description": "A page uri of MicrobeBase GeneSetEntryView",
       "required": true
     },
