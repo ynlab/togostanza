@@ -5,7 +5,7 @@
   "parameter": [
     {
       "key": "uri",
-      "example": "",
+      "example": "http://genome.microbedb.jp/cyanobase/Synechocystis",
       "description": "A page uri of MicrobeBase GeneView",
       "required": false
     }
