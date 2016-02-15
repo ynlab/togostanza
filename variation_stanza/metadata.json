@@ -4,8 +4,8 @@
   "definition": "A stanza for variations",
   "parameter": [
     {
-      "key": "uri",
-      "example": "",
+      "key": "data-stanza-uri",
+      "example": "http://genome.microbedb.jp/cyanobase/Synechocystis/genes/slr1897",
       "description": "A page uri of MicrobeBase GeneView",
       "required": false
     }
