@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>External Links</title>
+    {{#each css_uri}}
+    <link rel="stylesheet" href="{{this}}" />
+    {{/each}}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    {{adjust_iframe_height_script}}
+  </head>
+
+  <body>
+    <table>
+      <thead>
+        <tr>
+          <th>gene id</th>
+          <th>external links</th>
+          <th>database</th>
+      </thead>
+
+      <tbody>
+        {{#each links}}
+          <tr>
+            <!--//
+            <td class='first-column'><a href="{{gene}}" target='_parent'>{{gene_id}}</a></td>
+            -->
+            <td>{{gene}}</td>
+            <td>{{link}}</td>
+            <td>{{db}}</td>
+            <!--//
+            <td><a href="{{valiationid}}" target='_parent'>{{valiation_id}}</a></td>
+            -->
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </body>
+
+</html>
