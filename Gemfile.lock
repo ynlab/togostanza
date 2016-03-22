@@ -75,6 +75,12 @@ PATH
       togostanza
 
 PATH
+  remote: ./external_links_stanza
+  specs:
+    external_links_stanza (0.0.1)
+      togostanza
+
+PATH
   remote: ./gene_attributes_stanza
   specs:
     gene_attributes_stanza (0.0.1)
@@ -128,6 +134,12 @@ PATH
   remote: ./genome_plot_stanza
   specs:
     genome_plot_stanza (0.0.1)
+      togostanza
+
+PATH
+  remote: ./genome_projects_stanza
+  specs:
+    genome_projects_stanza (0.0.1)
       togostanza
 
 PATH
@@ -365,6 +377,12 @@ PATH
       togostanza
 
 PATH
+  remote: ./taxonomy_stanza
+  specs:
+    taxonomy_stanza (0.0.1)
+      togostanza
+
+PATH
   remote: ./variation_stanza
   specs:
     variation_stanza (0.0.1)
@@ -474,6 +492,7 @@ DEPENDENCIES
   environment_organism_distribution_on_temperature_nano_stanza!
   environment_taxonomic_composition_stanza!
   environment_top_level_symbolic_image_nano_stanza!
+  external_links_stanza!
   gene_attributes_stanza!
   gene_length_nano_stanza!
   geneset_entry_stanza!
@@ -483,6 +502,7 @@ DEPENDENCIES
   genome_information_stanza!
   genome_jbrowse_stanza!
   genome_plot_stanza!
+  genome_projects_stanza!
   gmo_applied_spices_stanza!
   gmo_approximation_stanza!
   gmo_genus_stanza!
@@ -525,9 +545,7 @@ DEPENDENCIES
   rake
   rspec
   taxonomy_ortholog_profile_stanza!
+  taxonomy_stanza!
   togostanza!
   unicorn
   variation_stanza!
-
-BUNDLED WITH
-   1.10.6
