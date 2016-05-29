@@ -13,6 +13,7 @@
 
  
   <body>
+ <!--//
     <h1>Assembly Records</h1>
     <h2>Summary</h2>
 <table class='table'>
@@ -31,13 +32,18 @@
     {{/each}}
   </tbody>
 </table>
+-->
+<div>
+    {{#each projects_sum}}
+    <span>{{level}}: {{number}}</span>
+    {{/each}}
+</div>
 
-    <h2>List of Projects</h2>
 <table class='table'>
   <thead>
     <tr>
-      <th>Assembly ID</th>
       <th>Organism Name</th>
+      <th>Assembly ID</th>
       <th>Taxonomy ID</th>
       <th>BioProject ID</th>
       <th>BioSample ID</th>
@@ -48,8 +54,8 @@
   <tbody>
     {{#each projects}}
       <tr>
+        <td><a href="http://dev-genome.annotation.jp/cyanobase/{{id}}">{{organism_name}}</a></td>
         <td><a href="{{link}}">{{id}}</td>
-        <td><a href="{{link}}">{{organism_name}}</a></td>
         <td><a href="{{taxon}}">{{taxid}}</a></td>
         <td><a href="http://identifiers.org/bioproject/{{bioproject_accession}}">{{bioproject_accession}}</td>
         <td><a href="http://identifiers.org/biosample/{{biosample_accession}}">{{biosample_accession}}</td>
