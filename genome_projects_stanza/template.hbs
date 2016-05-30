@@ -54,11 +54,11 @@
   <tbody>
     {{#each projects}}
       <tr>
-        <td><a href="http://dev-genome.annotation.jp/cyanobase/{{id}}">{{organism_name}}</a></td>
-        <td><a href="{{link}}">{{id}}</td>
-        <td><a href="{{taxon}}">{{taxid}}</a></td>
-        <td><a href="http://identifiers.org/bioproject/{{bioproject_accession}}">{{bioproject_accession}}</td>
-        <td><a href="http://identifiers.org/biosample/{{biosample_accession}}">{{biosample_accession}}</td>
+        <td><a target="_parent" href="http://dev-genome.annotation.jp/cyanobase/{{id}}">{{organism_name}}</a></td>
+        <td><a target="_parent" href="{{link}}">{{id}}</td>
+        <td><a target="_parent" href="{{taxon}}">{{taxid}}</a></td>
+        <td><a target="_parent" href="http://identifiers.org/bioproject/{{bioproject_accession}}">{{bioproject_accession}}</td>
+        <td><a target="_parent" href="http://identifiers.org/biosample/{{biosample_accession}}">{{biosample_accession}}</td>
         <td>{{level}}</td>
         <td>{{release_date}}</td>
       </tr>
