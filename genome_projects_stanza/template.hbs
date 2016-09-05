@@ -16,7 +16,7 @@
     {{adjust_iframe_height_script}}
   </head>
   <body>
-<table id="projects"></table>
+<table id="projects" class="table"></table>
 <script>
 var projects = $.getJSON(
     "./genome_projects/resources/projects?taxonomy_id={{select_taxonomy_id}}",
@@ -34,7 +34,7 @@ var projects = $.getJSON(
             columns: [
                 { data: 'organism_name', 'title': 'Organism Name', "render": function ( data, type, full, meta ) {
                       //console.log(full.id);
-                      return '<a href="/cyanobase/'+ full.id + '">'+ data + '</a>';
+                      return '<a target="_parent" href="/cyanobase/'+ full.id + '">'+ data + '</a>';
                           }
                       },
                 { data: 'id', 'title': 'Assembly ID' },
