@@ -13,7 +13,15 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 
+    <script>
+      function adjustIframeHeight() {
+        height = document.body.offsetHeight + 43;
+        parent.postMessage(JSON.stringify({height: height, id: name}), "*");
+      }
+    </script>
+    <!--
     {{adjust_iframe_height_script}}
+    -->
   </head>
   <body>
 <table id="projects" class="table"></table>
@@ -67,8 +75,8 @@ var projects = $.getJSON(
                     } );
                 } );
             }
+        } );
 
-            } );
         $('#projects tbody').on( 'click', 'tr', function () {
             $(this).toggleClass('selected');
         } );
@@ -77,6 +85,7 @@ var projects = $.getJSON(
             alert( table.rows('.selected').data().length +' row(s) selected' );
         } );
 
+        adjustIframeHeight();
     }); 
     </script>
   </body>
