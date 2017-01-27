@@ -4,10 +4,10 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 Gem::Specification.new do |spec|
   spec.name          = 'genome_projects_stanza'
   spec.version       = '0.0.1'
-  spec.authors       = ['TODO: Write your name']
-  spec.email         = ['TODO: Write your email address']
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.authors       = ['tf@nig.ac.jp']
+  spec.email         = ['tf@nig.ac.jp']
+  spec.summary       = %q{genome_projects_stanza}
+  spec.description   = %q{genome_projects_stanza}
   spec.homepage      = ''
   spec.license       = 'MIT'
 
