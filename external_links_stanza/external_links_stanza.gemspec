@@ -4,10 +4,10 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 Gem::Specification.new do |spec|
   spec.name          = 'external_links_stanza'
   spec.version       = '0.0.1'
-  spec.authors       = ['tf@nig.ac.jp']
+  spec.authors       = ['tf']
   spec.email         = ['tf@nig.ac.jp']
-  spec.summary       = %q{external_links_stanza}
-  spec.description   = %q{external_links_stanza}
+  spec.summary       = %q{external link stanza}
+  spec.description   = %q{external link stanza}
   spec.homepage      = ''
   spec.license       = 'MIT'
 

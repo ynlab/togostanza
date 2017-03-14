@@ -4,61 +4,89 @@
   <head>
     <title>Genome Projects</title>
     {{#each css_uri}}
+    <!--//
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"/> 
+    -->
     <link rel="stylesheet" href="{{this}}" />
     {{/each}}
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+
+    <script>
+      function adjustIframeHeight() {
+        height = document.body.offsetHeight + 43;
+        parent.postMessage(JSON.stringify({height: height, id: name}), "*");
+      }
+    </script>
+    <!--
     {{adjust_iframe_height_script}}
+    -->
   </head>
-
- 
   <body>
-    <h1>Assembly Records</h1>
-    <h2>Summary</h2>
-<table class='table'>
-  <thead>
-    <tr>
-      <th>Assembly Level</th>
-      <th>Count</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each projects_sum}}
-      <tr>
-        <td>{{level}}</td>
-        <td>{{number}}</td>
-      </tr>
-    {{/each}}
-  </tbody>
-</table>
+<table id="projects" class="table"></table>
+<script>
+var projects = $.getJSON(
+    "./genome_projects/resources/projects?taxonomy_id={{select_taxonomy_id}}",
+    function(json){
+        $('#projects').DataTable( {
+            data: json.projects,
+            paging: false,
+            footer: true,
+            //sDom : "<'header_area'<'#header_left'l>f>t<'footer_area'i>",
+            sDom : "<i><f>t<l>",
+            "order": [[ 0, "asc" ]],
+            //stateSave: true,
+            "lengthMenu": [[100, 200, 300, -1], [100, 200, 300, "All"]],
+            //select: true,
+            columns: [
+                { data: 'organism_name', 'title': 'Organism Name', "render": function ( data, type, full, meta ) {
+                      //console.log(full.id);
+                      return '<a target="_parent" href="/cyanobase/'+ full.id + '">'+ data + '</a>';
+                          }
+                      },
+                { data: 'id', 'title': 'Assembly ID' },
+                { data: 'bioproject_accession', 'title': 'BioProject ID'},
+                { data: 'biosample_accession', 'title': 'BioSample ID'},
+                { data: 'taxid', 'title': 'Taxonomy ID'},
+                { data: 'level', 'title': 'Assembly Level' },
+                { data: 'release_date', 'title': 'Release Date' }
+                ],
+            initComplete: function () {
+                //alert( this + 'DataTables has finished its initialisation.' );
+                this.api().columns().every( function () {
+                    var column = this;
+                    //console.log(column);
+                    var select = $('<br /><select><option value=""></option></select>')
+                        .appendTo( $(column.header()) )
+                        //.appendTo( $(column.header()).empty() )
+                        //.appendTo( $(column.footer()).empty() )
+                        .on( 'change', function () {
+                             var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+                            column
+                                .search( val ? '^'+val+'$' : '', true, false )
+                                .draw();
+                        } );
+ 
+                    column.data().unique().sort().each( function ( d, j ) {
+                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                    } );
+                } );
+            }
+        } );
 
-    <h2>List of Projects</h2>
-<table class='table'>
-  <thead>
-    <tr>
-      <th>Assembly ID</th>
-      <th>Organism Name</th>
-      <th>Taxonomy ID</th>
-      <th>BioProject ID</th>
-      <th>BioSample ID</th>
-      <th>Assembly Level</th>
-      <th>Release Date</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each projects}}
-      <tr>
-        <td><a href="{{link}}">{{id}}</td>
-        <td><a href="{{link}}">{{organism_name}}</a></td>
-        <td><a href="{{taxon}}">{{taxid}}</a></td>
-        <td><a href="http://identifiers.org/bioproject/{{bioproject_accession}}">{{bioproject_accession}}</td>
-        <td><a href="http://identifiers.org/biosample/{{biosample_accession}}">{{biosample_accession}}</td>
-        <td>{{level}}</td>
-        <td>{{release_date}}</td>
-      </tr>
-    {{/each}}
-  </tbody>
-</table>
+        $('#projects tbody').on( 'click', 'tr', function () {
+            $(this).toggleClass('selected');
+        } );
+ 
+        $('#button').click( function () {
+            alert( table.rows('.selected').data().length +' row(s) selected' );
+        } );
 
+        adjustIframeHeight();
+    }); 
+    </script>
   </body>
 </html>

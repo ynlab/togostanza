@@ -6,8 +6,8 @@ Gem::Specification.new do |spec|
   spec.version       = '0.0.1'
   spec.authors       = ['tf@nig.ac.jp']
   spec.email         = ['tf@nig.ac.jp']
-  spec.summary       = %q{taxonomy_stanza}
-  spec.description   = %q{taxonomy_stanza}
+  spec.summary       = %q{taxonomy stanza}
+  spec.description   = %q{taxonomy stanza}
   spec.homepage      = ''
   spec.license       = 'MIT'
 
