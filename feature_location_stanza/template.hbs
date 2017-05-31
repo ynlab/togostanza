@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Gene Jbrowse</title>
+    {{#each css_uri}}
+    <link rel="stylesheet" href="{{this}}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"/> 
+
+    <link href="http://genome.microbedb.jp/assets/application.css" media="all" rel="stylesheet" type="text/css" />
+    {{/each}}
+    <!--//
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
+    -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script src="http://wzrd.in/bundle/biojs-io-fasta@latest"></script>
+    <script type="text/javascript">
+
+    var frame_height = 600;
+    function init(entry_id) {
+      if(entry_id) {
+        adjust_iframe_height(frame_height);
+        $("#jbrowse").css("height", (frame_height - 30) + "px");
+        $("#jbrowse").css("border-radius", "4px");
+        $("#jbrowse").css("box-shadow", "0 2px 2px rgba(0,0,0,0.2)");
+        //$("#jbrowse-frame").css("height", (frame_height - 50) + "px");
+      } else {
+        $("#jbrowse").text("No data");
+        adjust_iframe_height();
+      }
+    }
+
+    function adjust_iframe_height(height_px) {
+      var height = 0;
+      if(height_px) {
+        height = height_px;
+      } else {
+        height = document.body.offsetHeight + 30;
+      }
+      parent.postMessage(JSON.stringify({height: height, id: name}), "*");
+    }
+
+      jQuery(function ($) {
+        // 親フレームのイベント
+        $(window).on('mousemove', onMouseMove);
+
+        // 子フレームのイベント
+        $('iframe').on('load', function () {
+          $(this).contents().on('mousemove', onMouseMove);
+        });
+
+        function onMouseMove() {
+          console.log('マウス動いた！');
+        }
+      });
+    </script>
+<style type="text/css"><!--
+
+.navbar-brand {
+  background: url("http://genome.annotation.jp/assets/cyanobase_mini.png") no-repeat left center;
+  background-size: contain;
+  height: 50px;
+  width: 250px;
+}
+
+
+.ribbon {
+      background-color: #FFBA10;
+}
+
+.ribbon::before {
+      content: "Feature";
+      background-color: white;
+      border-color: black;
+      border-style: dotted;
+}
+
+
+/*.jumbotron { background:url(main.jpg) center no-repeat; background-size: cover;}*/
+/*.jumbotron { background-color: gray; background-size: cover; }*/
+
+--></style>
+
+
+    
+  </head>
+  <body onload="init({{params.entry_id}})">
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top-nav">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button> 
+      <a class="navbar-brand" href="http://genome.microbedb.jp/{{params.dataset}}"></a>
+    </div>
+    <div class="collapse navbar-collapse" id="top-nav">
+            <!-- main navbar -->
+            <!--//
+            <ul class="nav navbar-nav">
+                <li><a href="http://genome.microbedb.jp/{{params.dataset}}/{{params.entry_id}}">{{params.entry_id}}</a></li>
+            </ul>
+            -->
+    </div>    
+  </div>
+</nav>
+
+<div class="page-header">
+        <h1>Sequence Features View</h1>       
+        <div class="pull-right">
+<ol class="breadcrumb">
+    <li><a href="http://genome.microbedb.jp/{{params.dataset}}">{{params.dataset}}</a></li>
+    <li><a href="http://genome.microbedb.jp/{{params.dataset}}/{{params.entry_id}}">{{params.entry_id}}</a></li>
+    <li class="active">{{params.seq_id}}:{{params.position_begin}}..{{params.position_end}}</li>
+</ol>
+</div>
+</div>
+
+<form class="form-inline" method="GET">
+  <div class="form-group">
+      <label for="dataset">Dataset</label>
+      <input type="text" class="form-control" placeholder="Dataset" id="dataset" name="dataset" value="{{params.dataset}}">
+  </div>
+  <div class="form-group">
+      <label for="entry_id">Entry ID</label>
+      <input type="text" class="form-cotrol" placeholder="Entry" id="entry_id" name="entry_id" value="{{params.entry_id}}">
+  </div>
+  <div class="form-group">
+      <label for="seq_id">Sequence ID</label>
+      <input type="text" class="form-control" placeholder="Sequence" id="seq_id" name="seq_id" value="{{params.seq_id}}">
+  </div>
+  <div class="form-group">
+      <label for="position_begin">Begin</label>
+      <input type="text" class="form-control" placeholder="Begin" id="position_begin" name="position_begin" value="{{params.position_begin}}">
+  </div>
+  <div class="form-group">
+      <label for="position_end">End</label>
+      <input type="text" class="form-control" placeholder="End" id="position_end" name="position_end" value="{{params.position_end}}">
+  </div>
+  <button type="submit" class="btn btn-default">Move</button>
+</form>
+
+
+<h2>Sequence browser</h2> 
+   <div class="panel panel-default">
+      <div id="jbrowse">
+          <iframe src="http://genome.microbedb.jp/jbrowse/index.html?tracklist=0&nav=0&overview=0&data={{params.dataset}}/{{params.entry_id}}&&loc={{params.seq_id}}:{{params.position_begin}}..{{params.position_end}}&tracks={{params.dataset}}" frameborder="0" style="width: 100%;" id="jbrowse-frame"></iframe>
+      </div>
+   </div>
+<h2>Retriving sequence</h2>
+<div id="subseq" class="text-left" style="font-family:monospace; word-wrap: break-word;"></div>
+
+<script>
+
+var subseq = "{{sequence}}";
+$.getJSON(
+        "./feature_location/resources/features?dataset={{params.dataset}}&entry_id={{params.entry_id}}&seq_id={{params.seq_id}}&position_begin={{params.position_begin}}&position_end={{params.position_end}}",
+        function(json){
+          $.each(json.features,function(index,val){
+              console.log(val);
+              var index = val['end'] - {{params.position_begin}};
+              subseq = subseq.slice(0, index) + "</span>" + subseq.slice(index, subseq.length);
+              var indexs = val['start'] - {{params.position_begin}};
+              if(indexs < 0){
+                 indexs = 0;
+              }
+                
+              subseq = subseq.slice(0, indexs) + "<span title=\""+ val['name']+ "\"name=\"" + val['name'] +"\" style=\"color: blue;\">" + subseq.slice(indexs, subseq.length);
+              });
+              $('#subseq').html(subseq);
+              //console.log(json);
+        } 
+        );
+</script>
+
+<h2>Feature Annotations</h2>
+        <div class="table-responsive" style="background-color:white;">        
+<table id="features"class="table table-condensed"></table>
+</div>
+<script>
+var projects = $.getJSON(
+        "./feature_location/resources/features?dataset={{params.dataset}}&entry_id={{params.entry_id}}&seq_id={{params.seq_id}}&position_begin={{params.position_begin}}&position_end={{params.position_end}}",
+    function(json){
+        $('#features').DataTable( {
+            data: json.features,
+            paging: false,
+            footer: true,
+            //sDom : "<'header_area'<'#header_left'l>f>t<'footer_area'i>",
+            sDom : "<i><f>t<l>",
+            "order": [[ 0, "asc" ]],
+            //stateSave: true,
+            "lengthMenu": [[100, 200, 300, -1], [100, 200, 300, "All"]],
+            //select: true,
+            columns: [
+                { data: 'name', 'title': 'feature id', "render": function ( data, type, full, meta ) {
+                      return '<a target="_parent" href="/cyanobase/'+ full.id + '">'+ data + '</a>';
+                          }
+                      },
+                { data: 'type', 'title': 'type' },
+                { data: 'start', 'title': 'start' },
+                { data: 'end', 'title': 'end'},
+                { data: 'strand', 'title': 'strand'},
+                { data: 'description', 'title': 'description' }
+                ],
+            initComplete: function () {
+                //alert( this + 'DataTables has finished its initialisation.' );
+                this.api().columns().every( function () {
+                    var column = this;
+                    //console.log(column);
+                    var select = $('<br /><select><option value=""></option></select>')
+                        .appendTo( $(column.header()) )
+                        //.appendTo( $(column.header()).empty() )
+                        //.appendTo( $(column.footer()).empty() )
+                        .on( 'change', function () {
+                             var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+                            column
+                                .search( val ? '^'+val+'$' : '', true, false )
+                                .draw();
+                        } );
+ 
+                    column.data().unique().sort().each( function ( d, j ) {
+                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                    } );
+                } );
+            }
+        } );
+
+        //$('#projects tbody').on( 'click', 'tr', function () {
+        //    $(this).toggleClass('selected');
+        //} );
+ 
+        $('#button').click( function () {
+            alert( table.rows('.selected').data().length +' row(s) selected' );
+        } );
+
+        adjustIframeHeight();
+    }); 
+    </script>
+  </body>
+</html>
+

@@ -1,0 +1,47 @@
+{
+  "id": "feature_location",
+  "label": "Show feature annotations from genomic location.",
+  "definition": "Show feature annotations from genomic location.",
+  "parameter": [
+    {
+      "key": "data-stanza-dataset",
+      "example": "cyanobase",
+      "description": "CyanoBase or RhizoBase",
+      "required": true
+    },
+    {
+      "key": "data-stanza-entry-id",
+      "example": "GCA_000009725.1",
+      "description": "Entry ID of CyanoBase or RhizoBase",
+      "required": true
+    },
+    {
+      "key": "data-stanza-seq-id",
+      "example": "Chr",
+      "description": "Sequence ID of CyanoBase or RhizoBase",
+      "required": true
+    },
+    {
+      "key": "data-stanza-position-begin",
+      "example": "568073",
+      "description": "Begin position on sequence of CyanoBase or RhizoBase",
+      "required": true
+    },
+    {
+      "key": "data-stanza-position-end",
+      "example": "570568",
+      "description": "End position on sequence of CyanoBase or RhizoBase",
+      "required": true
+    }
+  ],
+  "type": "Stanza",
+  "context": "Genome",
+  "display": "Other",
+  "provider": "ynlab",
+  "license": "CC-BY",
+  "author": "Takatomo Fujisawa",
+  "address": "tf@nig.ac.jp",
+  "version": "1",
+  "created": "2017-05-08",
+  "updated": "2017-05-08"
+}
