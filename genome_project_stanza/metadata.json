@@ -1,0 +1,23 @@
+{
+  "id": "genome_project",
+  "label": "",
+  "definition": "",
+  "parameter": [
+    {
+      "key": "",
+      "example": "",
+      "description": "",
+      "required": true
+    }
+  ],
+  "type": "Stanza",
+  "context": "",
+  "display": "",
+  "provider": "provider of this stanza",
+  "license": "",
+  "author": "author name",
+  "address": "name@example.org",
+  "contributor": [],
+  "created": "2018-12-19",
+  "updated": "2018-12-19"
+}

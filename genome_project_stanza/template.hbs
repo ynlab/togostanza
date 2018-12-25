@@ -1,18 +1,15 @@
-<!DOCTYPE html>
-
 <html>
   <head>
-    <title>Genome Projects</title>
-    {{#each css_uri}}
-    <!--//
+    <title>Genome Project</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/2.2.2/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"/> 
-    -->
+    {{#each css_uri}}
+
     <link rel="stylesheet" href="{{this}}" />
     {{/each}}
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-
     <script>
       function adjustIframeHeight() {
         height = document.body.offsetHeight + 43;
@@ -24,13 +21,66 @@
     -->
   </head>
   <body>
-<table id="projects" class="table"></table>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title">Genome Project: {{ select_project_id }}</h1>
+  </div>
+  <div class="panel-body">
+   {{ select_organism_name }}
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2 class="panel-title">Summary</h2>
+  </div>
+  <div class="panel-body">
+    <table id="project" class="table"></table>
+  </div>
+</div>  
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2 class="panel-title">Sequences</h2>
+  </div>
+  <div class="panel-body">
+    <table id="sequences" class="table"></table>
+  </div>
+</div>  
+
 <script>
-var projects = $.getJSON(
-    "./genome_projects/resources/projects?taxonomy_id={{select_taxonomy_id}}",
+/// Project Metadata
+var project = $.getJSON(
+    "./genome_project/resources/project_metadata?project_id={{select_project_id}}",
     function(json){
-        $('#projects').DataTable( {
-            data: json.projects,
+        $('#project').DataTable( {
+            data: json.project_metadata,
+            paging: false,
+            //footer: true,
+            //sDom : "<'header_area'<'#header_left'l>f>t<'footer_area'i>",
+            //sDom : "<i><f>t<l>",
+            "order": [[ 0, "asc" ]],
+            //stateSave: true,
+            //"lengthMenu": [[100, 200, 300, -1], [100, 200, 300, "All"]],
+            //select: true,
+            searching: false,
+            ordering: false,
+            info: false,
+            columns: [
+                { data: 'k', 'title': 'Property' },
+                { data: 'v', 'title': 'Value' }
+                ]
+        } );
+
+        adjustIframeHeight();
+    }); 
+
+///////////// sequences    
+var sequences = $.getJSON(
+    "./genome_project/resources/sequences?project_id={{select_project_id}}",
+    function(json){
+        $('#sequences').DataTable( {
+            data: json.sequences,
             paging: false,
             footer: true,
             //sDom : "<'header_area'<'#header_left'l>f>t<'footer_area'i>",
@@ -40,28 +90,11 @@ var projects = $.getJSON(
             "lengthMenu": [[100, 200, 300, -1], [100, 200, 300, "All"]],
             //select: true,
             columns: [
-                { data: 'organism_name', 'title': 'Organism Name', "render": function ( data, type, full, meta ) {
-                      //return '<a target="_parent" href="/cyanobase/'+ full.id + '">'+ data + '</a>';
-                      return '<a target="_parent" href="'+ full.mdb_uri + '">'+ data + '</a>';
-                          }
-                      },
-                //{ data: 'id', 'title': 'Assembly ID' },
-                      { data: 'bioproject_accession', 'title': 'BioProject ID', "render": function (data, type, full, meta){
-                          return '<a target="_parent" href="'+ full.bioproject + '">' + data + '</a>';
-                          }
-                      },
-                //{ data: 'biosample_accession', 'title': 'BioSample ID'},
-                      { data: 'taxid', 'title': 'Taxonomy ID', "render": function (data, type, full, meta){
-                          return '<a target="_parent" href="'+ full.taxon + '">' + data + '</a>';
-                                                                                                          }
-                      },
-                { data: 'nies_id', 'title': 'NIES ID'},
-                { data: 'level', 'title': 'Assembly Level' },
-                { data: 'project_next', 'title' : 'Project Latest' },
-                { data: 'project_status', 'title' : 'Project Status' },
-                { data: 'genepage_status', 'title' : 'GenePage' },
-                { data: 'release_date', 'title': 'Release Date' }
-        //mdb_uri":"http://genome.microbedb.jp/cyanobase/GCA_002169575.2","project_current":"GCA_002169575.2","project_next":"","genepage_status":"false","nies_id":"","project_status":"new"},
+                { data: 'assigned_molecule_location_type', 'title': 'Sequence type' },
+                { data: 'genbank_accession', 'title': 'Sequence data source',  "render": function ( data, type, full, meta ) {
+                      return '<a target="_parent" href="'+ full.genbank + '">'+ data + '</a>';
+                      }
+                      }
                 ],
             initComplete: function () {
                 //alert( this + 'DataTables has finished its initialisation.' );
@@ -88,7 +121,7 @@ var projects = $.getJSON(
             }
         } );
 
-        $('#projects tbody').on( 'click', 'tr', function () {
+        $('#sequences tbody').on( 'click', 'tr', function () {
             $(this).toggleClass('selected');
         } );
  

@@ -9,18 +9,24 @@ class GenomeProjectsStanza < TogoStanza::Stanza::Base
     list = query('http://staging-genome.annotation.jp/sparql', <<-SPARQL.strip_heredoc)
 DEFINE sql:select-option "order"
 
-PREFIX asm: <http://www.ncbi.nlm.nih.gov/assembly/>
+#PREFIX asm: <http://www.ncbi.nlm.nih.gov/assembly/>
+PREFIX asm: <http://ddbj.nig.ac.jp/ontologies/assembly/>
 PREFIX tax: <http://identifiers.org/taxonomy/>
-
-select  ?id,?link,?organism_name,?taxon,?bioproject_accession,?biosample_accession, ?level, ?release_date, replace(str($taxon),"http://identifiers.org/taxonomy/","") as ?taxid
-#FROM <http://togogenome.org/graph/taxonomy>
-FROM <http://ddbj.nig.ac.jp/ontologies/taxonomy>
-#FROM <http://togogenome.org/graph/assembly_report>
-FROM <http://genome.microbedb.jp/cyanobase/assembly>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX mdb: <http://genome.microbedb.jp/terms#>
+select
+?id,?link,?organism_name,?taxon,?bioproject_accession,?biosample_accession, ?level, ?release_date, replace(str($taxon),"http://identifiers.org/taxonomy/","") as ?taxid,?assembly, ?mdb_uri, ?project_current, ?project_next, ?genepage_status, ?nies_id, ?project_status
+#FROM <http://ddbj.nig.ac.jp/ontologies/taxonomy>
+FROM <http://ddbj.nig.ac.jp/ontologies/taxonomy_20181219>
+#FROM <http://genome.microbedb.jp/cyanobase/assembly>
+FROM <http://genome.microbedb.jp/cyanobase_201812/assembly>
+FROM <http://genome.microbedb.jp/cyanobase_201812/assembly_extended>
 WHERE
 {
 #values ?taxon_root { tax:1117 tax:147537 tax:147545 tax:451866 tax:3041 tax: 2763 tax:33090}
 values ?taxon_root { tax:#{taxonomy_id}}
+#values ?taxon_root { tax:1117}
+
 #values ?category {"representative genome"}.
 values ?version_status {"latest"}.
 
@@ -50,6 +56,14 @@ values ?version_status {"latest"}.
  asm:version_status ?version_status;
  asm:wgs_master ?wgs_master;
  rdfs:seeAlso ?link.
+?mdb_uri skos:relatedMatch ?assembly;
+  mdb:project_current ?project_current;
+  mdb:project_next ?project_next;
+  mdb:project_latest ?project_latest;
+  mdb:genepage_status ?genepage_status;
+  mdb:nies_id ?nies_id;
+  mdb:project_statue ?project_status.
+
 }
 ORDER BY desc(?release_date)
     SPARQL
