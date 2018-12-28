@@ -1,0 +1,24 @@
+{
+  "id": "genome_projects",
+  "label": "genome project list",
+  "definition": "A stanza for genome list on CyanoBase and RhizoBase",
+  "parameter": [
+    {
+      "key": "data-stanza-taxonomy_id",
+      "example": "1148",
+      "description": "taxonomy id",
+      "required": true
+    }
+  ],
+  "type": "Stanza",
+  "context": "Genome",
+  "display": "Table",
+  "provider": "National Institute of Genetics",
+  "license": "CC-BY",
+  "author": "Takatomo Fujisawa",
+  "address": "tf@nig.ac.jp",
+  "contributor": [],
+  "version": "1",
+  "created": "2016-09-05",
+  "updated": "2018-12-28"
+}
