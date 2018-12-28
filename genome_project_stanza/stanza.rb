@@ -4,6 +4,7 @@ class GenomeProjectStanza < TogoStanza::Stanza::Base
   end
 
   property :select_organism_name do |project_id|
+    project_id = 'GCA_000009725.1' if project_id.blank?
    list = query('http://staging-genome.annotation.jp/sparql', <<-SPARQL.strip_heredoc)
  DEFINE sql:select-option "order"
 PREFIX asm: <http://ddbj.nig.ac.jp/ontologies/assembly/>
@@ -24,6 +25,7 @@ SPARQL
    end
 
   resource :project_metadata do |project_id|
+    project_id = 'GCA_000009725.1' if project_id.blank?
       list = query('http://staging-genome.annotation.jp/sparql', <<-SPARQL.strip_heredoc)
 
  DEFINE sql:select-option "order"
@@ -99,7 +101,7 @@ SPARQL
 end
 
   resource :project do |project_id|
-    project_id = 'GCA_000009705.1"' if project_id.blank?
+    project_id = 'GCA_000009725.1' if project_id.blank?
     list = query('http://staging-genome.annotation.jp/sparql', <<-SPARQL.strip_heredoc)
  DEFINE sql:select-option "order"
 
@@ -153,7 +155,7 @@ SPARQL
   end
    
   resource :sequences do |project_id|
-    project_id = 'GCA_000009705.1"' if project_id.blank?
+    project_id = 'GCA_000009725.1' if project_id.blank?
     list = query('http://staging-genome.annotation.jp/sparql', <<-SPARQL.strip_heredoc)
  DEFINE sql:select-option "order"
 

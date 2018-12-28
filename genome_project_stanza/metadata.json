@@ -1,23 +1,24 @@
 {
   "id": "genome_project",
-  "label": "",
-  "definition": "",
+  "label": "genome list",
+  "definition": "A stanza for genome list on CyanoBase and RhizoBase",
   "parameter": [
     {
-      "key": "",
-      "example": "",
-      "description": "",
+      "key": "data-stanza-project_id",
+      "example": "GCA_002368315.1",
+      "description": "Assembly id",
       "required": true
     }
   ],
   "type": "Stanza",
-  "context": "",
-  "display": "",
-  "provider": "provider of this stanza",
-  "license": "",
-  "author": "author name",
-  "address": "name@example.org",
+  "context": "Genome",
+  "display": "Table",
+  "provider": "National Institute of Genetics",
+  "license": "CC-BY",
+  "author": "Takatomo Fujisawa",
+  "address": "tf@nig.ac.jp",
   "contributor": [],
+  "version": "1",
   "created": "2018-12-19",
-  "updated": "2018-12-19"
+  "updated": "2018-12-28"
 }
