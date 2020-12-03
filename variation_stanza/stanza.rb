@@ -2,7 +2,7 @@ class VariationStanza < TogoStanza::Stanza::Base
   property :variation do |uri|
     filter = uri.blank? ? '# not filtered' : "FILTER(?gene = <#{uri}>)"
 
-    query("http://semantic.annotation.jp/sparql", <<-SPARQL.strip_heredoc)
+    query('http://semantic.annotation.jp/sparql', <<-SPARQL.strip_heredoc)
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       PREFIX tga: <http://togo.annotation.jp/sw/>
       PREFIX obo: <http://purl.obolibrary.org/obo/>
