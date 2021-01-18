@@ -1,6 +1,6 @@
 class VariationStanza < TogoStanza::Stanza::Base
   property :variation do |uri|
-    filter = uri.blank? ? '# not filtered' : "FILTER(?gene = <#{uri}>)"
+    filter = uri.blank? ? '# not filtered' : "FILTER(?gene = <#{uri.sub('/GCA_000009725.1/', '/Synechocystis/')}>)"
 
     query('http://semantic.annotation.jp/sparql', <<-SPARQL.strip_heredoc)
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

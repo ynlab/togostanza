@@ -1,6 +1,6 @@
 class GenesetStanza < TogoStanza::Stanza::Base
   property :geneset do |uri|
-    filter = uri.blank? ? '# not filtered' : "?geneset ?p <#{uri}>."
+    filter = uri.blank? ? '# not filtered' : "?geneset ?p <#{uri.sub('/GCA_000009725.1/', '/Synechocystis/')}>."
 
     query('http://semantic.annotation.jp/sparql', <<-SPARQL.strip_heredoc)
       SELECT
