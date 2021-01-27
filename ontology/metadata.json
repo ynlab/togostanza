@@ -838,7 +838,7 @@
     },
     { "@id": "http://togostanza.org/stanza/protein_attributes",
       "stanza:label": "Protein attributes",
-      "stanza:definition": "See also: <a hfef=\"http://www.uniprot.org/manual/?query=category%3Aprotein_attributes\" target=\"_blank\">http://www.uniprot.org/manual/?query=category%3Aprotein_attributes</a>",
+      "stanza:definition": "See also: <a href=\"http://www.uniprot.org/manual/?query=category%3Aprotein_attributes\" target=\"_blank\">http://www.uniprot.org/manual/?query=category%3Aprotein_attributes</a>",
       "stanza:parameter": [
         { "stanza:key": "tax_id",
           "stanza:example": "1111708",
@@ -865,7 +865,7 @@
     },
     { "@id": "http://togostanza.org/stanza/protein_cross_references",
       "stanza:label": "Protein cross references",
-      "stanza:definition": "See also: <a hfef=\"http://www.uniprot.org/manual/?query=category%3Across_references\" target=\"_blank\">http://www.uniprot.org/manual/?query=category%3Across_references</a>",
+      "stanza:definition": "See also: <a href=\"http://www.uniprot.org/manual/?query=category%3Across_references\" target=\"_blank\">http://www.uniprot.org/manual/?query=category%3Across_references</a>",
       "stanza:parameter": [
         { "stanza:key": "tax_id",
           "stanza:example": "1111708",
